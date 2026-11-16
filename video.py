@@ -37,14 +37,14 @@ def create_card(title, summary, path):
     card = Image.new('RGB', (1080, 1920), '#081225')
     draw = ImageDraw.Draw(card)
     draw.rectangle((0, 0, 1080, 20), fill='#ef4056')
-    draw.text((75, 120), 'WORLD NEWS', font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 62), fill='white')
+    draw.text((75, 120), 'SL NEWS 247', font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 62), fill='white')
     draw.text((75, 215), 'සිංහල පුවත්', font=get_font(48), fill='#52dbc3')
     draw.rounded_rectangle((55, 370, 1025, 1010), radius=32, fill='#142642')
     fit(draw, title, (90, 420, 900, 540), 64, 30)
     fit(draw, summary, (90, 1080, 880, 560), 40, 24)
     draw.line((90, 1720, 990, 1720), fill='#52dbc3', width=3)
     draw.text((90, 1760), 'Source and article link in caption', font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 30), fill='#a9bacf')
-    draw.text((90, 1820), 'Follow for more world news', font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 30), fill='#a9bacf')
+    draw.text((90, 1820), 'Follow for Sri Lanka news', font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 30), fill='#a9bacf')
     card.save(path)
 
 

@@ -1,10 +1,11 @@
 name: Auto News Bot
 on:
   schedule:
-    - cron: '17 */3 * * *'
+    - cron: '2-59/5 * * * *'
   push:
     paths:
       - '*.py'
+      - 'tests/**'
       - 'requirements.txt'
       - '.github/workflows/news.yml'
   workflow_dispatch:
@@ -33,9 +34,11 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y ffmpeg fonts-noto-core
           pip install -r requirements.txt
+      - name: Verify feed parsing and delivery checkpoints
+        run: python -m unittest discover -s tests -v
       - name: Run news pipeline
         env:
-          PREVIEW_ONLY: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !inputs.publish) }}
+          PREVIEW_ONLY: ${{ github.event_name == 'workflow_dispatch' && !inputs.publish }}
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
@@ -44,9 +47,10 @@ jobs:
           TIKTOK_ENABLED: ${{ vars.TIKTOK_ENABLED || 'false' }}
           TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL || 'SELF_ONLY' }}
           MYMEMORY_EMAIL: ${{ secrets.MYMEMORY_EMAIL }}
-        run: python -u main.py
+          MAX_NEWS_PER_RUN: '5'
+        run: python -u fast_news.py
       - name: Preserve delivery checkpoints and translation cache
-        if: always() && github.event_name != 'push' && (github.event_name != 'workflow_dispatch' || inputs.publish)
+        if: always() && (github.event_name != 'workflow_dispatch' || inputs.publish)
         run: |
           mkdir -p data
           git config user.name 'github-actions[bot]'

@@ -69,7 +69,7 @@ def make_caption(news):
 මූලාශ්‍රය: {news.get('source', '')}
 {news.get('link', '')}
 
-🌍 world news in sinhala
+🌍 SL News 247 | ශ්‍රී ලංකා පුවත්
 """
 
 

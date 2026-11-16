@@ -1,30 +1,43 @@
-# Sinhala World News automation
+# SL News 247 — Sri Lankan Sinhala news automation
 
-RSS → short Sinhala translation → Sinhala gTTS voice → 1080×1920 MP4 → Telegram and Facebook; optional authorized TikTok delivery.
+Native Sinhala RSS headlines → fast Telegram + Facebook text alerts → Sinhala voice and 1080×1920 video → Telegram + Facebook + optional authorized TikTok.
 
-## Run
+## Production
 
-The existing `Auto News Bot` workflow runs every three hours at minute 17 UTC (Sri Lanka: 02:47, 05:47, 08:47, 11:47, 14:47, 17:47, 20:47, 23:47). GitHub may delay scheduled jobs. Pushes build a preview without publishing. For a manual preview use Actions → Auto News Bot → Run workflow with publish unchecked. Download the `sinhala-news-…` artifact. Check its Sinhala pronunciation, translation and layout before production use.
+`Auto News Bot` scans every five minutes, at UTC minutes 02, 07, 12, … 57. GitHub may delay scheduled jobs; this is not guaranteed real-time delivery. Code deployments also publish after the automated checks pass. Manual runs default to preview; select `publish` to send posts.
 
-Scheduled runs publish to the existing news destinations defined by repository secrets `TG_TOKEN`, `TG_CHAT_ID`, `FB_PAGE_ID`, `FB_PAGE_TOKEN`. Never use trading or store credentials for news. Tokens are not committed. Facebook Page permissions and Telegram bot channel admin access must remain valid.
+Every run collects these publisher feeds concurrently:
 
-## Reliability
+- Ada Derana Sinhala: https://sinhala.adaderana.lk/rss.php
+- Dinamina: https://www.dinamina.lk/feed/
+- Divaina: https://divaina.lk/feed/
+- Lankadeepa latest: https://www.lankadeepa.lk/rss/latest_news/1
+- Lankadeepa business: https://www.lankadeepa.lk/rss/business/9
 
-Feeds have HTTP timeouts. Only articles dated within 24 hours are selected, newest first. Each job has a 20-minute limit. The renderer builds one original graphic rather than repeatedly processing every video frame. Captions include the original publisher and article link. No publisher photos are automatically reused. Summaries are short machine translations, not independently verified reporting.
+The source health report records HTTP failures, feed counts and fresh Sinhala story counts. No firewall bypass is attempted. Native Sinhala avoids translation delays and translation quotas. Sri Lankan publishers cover national, regional, political, business, sport and international stories; this does not guarantee every article from every Sri Lankan outlet. Feed coverage and publisher delay affect availability.
 
-`data/delivery.json` stores the pending article and confirmed destinations; `used.json` records completed stories. Both are committed after production runs, including failures. The translation cache is also preserved. The Actions summary and `delivery_report.json` distinguish failures from successes. A failed destination keeps the current story pending instead of losing it. Repair its credentials to resume. Before clearing pending state, inspect the platform for any upload that succeeded despite a lost network response. Remote uploads and GitHub commits cannot form one atomic transaction, so duplicates remain possible after ambiguous timeouts or state-save failure.
+Up to five fresh, undelivered stories are sent per run. Only dated stories from the past 12 hours are eligible. Exact normalized headline fingerprints suppress duplicate titles across sources. Similar stories with different headlines may still appear. Posts include a short excerpt, publisher link and publication time in Asia/Colombo. No full article or publisher photograph is republished. Headlines are source reporting, not independently verified claims.
 
-## TikTok setup
+One new video is attempted every 30 minutes after headline delivery. Videos use original graphics, native Sinhala feed text and gTTS Sinhala voice. Free speech services can fail or be rate-limited. A video failure does not prevent text alerts.
 
-TikTok is disabled by default. Repository variable `TIKTOK_ENABLED=true` enables it only after authorizing the intended news account and setting `TIKTOK_ACCESS_TOKEN` as a secret. Set `TIKTOK_PRIVACY_LEVEL` explicitly to a privacy option approved for that account. Default is `SELF_ONLY`. Public posting requires TikTok approval; availability of a public option alone does not prove app approval. Unapproved apps are restricted by TikTok. Do not reuse the FreeSignal account automatically. This pipeline does not implement token refresh; expired authorization must be renewed. Videos over 64 MiB are rejected. Unconfirmed processing is not counted as successful delivery. Inspect TikTok before retrying a pending upload.
+## Accounts and credentials
 
-## Local preview
+The existing news accounts are used through repository secrets `TG_TOKEN`, `TG_CHAT_ID`, `FB_PAGE_ID`, `FB_PAGE_TOKEN`. Telegram bot channel admin access and Facebook Page posting permissions must remain valid. Credentials are never committed. The intended news Telegram channel was previously confirmed as `@slnews247` from historical delivery logs.
 
-Python 3.11, FFmpeg and Noto Sinhala fonts are required.
+TikTok remains disabled until the intended news account is authorized. Set secret `TIKTOK_ACCESS_TOKEN`, then explicitly set repository variables `TIKTOK_ENABLED=true` and `TIKTOK_PRIVACY_LEVEL` to an approved privacy option. Default privacy is `SELF_ONLY`. Public Direct Posting requires TikTok app approval; an available public privacy option alone does not prove approval. Current TikTok integration does not refresh expired tokens automatically. Do not substitute the FreeSignal account for the news account. Until authorization and app approval are completed, this is not fully automated public TikTok publishing.
+
+## Receipts, failures and retries
+
+`data/sri_lanka_delivery.json` records headline receipts and video attempts. Each destination is checkpointed separately, preventing routine duplicate retries. A confirmed rejected request can retry later. A lost or undecodable response is marked uncertain and is not automatically resent; other stories continue. Inspect the actual channel/Page before removing that story's `uncertain` destination flag. This avoids blindly duplicating a post that may have succeeded. Video attempts are recorded before uploading; failed/unconfirmed attempts are reported for inspection, rather than automatically resent. State saves run even when the pipeline fails. Remote posting and GitHub commits cannot be atomic, so a state-save failure still requires inspection.
+
+The Actions summary and downloadable `sinhala-news-…` artifact contain `delivery_report.json`, selected stories, and any rendered MP4/PNG. No fresh stories is a normal no-op. All feeds failing, or rejected/unconfirmed text delivery, makes the job fail visibly.
+
+## Preview and checks
 
 ```bash
 pip install -r requirements.txt
-PREVIEW_ONLY=true python main.py
+python -m unittest discover -s tests -v
+PREVIEW_ONLY=true python fast_news.py
 ```
 
-Free translation and speech services have quotas and availability limits. No API expense is configured. This is scheduled automation, not a guarantee of uninterrupted lifetime operation. No confirmed live-delivery claim is made until workflow results and destination posts have been checked.
+Python 3.11, FFmpeg and Noto Sinhala fonts are required. Preview creates output without posting or persisting production delivery state. The previous `main.py` remains as a legacy world-news entry point; the workflow now uses `fast_news.py`.
