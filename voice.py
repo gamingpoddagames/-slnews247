@@ -17,7 +17,8 @@ def create_voice(script, output_file):
         tts = gTTS(
             text=script,
             lang=VOICE_LANG,
-            slow=False
+            slow=False,
+            timeout=(5, 30)
         )
 
         tts.save(output_file)
@@ -41,3 +42,4 @@ def test_voice():
 
 if __name__ == "__main__":
     test_voice()
+

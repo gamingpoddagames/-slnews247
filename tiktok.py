@@ -74,10 +74,7 @@ def get_creator_info():
 
         if response.status_code != 200:
 
-            print(
-                "TikTok Creator Info Error:",
-                response.text
-            )
+            print("TikTok Creator Info Error:" "request rejected; check authorization")
 
             return None
 
@@ -88,10 +85,7 @@ def get_creator_info():
             "ok"
         ):
 
-            print(
-                "TikTok API Error:",
-                data
-            )
+            print("TikTok API Error:" "request rejected; check authorization")
 
             return None
 
@@ -100,7 +94,7 @@ def get_creator_info():
     except Exception as e:
 
         print(
-            f"TikTok Creator Info Exception: {e}"
+            f"TikTok Creator Info Exception: {type(e).__name__}"
         )
 
         return None
@@ -125,14 +119,11 @@ def choose_privacy_level(creator_info):
 
         return None
 
-    # Prefer public posting when TikTok allows it.
-    if "PUBLIC_TO_EVERYONE" in options:
-
-        return "PUBLIC_TO_EVERYONE"
-
-    # Otherwise use the first option returned
-    # by TikTok.
-    return options[0]
+    selected = os.getenv("TIKTOK_PRIVACY_LEVEL", "SELF_ONLY")
+    if selected not in options:
+        print("Configured TikTok privacy is unavailable")
+        return None
+    return selected
 
 
 # ==========================================
@@ -145,11 +136,10 @@ def initialize_post(
 ):
 
     # 10 MB chunks
-    chunk_size = 10 * 1024 * 1024
-
-    total_chunks = (
-        video_size + chunk_size - 1
-    ) // chunk_size
+    chunk_size = video_size
+    total_chunks = 1
+    if video_size > 64 * 1024 * 1024:
+        return None
 
     url = (
         f"{API_BASE}/post/publish/"
@@ -204,10 +194,7 @@ def initialize_post(
 
         if response.status_code != 200:
 
-            print(
-                "TikTok Init Error:",
-                response.text
-            )
+            print("TikTok Init Error:" "request rejected; check authorization")
 
             return None
 
@@ -223,10 +210,7 @@ def initialize_post(
             "ok"
         ):
 
-            print(
-                "TikTok API Error:",
-                data
-            )
+            print("TikTok API Error:" "request rejected; check authorization")
 
             return None
 
@@ -235,7 +219,7 @@ def initialize_post(
     except Exception as e:
 
         print(
-            f"TikTok Init Exception: {e}"
+            f"TikTok Init Exception: {type(e).__name__}"
         )
 
         return None
@@ -254,7 +238,7 @@ def upload_video(
         video_file
     )
 
-    chunk_size = 10 * 1024 * 1024
+    chunk_size = file_size
 
     print(
         f"TikTok video size: "
@@ -337,7 +321,7 @@ def upload_video(
     except Exception as e:
 
         print(
-            f"TikTok Upload Exception: {e}"
+            f"TikTok Upload Exception: {type(e).__name__}"
         )
 
         return False
@@ -371,10 +355,7 @@ def check_publish_status(
 
         if response.status_code != 200:
 
-            print(
-                "TikTok Status Error:",
-                response.text
-            )
+            print("TikTok Status Error:" "request rejected; check authorization")
 
             return None
 
@@ -385,7 +366,7 @@ def check_publish_status(
     except Exception as e:
 
         print(
-            f"TikTok Status Exception: {e}"
+            f"TikTok Status Exception: {type(e).__name__}"
         )
 
         return None
@@ -437,10 +418,7 @@ def wait_for_publish(
             "ERROR"
         ):
 
-            print(
-                "TikTok Publish Failed:",
-                status
-            )
+            print("TikTok Publish Failed:" "request rejected; check authorization")
 
             return False
 
@@ -448,7 +426,7 @@ def wait_for_publish(
         "TikTok is still processing the video."
     )
 
-    return True
+    return False
 
 
 # ==========================================
@@ -592,3 +570,4 @@ def upload_news(
     )
 
     return result
+

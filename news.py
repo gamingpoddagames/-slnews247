@@ -1,4 +1,6 @@
 import random
+import calendar
+import time
 import feedparser
 import requests
 
@@ -181,9 +183,9 @@ def collect_news():
                 f"Checking : {feed_url}"
             )
 
-            feed = feedparser.parse(
-                feed_url
-            )
+            response = requests.get(feed_url, headers=HEADERS, timeout=(5, 15))
+            response.raise_for_status()
+            feed = feedparser.parse(response.content)
 
             source = feed.feed.get(
                 "title",
@@ -214,6 +216,13 @@ def collect_news():
                 if not title or not link:
                     continue
 
+                published = entry.get("published_parsed") or entry.get("updated_parsed")
+                if not published:
+                    continue
+                age = time.time() - calendar.timegm(published)
+                if age < -3600 or age > 24 * 3600:
+                    continue
+
                 news_id = news_hash(
                     link
                 )
@@ -237,7 +246,8 @@ def collect_news():
 
                     "image": image,
 
-                    "source": source
+                    "source": source,
+                    "published": calendar.timegm(published)
                 })
 
         except Exception as e:
@@ -324,9 +334,7 @@ def get_best_news():
 
         return None
 
-    random.shuffle(
-        news_list
-    )
+    news_list.sort(key=lambda item: item.get("published", 0), reverse=True)
 
     # Try only a few articles.
     # This prevents the workflow from spending
@@ -379,23 +387,6 @@ def get_best_news():
         if article_image:
 
             translated["image"] = article_image
-
-        # Mark only successfully selected news
-        # as used.
-        used = load_used(
-            USED_FILE
-        )
-
-        if translated["id"] not in used:
-
-            used.append(
-                translated["id"]
-            )
-
-        save_used(
-            USED_FILE,
-            used
-        )
 
         log(
             "News Selected"
@@ -481,3 +472,4 @@ if __name__ == "__main__":
         print(
             make_script(news)
         )
+

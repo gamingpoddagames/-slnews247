@@ -19,6 +19,9 @@ def make_caption(news):
 
 {news['summary_si']}
 
+මූලාශ්‍රය: {news.get('source', '')}
+{news.get('link', '')}
+
 🌍 world news in sinhala
 """
 
@@ -77,10 +80,10 @@ def upload_video(video_path, caption):
             )
 
 
-        print(response.text)
+        print("Upload HTTP status:", response.status_code)
 
 
-        if response.status_code == 200:
+        if response.status_code == 200 and response.json().get("id"):
 
             return True
 
@@ -90,7 +93,7 @@ def upload_video(video_path, caption):
 
     except Exception as e:
 
-        print("Facebook Error:", e)
+        print("Facebook request failed:", type(e).__name__)
 
         return False
 
@@ -140,3 +143,4 @@ if __name__ == "__main__":
         )
 
     )
+

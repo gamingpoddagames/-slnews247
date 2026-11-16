@@ -28,7 +28,7 @@ def upload_video(video_path, caption=""):
 
             data = {
                 "chat_id": CHAT_ID,
-                "caption": caption,
+                "caption": caption[:1024],
                 "supports_streaming": True
             }
 
@@ -39,9 +39,9 @@ def upload_video(video_path, caption=""):
                 timeout=600
             )
 
-        print(response.text)
+        print("Upload HTTP status:", response.status_code)
 
-        if response.status_code == 200:
+        if response.status_code == 200 and response.json().get("ok"):
             return True
 
         return False
@@ -49,7 +49,7 @@ def upload_video(video_path, caption=""):
 
     except Exception as e:
 
-        print("Telegram Error:", e)
+        print("Telegram request failed:", type(e).__name__)
 
         return False
 
@@ -65,6 +65,9 @@ def make_caption(news):
 {news['title_si']}
 
 {news['summary_si']}
+
+මූලාශ්‍රය: {news.get('source', '')}
+{news.get('link', '')}
 
 🌍 world news in sinhala
 """
@@ -103,3 +106,4 @@ if __name__ == "__main__":
             test
         )
     )
+
