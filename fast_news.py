@@ -19,6 +19,10 @@ SOURCES = [
     ('Divaina', 'https://divaina.lk/feed/'),
     ('Lankadeepa Latest', 'https://www.lankadeepa.lk/rss/latest_news/1'),
     ('Lankadeepa Business', 'https://www.lankadeepa.lk/rss/business/9'),
+    ('Siyatha News', 'https://siyathanews.lk/feed/'),
+    ('ITN News', 'https://www.itnnews.lk/feed/'),
+    ('Lankasara Sinhala', 'https://lankasara.com/si/feed/'),
+    ('Newsfirst Sinhala', 'https://sinhala.newsfirst.lk/feed/'),
 ]
 STATE_FILE = Path('data/sri_lanka_delivery.json')
 MAX_AGE = 12 * 3600
@@ -76,11 +80,11 @@ def collect(now):
             response.raise_for_status()
             articles, total = parse_feed(response.content, source, now)
             return articles, {'source': source, 'http': response.status_code,
-                              'entries': total, 'fresh_sinhala': len(articles)}
+                              'entries': total, 'fresh_sinhala': len(articles), 'feed_url': url}
         except Exception as exc:
-            return [], {'source': source, 'error': type(exc).__name__}
+            return [], {'source': source, 'error': type(exc).__name__, 'http': getattr(getattr(exc, 'response', None), 'status_code', None)}
     articles, health = [], []
-    with ThreadPoolExecutor(max_workers=5) as pool:
+    with ThreadPoolExecutor(max_workers=8) as pool:
         for items, status in pool.map(fetch, SOURCES):
             articles.extend(items)
             health.append(status)
@@ -111,7 +115,7 @@ def caption(article):
 def send_text(platform, article):
     from media import post_image
     try:
-        image_path = post_image(article)
+        image_path = None if article.get('official_video_url') else post_image(article)
     except Exception as exc:
         # No unlicensed substitute and no uncertain platform request on media failure.
         image_path = None
@@ -154,7 +158,7 @@ def send_text(platform, article):
 def deliver(state, articles, now, preview=False, sender=send_text):
     results = {name: {'sent': 0, 'failed': 0, 'uncertain': 0} for name in ('telegram', 'facebook')}
     records = state.setdefault('stories', {})
-    limit = max(1, min(20, int(os.getenv('MAX_NEWS_PER_RUN', '5'))))
+    limit = max(1, min(20, int(os.getenv('MAX_NEWS_PER_RUN', '10'))))
     selected = []
     for article in articles:
         record = records.setdefault(article['id'], {'article': article, 'receipts': {}})
@@ -202,7 +206,7 @@ def maybe_video(state, articles, now, preview):
     recent = state.setdefault('videos', {})
     candidate = next((a for a in articles if a['id'] not in recent), None)
     if not candidate:
-        return 'no_new_video_story'
+        return share_official_video(state, articles, now, preview)
     from media import choose_video
     candidate = None
     footage = None
@@ -246,8 +250,13 @@ def maybe_video(state, articles, now, preview):
 def share_official_video(state, articles, now, preview):
     from editorial import official_video_for
     history = state.setdefault('official_video_links', {})
+    checks = 0
     for article in articles:
         url = official_video_for(article)
+        if not url and checks < 3 and re.search(r'video|වීඩියෝ', article['title_si'], re.I):
+            from publisher_videos import discover_video
+            checks += 1
+            url = discover_video(article)
         if not url:
             continue
         record = history.setdefault(article['id'], {'url': url, 'destinations': {}})
@@ -319,6 +328,7 @@ def main():
     report['unconfirmed_headline_requests'] = sum(len(r.get('uncertain', {})) for r in state.get('stories', {}).values())
     report['selected_titles'] = [a['title_si'] for a in selected]
     if not preview:
+        Path('data/source_health.json').write_text(json.dumps({'checked_at': now, 'configured_feeds': len(SOURCES), 'sources': health}, ensure_ascii=False, indent=2), encoding='utf-8')
         state['last_scan_at'] = now
         save(state)
     Path('output/delivery_report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')

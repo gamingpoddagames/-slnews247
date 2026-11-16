@@ -167,3 +167,13 @@ class EditorialDeliveryTests(unittest.TestCase):
             pipeline.share_editorial_update(state,[article],time.time(),False)
             self.assertEqual(send.call_count,2)
             self.assertTrue(send.call_args.args[1]['title_si'].startswith('විස්තරාත්මක පුවත'))
+
+class PublisherPlayerTests(unittest.TestCase):
+    def test_only_single_exact_article_player_is_selected(self):
+        from publisher_videos import extract_video,youtube_watch
+        clip='https://www.youtube.com/embed/X5LpOsYyDiU?feature=oembed'
+        self.assertEqual(youtube_watch(clip),'https://www.youtube.com/watch?v=X5LpOsYyDiU')
+        self.assertIsNone(extract_video('<footer><iframe src="'+clip+'"></iframe></footer>'))
+        self.assertEqual(extract_video('<div class="td-post-content"><iframe src="'+clip+'"></iframe></div>'),'https://www.youtube.com/watch?v=X5LpOsYyDiU')
+        self.assertIsNone(extract_video('<div class="entry-content"><iframe src="'+clip+'"></iframe><iframe src="https://youtube.com/embed/x3CE2K5CwT8"></iframe></div>'))
+        self.assertIsNone(youtube_watch('https://youtube.com/embed/live_stream?channel=wrong'))
