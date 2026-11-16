@@ -219,6 +219,121 @@
         }
       },
       "uncertain": {}
+    },
+    "4c61048a186d1d69341a1151": {
+      "article": {
+        "id": "4c61048a186d1d69341a1151",
+        "title_si": "දකුණු අප්‍රිකාවේ වෙඩි තැබීම් දෙකකින් පුද්ගලයින් 17 දෙනෙකු මරුට",
+        "summary_si": "",
+        "link": "https://sinhala.adaderana.lk/news/254737",
+        "source": "Ada Derana Sinhala",
+        "published": 1794848516
+      },
+      "receipts": {
+        "telegram": {
+          "id": "706",
+          "at": 1794857721.071352,
+          "format": "text"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126342349318605",
+          "at": 1794857721.071352,
+          "format": "text"
+        }
+      },
+      "uncertain": {}
+    },
+    "7db6fe7ab3d8d1fe9dbc97d3": {
+      "article": {
+        "id": "7db6fe7ab3d8d1fe9dbc97d3",
+        "title_si": "අමෙරිකාවේ Theodore Roosevelt ගුවන් යානා ප්‍රහාරක නෞකාව මැදපෙරදිග කලාපයට",
+        "summary_si": "",
+        "link": "https://sinhala.adaderana.lk/news/254736",
+        "source": "Ada Derana Sinhala",
+        "published": 1794847432
+      },
+      "receipts": {
+        "telegram": {
+          "id": "707",
+          "at": 1794857721.071352,
+          "format": "text"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126342361318605",
+          "at": 1794857721.071352,
+          "format": "text"
+        }
+      },
+      "uncertain": {}
+    },
+    "b3310d1607aaffa841165647": {
+      "article": {
+        "id": "b3310d1607aaffa841165647",
+        "title_si": "‘අක්වාන්’ සුළි කුණාටුව ගැන ඉන්දීය කාලගුණ අංශවලින් දැනුම්දීමක්",
+        "summary_si": "",
+        "link": "https://sinhala.adaderana.lk/news/254735",
+        "source": "Ada Derana Sinhala",
+        "published": 1794846219
+      },
+      "receipts": {
+        "telegram": {
+          "id": "708",
+          "at": 1794857721.071352,
+          "format": "text"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126342379318605",
+          "at": 1794857721.071352,
+          "format": "text"
+        }
+      },
+      "uncertain": {}
+    },
+    "e749db0d6c592da6faabd4fc": {
+      "article": {
+        "id": "e749db0d6c592da6faabd4fc",
+        "title_si": "ජේම්ස් බොන්ඩ් චරිතය සඳහා 'රොබ්ට් පැටින්සන්' තෝරාගැනේ",
+        "summary_si": "",
+        "link": "https://sinhala.adaderana.lk/news/254734",
+        "source": "Ada Derana Sinhala",
+        "published": 1794845960
+      },
+      "receipts": {
+        "telegram": {
+          "id": "709",
+          "at": 1794857721.071352,
+          "format": "text"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126342397318605",
+          "at": 1794857721.071352,
+          "format": "text"
+        }
+      },
+      "uncertain": {}
+    },
+    "6275c5e21e8215c7302860f9": {
+      "article": {
+        "id": "6275c5e21e8215c7302860f9",
+        "title_si": "‘හස්ති සේනා’ මෙහෙයුමෙන් එංගලන්තයේ නිෂ්පාදිත ගිනි අවියක් සොයාගැනේ",
+        "summary_si": "",
+        "link": "https://sinhala.adaderana.lk/news/254733",
+        "source": "Ada Derana Sinhala",
+        "published": 1794843776
+      },
+      "receipts": {
+        "telegram": {
+          "id": "710",
+          "at": 1794857721.071352,
+          "format": "text"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126342445318605",
+          "at": 1794857721.071352,
+          "format": "text"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -240,6 +355,6 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1794857263.9764938,
+  "last_scan_at": 1794857721.071352,
   "video_style": "photo-v1"
 }
