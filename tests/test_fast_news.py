@@ -63,14 +63,6 @@ class PresentationTests(unittest.TestCase):
         self.assertNotIn('මූලාශ්‍රය', text)
         self.assertIn('SL News 247', text)
 
-    def test_photo_license_and_topic_selection(self):
-        from media import CATALOG, LICENSE, topic
-        self.assertEqual(topic({'title_si':'කාලගුණ නිවේදනයක්'}), 'weather')
-        self.assertEqual(topic({'title_si':'දුම්රිය ප්‍රවාහන සේවය'}), 'transport')
-        self.assertEqual(topic({'title_si':'බැංකු ආර්ථික පුවත්'}), 'business')
-        self.assertEqual(LICENSE, 'https://www.pexels.com/license/')
-        self.assertTrue(all(a['page'].startswith('https://www.pexels.com/photo/') for a in CATALOG.values()))
-
     def test_photo_post_request_uses_uploaded_image(self):
         from unittest.mock import MagicMock
         article = {'id':'one', 'title_si':'පුවත', 'summary_si':'', 'published':time.time()}
@@ -85,3 +77,49 @@ class PresentationTests(unittest.TestCase):
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
                 self.assertIn('photo', request.call_args.kwargs['files'])
                 self.assertNotIn('https://', request.call_args.kwargs['data']['caption'])
+
+class ExactEventMediaTests(unittest.TestCase):
+    def test_no_media_posts_text_and_skips_video(self):
+        from unittest.mock import MagicMock
+        article = {'id':'new','title_si':'පුවත','summary_si':'','published':time.time(),'link':'https://example.com/a'}
+        response = MagicMock();response.ok=True
+        response.json.return_value={'ok':True,'result':{'message_id':100}}
+        with patch('media.post_image', return_value=None), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
+            result=pipeline.send_text('telegram', article)
+            self.assertEqual(result['format'],'text')
+            self.assertTrue(request.call_args.args[0].endswith('/sendMessage'))
+            self.assertNotIn('files',request.call_args.kwargs)
+        with patch('media.choose_photo', return_value=None):
+            self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'skipped_no_verified_event_media')
+
+    def test_exact_story_and_nonreuse_guards(self):
+        import hashlib, io, json
+        import media
+        from PIL import Image
+        from unittest.mock import MagicMock
+        stream=io.BytesIO();Image.new('RGB',(800,800),'blue').save(stream,format='JPEG')
+        blob=stream.getvalue();digest=hashlib.sha256(blob).hexdigest()
+        a={'id':'one','link':'https://example.com/one'}
+        b={'id':'two','link':'https://example.com/two'}
+        asset={'article_url':a['link'],'verified_event':True,'rights_verified':True,
+               'attribution_required':False,'verification_notes':'Exact event reviewed',
+               'rights_evidence':'Owner permission recorded','sha256':digest,'url':'https://example.com/media.jpg'}
+        response=MagicMock();response.content=blob
+        old=os.getcwd()
+        with tempfile.TemporaryDirectory() as directory:
+            try:
+                os.chdir(directory)
+                registry=Path('registry.json');usage=Path('usage.json')
+                with patch.object(media,'REGISTRY',registry),patch.object(media,'USAGE',usage),patch('requests.get',return_value=response) as request:
+                    self.assertIsNone(media.choose_photo(a))
+                    request.assert_not_called()
+                    registry.write_text(json.dumps({'one':dict(asset,article_url='wrong')}))
+                    self.assertIsNone(media.choose_photo(a))
+                    registry.write_text(json.dumps({'one':asset,'two':dict(asset,article_url=b['link'])}))
+                    self.assertIsNotNone(media.choose_photo(a))
+                    self.assertIsNotNone(media.choose_photo(a))
+                    self.assertIsNone(media.choose_photo(b))
+                    registry.write_text(json.dumps({'one':dict(asset,rights_verified=False)}))
+                    self.assertIsNone(media.choose_photo(a))
+            finally:
+                os.chdir(old)

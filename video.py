@@ -33,7 +33,7 @@ def fit(draw, text, box, start, minimum=20):
     raise ValueError('News text does not fit card; refusing clipped output')
 
 
-def create_card(title, summary, path, image_path=None, height=1920):
+def create_card(title, summary, path, image_path=None, height=1920, contextual=True):
     card = Image.new('RGB', (1080, height), '#081225')
     draw = ImageDraw.Draw(card)
     draw.rectangle((0, 0, 1080, 16), fill='#ef4056')
@@ -54,8 +54,9 @@ def create_card(title, summary, path, image_path=None, height=1920):
             photo = ImageOps.fit(image.convert('RGB'), (x1-x0, y1-y0), method=Image.Resampling.LANCZOS)
         card.paste(photo, (x0, y0))
         draw = ImageDraw.Draw(card)
-        draw.rectangle((x0, y1-64, x1, y1), fill='#142642')
-        draw.text((x0+20, y1-55), 'පසුබිම් ඡායාරූපයකි', font=get_font(27), fill='#d8e4ed')
+        if contextual:
+            draw.rectangle((x0, y1-64, x1, y1), fill='#142642')
+            draw.text((x0+20, y1-55), 'පසුබිම් ඡායාරූපයකි', font=get_font(27), fill='#d8e4ed')
     fit(draw, title, title_box, 54, 24)
     if summary_box[3] and summary:
         fit(draw, summary, summary_box, 30, 22)
@@ -64,9 +65,9 @@ def create_card(title, summary, path, image_path=None, height=1920):
     card.save(path)
 
 
-def create_video(image_path, audio_path, title, summary, output_path):
+def create_video(image_path, audio_path, title, summary, output_path, contextual=True):
     card = str(Path(output_path).with_suffix('.png'))
-    create_card(title, summary, card, image_path)
+    create_card(title, summary, card, image_path, contextual=contextual)
     subprocess.run(['ffmpeg', '-y', '-loop', '1', '-framerate', '25', '-i', card,
                     '-i', audio_path, '-c:v', 'libx264', '-tune', 'stillimage',
                     '-preset', 'veryfast', '-crf', '25', '-c:a', 'aac', '-b:a', '128k',

@@ -111,29 +111,39 @@ def send_text(platform, article):
         image_path = post_image(article)
     except Exception as exc:
         # No unlicensed substitute and no uncertain platform request on media failure.
-        return {'error': 'photo_preparation_failed', 'type': type(exc).__name__}
+        image_path = None
+        print('No verified event photo:', type(exc).__name__)
     if platform == 'telegram':
         token, chat = os.getenv('TG_TOKEN'), os.getenv('TG_CHAT_ID')
         if not token or not chat:
             return {'error': 'missing_credentials'}
-        with open(image_path, 'rb') as photo:
-            response = requests.post(f'https://api.telegram.org/bot{token}/sendPhoto',
-                                     data={'chat_id': chat, 'caption': caption(article)[:1024]},
-                                     files={'photo': photo}, timeout=(5, 45))
+        if image_path:
+            with open(image_path, 'rb') as photo:
+                response = requests.post(f'https://api.telegram.org/bot{token}/sendPhoto',
+                                         data={'chat_id': chat, 'caption': caption(article)[:1024]},
+                                         files={'photo': photo}, timeout=(5, 45))
+        else:
+            response = requests.post(f'https://api.telegram.org/bot{token}/sendMessage',
+                                     json={'chat_id': chat, 'text': caption(article)[:4096],
+                                           'link_preview_options': {'is_disabled': True}}, timeout=(5, 30))
         data = response.json()
         if response.ok and data.get('ok'):
-            return {'id': str(data['result']['message_id']), 'format': 'photo'}
+            return {'id': str(data['result']['message_id']), 'format': 'photo' if image_path else 'text'}
     else:
         page, token = os.getenv('FB_PAGE_ID'), os.getenv('FB_PAGE_TOKEN')
         if not page or not token:
             return {'error': 'missing_credentials'}
-        with open(image_path, 'rb') as photo:
-            response = requests.post(f'https://graph.facebook.com/v22.0/{page}/photos',
-                                     data={'access_token': token, 'caption': caption(article)},
-                                     files={'source': photo}, timeout=(5, 60))
+        if image_path:
+            with open(image_path, 'rb') as photo:
+                response = requests.post(f'https://graph.facebook.com/v22.0/{page}/photos',
+                                         data={'access_token': token, 'caption': caption(article)},
+                                         files={'source': photo}, timeout=(5, 60))
+        else:
+            response = requests.post(f'https://graph.facebook.com/v22.0/{page}/feed',
+                                     data={'access_token': token, 'message': caption(article)}, timeout=(5, 45))
         data = response.json()
         if response.ok and data.get('id'):
-            return {'id': str(data.get('post_id') or data['id']), 'format': 'photo'}
+            return {'id': str(data.get('post_id') or data['id']), 'format': 'photo' if image_path else 'text'}
     return {'error': 'api_rejected', 'http': response.status_code,
             'code': data.get('error', {}).get('code')}
 
@@ -190,6 +200,10 @@ def maybe_video(state, articles, now, preview):
     candidate = next((a for a in articles if a['id'] not in recent), None)
     if not candidate:
         return 'no_new_video_story'
+    from media import choose_photo
+    photo = choose_photo(candidate)
+    if not photo:
+        return 'skipped_no_verified_event_media'
     from voice import create_voice
     from video import create_video
     video = 'output/news.mp4'
@@ -197,9 +211,7 @@ def maybe_video(state, articles, now, preview):
     script = candidate['title_si'] + '. ' + candidate['summary_si']
     if not create_voice(script, 'assets/voice.mp3'):
         return 'voice_failed'
-    from media import choose_photo
-    photo = choose_photo(candidate)
-    create_video(photo, 'assets/voice.mp3', candidate['title_si'], candidate['summary_si'], video)
+    create_video(photo, 'assets/voice.mp3', candidate['title_si'], candidate['summary_si'], video, contextual=False)
     if preview:
         return 'preview_created'
     # Prevent duplicate automatic uploads after an ambiguous video request.

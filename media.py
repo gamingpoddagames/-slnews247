@@ -1,66 +1,72 @@
-"""Curated real Sri Lankan stock photos; no publisher-image scraping."""
+"""Only reviewed, licensed media of the exact story; never stock fallbacks."""
 import hashlib
 import json
-from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlsplit
 import requests
 from PIL import Image
 
-LICENSE = 'https://www.pexels.com/license/'
-CATALOG = {
-    'weather': {'id': 32160085, 'page': 'https://www.pexels.com/photo/colombo-street-view-during-rain-in-sri-lanka-32160085/', 'description': 'Rainy Colombo street; contextual stock photograph'},
-    'transport': {'id': 35265473, 'page': 'https://www.pexels.com/photo/aerial-view-of-colombo-cityscape-sri-lanka-35265473/', 'description': 'Colombo city and railway; contextual stock photograph'},
-    'business': {'id': 18040853, 'page': 'https://www.pexels.com/photo/skyscrapers-of-world-trade-center-colombo-sri-lanka-18040853/', 'description': 'Colombo commercial buildings; contextual stock photograph'},
-    'general': {'id': 31399466, 'page': 'https://www.pexels.com/photo/colombo-skyline-with-sri-lankan-flag-31399466/', 'description': 'Sri Lankan flag and buildings; contextual stock photograph'},
-}
-
-
-def topic(article):
-    text = article.get('title_si', '') + ' ' + article.get('summary_si', '')
-    if any(word in text for word in ['කාලගුණ', 'වැසි', 'වර්ෂා', 'සුළි', 'ගංවතුර']):
-        return 'weather'
-    if any(word in text for word in ['දුම්රිය', 'ප්‍රවාහන', 'මාර්ග', 'බස්']):
-        return 'transport'
-    if any(word in text for word in ['ආර්ථික', 'බැංකු', 'ව්‍යාපාර', 'ආයෝජන', 'වෙළෙඳ', 'මුදල්']):
-        return 'business'
-    return 'general'
+REGISTRY = Path('data/verified_event_media.json')
+USAGE = Path('data/event_media_usage.json')
 
 
 def choose_photo(article):
-    asset = CATALOG[topic(article)]
-    directory = Path('assets/media')
-    directory.mkdir(parents=True, exist_ok=True)
-    path = directory / f"pexels-{asset['id']}.jpg"
+    registry = json.loads(REGISTRY.read_text()) if REGISTRY.exists() else {}
+    asset = registry.get(article['id'])
+    if not asset:
+        return None
+    # A publisher thumbnail or topical resemblance is not verification or permission.
+    if (asset.get('article_url') != article.get('link')
+            or asset.get('verified_event') is not True
+            or asset.get('rights_verified') is not True
+            or asset.get('attribution_required') is not False
+            or not asset.get('verification_notes')
+            or not asset.get('rights_evidence')
+            or not asset.get('sha256')):
+        return None
+    url = asset.get('url', '')
+    if urlsplit(url).scheme != 'https':
+        return None
+    path = Path('assets/events') / (article['id'] + '.jpg')
+    path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
-        url = f"https://images.pexels.com/photos/{asset['id']}/pexels-photo-{asset['id']}.jpeg?auto=compress&cs=tinysrgb&w=1400"
         response = requests.get(url, timeout=(5, 20))
         response.raise_for_status()
-        if len(response.content) > 12_000_000:
-            raise ValueError('Photo exceeds download limit')
+        content = response.content
+        if len(content) > 12_000_000:
+            return None
+        if hashlib.sha256(content).hexdigest() != asset['sha256']:
+            return None
         temp = path.with_suffix('.tmp')
-        temp.write_bytes(response.content)
+        temp.write_bytes(content)
         try:
             with Image.open(temp) as image:
-                if image.width < 700 or image.height < 700:
-                    raise ValueError('Photo resolution too small')
-                image.convert('RGB').save(path, 'JPEG', quality=92)
+                image.verify()
+            temp.replace(path)
         finally:
             temp.unlink(missing_ok=True)
-    manifest = Path('data/media_usage.json')
-    history = json.loads(manifest.read_text()) if manifest.exists() else {}
-    history[article['id']] = {**asset, 'license': LICENSE, 'visible_credit_required': False,
-                              'contextual_only': True, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
-                              'checked_at': datetime.now(timezone.utc).isoformat()}
-    manifest.parent.mkdir(parents=True, exist_ok=True)
-    manifest.write_text(json.dumps(dict(list(history.items())[-500:]), ensure_ascii=False, indent=2), encoding='utf-8')
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    if digest != asset['sha256']:
+        return None
+    usage = json.loads(USAGE.read_text()) if USAGE.exists() else {}
+    if digest in usage and usage[digest]['article_id'] != article['id']:
+        return None
+    usage[digest] = {'article_id': article['id'], 'article_url': article['link'],
+                     'rights_evidence': asset['rights_evidence']}
+    USAGE.parent.mkdir(parents=True, exist_ok=True)
+    temp = USAGE.with_suffix('.tmp')
+    temp.write_text(json.dumps(usage, ensure_ascii=False, indent=2), encoding='utf-8')
+    temp.replace(USAGE)
     return str(path)
 
 
 def post_image(article):
-    from video import create_card
     photo = choose_photo(article)
+    if not photo:
+        return None
+    from video import create_card
     path = Path('output') / f"post-{article['id']}.jpg"
     path.parent.mkdir(exist_ok=True)
-    if not path.exists():
-        create_card(article['title_si'], article['summary_si'], str(path), photo, height=1350)
+    create_card(article['title_si'], article['summary_si'], str(path), photo,
+                height=1350, contextual=False)
     return str(path)
