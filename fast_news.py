@@ -252,6 +252,9 @@ def share_official_video(state, articles, now, preview):
     history = state.setdefault('official_video_links', {})
     checks = 0
     for article in articles:
+        existing = history.get(article['id'], {}).get('destinations', {})
+        if all(name in existing for name in ('telegram', 'facebook')):
+            continue
         url = official_video_for(article)
         if not url and checks < 3 and re.search(r'video|වීඩියෝ', article['title_si'], re.I):
             from publisher_videos import discover_video
