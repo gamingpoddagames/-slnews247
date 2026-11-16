@@ -51,3 +51,9 @@ Generic stock photos, topic-based photos and unrelated footage are disabled. Mis
 Downloaded bytes must match the approved SHA-256. `data/event_media_usage.json` binds each photo hash to one story. The same photo may accompany the same story on Telegram, Facebook and its video, but cannot be used for a different story. The usage ledger is retained across runs. A failed download falls back to text.
 
 Public captions omit publisher names and article links, while internal story records retain them. Only media whose verified permission does not require visible attribution is eligible. Removing a credit does not grant reuse rights. Existing previously published posts are not automatically deleted or edited. Newly deployed and scheduled runs use this strict policy.
+
+## Genuine video clips
+
+The automated video branch now requires `choose_video`, not a still photograph. It never converts a photo into a news video. Add a `video` object under the exact article ID in `data/verified_event_media.json`; it requires all the exact-event/right-to-use fields above plus `real_footage_verified: true`. A photo can coexist under `photo`. Video files are checked with FFprobe, their approved SHA-256 and the cross-story reuse ledger. A registry entry is evidence of a prior review, not an automatic truth classifier.
+
+Reviewed moving footage is fitted into the Sinhala news layout, with original clip audio retained and a maximum duration of 90 seconds. No clip looping, stock fallback, freeze-frame extension or generated footage is used. This branch does not add Sinhala TTS over the original clip. A missing verified video skips video publication while news text and eligible exact-event photos continue. There is currently no authorized exact-event clip provider connected and no reviewed clip in the registry; no real-event clip has been published as part of this change.

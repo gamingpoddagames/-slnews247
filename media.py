@@ -10,9 +10,10 @@ REGISTRY = Path('data/verified_event_media.json')
 USAGE = Path('data/event_media_usage.json')
 
 
-def choose_photo(article):
+def choose_media(article, kind):
     registry = json.loads(REGISTRY.read_text()) if REGISTRY.exists() else {}
-    asset = registry.get(article['id'])
+    entry = registry.get(article['id'], {})
+    asset = entry.get(kind) if kind in entry else (entry if kind == 'photo' else None)
     if not asset:
         return None
     # A publisher thumbnail or topical resemblance is not verification or permission.
@@ -22,26 +23,31 @@ def choose_photo(article):
             or asset.get('attribution_required') is not False
             or not asset.get('verification_notes')
             or not asset.get('rights_evidence')
-            or not asset.get('sha256')):
+            or not asset.get('sha256')
+            or (kind == 'video' and asset.get('real_footage_verified') is not True)):
         return None
     url = asset.get('url', '')
     if urlsplit(url).scheme != 'https':
         return None
-    path = Path('assets/events') / (article['id'] + '.jpg')
+    path = Path('assets/events') / (article['id'] + ('.mp4' if kind == 'video' else '.jpg'))
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
         response = requests.get(url, timeout=(5, 20))
         response.raise_for_status()
         content = response.content
-        if len(content) > 12_000_000:
+        if len(content) > (60_000_000 if kind == 'video' else 12_000_000):
             return None
         if hashlib.sha256(content).hexdigest() != asset['sha256']:
             return None
         temp = path.with_suffix('.tmp')
         temp.write_bytes(content)
         try:
-            with Image.open(temp) as image:
-                image.verify()
+            if kind == 'photo':
+                with Image.open(temp) as image:
+                    image.verify()
+            else:
+                from video import probe_footage
+                probe_footage(str(temp))
             temp.replace(path)
         finally:
             temp.unlink(missing_ok=True)
@@ -58,6 +64,14 @@ def choose_photo(article):
     temp.write_text(json.dumps(usage, ensure_ascii=False, indent=2), encoding='utf-8')
     temp.replace(USAGE)
     return str(path)
+
+
+def choose_photo(article):
+    return choose_media(article, 'photo')
+
+
+def choose_video(article):
+    return choose_media(article, 'video')
 
 
 def post_image(article):

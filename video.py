@@ -74,3 +74,34 @@ def create_video(image_path, audio_path, title, summary, output_path, contextual
                     '-pix_fmt', 'yuv420p', '-shortest', '-movflags', '+faststart', output_path],
                    check=True, timeout=240, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return True
+
+
+def probe_footage(path):
+    import json
+    result = subprocess.run(['ffprobe', '-v', 'error', '-show_streams', '-show_format',
+                             '-of', 'json', path], capture_output=True, text=True, check=True, timeout=20)
+    info = json.loads(result.stdout)
+    video = next((s for s in info.get('streams', []) if s.get('codec_type') == 'video'), None)
+    duration = float(info.get('format', {}).get('duration', 0))
+    if not video or duration < 1 or video.get('disposition', {}).get('attached_pic'):
+        raise ValueError('File is not a usable video clip')
+    if int(video.get('nb_frames', '2')) < 2:
+        raise ValueError('A still photo is not event footage')
+    return {'duration': duration, 'has_audio': any(s.get('codec_type') == 'audio' for s in info['streams'])}
+
+
+def create_footage_video(clip_path, title, summary, output_path):
+    """Embed an actual reviewed clip, retaining native audio without looping or AI footage."""
+    info = probe_footage(clip_path)
+    card = str(Path(output_path).with_suffix('.png'))
+    create_card(title, summary, card, contextual=False)
+    filters = ('[0:v]scale=990:760:force_original_aspect_ratio=decrease,'
+               'pad=990:760:(ow-iw)/2:(oh-ih)/2:black,setsar=1[footage];'
+               '[1:v][footage]overlay=45:270:shortest=1,format=yuv420p[out]')
+    args = ['ffmpeg', '-y', '-i', clip_path, '-loop', '1', '-i', card,
+            '-filter_complex', filters, '-map', '[out]', '-map', '0:a?',
+            '-t', str(min(info['duration'], 90)), '-r', '25', '-c:v', 'libx264',
+            '-preset', 'veryfast', '-crf', '24', '-c:a', 'aac', '-b:a', '128k',
+            '-movflags', '+faststart', '-shortest', output_path]
+    subprocess.run(args, check=True, timeout=240, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    return True

@@ -89,8 +89,8 @@ class ExactEventMediaTests(unittest.TestCase):
             self.assertEqual(result['format'],'text')
             self.assertTrue(request.call_args.args[0].endswith('/sendMessage'))
             self.assertNotIn('files',request.call_args.kwargs)
-        with patch('media.choose_photo', return_value=None):
-            self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'skipped_no_verified_event_media')
+        with patch('media.choose_video', return_value=None):
+            self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'skipped_no_verified_event_video')
 
     def test_exact_story_and_nonreuse_guards(self):
         import hashlib, io, json
@@ -123,3 +123,19 @@ class ExactEventMediaTests(unittest.TestCase):
                     self.assertIsNone(media.choose_photo(a))
             finally:
                 os.chdir(old)
+
+class GenuineVideoTests(unittest.TestCase):
+    def test_photo_and_unverified_video_cannot_enter_video_branch(self):
+        import json, media
+        article={'id':'one','link':'https://example.com/story'}
+        asset={'article_url':article['link'],'verified_event':True,'rights_verified':True,
+               'attribution_required':False,'verification_notes':'Reviewed story',
+               'rights_evidence':'Permission on file','sha256':'test','url':'https://example.com/clip.mp4'}
+        with tempfile.TemporaryDirectory() as directory:
+            registry=Path(directory,'registry.json')
+            with patch.object(media,'REGISTRY',registry),patch('requests.get') as download:
+                registry.write_text(json.dumps({'one':asset}))
+                self.assertIsNone(media.choose_video(article))
+                registry.write_text(json.dumps({'one':{'video':asset}}))
+                self.assertIsNone(media.choose_video(article))
+                download.assert_not_called()

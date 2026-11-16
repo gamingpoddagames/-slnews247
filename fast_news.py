@@ -194,29 +194,32 @@ def deliver(state, articles, now, preview=False, sender=send_text):
 def maybe_video(state, articles, now, preview):
     if not articles:
         return 'no_fresh_story'
-    if not preview and now - state.get('last_video_at', 0) < 1800 and state.get('video_style') == 'photo-v1':
+    if not preview and now - state.get('last_video_at', 0) < 1800 and state.get('video_style') == 'real-footage-v1':
         return 'waiting_for_30_minute_interval'
     recent = state.setdefault('videos', {})
     candidate = next((a for a in articles if a['id'] not in recent), None)
     if not candidate:
         return 'no_new_video_story'
-    from media import choose_photo
-    photo = choose_photo(candidate)
-    if not photo:
-        return 'skipped_no_verified_event_media'
-    from voice import create_voice
-    from video import create_video
+    from media import choose_video
+    candidate = None
+    footage = None
+    for article in articles:
+        if article['id'] in recent:
+            continue
+        footage = choose_video(article)
+        if footage:
+            candidate = article
+            break
+    if not candidate:
+        return 'skipped_no_verified_event_video'
+    from video import create_footage_video
     video = 'output/news.mp4'
-    Path('assets').mkdir(exist_ok=True)
-    script = candidate['title_si'] + '. ' + candidate['summary_si']
-    if not create_voice(script, 'assets/voice.mp3'):
-        return 'voice_failed'
-    create_video(photo, 'assets/voice.mp3', candidate['title_si'], candidate['summary_si'], video, contextual=False)
+    create_footage_video(footage, candidate['title_si'], candidate['summary_si'], video)
     if preview:
         return 'preview_created'
     # Prevent duplicate automatic uploads after an ambiguous video request.
     recent[candidate['id']] = {'status': 'started', 'at': now, 'destinations': {}}
-    state['video_style'] = 'photo-v1'
+    state['video_style'] = 'real-footage-v1'
     state['last_video_at'] = now
     save(state)
     from telegram import upload_news as telegram
