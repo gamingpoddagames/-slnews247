@@ -100,8 +100,11 @@ def save(state):
 def caption(article):
     from zoneinfo import ZoneInfo
     stamp = datetime.fromtimestamp(article['published'], ZoneInfo('Asia/Colombo')).strftime('%Y-%m-%d %H:%M')
+    body = article['summary_si']
+    video = article.get('official_video_url')
     return (f"🇱🇰 {article['title_si']}\n\n" +
-            (f"{article['summary_si']}\n\n" if article['summary_si'] else '') +
+            (f"{body}\n\n" if body else '') +
+            (f"🎬 වීඩියෝව: {video}\n\n" if video else '') +
             f"{stamp} | ශ්‍රී ලංකා වේලාව\nSL News 247")
 
 
@@ -125,7 +128,7 @@ def send_text(platform, article):
         else:
             response = requests.post(f'https://api.telegram.org/bot{token}/sendMessage',
                                      json={'chat_id': chat, 'text': caption(article)[:4096],
-                                           'link_preview_options': {'is_disabled': True}}, timeout=(5, 30))
+                                           'link_preview_options': {'is_disabled': not bool(article.get('official_video_url'))}}, timeout=(5, 30))
         data = response.json()
         if response.ok and data.get('ok'):
             return {'id': str(data['result']['message_id']), 'format': 'photo' if image_path else 'text'}
@@ -211,7 +214,7 @@ def maybe_video(state, articles, now, preview):
             candidate = article
             break
     if not candidate:
-        return 'skipped_no_verified_event_video'
+        return share_official_video(state, articles, now, preview)
     from video import create_footage_video
     video = 'output/news.mp4'
     create_footage_video(footage, candidate['title_si'], candidate['summary_si'], video)
@@ -240,6 +243,58 @@ def maybe_video(state, articles, now, preview):
     return recent[candidate['id']]
 
 
+def share_official_video(state, articles, now, preview):
+    from editorial import official_video_for
+    history = state.setdefault('official_video_links', {})
+    for article in articles:
+        url = official_video_for(article)
+        if not url:
+            continue
+        record = history.setdefault(article['id'], {'url': url, 'destinations': {}})
+        if all(name in record['destinations'] for name in ('telegram', 'facebook')):
+            continue
+        if preview:
+            return {'format': 'official_video_link', 'url': url, 'preview': True}
+        linked = dict(article, official_video_url=url)
+        for name in ('telegram', 'facebook'):
+            if name in record['destinations']:
+                continue
+            # Persist intent: a lost response must not trigger blind duplicate sharing.
+            record['destinations'][name] = {'status': 'unconfirmed'}
+            save(state)
+            try:
+                result = send_text(name, linked)
+            except Exception:
+                result = {'error': 'unconfirmed_request'}
+            record['destinations'][name] = result
+            save(state)
+        return {'format': 'official_video_link', 'url': url, 'destinations': record['destinations']}
+    return 'skipped_no_verified_event_video_or_official_link'
+
+
+def share_editorial_update(state, articles, now, preview):
+    from editorial import brief_for
+    history = state.setdefault('editorial_updates', {})
+    for article in articles:
+        brief = brief_for(article)
+        if not brief or article['id'] in history:
+            continue
+        if preview:
+            return 'preview_only'
+        report = history.setdefault(article['id'], {})
+        detailed = dict(article, title_si='විස්තරාත්මක පුවත | ' + article['title_si'], summary_si=brief['body_si'])
+        for name in ('telegram', 'facebook'):
+            report[name] = {'status': 'unconfirmed'}
+            save(state)
+            try:
+                report[name] = send_text(name, detailed)
+            except Exception:
+                report[name] = {'error': 'unconfirmed_request'}
+            save(state)
+        return report
+    return 'no_new_reviewed_brief'
+
+
 def main():
     now = time.time()
     preview = os.getenv('PREVIEW_ONLY', 'false').lower() == 'true'
@@ -255,6 +310,7 @@ def main():
               'tiktok': 'enabled' if os.getenv('TIKTOK_ENABLED', 'false').lower() == 'true' else 'blocked_authorization_required'}
     delivery, selected = deliver(state, articles, now, preview)
     report['delivery'] = delivery
+    report['editorial_update'] = share_editorial_update(state, articles, now, preview)
     Path('output/stories.json').write_text(json.dumps(selected, ensure_ascii=False, indent=2), encoding='utf-8')
     try:
         report['video'] = maybe_video(state, articles, now, preview)

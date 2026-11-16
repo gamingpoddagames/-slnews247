@@ -90,7 +90,7 @@ class ExactEventMediaTests(unittest.TestCase):
             self.assertTrue(request.call_args.args[0].endswith('/sendMessage'))
             self.assertNotIn('files',request.call_args.kwargs)
         with patch('media.choose_video', return_value=None):
-            self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'skipped_no_verified_event_video')
+            self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'skipped_no_verified_event_video_or_official_link')
 
     def test_exact_story_and_nonreuse_guards(self):
         import hashlib, io, json
@@ -139,3 +139,31 @@ class GenuineVideoTests(unittest.TestCase):
                 registry.write_text(json.dumps({'one':{'video':asset}}))
                 self.assertIsNone(media.choose_video(article))
                 download.assert_not_called()
+
+class EditorialTests(unittest.TestCase):
+    def test_exact_article_review_and_official_video_guards(self):
+        import editorial,json
+        article={'id':'a','link':'https://example.com/story'}
+        brief={'article_url':article['link'],'facts_reviewed':True,'source_refs':['https://example.com/source'],
+               'body_si':'කරුණු තහවුරු කළ අපගේම පුවත් සාරාංශයකි.',
+               'official_video_url':'https://www.youtube.com/watch?v=test',
+               'official_video_verified':True,'official_video_evidence':'Article embeds exact official event clip'}
+        with tempfile.TemporaryDirectory() as directory:
+            file=Path(directory,'briefs.json')
+            with patch.object(editorial,'BRIEFS',file):
+                file.write_text(json.dumps({'a':brief}))
+                self.assertEqual(editorial.brief_for(article)['body_si'],brief['body_si'])
+                self.assertEqual(editorial.official_video_for(article),brief['official_video_url'])
+                self.assertEqual(editorial.brief_for(dict(article,link='wrong')), {})
+                file.write_text(json.dumps({'a':dict(brief,official_video_verified=False)}))
+                self.assertIsNone(editorial.official_video_for(article))
+
+class EditorialDeliveryTests(unittest.TestCase):
+    def test_original_brief_is_shared_once_without_resending_headline(self):
+        article={'id':'a','title_si':'පුවත','summary_si':'කෙටි පුවත','published':time.time(),'link':'https://example.com/a'}
+        state={}
+        with patch('editorial.brief_for',return_value={'body_si':'අපේම වචනවලින් ලියූ විස්තරාත්මක සාරාංශය.'}),patch.object(pipeline,'save'),patch.object(pipeline,'send_text',return_value={'id':'10'}) as send:
+            pipeline.share_editorial_update(state,[article],time.time(),False)
+            pipeline.share_editorial_update(state,[article],time.time(),False)
+            self.assertEqual(send.call_count,2)
+            self.assertTrue(send.call_args.args[1]['title_si'].startswith('විස්තරාත්මක පුවත'))
