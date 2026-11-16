@@ -52,3 +52,36 @@ class NewsTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class PresentationTests(unittest.TestCase):
+    def test_caption_has_no_visible_source_or_url(self):
+        article = {'title_si':'ශ්‍රී ලංකා පුවත්', 'summary_si':'පුවත් කෙටියෙන්',
+                   'source':'Publisher', 'link':'https://example.com/story', 'published':time.time()}
+        text = pipeline.caption(article)
+        self.assertNotIn('Publisher', text)
+        self.assertNotIn('https://', text)
+        self.assertNotIn('මූලාශ්‍රය', text)
+        self.assertIn('SL News 247', text)
+
+    def test_photo_license_and_topic_selection(self):
+        from media import CATALOG, LICENSE, topic
+        self.assertEqual(topic({'title_si':'කාලගුණ නිවේදනයක්'}), 'weather')
+        self.assertEqual(topic({'title_si':'දුම්රිය ප්‍රවාහන සේවය'}), 'transport')
+        self.assertEqual(topic({'title_si':'බැංකු ආර්ථික පුවත්'}), 'business')
+        self.assertEqual(LICENSE, 'https://www.pexels.com/license/')
+        self.assertTrue(all(a['page'].startswith('https://www.pexels.com/photo/') for a in CATALOG.values()))
+
+    def test_photo_post_request_uses_uploaded_image(self):
+        from unittest.mock import MagicMock
+        article = {'id':'one', 'title_si':'පුවත', 'summary_si':'', 'published':time.time()}
+        response = MagicMock()
+        response.ok = True
+        response.json.return_value = {'ok':True,'result':{'message_id':99}}
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory, 'test.jpg');image.write_bytes(b'image-fixture')
+            with patch('media.post_image', return_value=str(image)), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
+                result = pipeline.send_text('telegram', article)
+                self.assertEqual(result['format'], 'photo')
+                self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
+                self.assertIn('photo', request.call_args.kwargs['files'])
+                self.assertNotIn('https://', request.call_args.kwargs['data']['caption'])

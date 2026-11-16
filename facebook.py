@@ -13,20 +13,8 @@ PAGE_TOKEN = os.getenv("FB_PAGE_TOKEN")
 # ==========================================
 
 def make_caption(news):
-
-    caption = f"""
-{news['title_si']}
-
-{news['summary_si']}
-
-මූලාශ්‍රය: {news.get('source', '')}
-{news.get('link', '')}
-
-🌍 SL News 247 | ශ්‍රී ලංකා පුවත්
-"""
-
-    return caption
-
+    from fast_news import caption
+    return caption(news)
 
 
 # ==========================================

@@ -60,18 +60,8 @@ def upload_video(video_path, caption=""):
 # ==========================================
 
 def make_caption(news):
-
-    return f"""
-{news['title_si']}
-
-{news['summary_si']}
-
-මූලාශ්‍රය: {news.get('source', '')}
-{news.get('link', '')}
-
-🌍 SL News 247 | ශ්‍රී ලංකා පුවත්
-"""
-
+    from fast_news import caption
+    return caption(news)
 
 
 # ==========================================

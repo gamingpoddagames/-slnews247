@@ -1,6 +1,6 @@
 # SL News 247 — Sri Lankan Sinhala news automation
 
-Native Sinhala RSS headlines → fast Telegram + Facebook text alerts → Sinhala voice and 1080×1920 video → Telegram + Facebook + optional authorized TikTok.
+Native Sinhala RSS headlines → fast Telegram + Facebook photo posts → Sinhala voice and 1080×1920 video → Telegram + Facebook + optional authorized TikTok.
 
 ## Production
 
@@ -16,9 +16,9 @@ Every run collects these publisher feeds concurrently:
 
 The source health report records HTTP failures, feed counts and fresh Sinhala story counts. No firewall bypass is attempted. Native Sinhala avoids translation delays and translation quotas. Sri Lankan publishers cover national, regional, political, business, sport and international stories; this does not guarantee every article from every Sri Lankan outlet. Feed coverage and publisher delay affect availability.
 
-Up to five fresh, undelivered stories are sent per run. Only dated stories from the past 12 hours are eligible. Exact normalized headline fingerprints suppress duplicate titles across sources. Similar stories with different headlines may still appear. Posts include a short excerpt, publisher link and publication time in Asia/Colombo. No full article or publisher photograph is republished. Headlines are source reporting, not independently verified claims.
+Up to five fresh, undelivered stories are sent per run. Only dated stories from the past 12 hours are eligible. Exact normalized headline fingerprints suppress duplicate titles across sources. Similar stories with different headlines may still appear. Public captions include a short excerpt and publication time in Asia/Colombo, without visible publisher names or article links. Publisher URLs remain in internal story records. No full article or publisher photograph is republished. Headlines are source reporting, not independently verified claims.
 
-One new video is attempted every 30 minutes after headline delivery. Videos use original graphics, native Sinhala feed text and gTTS Sinhala voice. Free speech services can fail or be rate-limited. A video failure does not prevent text alerts.
+One new video is attempted every 30 minutes after headline delivery. Videos use real licensed stock photographs inside original graphics, native Sinhala feed text and gTTS Sinhala voice. Free speech services can fail or be rate-limited. A video failure does not prevent text alerts.
 
 ## Accounts and credentials
 
@@ -41,3 +41,11 @@ PREVIEW_ONLY=true python fast_news.py
 ```
 
 Python 3.11, FFmpeg and Noto Sinhala fonts are required. Preview creates output without posting or persisting production delivery state. The previous `main.py` remains as a legacy world-news entry point; the workflow now uses `fast_news.py`.
+
+## Real photographs and visible credits
+
+Photo posts are 1080×1350; videos are 1080×1920 with a prominent photo area. `media.py` selects from four reviewed real Sri Lankan Pexels photographs covering weather, transport, business and a general national backdrop. These are contextual stock photos, not authenticated photographs of each reported event. The Sinhala label `පසුබිම් ඡායාරූපයකි` is visible in the image and video. The system never calls a stock photograph live footage or an image of a specific accident, person, crime or disaster. It does not currently ingest event video footage.
+
+The standard Pexels License permits these photos without visible attribution, subject to its restrictions: https://www.pexels.com/license/. Reviewed original asset pages and license URLs are recorded in `data/media_usage.json`, together with the downloaded file checksum. Publisher photographs and watermarked clips are not downloaded. Removing visible credits does not itself remove copyright obligations. Assets requiring attribution must not be substituted into this no-credit catalog. If a licensed photo fails to download, the post is recorded as failed for retry; no unlicensed fallback is used.
+
+Existing published posts are not retroactively edited. New deployments and scheduled runs use the updated presentation. The first deployment of this photo style attempts one fresh video immediately; subsequent videos retain the 30-minute interval. TikTok authorization remains a separate unfinished setup requirement.

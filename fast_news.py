@@ -102,30 +102,40 @@ def caption(article):
     stamp = datetime.fromtimestamp(article['published'], ZoneInfo('Asia/Colombo')).strftime('%Y-%m-%d %H:%M')
     return (f"🇱🇰 {article['title_si']}\n\n" +
             (f"{article['summary_si']}\n\n" if article['summary_si'] else '') +
-            f"මූලාශ්‍රය: {article['source']} | {stamp} ශ්‍රී ලංකා වේලාව\n{article['link']}")
+            f"{stamp} | ශ්‍රී ලංකා වේලාව\nSL News 247")
 
 
 def send_text(platform, article):
+    from media import post_image
+    try:
+        image_path = post_image(article)
+    except Exception as exc:
+        # No unlicensed substitute and no uncertain platform request on media failure.
+        return {'error': 'photo_preparation_failed', 'type': type(exc).__name__}
     if platform == 'telegram':
         token, chat = os.getenv('TG_TOKEN'), os.getenv('TG_CHAT_ID')
         if not token or not chat:
             return {'error': 'missing_credentials'}
-        response = requests.post(f'https://api.telegram.org/bot{token}/sendMessage',
-                                 json={'chat_id': chat, 'text': caption(article)[:4096],
-                                       'link_preview_options': {'is_disabled': True}}, timeout=(5, 30))
+        with open(image_path, 'rb') as photo:
+            response = requests.post(f'https://api.telegram.org/bot{token}/sendPhoto',
+                                     data={'chat_id': chat, 'caption': caption(article)[:1024]},
+                                     files={'photo': photo}, timeout=(5, 45))
         data = response.json()
         if response.ok and data.get('ok'):
-            return {'id': str(data['result']['message_id'])}
+            return {'id': str(data['result']['message_id']), 'format': 'photo'}
     else:
         page, token = os.getenv('FB_PAGE_ID'), os.getenv('FB_PAGE_TOKEN')
         if not page or not token:
             return {'error': 'missing_credentials'}
-        response = requests.post(f'https://graph.facebook.com/v22.0/{page}/feed',
-                                 data={'access_token': token, 'message': caption(article)}, timeout=(5, 45))
+        with open(image_path, 'rb') as photo:
+            response = requests.post(f'https://graph.facebook.com/v22.0/{page}/photos',
+                                     data={'access_token': token, 'caption': caption(article)},
+                                     files={'source': photo}, timeout=(5, 60))
         data = response.json()
         if response.ok and data.get('id'):
-            return {'id': str(data['id'])}
-    return {'error': 'api_rejected', 'http': response.status_code}
+            return {'id': str(data.get('post_id') or data['id']), 'format': 'photo'}
+    return {'error': 'api_rejected', 'http': response.status_code,
+            'code': data.get('error', {}).get('code')}
 
 
 def deliver(state, articles, now, preview=False, sender=send_text):
@@ -160,7 +170,7 @@ def deliver(state, articles, now, preview=False, sender=send_text):
                 print(name, 'unconfirmed request:', type(exc).__name__)
                 continue
             if result.get('id'):
-                record['receipts'][name] = {'id': result['id'], 'at': now}
+                record['receipts'][name] = {'id': result['id'], 'at': now, 'format': result.get('format', 'text')}
                 record['uncertain'].pop(name, None)
                 results[name]['sent'] += 1
             else:
@@ -174,7 +184,7 @@ def deliver(state, articles, now, preview=False, sender=send_text):
 def maybe_video(state, articles, now, preview):
     if not articles:
         return 'no_fresh_story'
-    if not preview and now - state.get('last_video_at', 0) < 1800:
+    if not preview and now - state.get('last_video_at', 0) < 1800 and state.get('video_style') == 'photo-v1':
         return 'waiting_for_30_minute_interval'
     recent = state.setdefault('videos', {})
     candidate = next((a for a in articles if a['id'] not in recent), None)
@@ -187,11 +197,14 @@ def maybe_video(state, articles, now, preview):
     script = candidate['title_si'] + '. ' + candidate['summary_si']
     if not create_voice(script, 'assets/voice.mp3'):
         return 'voice_failed'
-    create_video('', 'assets/voice.mp3', candidate['title_si'], candidate['summary_si'], video)
+    from media import choose_photo
+    photo = choose_photo(candidate)
+    create_video(photo, 'assets/voice.mp3', candidate['title_si'], candidate['summary_si'], video)
     if preview:
         return 'preview_created'
     # Prevent duplicate automatic uploads after an ambiguous video request.
     recent[candidate['id']] = {'status': 'started', 'at': now, 'destinations': {}}
+    state['video_style'] = 'photo-v1'
     state['last_video_at'] = now
     save(state)
     from telegram import upload_news as telegram
