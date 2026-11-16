@@ -1,0 +1,57 @@
+{
+  "checked_at": 1794858979.0709298,
+  "configured_feeds": 9,
+  "sources": [
+    {
+      "source": "Ada Derana Sinhala",
+      "error": "HTTPError",
+      "http": 403
+    },
+    {
+      "source": "Dinamina",
+      "error": "HTTPError",
+      "http": 403
+    },
+    {
+      "source": "Divaina",
+      "error": "HTTPError",
+      "http": 403
+    },
+    {
+      "source": "Lankadeepa Latest",
+      "http": 200,
+      "entries": 12,
+      "fresh_sinhala": 12,
+      "feed_url": "https://www.lankadeepa.lk/rss/latest_news/1"
+    },
+    {
+      "source": "Lankadeepa Business",
+      "http": 200,
+      "entries": 12,
+      "fresh_sinhala": 12,
+      "feed_url": "https://www.lankadeepa.lk/rss/business/9"
+    },
+    {
+      "source": "Siyatha News",
+      "http": 200,
+      "entries": 50,
+      "fresh_sinhala": 8,
+      "feed_url": "https://siyathanews.lk/feed/"
+    },
+    {
+      "source": "ITN News",
+      "error": "HTTPError",
+      "http": 403
+    },
+    {
+      "source": "Lankasara Sinhala",
+      "error": "HTTPError",
+      "http": 403
+    },
+    {
+      "source": "Newsfirst Sinhala",
+      "error": "HTTPError",
+      "http": 403
+    }
+  ]
+}
