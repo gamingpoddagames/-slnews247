@@ -39,11 +39,21 @@ def shorten(text, size):
 
 
 def complete_sentences(text, limit=1800):
-    """Discard unfinished RSS fragments instead of printing '…'."""
+    """Preserve complete reported sentences; discard cut-off RSS fragments."""
     text = clean(text)
-    text = re.split(r'The post\\b|මේ පිළිබඳ තවත් තොරතුරු පහතින්', text, maxsplit=1)[0].strip()
-    text = re.sub(r'https?://\\S+', '', text).strip()
-    text = re.sub(r'(?:\\.{3}|…)+\\s*
+    text = re.split(r'The post\b|මේ පිළිබඳ තවත් තොරතුරු පහතින්', text, maxsplit=1)[0].strip()
+    text = re.sub(r'https?://\S+', '', text).strip()
+    text = re.sub(r'(?:\.{3}|…)+\s*$', '', text).strip()
+    sentences = []
+    for match in re.finditer(r'[^.!?।\n]+[.!?।]+', text):
+        sentence = match.group().strip()
+        if len(' '.join(sentences + [sentence])) > limit:
+            break
+        sentences.append(sentence)
+    return ' '.join(sentences)
+
+
+def fingerprint(title):
     normalized = ''.join(c for c in unicodedata.normalize('NFC', title).lower()
                          if unicodedata.category(c)[0] in 'LMN')
     return hashlib.sha256(normalized.encode()).hexdigest()[:24]
