@@ -75,12 +75,9 @@ def choose_video(article):
 
 
 def post_image(article):
+    """Render every verified event photo with the same branded Sinhala poster."""
     photo = choose_photo(article)
     if not photo:
         return None
-    from video import create_card
-    path = Path('output') / f"post-{article['id']}.jpg"
-    path.parent.mkdir(exist_ok=True)
-    create_card(article['title_si'], article['summary_si'], str(path), photo,
-                height=1350, contextual=False)
-    return str(path)
+    from image import news_card
+    return news_card(article, image_path=photo)
