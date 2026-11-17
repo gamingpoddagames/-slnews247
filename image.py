@@ -317,15 +317,14 @@ def news_card(article, image_path=None):
     title = title.removeprefix('විස්තරාත්මක පුවත | ').strip()
     width, height = 1080, 1350
     canvas = Image.new('RGB', (width, height))
-    pixels = canvas.load()
+    gradient = ImageDraw.Draw(canvas)
     for y in range(height):
-        for x in range(width):
-            weight = x / width * .48 + y / height * .30
-            pixels[x, y] = (
-                round(255 * (1-weight) + 170 * weight),
-                round(139 * (1-weight) + 10 * weight),
-                round(23 * (1-weight) + 31 * weight),
-            )
+        weight = y / height
+        gradient.line((0, y, width, y), fill=(
+            round(255 - 75 * weight),
+            round(142 - 117 * weight),
+            round(23 + 13 * weight),
+        ))
 
     # Inner panel has a thick rounded white frame and dark lower portion.
     draw = ImageDraw.Draw(canvas)
