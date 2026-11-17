@@ -3,7 +3,7 @@ test_detector_report_never_deletes_footage (test_fast_news.AutomaticAdCandidateT
 test_no_silence_or_midclip_transition_does_not_infer_ad (test_fast_news.AutomaticAdCandidateTests.test_no_silence_or_midclip_transition_does_not_infer_ad) ... ok
 test_caption_omits_partial_sentence (test_fast_news.CompleteStoryTests.test_caption_omits_partial_sentence) ... ok
 test_clipped_excerpt_never_shows_dangling_fragment (test_fast_news.CompleteStoryTests.test_clipped_excerpt_never_shows_dangling_fragment) ... ok
-test_rss_summary_preserves_full_complete_sentences (test_fast_news.CompleteStoryTests.test_rss_summary_preserves_full_complete_sentences) ... FAIL
+test_rss_summary_preserves_full_complete_sentences (test_fast_news.CompleteStoryTests.test_rss_summary_preserves_full_complete_sentences) ... ok
 test_original_brief_is_shared_once_without_resending_headline (test_fast_news.EditorialDeliveryTests.test_original_brief_is_shared_once_without_resending_headline) ... ok
 test_exact_article_review_and_official_video_guards (test_fast_news.EditorialTests.test_exact_article_review_and_official_video_guards) ... ok
 test_exact_story_and_nonreuse_guards (test_fast_news.ExactEventMediaTests.test_exact_story_and_nonreuse_guards) ... ok
@@ -25,19 +25,10 @@ test_empty_story_is_not_sent_or_checkpointed (test_fast_news.QualityGateTests.te
 test_mismatched_sports_and_veterinary_description_is_rejected (test_fast_news.QualityGateTests.test_mismatched_sports_and_veterinary_description_is_rejected) ... ok
 test_ads_require_review_and_valid_intervals (test_fast_news.ReviewedFootageEditsTests.test_ads_require_review_and_valid_intervals) ... ok
 
-======================================================================
-FAIL: test_rss_summary_preserves_full_complete_sentences (test_fast_news.CompleteStoryTests.test_rss_summary_preserves_full_complete_sentences)
 ----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/home/runner/work/-slnews247/-slnews247/tests/test_fast_news.py", line 239, in test_rss_summary_preserves_full_complete_sentences
-    self.assertEqual(stories[0]['summary_si'], pipeline.complete_sentences(summary))
-AssertionError: '' != 'පළමු වැදගත් වාක්\u200dයය සම්පූර්ණයි. දෙවන[457 chars] වේ.'
-+ පළමු වැදගත් වාක්‍යය සම්පූර්ණයි. දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු අවසන් වේ.
+Ran 26 tests in 0.370s
 
-----------------------------------------------------------------------
-Ran 26 tests in 0.299s
-
-FAILED (failures=1)
+OK
 telegram unconfirmed request: TimeoutError
 facebook unconfirmed request: TimeoutError
 telegram unconfirmed request: TimeoutError
