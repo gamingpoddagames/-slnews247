@@ -197,3 +197,23 @@ class PublisherPlayerTests(unittest.TestCase):
         self.assertEqual(extract_video('<div class="td-post-content"><iframe src="'+clip+'"></iframe></div>'),'https://www.youtube.com/watch?v=X5LpOsYyDiU')
         self.assertIsNone(extract_video('<div class="entry-content"><iframe src="'+clip+'"></iframe><iframe src="https://youtube.com/embed/x3CE2K5CwT8"></iframe></div>'))
         self.assertIsNone(youtube_watch('https://youtube.com/embed/live_stream?channel=wrong'))
+
+
+class MixedScriptCardTests(unittest.TestCase):
+    def test_english_words_are_preserved_in_sinhala_titles(self):
+        from image import script_runs
+        title = 'LAUGFS ගෑස් 12.5kg Rs. 5,995'
+        self.assertEqual(''.join(script_runs(title)), title)
+        self.assertIn('LAUGFS', ''.join(script_runs(title)))
+        self.assertIn('ගෑස්', ''.join(script_runs(title)))
+
+    def test_mixed_script_card_can_render_without_missing_glyph_substitution(self):
+        from PIL import Image, ImageDraw
+        from image import mixed_width, draw_mixed
+        canvas = Image.new('RGB', (1200, 200), 'black')
+        draw = ImageDraw.Draw(canvas)
+        title = 'LAUGFS ගෑස් 12.5kg මිල අඩු කරයි'
+        self.assertGreater(mixed_width(draw, title, 45), 200)
+        self.assertGreater(draw_mixed(draw, (20, 100), title, 45), 200)
+        self.assertIsNotNone(canvas.getbbox())
+
