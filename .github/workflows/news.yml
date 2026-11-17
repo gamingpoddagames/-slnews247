@@ -61,7 +61,11 @@ jobs:
           mkdir -p data
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add used.json data/
+          # CI diagnostics are artifacts, not mutable branch state.
+          # Committing test logs every run creates unnecessary merge conflicts.
+          git add -A -- data/sri_lanka_delivery.json data/source_health.json
+          if [ -f data/translation_cache.json ]; then git add data/translation_cache.json; fi
+          if [ -f used.json ]; then git add used.json; fi
           if ! git diff --cached --quiet; then
             git commit -m 'Record news delivery checkpoints'
             git pull --rebase origin main
