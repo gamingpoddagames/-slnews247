@@ -208,10 +208,13 @@ def maybe_video(state, articles, now, preview):
     if not candidate:
         return share_official_video(state, articles, now, preview)
     from media import choose_video
+    from editorial import brief_for
     candidate = None
     footage = None
     for article in articles:
         if article['id'] in recent:
+            continue
+        if not brief_for(article):
             continue
         footage = choose_video(article)
         if footage:
@@ -221,7 +224,13 @@ def maybe_video(state, articles, now, preview):
         return share_official_video(state, articles, now, preview)
     from video import create_footage_video
     video = 'output/news.mp4'
-    create_footage_video(footage, candidate['title_si'], candidate['summary_si'], video)
+    from voice import create_voice
+    brief = brief_for(candidate)
+    audio = 'output/news_narration.mp3'
+    Path(audio).unlink(missing_ok=True)
+    if not create_voice(brief['body_si'], audio):
+        return 'skipped_narration_failed'
+    create_footage_video(footage, candidate['title_si'], candidate['summary_si'], video, audio_path=audio)
     if preview:
         return 'preview_created'
     # Prevent duplicate automatic uploads after an ambiguous video request.
