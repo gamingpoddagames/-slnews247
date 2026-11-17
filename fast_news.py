@@ -64,7 +64,7 @@ def relevant_summary(title, body):
     }
     excluded = {'ප්‍රදේශයේ', 'සම්බන්ධයෙන්', 'අදාල', 'අදාළ', 'පිළිබඳව',
                 'පිළිබඳ', 'සඳහා', 'සිදුවූ', 'තිබෙනවා', 'තිබේ',
-                'කරයි', 'කෙරේ', 'ලංකාවේ', 'පුවතක්'}
+                'කරයි', 'කෙරේ', 'ලංකාවේ', 'ලංකා', 'පුවතක්'}
     keywords = words(title) - excluded
     if not keywords:
         return False
@@ -411,6 +411,7 @@ def main():
     report = {'preview': preview, 'feeds': health, 'fresh_unique_articles': len(articles),
               'tiktok': 'enabled' if os.getenv('TIKTOK_ENABLED', 'false').lower() == 'true' else 'blocked_authorization_required'}
     delivery, selected = deliver(state, articles, now, preview)
+    report['quality_gate_skipped'] = sum(not publishable(article) for article in articles)
     report['delivery'] = delivery
     report['editorial_update'] = share_editorial_update(state, articles, now, preview)
     Path('output/stories.json').write_text(json.dumps(selected, ensure_ascii=False, indent=2), encoding='utf-8')
