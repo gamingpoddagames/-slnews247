@@ -90,6 +90,57 @@ def probe_footage(path):
     return {'duration': duration, 'has_audio': any(s.get('codec_type') == 'audio' for s in info['streams'])}
 
 
+def trim_reviewed_ad_segments(clip_path, output_path, ad_segments, reviewed=False):
+    """Remove human-reviewed ad intervals from an authorized source video.
+
+    This never detects ads heuristically or removes source watermarks. Retained
+    footage must belong to the same verified event. The original file is intact.
+    """
+    if not reviewed:
+        raise ValueError('Ad edits must be reviewed before processing')
+    info = probe_footage(clip_path)
+    duration = info['duration']
+    if not 0 < duration <= 7200:
+        raise ValueError('Unexpected footage duration')
+    if not isinstance(ad_segments, list) or not ad_segments or len(ad_segments) > 12:
+        raise ValueError('Expected 1-12 reviewed ad intervals')
+    intervals = []
+    for segment in ad_segments:
+        if not isinstance(segment, (list, tuple)) or len(segment) != 2:
+            raise ValueError('Ad intervals must be [start_seconds, end_seconds]')
+        start, end = segment
+        if (not isinstance(start, (float, int)) or isinstance(start, bool)
+                or not isinstance(end, (float, int)) or isinstance(end, bool)
+                or not 0 <= start < end <= duration):
+            raise ValueError('Ad interval outside footage')
+        intervals.append((float(start), float(end)))
+    intervals.sort()
+    if any(intervals[i][1] > intervals[i + 1][0] for i in range(len(intervals) - 1)):
+        raise ValueError('Overlapping ad intervals')
+    retain = []
+    cursor = 0.0
+    for start, end in intervals:
+        if start - cursor >= 0.15:
+            retain.append((cursor, start))
+        cursor = end
+    if duration - cursor >= 0.15:
+        retain.append((cursor, duration))
+    if not retain:
+        raise ValueError('Nothing remains after reviewed ad cuts')
+    filters = []
+    segments = []
+    for i, (start, end) in enumerate(retain):
+        filters.append(f'[0:v]trim=start={start:.3f}:end={end:.3f},setpts=PTS-STARTPTS[v{i}]')
+        segments.append(f'[v{i}]')
+    filters.append(''.join(segments) + f'concat=n={len(segments)}:v=1:a=0[out]')
+    subprocess.run(
+        ['ffmpeg', '-y', '-i', str(clip_path), '-filter_complex', ';'.join(filters),
+         '-map', '[out]', '-an', '-c:v', 'libx264', '-preset', 'veryfast',
+         '-crf', '23', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(output_path)],
+        check=True, timeout=240, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    return str(output_path)
+
+
 def create_footage_video(clip_path, title, summary, output_path, audio_path=None):
     """Use reviewed footage and a separate Sinhala narration; never source audio."""
     info = probe_footage(clip_path)
