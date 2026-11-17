@@ -523,3 +523,35 @@ class NewsCheckpointMergeTests(unittest.TestCase):
         self.assertEqual(result['stories']['same']['receipts']['facebook']['id'],'post-1')
         self.assertNotIn('facebook',result['stories']['same']['uncertain'])
         self.assertIn('new',result['stories'])
+
+
+class IllustrativePhotoSafetyTests(unittest.TestCase):
+    def test_cc0_photo_is_labelled_and_not_claimed_as_event(self):
+        from PIL import Image
+        from media import post_image
+        article={'id':'expressway-test','title_si':'රුවන්පුර අධිවේගී මාර්ගය සඳහා කැබිනට් අනුමැතිය',
+                 'published':1794921000,'illustrative_photo':'sri_lanka_expressway_cc0'}
+        def mock_download(url,path):
+            Image.new('RGB',(900,700),(42,91,142)).save(path)
+            return True
+        with tempfile.TemporaryDirectory() as root:
+            previous=os.getcwd()
+            try:
+                os.chdir(root)
+                with patch('media.choose_photo',return_value=None),patch('image.download_image',side_effect=mock_download):
+                    path=post_image(article)
+                with Image.open(path) as img:
+                    self.assertEqual(img.size,(1080,1350))
+                    self.assertEqual(img.getpixel((500,350)),(42,91,142))
+            finally:
+                os.chdir(previous)
+        self.assertIn('සංකේතාත්මක ඡායාරූපයක්',pipeline.caption(article))
+        self.assertIn('CC0',pipeline.caption(article))
+
+    def test_unapproved_illustration_cannot_download(self):
+        from media import post_image
+        article={'id':'bad-image','title_si':'මාතර පුවතක්',
+                 'illustrative_photo':'https://untrusted.invalid/a.jpg'}
+        with patch('media.choose_photo',return_value=None),patch('image.download_image') as download:
+            self.assertIsNone(post_image(article))
+            download.assert_not_called()
