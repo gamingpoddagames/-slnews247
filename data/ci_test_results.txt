@@ -29,7 +29,7 @@ test_mismatched_sports_and_veterinary_description_is_rejected (test_fast_news.Qu
 test_ads_require_review_and_valid_intervals (test_fast_news.ReviewedFootageEditsTests.test_ads_require_review_and_valid_intervals) ... ok
 
 ----------------------------------------------------------------------
-Ran 29 tests in 0.402s
+Ran 29 tests in 0.412s
 
 OK
 telegram unconfirmed request: TimeoutError
