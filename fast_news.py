@@ -29,7 +29,17 @@ SOURCES = [
     ('Lankadeepa Video News', 'https://www.lankadeepa.lk/rss/videos/12'),
     ('Lankadeepa National', 'https://www.lankadeepa.lk/rss/news/48'),
     ('Neth News', 'https://nethnews.lk/feed/'),
-    ('Lanka Truth Sinhala', 'https://lankatruth.com/si/feed/'),
+    ('Lanka Truth Sinhala', 'https://lankatruth.com/si/?feed=rss2'),
+    ('Lankadeepa Politics', 'https://www.lankadeepa.lk/rss/politics/13'),
+    ('Neth Sports', 'https://www.nethnews.lk/sports/feed/'),
+    ('Neth International', 'https://www.nethnews.lk/international-news/feed/'),
+    ('Neth Politics', 'https://www.nethnews.lk/politics/feed/'),
+    ('Siyatha Sports', 'https://siyathanews.lk/archives/category/sports-news/feed'),
+    ('Siyatha Business', 'https://siyathanews.lk/archives/category/business-news/feed'),
+    ('Siyatha World', 'https://siyathanews.lk/archives/category/world-news/feed'),
+    ('Lanka Truth World', 'https://lankatruth.com/si/?feed=rss2&cat=3'),
+    ('Lanka Truth Economy', 'https://lankatruth.com/si/?feed=rss2&cat=5'),
+    ('Lanka Truth Sport', 'https://lankatruth.com/si/?feed=rss2&cat=6'),
 ]
 STATE_FILE = Path('data/sri_lanka_delivery.json')
 MAX_AGE = 12 * 3600
