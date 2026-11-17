@@ -144,6 +144,9 @@ def send_text(platform, article):
         # No unlicensed substitute and no uncertain platform request on media failure.
         image_path = None
         print('No verified event photo:', type(exc).__name__)
+    message = caption(article)
+    if platform == 'telegram' and len(message) > 4096:
+        return {'error': 'caption_too_long_review_required'}
     if platform == 'telegram':
         token, chat = os.getenv('TG_TOKEN'), os.getenv('TG_CHAT_ID')
         if not token or not chat:
@@ -151,11 +154,11 @@ def send_text(platform, article):
         if image_path:
             with open(image_path, 'rb') as photo:
                 response = requests.post(f'https://api.telegram.org/bot{token}/sendPhoto',
-                                         data={'chat_id': chat, 'caption': caption(article)[:1024]},
+                                         data={'chat_id': chat, 'caption': message},
                                          files={'photo': photo}, timeout=(5, 45))
         else:
             response = requests.post(f'https://api.telegram.org/bot{token}/sendMessage',
-                                     json={'chat_id': chat, 'text': caption(article)[:4096],
+                                     json={'chat_id': chat, 'text': message,
                                            'link_preview_options': {'is_disabled': not bool(article.get('official_video_url'))}}, timeout=(5, 30))
         data = response.json()
         if response.ok and data.get('ok'):
