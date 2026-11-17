@@ -96,16 +96,19 @@ class PresentationTests(unittest.TestCase):
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
 
 class ExactEventMediaTests(unittest.TestCase):
-    def test_no_media_posts_text_and_skips_video(self):
+    def test_no_event_photo_uses_branded_card_and_skips_video(self):
         from unittest.mock import MagicMock
         article = {'id':'new','title_si':'පුවත','summary_si':'','published':time.time(),'link':'https://example.com/a'}
         response = MagicMock();response.ok=True
         response.json.return_value={'ok':True,'result':{'message_id':100}}
-        with patch('media.post_image', return_value=None), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
-            result=pipeline.send_text('telegram', article)
-            self.assertEqual(result['format'],'text')
-            self.assertTrue(request.call_args.args[0].endswith('/sendMessage'))
-            self.assertNotIn('files',request.call_args.kwargs)
+        with tempfile.TemporaryDirectory() as directory:
+            card_path = Path(directory, 'news.png')
+            card_path.write_bytes(b'original-typography-card')
+            with patch('media.post_image', return_value=None), patch('image.news_card', return_value=str(card_path)), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
+                result=pipeline.send_text('telegram', article)
+                self.assertEqual(result['format'],'photo')
+                self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
+                self.assertIn('files',request.call_args.kwargs)
         with patch('media.choose_video', return_value=None):
             self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'skipped_no_verified_event_video_or_official_link')
 
