@@ -68,7 +68,9 @@ jobs:
           if [ -f used.json ]; then git add used.json; fi
           if ! git diff --cached --quiet; then
             git commit -m 'Record news delivery checkpoints'
-            git pull --rebase origin main
+            # Test diagnostics change on each run; discard them before rebase.
+            git restore -- data/ci_test_results.txt
+            git -c rebase.autoStash=true pull --rebase origin main
             git push origin HEAD:main
           fi
       - name: Save preview and delivery report
