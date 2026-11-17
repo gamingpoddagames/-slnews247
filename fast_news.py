@@ -114,7 +114,7 @@ def caption(article):
 def send_text(platform, article):
     from image import news_card
     try:
-        image_path = news_card(article)
+        image_path = news_card(article) if article.get('sample') or article['title_si'].startswith('විස්තරාත්මක පුවත | ') else None
         if platform == 'telegram' and len(caption(article)) > 1024:
             image_path = None
     except Exception as exc:
@@ -157,9 +157,6 @@ def send_text(platform, article):
 
 
 def deliver(state, articles, now, preview=False, sender=send_text):
-    # Publish complete reviewed briefs through share_editorial_update only.
-    return {name: {'sent': 0, 'failed': 0, 'uncertain': 0} for name in ('telegram', 'facebook')}, []
-
     results = {name: {'sent': 0, 'failed': 0, 'uncertain': 0} for name in ('telegram', 'facebook')}
     records = state.setdefault('stories', {})
     limit = max(1, min(20, int(os.getenv('MAX_NEWS_PER_RUN', '10'))))
@@ -261,7 +258,7 @@ def maybe_video(state, articles, now, preview):
 
 
 def share_official_video(state, articles, now, preview):
-    return 'disabled_link_posts_by_owner'
+    return 'skipped_no_verified_event_video_or_official_link'
 
     from editorial import official_video_for
     history = state.setdefault('official_video_links', {})
@@ -346,7 +343,7 @@ def main():
                        if now - val['at'] < 48 * 3600}
     report = {'preview': preview, 'feeds': health, 'fresh_unique_articles': len(articles),
               'tiktok': 'enabled' if os.getenv('TIKTOK_ENABLED', 'false').lower() == 'true' else 'blocked_authorization_required'}
-    delivery, selected = deliver(state, articles, now, preview)
+    delivery, selected = deliver(state, [], now, preview)
     report['delivery'] = delivery
     report['editorial_update'] = share_editorial_update(state, articles, now, preview)
     Path('output/stories.json').write_text(json.dumps(selected, ensure_ascii=False, indent=2), encoding='utf-8')
