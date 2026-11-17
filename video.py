@@ -2,14 +2,14 @@
 import subprocess
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps
-from image import get_font
+from image import get_font, mixed_width, draw_mixed
 
 
 def wrap(draw, text, font, width):
     lines, current = [], ''
     for word in text.split():
         trial = (current + ' ' + word).strip()
-        if current and draw.textlength(trial, font=font) > width:
+        if current and mixed_width(draw, trial, font.size) > width:
             lines.append(current)
             current = word
         else:
@@ -25,9 +25,9 @@ def fit(draw, text, box, start, minimum=20):
         font = get_font(size)
         lines = wrap(draw, text, font, width)
         step = int(size * 1.65)
-        if len(lines) * step <= height and all(draw.textlength(line, font=font) <= width for line in lines):
+        if len(lines) * step <= height and all(mixed_width(draw, line, size) <= width for line in lines):
             for line in lines:
-                draw.text((x, y), line, font=font, fill='white')
+                draw_mixed(draw, (x, y + size), line, size, fill='white')
                 y += step
             return
     raise ValueError('News text does not fit card; refusing clipped output')
@@ -40,7 +40,7 @@ def create_card(title, summary, path, image_path=None, height=1920, contextual=T
     english = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
     draw.text((65, 65), 'SL NEWS 247', font=ImageFont.truetype(english, 52), fill='white')
     if height == 1920:
-        draw.text((65, 155), 'සිංහල පුවත්', font=get_font(38), fill='#52dbc3')
+        draw_mixed(draw, (65, 196), 'සිංහල පුවත්', 38, fill='#52dbc3')
         photo_box = (45, 270, 1035, 1030)
         title_box, summary_box = (65, 1110, 950, 350), (65, 1500, 950, 210)
         footer_y = 1780
@@ -56,7 +56,7 @@ def create_card(title, summary, path, image_path=None, height=1920, contextual=T
         draw = ImageDraw.Draw(card)
         if contextual:
             draw.rectangle((x0, y1-64, x1, y1), fill='#142642')
-            draw.text((x0+20, y1-55), 'පසුබිම් ඡායාරූපයකි', font=get_font(27), fill='#d8e4ed')
+            draw_mixed(draw, (x0+20, y1-24), 'පසුබිම් ඡායාරූපයකි', 27, fill='#d8e4ed')
     fit(draw, title, title_box, 54, 24)
     if summary_box[3] and summary:
         fit(draw, summary, summary_box, 30, 22)
