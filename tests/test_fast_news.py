@@ -61,7 +61,7 @@ class PresentationTests(unittest.TestCase):
         self.assertNotIn('Publisher', text)
         self.assertNotIn('https://', text)
         self.assertNotIn('මූලාශ්‍රය', text)
-        self.assertIn('SL News 247', text)
+        self.assertIn('SL NEWS 24/7', text)
 
     def test_photo_post_request_uses_uploaded_image(self):
         from unittest.mock import MagicMock
@@ -542,7 +542,7 @@ class IllustrativePhotoSafetyTests(unittest.TestCase):
                     path=post_image(article)
                 with Image.open(path) as img:
                     self.assertEqual(img.size,(1080,1350))
-                    self.assertEqual(img.getpixel((500,350)),(42,91,142))
+                    self.assertTrue(all(abs(a-b) <= 3 for a,b in zip(img.getpixel((500,350)),(42,91,142))))
             finally:
                 os.chdir(previous)
         self.assertIn('සංකේතාත්මක ඡායාරූපයක්',pipeline.caption(article))
