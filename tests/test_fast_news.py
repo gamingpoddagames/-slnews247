@@ -234,7 +234,7 @@ class CompleteStoryTests(unittest.TestCase):
         summary = ('පළමු වැදගත් වාක්‍යය සම්පූර්ණයි. ' +
                    'දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු ' * 12 + 'අවසන් වේ. '
                    'තවත් අසම්පූර්ණ')
-        xml = f'<rss><channel><item><title>මාතර සිදුවීමක්</title><link>https://example.com/1</link><pubDate>{pub}</pubDate><description>{summary}</description></item></channel></rss>'
+        xml = f'<rss><channel><item><title>දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු පිළිබඳ පුවතක්</title><link>https://example.com/1</link><pubDate>{pub}</pubDate><description>{summary}</description></item></channel></rss>'
         stories, _ = pipeline.parse_feed(xml.encode(), 'Test', now)
         self.assertEqual(stories[0]['summary_si'], pipeline.complete_sentences(summary))
         self.assertTrue(stories[0]['summary_si'].endswith('අවසන් වේ.'))
