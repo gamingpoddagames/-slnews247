@@ -224,3 +224,43 @@ def get_font(size, bold=False):
             pass
 
     return ImageFont.load_default()
+
+def news_card(article):
+    """Original typography card, never a substitute event photograph."""
+    from pathlib import Path
+    from PIL import Image, ImageDraw, ImageFont
+    import re
+    title = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '', article['title_si'], flags=re.I)
+    title = title.removeprefix('විස්තරාත්මක පුවත | ')
+    canvas = Image.new('RGB', (1080, 1080), '#a90818')
+    draw = ImageDraw.Draw(canvas)
+    draw.rectangle((0, 0, 1080, 150), fill='#670814')
+    brand = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 58)
+    draw.text((60, 45), 'SL NEWS 247', font=brand, fill='white')
+    for size in range(72, 25, -2):
+        font = get_font(size)
+        lines, line = [], ''
+        for word in title.split():
+            trial = (line + ' ' + word).strip()
+            if line and draw.textlength(trial, font=font) > 950:
+                lines.append(line)
+                line = word
+            else:
+                line = trial
+        if line:
+            lines.append(line)
+        if len(lines) * size * 1.7 <= 540:
+            break
+    else:
+        raise ValueError('Headline does not fit')
+    y = 220
+    for line in lines:
+        draw.text((60, y), line, font=font, fill='white')
+        y += int(size * 1.7)
+    draw.rectangle((50, 820, 1030, 930), fill='#ffdd36')
+    label = 'ආදර්ශ පළ කිරීමකි' if article.get('sample') else 'සම්පූර්ණ විස්තර පහතින්'
+    draw.text((80, 845), label, font=get_font(40), fill='#670814')
+    Path('output').mkdir(exist_ok=True)
+    path = 'output/card_' + re.sub('[^a-zA-Z0-9_-]', '', article['id']) + '.png'
+    canvas.save(path)
+    return path
