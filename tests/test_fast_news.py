@@ -363,6 +363,23 @@ class NewsCardTextBoundsTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             fit_headline(draw, 'EXTRALONGUNBROKEN' * 100)
 
+
+    def test_published_news_card_has_no_details_below_banner(self):
+        from PIL import Image
+        from image import news_card
+        story = {'id': 'caption-above-test',
+                 'title_si': 'අම්බලන්ගොඩ ප්‍රදේශයේ මත්ද්‍රව්‍ය වැටලීමක්'}
+        with tempfile.TemporaryDirectory() as root:
+            previous = os.getcwd()
+            try:
+                os.chdir(root)
+                path = news_card(story)
+                with Image.open(path) as img:
+                    # This used to be a bright yellow "details below" banner.
+                    self.assertEqual(img.getpixel((540, 870)), (169, 8, 24))
+            finally:
+                os.chdir(previous)
+
     def test_actual_branded_card_is_saved_at_correct_size(self):
         from PIL import Image
         from image import news_card
