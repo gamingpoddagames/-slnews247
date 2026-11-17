@@ -1643,7 +1643,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1794913464.3619957,
+  "last_scan_at": 1794922543.1369693,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -1733,5 +1733,9 @@
         }
       }
     }
+  },
+  "facebook_design_sample_v1": {
+    "id": "1020689164470492_122126490789318605",
+    "format": "photo"
   }
 }
