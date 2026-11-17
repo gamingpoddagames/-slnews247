@@ -36,7 +36,12 @@ jobs:
           sudo apt-get install -y ffmpeg fonts-noto-core
           pip install -r requirements.txt
       - name: Verify feed parsing and delivery checkpoints
-        run: python -m unittest discover -s tests -v
+        run: |
+          mkdir -p data
+          python -m unittest discover -s tests -v > data/ci_test_results.txt 2>&1
+          status=$?
+          tail -n 150 data/ci_test_results.txt
+          exit "$status"
       - name: Run news pipeline
         env:
           PREVIEW_ONLY: ${{ github.event_name == 'workflow_dispatch' && !inputs.publish }}
