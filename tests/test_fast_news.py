@@ -427,6 +427,31 @@ class SinhalaGlyphRegressionTests(unittest.TestCase):
 
 class PhotoFirstPosterTests(unittest.TestCase):
 
+    def test_blank_photo_area_is_seamless_shaded_navy_no_shapes(self):
+        from PIL import Image
+        from image import news_card
+        story={'id':'seamless-blue','title_si':'ශ්‍රී ලංකාවේ නව පුවතක්',
+               'published':1794921000}
+        with tempfile.TemporaryDirectory() as root:
+            previous=os.getcwd()
+            try:
+                os.chdir(root)
+                with Image.open(news_card(story)) as img:
+                    center=img.getpixel((540,430))
+                    edge=img.getpixel((110,430))
+                    # Subtle royal-blue center and navy edges; no icon or box.
+                    self.assertGreater(center[2], center[0] * 4)
+                    self.assertGreater(center[2], edge[2] + 40)
+                    # Close neighbors should never create a geometric outline.
+                    for x,y in ((280,320),(540,430),(760,500),(450,600)):
+                        a=img.getpixel((x,y))
+                        b=img.getpixel((x+2,y+2))
+                        self.assertLessEqual(max(abs(u-v) for u,v in zip(a,b)), 7)
+                    self.assertGreater(img.getpixel((12,155))[0],img.getpixel((12,155))[2])
+                    self.assertGreater(img.getpixel((12,1190))[2],img.getpixel((12,1190))[0])
+            finally:
+                os.chdir(previous)
+
     def test_no_photo_has_blue_area_and_split_color_frame(self):
         from PIL import Image
         from image import news_card
