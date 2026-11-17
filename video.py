@@ -91,7 +91,7 @@ def probe_footage(path):
 
 
 def create_footage_video(clip_path, title, summary, output_path):
-    """Embed an actual reviewed clip, retaining native audio without looping or AI footage."""
+    """Embed an actual reviewed clip with its original audio muted."""
     info = probe_footage(clip_path)
     card = str(Path(output_path).with_suffix('.png'))
     create_card(title, summary, card, contextual=False)
@@ -99,9 +99,9 @@ def create_footage_video(clip_path, title, summary, output_path):
                'pad=990:760:(ow-iw)/2:(oh-ih)/2:black,setsar=1[footage];'
                '[1:v][footage]overlay=45:270:shortest=1,format=yuv420p[out]')
     args = ['ffmpeg', '-y', '-i', clip_path, '-loop', '1', '-i', card,
-            '-filter_complex', filters, '-map', '[out]', '-map', '0:a?',
+            '-filter_complex', filters, '-map', '[out]', '-an',
             '-t', str(min(info['duration'], 90)), '-r', '25', '-c:v', 'libx264',
-            '-preset', 'veryfast', '-crf', '24', '-c:a', 'aac', '-b:a', '128k',
+            '-preset', 'veryfast', '-crf', '24',
             '-movflags', '+faststart', '-shortest', output_path]
     subprocess.run(args, check=True, timeout=240, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return True
