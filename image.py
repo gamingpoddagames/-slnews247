@@ -302,7 +302,7 @@ def _fitted_lines(draw, text, width, height, sizes):
     raise ValueError('Headline cannot fit the poster safely')
 
 
-def news_card(article, image_path=None):
+def news_card(article, image_path=None, illustrative=False):
     """Original broadcast-style 1080x1350 news poster.
 
     The photo is allowed only after media.choose_photo has verified the
@@ -381,6 +381,12 @@ def news_card(article, image_path=None):
     draw.rounded_rectangle((722, 22, 1027, 132), radius=22, fill='#a6081b', outline='white', width=5)
     draw.text((750, 36), 'SL NEWS', font=latin_font(41, bold=True), fill='white')
     draw.text((891, 80), '24/7', font=latin_font(27, bold=True), fill='#ffdc37')
+
+    if image_path and illustrative:
+        # Explicitly distinguish a contextual archive photo from event footage.
+        draw.rounded_rectangle((110, 708, 720, 777), radius=16, fill='#15243f')
+        draw_mixed(draw, (132, 758), 'සංකේතාත්මක ඡායාරූපයක්', 33,
+                   fill='#ffffff', bold=True)
 
     # Fade/cover lower photo margin with a charcoal headline field.
     draw.rectangle((46, 793, 1034, 1282), fill='#202124')
