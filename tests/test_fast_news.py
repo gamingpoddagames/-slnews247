@@ -485,3 +485,16 @@ class PhotoFirstPosterTests(unittest.TestCase):
         with patch('media.choose_photo',return_value=None),patch('image.news_card') as draw:
             self.assertIsNone(media.post_image(article))
             draw.assert_not_called()
+
+
+class NewsCheckpointMergeTests(unittest.TestCase):
+    def test_merge_preserves_remote_receipts_and_adds_local(self):
+        from scripts.merge_news_checkpoint import merge_state
+        remote={'last_scan_at':100, 'stories':{'same':{'article':{'id':'same'},'receipts':{'telegram':{'id':'90'}},'uncertain':{'facebook':True}}}}
+        local={'last_scan_at':110, 'stories':{'same':{'article':{'id':'same'},'receipts':{'facebook':{'id':'post-1'}},'uncertain':{}},'new':{'article':{'id':'new'},'receipts':{}}}}
+        result=merge_state(remote,local)
+        self.assertEqual(result['last_scan_at'],110)
+        self.assertEqual(result['stories']['same']['receipts']['telegram']['id'],'90')
+        self.assertEqual(result['stories']['same']['receipts']['facebook']['id'],'post-1')
+        self.assertNotIn('facebook',result['stories']['same']['uncertain'])
+        self.assertIn('new',result['stories'])
