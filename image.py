@@ -242,41 +242,57 @@ def draw_mixed(draw, xy, text, size, fill='white', bold=False):
         x += draw.textlength(run, font=font)
     return x
 
+def fit_headline(draw, title, width=950, max_height=550, start_size=72, min_size=20):
+    """Size Sinhala/English text using actual glyph measurements, never clipping."""
+    if not title or not title.strip():
+        raise ValueError('A news card requires a title')
+    for size in range(start_size, min_size - 1, -2):
+        lines, current = [], ''
+        for word in title.split():
+            trial = (current + ' ' + word).strip()
+            if mixed_width(draw, trial, size) <= width:
+                current = trial
+            else:
+                if current:
+                    lines.append(current)
+                current = word
+                # Long unbreakable words must not escape the card boundary.
+                if mixed_width(draw, current, size) > width:
+                    break
+        else:
+            if current:
+                lines.append(current)
+            step = int(size * 1.48)
+            if (lines and len(lines) * step <= max_height
+                    and all(mixed_width(draw, line, size) <= width for line in lines)):
+                return size, lines, step
+    raise ValueError('Headline too long for readable card; keep full title in post caption')
+
+
 def news_card(article):
-    """Original typography card, never a substitute event photograph."""
+    """Original 1080x1080 post card with fully measured, contained headline."""
     from pathlib import Path
-    from PIL import Image, ImageDraw, ImageFont
     import re
     title = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '', article['title_si'], flags=re.I)
     title = title.removeprefix('විස්තරාත්මක පුවත | ')
     canvas = Image.new('RGB', (1080, 1080), '#a90818')
     draw = ImageDraw.Draw(canvas)
     draw.rectangle((0, 0, 1080, 150), fill='#670814')
-    brand = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 58)
-    draw.text((60, 45), 'SL NEWS 247', font=brand, fill='white')
-    for size in range(72, 25, -2):
-        font = get_font(size)
-        lines, line = [], ''
-        for word in title.split():
-            trial = (line + ' ' + word).strip()
-            if line and mixed_width(draw, trial, size) > 950:
-                lines.append(line)
-                line = word
-            else:
-                line = trial
-        if line:
-            lines.append(line)
-        if len(lines) * size * 1.7 <= 540:
-            break
-    else:
-        raise ValueError('Headline does not fit')
-    y = 220
+    brand = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 54)
+    draw.text((60, 49), 'SL NEWS 24/7', font=brand, fill='white')
+    size, lines, step = fit_headline(draw, title)
+    y = 205
     for line in lines:
         draw_mixed(draw, (60, y + size), line, size, fill='white')
-        y += int(size * 1.7)
-    draw.rectangle((50, 820, 1030, 930), fill='#ffdd36')
+        y += step
+    draw.rectangle((50, 830, 1030, 935), fill='#ffdd36')
     label = 'ආදර්ශ පළ කිරීමකි' if article.get('sample') else 'සම්පූර්ණ විස්තර පහතින්'
-    draw_mixed(draw, (80, 890), label, 40, fill='#670814')
+    label_size, label_lines, _ = fit_headline(
+        draw, label, width=910, max_height=75, start_size=40, min_size=22)
+    if len(label_lines) != 1:
+        raise ValueError('Footer label does not fit on one line')
+    draw_mixed(draw, (80, 868 + label_size), label_lines[0],
+               label_size, fill='#670814')
     Path('output').mkdir(exist_ok=True)
     path = 'output/card_' + re.sub('[^a-zA-Z0-9_-]', '', article['id']) + '.png'
     canvas.save(path)
