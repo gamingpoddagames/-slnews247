@@ -201,8 +201,8 @@ def deliver(state, articles, now, preview=False, sender=send_text):
 def maybe_video(state, articles, now, preview):
     if not articles:
         return 'no_fresh_story'
-    if not preview and now - state.get('last_video_at', 0) < 1800 and state.get('video_style') == 'real-footage-v1':
-        return 'waiting_for_30_minute_interval'
+    if not preview and now - state.get('last_video_at', 0) < 900 and state.get('video_style') == 'real-footage-v1':
+        return 'waiting_for_15_minute_interval'
     recent = state.setdefault('videos', {})
     candidate = next((a for a in articles if a['id'] not in recent), None)
     if not candidate:
