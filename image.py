@@ -196,34 +196,51 @@ def create_fallback(path):
 # ==========================================
 
 def get_font(size, bold=False):
-
-    fonts = [
-
-        "/usr/share/fonts/truetype/noto/NotoSansSinhala-Regular.ttf",
-
-        "/usr/share/fonts/truetype/noto/NotoSansSinhala-Bold.ttf",
-
-        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-
+    """Require a real Sinhala font; never silently draw missing-glyph boxes."""
+    from pathlib import Path
+    weight = 'Bold' if bold else 'Regular'
+    candidates = [
+        f'/usr/share/fonts/truetype/noto/NotoSansSinhala-{weight}.ttf',
+        f'/usr/share/fonts/truetype/noto/NotoSerifSinhala-{weight}.ttf',
+        f'/usr/local/share/fonts/NotoSansSinhala-{weight}.ttf',
     ]
+    for candidate in candidates:
+        if Path(candidate).exists():
+            if not ImageFont.core.HAVE_RAQM:
+                raise RuntimeError('Pillow requires libraqm for correct Sinhala shaping')
+            return ImageFont.truetype(candidate, size, layout_engine=ImageFont.Layout.RAQM)
+    raise RuntimeError('Sinhala font unavailable: install fonts-noto-core')
 
-    for f in fonts:
 
-        try:
+def latin_font(size, bold=False):
+    weight = 'Bold' if bold else ''
+    path = '/usr/share/fonts/truetype/dejavu/DejaVuSans' + ('-' + weight if weight else '') + '.ttf'
+    return ImageFont.truetype(path, size, layout_engine=ImageFont.Layout.RAQM)
 
-            return ImageFont.truetype(
 
-                f,
+def script_runs(text):
+    """Keep original Unicode content; switch glyph fonts without translating."""
+    import re
+    return re.findall(r'[\\u0D80-\\u0DFF]+|[^\\u0D80-\\u0DFF]+', str(text))
 
-                size
 
-            )
+def mixed_width(draw, text, size, bold=False):
+    sinhala = get_font(size, bold)
+    latin = latin_font(size, bold)
+    return sum(draw.textlength(run, font=sinhala if '\\u0d80' <= run[0] <= '\\u0dff' else latin)
+               for run in script_runs(text))
 
-        except:
 
-            pass
-
-    return ImageFont.load_default()
+def draw_mixed(draw, xy, text, size, fill='white', bold=False):
+    """Draw Sinhala and Latin as separate shaped runs on a common baseline."""
+    sinhala = get_font(size, bold)
+    latin = latin_font(size, bold)
+    x, y = xy
+    for run in script_runs(text):
+        font = sinhala if '\\u0d80' <= run[0] <= '\\u0dff' else latin
+        draw.text((x, y), run, font=font, fill=fill, anchor='ls')
+        x += draw.textlength(run, font=font)
+    return x
 
 def news_card(article):
     """Original typography card, never a substitute event photograph."""
@@ -242,7 +259,7 @@ def news_card(article):
         lines, line = [], ''
         for word in title.split():
             trial = (line + ' ' + word).strip()
-            if line and draw.textlength(trial, font=font) > 950:
+            if line and mixed_width(draw, trial, size) > 950:
                 lines.append(line)
                 line = word
             else:
@@ -255,11 +272,11 @@ def news_card(article):
         raise ValueError('Headline does not fit')
     y = 220
     for line in lines:
-        draw.text((60, y), line, font=font, fill='white')
+        draw_mixed(draw, (60, y + size), line, size, fill='white')
         y += int(size * 1.7)
     draw.rectangle((50, 820, 1030, 930), fill='#ffdd36')
     label = 'ආදර්ශ පළ කිරීමකි' if article.get('sample') else 'සම්පූර්ණ විස්තර පහතින්'
-    draw.text((80, 845), label, font=get_font(40), fill='#670814')
+    draw_mixed(draw, (80, 890), label, 40, fill='#670814')
     Path('output').mkdir(exist_ok=True)
     path = 'output/card_' + re.sub('[^a-zA-Z0-9_-]', '', article['id']) + '.png'
     canvas.save(path)
