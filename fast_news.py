@@ -23,6 +23,13 @@ SOURCES = [
     ('ITN News', 'https://www.itnnews.lk/feed/'),
     ('Lankasara Sinhala', 'https://lankasara.com/si/feed/'),
     ('Newsfirst Sinhala', 'https://sinhala.newsfirst.lk/feed/'),
+    # Publisher-specific subject feeds capture stories missed by front-page RSS.
+    ('Lankadeepa Sports', 'https://www.lankadeepa.lk/rss/sport/6'),
+    ('Lankadeepa World', 'https://www.lankadeepa.lk/rss/world_news/14'),
+    ('Lankadeepa Video News', 'https://www.lankadeepa.lk/rss/videos/12'),
+    ('Lankadeepa National', 'https://www.lankadeepa.lk/rss/news/48'),
+    ('Neth News', 'https://nethnews.lk/feed/'),
+    ('Lanka Truth Sinhala', 'https://lankatruth.com/si/feed/'),
 ]
 STATE_FILE = Path('data/sri_lanka_delivery.json')
 MAX_AGE = 12 * 3600
@@ -89,7 +96,7 @@ def fingerprint(title):
 def parse_feed(content, source, now):
     feed = feedparser.parse(content)
     articles = []
-    for item in feed.entries[:40]:
+    for item in feed.entries[:100]:
         title, link = clean(item.get('title')), item.get('link', '')
         if not re.search('[\u0d80-\u0dff]', title) or not link.startswith('https://'):
             continue
@@ -126,7 +133,7 @@ def collect(now):
         except Exception as exc:
             return [], {'source': source, 'error': type(exc).__name__, 'http': getattr(getattr(exc, 'response', None), 'status_code', None)}
     articles, health = [], []
-    with ThreadPoolExecutor(max_workers=8) as pool:
+    with ThreadPoolExecutor(max_workers=10) as pool:
         for items, status in pool.map(fetch, SOURCES):
             articles.extend(items)
             health.append(status)
@@ -224,7 +231,7 @@ def send_text(platform, article):
 def deliver(state, articles, now, preview=False, sender=send_text):
     results = {name: {'sent': 0, 'failed': 0, 'uncertain': 0} for name in ('telegram', 'facebook')}
     records = state.setdefault('stories', {})
-    limit = max(1, min(20, int(os.getenv('MAX_NEWS_PER_RUN', '10'))))
+    limit = max(1, min(60, int(os.getenv('MAX_NEWS_PER_RUN', '30'))))
     selected = []
     for article in articles:
         if not publishable(article):
