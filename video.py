@@ -90,18 +90,29 @@ def probe_footage(path):
     return {'duration': duration, 'has_audio': any(s.get('codec_type') == 'audio' for s in info['streams'])}
 
 
-def create_footage_video(clip_path, title, summary, output_path):
-    """Embed an actual reviewed clip with its original audio muted."""
+def create_footage_video(clip_path, title, summary, output_path, audio_path=None):
+    """Use reviewed footage and a separate Sinhala narration; never source audio."""
     info = probe_footage(clip_path)
+    if not audio_path:
+        raise ValueError('Sinhala narration is required')
+    import json
+    narration = subprocess.run(
+        ['ffprobe', '-v', 'error', '-show_streams', '-show_format', '-of', 'json', str(audio_path)],
+        capture_output=True, text=True, check=True, timeout=20)
+    audio_info = json.loads(narration.stdout)
+    duration = float(audio_info.get('format', {}).get('duration', 0))
+    if (not any(s.get('codec_type') == 'audio' for s in audio_info.get('streams', []))
+            or not 0 < duration <= min(info['duration'], 90)):
+        raise ValueError('Complete narration must fit available footage and 90 seconds')
     card = str(Path(output_path).with_suffix('.png'))
     create_card(title, summary, card, contextual=False)
     filters = ('[0:v]scale=990:760:force_original_aspect_ratio=decrease,'
                'pad=990:760:(ow-iw)/2:(oh-ih)/2:black,setsar=1[footage];'
                '[1:v][footage]overlay=45:270:shortest=1,format=yuv420p[out]')
     args = ['ffmpeg', '-y', '-i', clip_path, '-loop', '1', '-i', card,
-            '-filter_complex', filters, '-map', '[out]', '-an',
-            '-t', str(min(info['duration'], 90)), '-r', '25', '-c:v', 'libx264',
-            '-preset', 'veryfast', '-crf', '24',
+            '-i', str(audio_path), '-filter_complex', filters, '-map', '[out]', '-map', '2:a:0',
+            '-t', str(duration), '-r', '25', '-c:v', 'libx264',
+            '-preset', 'veryfast', '-crf', '24', '-c:a', 'aac', '-b:a', '128k',
             '-movflags', '+faststart', '-shortest', output_path]
     subprocess.run(args, check=True, timeout=240, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return True
