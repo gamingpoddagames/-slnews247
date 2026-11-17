@@ -444,6 +444,10 @@ def main():
     state['videos'] = {key: val for key, val in state.get('videos', {}).items()
                        if now - val['at'] < 48 * 3600}
     report = {'preview': preview, 'feeds': health, 'fresh_unique_articles': len(articles),
+              'configured_feeds': len(SOURCES),
+              'working_feeds': sum(h.get('http') == 200 for h in health),
+              'failed_feeds': [h['source'] for h in health if h.get('http') != 200],
+              'publishable_articles': sum(publishable(a) for a in articles),
               'tiktok': 'enabled' if os.getenv('TIKTOK_ENABLED', 'false').lower() == 'true' else 'blocked_authorization_required'}
     delivery, selected = deliver(state, articles, now, preview)
     report['quality_gate_skipped'] = sum(not publishable(article) for article in articles)
