@@ -125,7 +125,7 @@ def caption(article):
     title = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '', article['title_si'], flags=re.I)
     title = title.removeprefix('විස්තරාත්මක පුවත | ')
     from editorial import brief_for
-    reviewed = brief_for(article)
+    reviewed = brief_for(article) if article.get('id') and article.get('link') else {}
     body = reviewed.get('body_si', '') if reviewed else article.get('summary_si', '')
     body = complete_sentences(body, 3500)
     return f"🇱🇰 {title}\n\n{body}\n\n🕒 {stamp}\n━━━━━━━━━━━━\nSL News 247"
