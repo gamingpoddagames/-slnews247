@@ -20,7 +20,7 @@ class NewsTests(unittest.TestCase):
         self.assertEqual(pipeline.fingerprint('ශ්‍රී ලංකා!'), pipeline.fingerprint('ශ්‍රී ලංකා'))
 
     def test_receipts_and_partial_failure(self):
-        story = {'id':'one', 'published':time.time(), 'title_si':'පුවත', 'summary_si':'', 'source':'Test','link':'https://example.com'}
+        story = {'id':'one', 'published':time.time(), 'title_si':'මාතර සිද්ධිය', 'summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.', 'source':'Test','link':'https://example.com'}
         state = {}
         calls = []
         def sender(name, article):
@@ -39,7 +39,7 @@ class NewsTests(unittest.TestCase):
             self.assertEqual(len(calls),3)
 
     def test_lost_response_does_not_repeat_or_block_new_story(self):
-        story = {'id':'one','published':time.time(),'title_si':'පුවත','summary_si':'','source':'Test','link':'https://example.com'}
+        story = {'id':'one','published':time.time(),'title_si':'මාතර සිද්ධිය','summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.','source':'Test','link':'https://example.com'}
         state = {}
         calls = []
         def sender(name, article):
@@ -65,7 +65,7 @@ class PresentationTests(unittest.TestCase):
 
     def test_photo_post_request_uses_uploaded_image(self):
         from unittest.mock import MagicMock
-        article = {'id':'one', 'title_si':'පුවත', 'summary_si':'', 'published':time.time()}
+        article = {'id':'one', 'title_si':'මාතර සිද්ධිය', 'summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.', 'published':time.time()}
         response = MagicMock()
         response.ok = True
         response.json.return_value = {'ok':True,'result':{'message_id':99}}
@@ -81,7 +81,7 @@ class PresentationTests(unittest.TestCase):
 
     def test_unlicensed_story_still_gets_original_brand_card(self):
         from unittest.mock import MagicMock
-        article = {'id':'new', 'title_si':'නවතම පුවතක්', 'summary_si':'සාරාංශය',
+        article = {'id':'new', 'title_si':'මාතර සිද්ධිය', 'summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
                    'published':time.time(), 'link':'https://example.com/a'}
         response = MagicMock()
         response.ok = True
@@ -98,7 +98,7 @@ class PresentationTests(unittest.TestCase):
 class ExactEventMediaTests(unittest.TestCase):
     def test_no_event_photo_uses_branded_card_and_skips_video(self):
         from unittest.mock import MagicMock
-        article = {'id':'new','title_si':'පුවත','summary_si':'','published':time.time(),'link':'https://example.com/a'}
+        article = {'id':'new','title_si':'මාතර සිද්ධිය','summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.','published':time.time(),'link':'https://example.com/a'}
         response = MagicMock();response.ok=True
         response.json.return_value={'ok':True,'result':{'message_id':100}}
         with tempfile.TemporaryDirectory() as directory:
@@ -247,4 +247,27 @@ class CompleteStoryTests(unittest.TestCase):
         caption=pipeline.caption(story)
         self.assertIn('පළමු වාක්‍යය සම්පූර්ණයි.', caption)
         self.assertNotIn('අදාළ…', caption)
+
+
+
+class QualityGateTests(unittest.TestCase):
+    def test_mismatched_sports_and_veterinary_description_is_rejected(self):
+        title = 'ශ්‍රී ලංකා පාපන්දු කණ්ඩායමේ නායක සුජාන් පෙරේරා සමුදෙයි'
+        wrong = 'පශු වෛද්‍ය නිලධාරීන්ගේ සංගමය අද වෘත්තීය සමිති ක්‍රියාමාර්ගයක නිරත වීමට තීරණය කර තිබේ.'
+        self.assertFalse(pipeline.relevant_summary(title, wrong))
+        self.assertFalse(pipeline.publishable({'title_si':title,'summary_si':wrong}))
+
+    def test_complete_matching_body_is_publishable(self):
+        story = {'title_si':'මාතර ප්‍රදේශයේ ඝාතනයක්',
+                 'summary_si':'මාතර ප්‍රදේශයේ නිවසක් තුළදී පුද්ගලයෙකු ඝාතනය කර ඇති අතර පොලිසිය විමර්ශන ආරම්භ කර තිබේ.'}
+        self.assertTrue(pipeline.publishable(story))
+
+    def test_empty_story_is_not_sent_or_checkpointed(self):
+        article = {'id':'empty', 'title_si':'පාපන්දු ක්‍රීඩා පුවතක්',
+                   'summary_si':'', 'published':time.time()}
+        with patch.object(pipeline, 'save'), patch.object(pipeline, 'send_text') as send:
+            result, selected = pipeline.deliver({}, [article], time.time())
+        self.assertEqual(selected, [])
+        self.assertEqual(result['facebook']['sent'], 0)
+        send.assert_not_called()
 
