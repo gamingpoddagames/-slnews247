@@ -376,7 +376,7 @@ class NewsCardTextBoundsTests(unittest.TestCase):
                 path = news_card(story)
                 with Image.open(path) as img:
                     # This used to be a bright yellow "details below" banner.
-                    self.assertEqual(img.getpixel((540, 870)), (169, 8, 24))
+                    self.assertEqual(img.getpixel((540, 1250)), (32, 33, 36))
             finally:
                 os.chdir(previous)
 
@@ -390,7 +390,7 @@ class NewsCardTextBoundsTests(unittest.TestCase):
                 os.chdir(root)
                 path = news_card(story)
                 with Image.open(path) as rendered:
-                    self.assertEqual(rendered.size, (1080, 1080))
+                    self.assertEqual(rendered.size, (1080, 1350))
             finally:
                 os.chdir(previous)
 
@@ -424,3 +424,29 @@ class SinhalaGlyphRegressionTests(unittest.TestCase):
         latin = latin_font(45)
         self.assertNotEqual(sinhala.path, latin.path)
         self.assertIsNotNone(sinhala.getmask('සිංහල').getbbox())
+
+class PhotoFirstPosterTests(unittest.TestCase):
+    def test_verified_photo_is_rendered_with_poster_layout(self):
+        from PIL import Image
+        from image import news_card
+        story={'id':'photo-test','title_si':'ගම්පහ ප්‍රදේශයේ විශේෂ වැඩසටහනක් පැවැත්වේ',
+               'published':1794921000}
+        with tempfile.TemporaryDirectory() as root:
+            previous=os.getcwd()
+            try:
+                os.chdir(root)
+                Image.new('RGB',(900,700),(12,210,32)).save('photo.jpg')
+                path=news_card(story,image_path='photo.jpg')
+                with Image.open(path) as img:
+                    self.assertEqual(img.size,(1080,1350))
+                    self.assertEqual(img.getpixel((500,400)),(12,210,32))
+                    self.assertEqual(img.getpixel((500,1250)),(32,33,36))
+            finally:
+                os.chdir(previous)
+
+    def test_unverified_photo_is_not_passed_to_poster(self):
+        import media
+        article={'id':'unverified','title_si':'මාතර පුවතක්'}
+        with patch('media.choose_photo',return_value=None),patch('image.news_card') as draw:
+            self.assertIsNone(media.post_image(article))
+            draw.assert_not_called()
