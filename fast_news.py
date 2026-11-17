@@ -88,6 +88,19 @@ def collect(now):
         for items, status in pool.map(fetch, SOURCES):
             articles.extend(items)
             health.append(status)
+    # One-off, fact-checked urgent newsroom items (original summaries only).
+    # Honor the same 12-hour freshness filter and existing delivery receipts.
+    urgent_path = Path('data/urgent_news.json')
+    if urgent_path.exists():
+        try:
+            for urgent in json.loads(urgent_path.read_text(encoding='utf-8')).get('stories', []):
+                if (isinstance(urgent, dict) and urgent.get('id')
+                        and urgent.get('title_si') and urgent.get('link', '').startswith('https://')
+                        and isinstance(urgent.get('published'), (int, float))
+                        and 0 <= now - urgent['published'] <= MAX_AGE):
+                    articles.append(urgent)
+        except (ValueError, OSError, TypeError, KeyError) as exc:
+            print('Urgent newsroom source invalid:', type(exc).__name__)
     unique = {}
     for article in sorted(articles, key=lambda a: a['published'], reverse=True):
         unique.setdefault(article['id'], article)
