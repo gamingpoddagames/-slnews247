@@ -292,28 +292,102 @@ def fit_headline(draw, title, width=950, max_height=550, start_size=72, min_size
     raise ValueError('Headline too long for readable card; keep full title in post caption')
 
 
-def news_card(article):
-    """Original 1080x1080 post card with fully measured, contained headline."""
+def _fitted_lines(draw, text, width, height, sizes):
+    for size in sizes:
+        try:
+            fs, lines, step = fit_headline(draw, text, width, height, size, size)
+            return fs, lines, step
+        except ValueError:
+            continue
+    raise ValueError('Headline cannot fit the poster safely')
+
+
+def news_card(article, image_path=None):
+    """Original broadcast-style 1080x1350 news poster.
+
+    The photo is allowed only after media.choose_photo has verified the
+    matching story and permission. No invented depiction or publisher logo.
+    """
     from pathlib import Path
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
     import re
+
     title = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '', article['title_si'], flags=re.I)
-    title = title.removeprefix('විස්තරාත්මක පුවත | ')
-    canvas = Image.new('RGB', (1080, 1080), '#a90818')
+    title = title.removeprefix('විස්තරාත්මක පුවත | ').strip()
+    width, height = 1080, 1350
+    canvas = Image.new('RGB', (width, height))
+    pixels = canvas.load()
+    for y in range(height):
+        for x in range(width):
+            weight = x / width * .48 + y / height * .30
+            pixels[x, y] = (
+                round(255 * (1-weight) + 170 * weight),
+                round(139 * (1-weight) + 10 * weight),
+                round(23 * (1-weight) + 31 * weight),
+            )
+
+    # Inner panel has a thick rounded white frame and dark lower portion.
     draw = ImageDraw.Draw(canvas)
-    draw.rectangle((0, 0, 1080, 150), fill='#670814')
-    brand = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 54)
-    draw.text((60, 49), 'SL NEWS 24/7', font=brand, fill='white')
-    size, lines, step = fit_headline(draw, title)
-    y = 205
-    for line in lines:
-        draw_mixed(draw, (60, y + size), line, size, fill='white')
-        y += step
-    # Full story is shown above the image in Facebook's post caption.
-    # Never add a misleading "details below" banner to published cards.
-    if article.get('sample'):
-        draw.rectangle((50, 830, 1030, 935), fill='#ffdd36')
-        draw_mixed(draw, (80, 909), 'ආදර්ශ පළ කිරීමකි', 40, fill='#670814')
+    draw.rounded_rectangle((32, 56, 1048, 1295), radius=88, fill='white')
+    draw.rounded_rectangle((44, 68, 1036, 1283), radius=76, fill='#202124')
+    photo_rect = (46, 70, 1034, 822)
+    if image_path:
+        with Image.open(image_path) as src:
+            photo = __import__('PIL.ImageOps', fromlist=['fit']).fit(
+                src.convert('RGB'), (photo_rect[2]-photo_rect[0], photo_rect[3]-photo_rect[1]),
+                method=Image.Resampling.LANCZOS)
+        canvas.paste(photo, (photo_rect[0], photo_rect[1]))
+    else:
+        # Honest graphic fallback; do not imply an unrelated or generated
+        # picture is a real photograph of the event.
+        draw.rectangle(photo_rect, fill='#293a4e')
+        draw.ellipse((353, 200, 728, 575), outline='#687b93', width=13)
+        draw.line((455, 475, 620, 305), fill='#91a7c0', width=16)
+        draw.line((465, 325, 617, 481), fill='#91a7c0', width=16)
+        draw_mixed(draw, (240, 680), 'පුවත් සිරස්තලය', 53, fill='#e6eef7', bold=True)
+
+    # Top date and original brand only (no third-party logo/watermarks).
+    draw = ImageDraw.Draw(canvas)
+    date = datetime.fromtimestamp(
+        article.get('published', __import__('time').time()), ZoneInfo('Asia/Colombo')
+    ).strftime('%d.%m.%Y')
+    latin = latin_font(35, bold=True)
+    draw.rounded_rectangle((75, 89, 326, 147), radius=14, fill='#1a2031')
+    draw.text((95, 100), date, font=latin, fill='white')
+    draw.rounded_rectangle((722, 22, 1027, 132), radius=22, fill='#a6081b', outline='white', width=5)
+    draw.text((750, 36), 'SL NEWS', font=latin_font(41, bold=True), fill='white')
+    draw.text((891, 80), '24/7', font=latin_font(27, bold=True), fill='#ffdc37')
+
+    # Fade/cover lower photo margin with a charcoal headline field.
+    draw.rectangle((46, 793, 1034, 1282), fill='#202124')
+    words = title.split()
+    if not words:
+        raise ValueError('Title missing')
+    split = max(1, (len(words) + 1)//2)
+    yellow = ' '.join(words[:split])
+    white = ' '.join(words[split:])
+
+    # Keep full source headline, split purely for layout. Avoid word clipping.
+    upper = _fitted_lines(draw, yellow, 886, 170, range(58, 23, -2))
+    lower = _fitted_lines(draw, white, 886, 238, range(68, 23, -2)) if white else None
+    def center_lines(group, first_baseline, color):
+        if group is None:
+            return
+        size, lines, step = group
+        for line in lines:
+            x = 540 - mixed_width(draw, line, size, bold=True)/2
+            draw_mixed(draw, (x, first_baseline), line, size, fill=color, bold=True)
+            first_baseline += step
+    center_lines(upper, 880, '#ffdd32')
+    if lower:
+        center_lines(lower, 1068, 'white')
+    # Quote-shaped original accents, outside the headline text region.
+    draw.text((72, 1128), '“', font=latin_font(74, bold=True), fill='#fb5722')
+    draw.text((953, 1190), '”', font=latin_font(74, bold=True), fill='#fb5722')
+
     Path('output').mkdir(exist_ok=True)
-    path = 'output/card_' + re.sub('[^a-zA-Z0-9_-]', '', article['id']) + '.png'
-    canvas.save(path)
+    safe_id = re.sub('[^a-zA-Z0-9_-]', '', str(article.get('id', 'news'))) or 'news'
+    path = 'output/card_' + safe_id + '.png'
+    canvas.save(path, optimize=True)
     return path
