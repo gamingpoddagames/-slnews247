@@ -13,6 +13,9 @@ test_english_words_are_preserved_in_sinhala_titles (test_fast_news.MixedScriptCa
 test_mixed_script_card_can_render_without_missing_glyph_substitution (test_fast_news.MixedScriptCardTests.test_mixed_script_card_can_render_without_missing_glyph_substitution) ... ok
 test_batch_accepts_more_than_ten_valid_stories (test_fast_news.MultiPublisherCoverageTests.test_batch_accepts_more_than_ten_valid_stories) ... ok
 test_multiple_independent_sinhala_publishers_and_sections (test_fast_news.MultiPublisherCoverageTests.test_multiple_independent_sinhala_publishers_and_sections) ... ok
+test_actual_branded_card_is_saved_at_correct_size (test_fast_news.NewsCardTextBoundsTests.test_actual_branded_card_is_saved_at_correct_size) ... ok
+test_long_sinhala_headline_stays_inside_card (test_fast_news.NewsCardTextBoundsTests.test_long_sinhala_headline_stays_inside_card) ... ok
+test_oversized_unbroken_word_is_rejected_not_clipped (test_fast_news.NewsCardTextBoundsTests.test_oversized_unbroken_word_is_rejected_not_clipped) ... ok
 test_lost_response_does_not_repeat_or_block_new_story (test_fast_news.NewsTests.test_lost_response_does_not_repeat_or_block_new_story) ... ok
 test_native_freshness_and_broken_xml (test_fast_news.NewsTests.test_native_freshness_and_broken_xml) ... ok
 test_receipts_and_partial_failure (test_fast_news.NewsTests.test_receipts_and_partial_failure) ... ok
@@ -26,7 +29,7 @@ test_mismatched_sports_and_veterinary_description_is_rejected (test_fast_news.Qu
 test_ads_require_review_and_valid_intervals (test_fast_news.ReviewedFootageEditsTests.test_ads_require_review_and_valid_intervals) ... ok
 
 ----------------------------------------------------------------------
-Ran 26 tests in 0.370s
+Ran 29 tests in 0.402s
 
 OK
 telegram unconfirmed request: TimeoutError
