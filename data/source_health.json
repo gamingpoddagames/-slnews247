@@ -1,5 +1,5 @@
 {
-  "checked_at": 1794938974.7876072,
+  "checked_at": 1794944814.5202656,
   "configured_feeds": 25,
   "sources": [
     {
@@ -111,7 +111,7 @@
       "source": "Neth International",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 2,
+      "fresh_sinhala": 1,
       "feed_url": "https://www.nethnews.lk/international-news/feed/"
     },
     {
