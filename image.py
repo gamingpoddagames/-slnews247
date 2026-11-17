@@ -308,14 +308,11 @@ def news_card(article):
     for line in lines:
         draw_mixed(draw, (60, y + size), line, size, fill='white')
         y += step
-    draw.rectangle((50, 830, 1030, 935), fill='#ffdd36')
-    label = 'ආදර්ශ පළ කිරීමකි' if article.get('sample') else 'සම්පූර්ණ විස්තර පහතින්'
-    label_size, label_lines, _ = fit_headline(
-        draw, label, width=910, max_height=75, start_size=40, min_size=22)
-    if len(label_lines) != 1:
-        raise ValueError('Footer label does not fit on one line')
-    draw_mixed(draw, (80, 868 + label_size), label_lines[0],
-               label_size, fill='#670814')
+    # Full story is shown above the image in Facebook's post caption.
+    # Never add a misleading "details below" banner to published cards.
+    if article.get('sample'):
+        draw.rectangle((50, 830, 1030, 935), fill='#ffdd36')
+        draw_mixed(draw, (80, 909), 'ආදර්ශ පළ කිරීමකි', 40, fill='#670814')
     Path('output').mkdir(exist_ok=True)
     path = 'output/card_' + re.sub('[^a-zA-Z0-9_-]', '', article['id']) + '.png'
     canvas.save(path)
