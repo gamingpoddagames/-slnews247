@@ -217,3 +217,34 @@ class MixedScriptCardTests(unittest.TestCase):
         self.assertGreater(draw_mixed(draw, (20, 100), title, 45), 200)
         self.assertIsNotNone(canvas.getbbox())
 
+
+
+class CompleteStoryTests(unittest.TestCase):
+    def test_clipped_excerpt_never_shows_dangling_fragment(self):
+        raw = ('මාතර ප්‍රදේශයේ නිවසක් තුළදී පුද්ගලයෙකු ඝාතනය කර තිබේ. '
+               'මියගිය පුද්ගලයා වයස අවුරුදු 39ක අයෙකි. අදාළ…')
+        self.assertEqual(pipeline.complete_sentences(raw),
+                         'මාතර ප්‍රදේශයේ නිවසක් තුළදී පුද්ගලයෙකු ඝාතනය කර තිබේ. '
+                         'මියගිය පුද්ගලයා වයස අවුරුදු 39ක අයෙකි.')
+        self.assertNotIn('…', pipeline.complete_sentences(raw))
+
+    def test_rss_summary_preserves_full_complete_sentences(self):
+        now = time.time()
+        pub = datetime.fromtimestamp(now-30, timezone.utc).strftime('%a, %d %b %Y %H:%M:%S GMT')
+        summary = ('පළමු වැදගත් වාක්‍යය සම්පූර්ණයි. ' +
+                   'දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු ' * 12 + 'අවසන් වේ. '
+                   'තවත් අසම්පූර්ණ')
+        xml = f'<rss><channel><item><title>මාතර සිදුවීමක්</title><link>https://example.com/1</link><pubDate>{pub}</pubDate><description>{summary}</description></item></channel></rss>'
+        stories, _ = pipeline.parse_feed(xml.encode(), 'Test', now)
+        self.assertEqual(stories[0]['summary_si'], pipeline.complete_sentences(summary))
+        self.assertTrue(stories[0]['summary_si'].endswith('අවසන් වේ.'))
+        self.assertGreater(len(stories[0]['summary_si']), 200)
+
+    def test_caption_omits_partial_sentence(self):
+        story={'title_si':'මාතර ප්‍රදේශයේ මනුෂ්‍ය ඝාතනයක්',
+               'summary_si':'පළමු වාක්‍යය සම්පූර්ණයි. අදාළ…',
+               'published':time.time()}
+        caption=pipeline.caption(story)
+        self.assertIn('පළමු වාක්‍යය සම්පූර්ණයි.', caption)
+        self.assertNotIn('අදාළ…', caption)
+
