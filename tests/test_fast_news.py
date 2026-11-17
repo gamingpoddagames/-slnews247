@@ -78,6 +78,23 @@ class PresentationTests(unittest.TestCase):
                 self.assertIn('photo', request.call_args.kwargs['files'])
                 self.assertNotIn('https://', request.call_args.kwargs['data']['caption'])
 
+
+    def test_unlicensed_story_still_gets_original_brand_card(self):
+        from unittest.mock import MagicMock
+        article = {'id':'new', 'title_si':'නවතම පුවතක්', 'summary_si':'සාරාංශය',
+                   'published':time.time(), 'link':'https://example.com/a'}
+        response = MagicMock()
+        response.ok = True
+        response.json.return_value = {'ok':True,'result':{'message_id':101}}
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory, 'card.png')
+            image.write_bytes(b'graphic-test')
+            with patch('media.post_image', return_value=None), patch('image.news_card', return_value=str(image)) as card, patch.dict(os.environ, {'TG_TOKEN':'test', 'TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
+                result = pipeline.send_text('telegram', article)
+                self.assertEqual(result['format'], 'photo')
+                card.assert_called_once_with(article)
+                self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
+
 class ExactEventMediaTests(unittest.TestCase):
     def test_no_media_posts_text_and_skips_video(self):
         from unittest.mock import MagicMock
