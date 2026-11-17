@@ -112,9 +112,11 @@ def caption(article):
 
 
 def send_text(platform, article):
-    from media import post_image
+    from image import news_card
     try:
-        image_path = None if len(caption(article)) > 1024 else post_image(article)
+        image_path = news_card(article)
+        if platform == 'telegram' and len(caption(article)) > 1024:
+            image_path = None
     except Exception as exc:
         # No unlicensed substitute and no uncertain platform request on media failure.
         image_path = None
@@ -325,6 +327,17 @@ def main():
     preview = os.getenv('PREVIEW_ONLY', 'false').lower() == 'true'
     Path('output').mkdir(exist_ok=True)
     state = json.loads(STATE_FILE.read_text()) if STATE_FILE.exists() else {}
+
+    # Owner-authorized one-time Facebook design sample, checkpointed before sending.
+    if not preview and 'facebook_design_sample_v1' not in state:
+        state['facebook_design_sample_v1'] = {'status': 'unconfirmed'}
+        save(state)
+        sample = {'id': 'design_sample_v1', 'sample': True, 'published': now,
+                  'title_si': 'පුවතේ වැදගත්ම තොරතුරු එකම තැනක',
+                  'summary_si': 'ආදර්ශ පළ කිරීමකි.\n\nමෙය SL News 247 නව පුවත් සැලසුම පෙන්වීම සඳහා පළ කරන ආදර්ශයකි. රතු පසුබිම මත සුදු පැහැයෙන් සිරස්තලයත්, කහ පැහැයෙන් වැදගත් කොටසත් දක්වා තිබෙනවා.\n\nඉදිරි පුවත් සඳහා තහවුරු කළ කරුණු පැහැදිලි ඡේද ලෙස මෙහි ඇතුළත් කෙරෙනවා. මෙය සැබෑ සිද්ධියක් පිළිබඳ පුවතක් නොවේ.'}
+        state['facebook_design_sample_v1'] = send_text('facebook', sample)
+        save(state)
+
     articles, health = collect(now)
     # Retain receipts for two days; only publish fresh feed entries.
     state['stories'] = {key: val for key, val in state.get('stories', {}).items()
