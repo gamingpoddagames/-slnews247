@@ -74,10 +74,31 @@ def choose_video(article):
     return choose_media(article, 'video')
 
 
+# Curated license-checked contextual example; it is NOT the construction site
+# of the Ruwanpura Expressway. CC0 source:
+# https://commons.wikimedia.org/wiki/File:Galle.to_Matara_Highway.jpg
+ILLUSTRATIVE_PHOTOS = {
+    'sri_lanka_expressway_cc0': (
+        'https://upload.wikimedia.org/wikipedia/commons/1/16/Galle.to_Matara_Highway.jpg',
+        'https://commons.wikimedia.org/wiki/File:Galle.to_Matara_Highway.jpg',
+    ),
+}
+
+
 def post_image(article):
-    """Render every verified event photo with the same branded Sinhala poster."""
+    """Prefer licensed exact-event imagery, then clearly labelled CC0 context."""
     photo = choose_photo(article)
-    if not photo:
+    if photo:
+        from image import news_card
+        return news_card(article, image_path=photo)
+    key = article.get('illustrative_photo')
+    if key not in ILLUSTRATIVE_PHOTOS:
         return None
-    from image import news_card
-    return news_card(article, image_path=photo)
+    from image import news_card, download_image
+    url, source_page = ILLUSTRATIVE_PHOTOS[key]
+    path = Path('assets/illustrative') / (key + '.jpg')
+    if not path.is_file():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if not download_image(url, str(path)):
+            return None
+    return news_card(article, image_path=str(path), illustrative=True)
