@@ -23,7 +23,7 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -48,7 +48,7 @@ jobs:
           TIKTOK_ENABLED: ${{ vars.TIKTOK_ENABLED || 'false' }}
           TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL || 'SELF_ONLY' }}
           MYMEMORY_EMAIL: ${{ secrets.MYMEMORY_EMAIL }}
-          MAX_NEWS_PER_RUN: '10'
+          MAX_NEWS_PER_RUN: '30'
         run: python -u fast_news.py
       - name: Preserve delivery checkpoints and translation cache
         if: always() && (github.event_name != 'workflow_dispatch' || inputs.publish)
