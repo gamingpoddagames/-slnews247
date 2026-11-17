@@ -1,24 +1,44 @@
-test_fast_news (unittest.loader._FailedTest.test_fast_news) ... ERROR
+test_black_and_silent_transition_flags_intro_only_for_review (test_fast_news.AutomaticAdCandidateTests.test_black_and_silent_transition_flags_intro_only_for_review) ... ok
+test_detector_report_never_deletes_footage (test_fast_news.AutomaticAdCandidateTests.test_detector_report_never_deletes_footage) ... ok
+test_no_silence_or_midclip_transition_does_not_infer_ad (test_fast_news.AutomaticAdCandidateTests.test_no_silence_or_midclip_transition_does_not_infer_ad) ... ok
+test_caption_omits_partial_sentence (test_fast_news.CompleteStoryTests.test_caption_omits_partial_sentence) ... ok
+test_clipped_excerpt_never_shows_dangling_fragment (test_fast_news.CompleteStoryTests.test_clipped_excerpt_never_shows_dangling_fragment) ... ok
+test_rss_summary_preserves_full_complete_sentences (test_fast_news.CompleteStoryTests.test_rss_summary_preserves_full_complete_sentences) ... FAIL
+test_original_brief_is_shared_once_without_resending_headline (test_fast_news.EditorialDeliveryTests.test_original_brief_is_shared_once_without_resending_headline) ... ok
+test_exact_article_review_and_official_video_guards (test_fast_news.EditorialTests.test_exact_article_review_and_official_video_guards) ... ok
+test_exact_story_and_nonreuse_guards (test_fast_news.ExactEventMediaTests.test_exact_story_and_nonreuse_guards) ... ok
+test_no_event_photo_uses_branded_card_and_skips_video (test_fast_news.ExactEventMediaTests.test_no_event_photo_uses_branded_card_and_skips_video) ... ok
+test_photo_and_unverified_video_cannot_enter_video_branch (test_fast_news.GenuineVideoTests.test_photo_and_unverified_video_cannot_enter_video_branch) ... ok
+test_english_words_are_preserved_in_sinhala_titles (test_fast_news.MixedScriptCardTests.test_english_words_are_preserved_in_sinhala_titles) ... ok
+test_mixed_script_card_can_render_without_missing_glyph_substitution (test_fast_news.MixedScriptCardTests.test_mixed_script_card_can_render_without_missing_glyph_substitution) ... ok
+test_batch_accepts_more_than_ten_valid_stories (test_fast_news.MultiPublisherCoverageTests.test_batch_accepts_more_than_ten_valid_stories) ... ok
+test_multiple_independent_sinhala_publishers_and_sections (test_fast_news.MultiPublisherCoverageTests.test_multiple_independent_sinhala_publishers_and_sections) ... ok
+test_lost_response_does_not_repeat_or_block_new_story (test_fast_news.NewsTests.test_lost_response_does_not_repeat_or_block_new_story) ... ok
+test_native_freshness_and_broken_xml (test_fast_news.NewsTests.test_native_freshness_and_broken_xml) ... ok
+test_receipts_and_partial_failure (test_fast_news.NewsTests.test_receipts_and_partial_failure) ... ok
+test_caption_has_no_visible_source_or_url (test_fast_news.PresentationTests.test_caption_has_no_visible_source_or_url) ... ok
+test_photo_post_request_uses_uploaded_image (test_fast_news.PresentationTests.test_photo_post_request_uses_uploaded_image) ... ok
+test_unlicensed_story_still_gets_original_brand_card (test_fast_news.PresentationTests.test_unlicensed_story_still_gets_original_brand_card) ... ok
+test_only_single_exact_article_player_is_selected (test_fast_news.PublisherPlayerTests.test_only_single_exact_article_player_is_selected) ... ok
+test_complete_matching_body_is_publishable (test_fast_news.QualityGateTests.test_complete_matching_body_is_publishable) ... ok
+test_empty_story_is_not_sent_or_checkpointed (test_fast_news.QualityGateTests.test_empty_story_is_not_sent_or_checkpointed) ... ok
+test_mismatched_sports_and_veterinary_description_is_rejected (test_fast_news.QualityGateTests.test_mismatched_sports_and_veterinary_description_is_rejected) ... ok
+test_ads_require_review_and_valid_intervals (test_fast_news.ReviewedFootageEditsTests.test_ads_require_review_and_valid_intervals) ... ok
 
 ======================================================================
-ERROR: test_fast_news (unittest.loader._FailedTest.test_fast_news)
+FAIL: test_rss_summary_preserves_full_complete_sentences (test_fast_news.CompleteStoryTests.test_rss_summary_preserves_full_complete_sentences)
 ----------------------------------------------------------------------
-ImportError: Failed to import test module: test_fast_news
 Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/unittest/loader.py", line 419, in _find_test_path
-    module = self._get_module_from_name(name)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/unittest/loader.py", line 362, in _get_module_from_name
-    __import__(name)
-  File "/home/runner/work/-slnews247/-slnews247/tests/test_fast_news.py", line 9, in <module>
-    import fast_news as pipeline
-  File "/home/runner/work/-slnews247/-slnews247/fast_news.py", line 480
-    , '', text).strip()
-              ^
-SyntaxError: unmatched ')'
-
+  File "/home/runner/work/-slnews247/-slnews247/tests/test_fast_news.py", line 239, in test_rss_summary_preserves_full_complete_sentences
+    self.assertEqual(stories[0]['summary_si'], pipeline.complete_sentences(summary))
+AssertionError: '' != 'පළමු වැදගත් වාක්\u200dයය සම්පූර්ණයි. දෙවන[457 chars] වේ.'
++ පළමු වැදගත් වාක්‍යය සම්පූර්ණයි. දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු දෙවන වාක්‍යයේ සවිස්තරාත්මක කරුණු අවසන් වේ.
 
 ----------------------------------------------------------------------
-Ran 1 test in 0.000s
+Ran 26 tests in 0.299s
 
-FAILED (errors=1)
+FAILED (failures=1)
+telegram unconfirmed request: TimeoutError
+facebook unconfirmed request: TimeoutError
+telegram unconfirmed request: TimeoutError
+facebook unconfirmed request: TimeoutError
