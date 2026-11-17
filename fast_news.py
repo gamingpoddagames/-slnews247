@@ -344,7 +344,7 @@ def main():
                        if now - val['at'] < 48 * 3600}
     report = {'preview': preview, 'feeds': health, 'fresh_unique_articles': len(articles),
               'tiktok': 'enabled' if os.getenv('TIKTOK_ENABLED', 'false').lower() == 'true' else 'blocked_authorization_required'}
-    delivery, selected = deliver(state, [], now, preview)
+    delivery, selected = deliver(state, articles, now, preview)
     report['delivery'] = delivery
     report['editorial_update'] = share_editorial_update(state, articles, now, preview)
     Path('output/stories.json').write_text(json.dumps(selected, ensure_ascii=False, indent=2), encoding='utf-8')
