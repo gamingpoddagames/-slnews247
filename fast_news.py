@@ -303,6 +303,13 @@ def maybe_video(state, articles, now, preview):
     registry_path = Path('data/verified_event_media.json')
     registry = json.loads(registry_path.read_text(encoding='utf-8')) if registry_path.exists() else {}
     clip_record = registry.get(candidate['id'], {}).get('video', {})
+    # Automatically locate potential ad breaks for a newsroom review report.
+    # Detection must not silently remove genuine footage.
+    try:
+        from ad_detector import detect_ad_candidates
+        detect_ad_candidates(footage, 'output/ad_review_' + candidate['id'] + '.json')
+    except Exception as exc:
+        print('Ad analysis unavailable:', type(exc).__name__)
     if (clip_record.get('ad_segments_reviewed') is True
             and clip_record.get('ad_segments')):
         from video import trim_reviewed_ad_segments
