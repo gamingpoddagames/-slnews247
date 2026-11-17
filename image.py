@@ -218,29 +218,52 @@ def latin_font(size, bold=False):
     return ImageFont.truetype(path, size, layout_engine=ImageFont.Layout.RAQM)
 
 
+def _sinhala_char(char):
+    """Sinhala code points and Sinhala shaping joiners use the Sinhala font."""
+    return ('\u0D80' <= char <= '\u0DFF') or char in ('\u200C', '\u200D')
+
+
 def script_runs(text):
-    """Keep original Unicode content; switch glyph fonts without translating."""
-    import re
-    return re.findall(r'[\\u0D80-\\u0DFF]+|[^\\u0D80-\\u0DFF]+', str(text))
+    """Keep full Unicode syllable clusters together and switch scripts safely."""
+    import unicodedata
+    text = unicodedata.normalize('NFC', str(text))
+    if not text:
+        return []
+    runs = []
+    current = text[0]
+    current_is_sinhala = _sinhala_char(text[0])
+    for char in text[1:]:
+        is_sinhala = _sinhala_char(char)
+        if is_sinhala == current_is_sinhala:
+            current += char
+        else:
+            runs.append(current)
+            current = char
+            current_is_sinhala = is_sinhala
+    runs.append(current)
+    return runs
 
 
 def mixed_width(draw, text, size, bold=False):
     sinhala = get_font(size, bold)
     latin = latin_font(size, bold)
-    return sum(draw.textlength(run, font=sinhala if '\\u0d80' <= run[0] <= '\\u0dff' else latin)
-               for run in script_runs(text))
+    return sum(
+        draw.textlength(run, font=sinhala if _sinhala_char(run[0]) else latin)
+        for run in script_runs(text)
+    )
 
 
 def draw_mixed(draw, xy, text, size, fill='white', bold=False):
-    """Draw Sinhala and Latin as separate shaped runs on a common baseline."""
+    """Render Sinhala with Noto + RAQM, English with DejaVu, never tofu boxes."""
     sinhala = get_font(size, bold)
     latin = latin_font(size, bold)
     x, y = xy
     for run in script_runs(text):
-        font = sinhala if '\\u0d80' <= run[0] <= '\\u0dff' else latin
+        font = sinhala if _sinhala_char(run[0]) else latin
         draw.text((x, y), run, font=font, fill=fill, anchor='ls')
         x += draw.textlength(run, font=font)
     return x
+
 
 def fit_headline(draw, title, width=950, max_height=550, start_size=72, min_size=20):
     """Size Sinhala/English text using actual glyph measurements, never clipping."""
