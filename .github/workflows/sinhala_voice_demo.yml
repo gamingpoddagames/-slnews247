@@ -1,0 +1,32 @@
+name: Sinhala Voice News Demo
+on:
+  push:
+    paths:
+      - 'scripts/build_sinhala_voice_demo.py'
+      - '.github/workflows/sinhala_voice_demo.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  voice-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Sinhala fonts and video tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg fonts-noto-core
+          python -m pip install Pillow==11.3.0 gTTS==2.5.4
+      - name: Render Sinhala narration and verify audio
+        run: python scripts/build_sinhala_voice_demo.py
+      - name: Upload narrated video
+        uses: actions/upload-artifact@v4
+        with:
+          name: SL-News-247-Sinhala-Voice-Video
+          path: output/voice_demo/SL_News_247_Sinhala_Voice_Demo.mp4
+          if-no-files-found: error
+          retention-days: 7
