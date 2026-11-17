@@ -426,6 +426,41 @@ class SinhalaGlyphRegressionTests(unittest.TestCase):
         self.assertIsNotNone(sinhala.getmask('සිංහල').getbbox())
 
 class PhotoFirstPosterTests(unittest.TestCase):
+
+    def test_no_photo_has_blue_area_and_split_color_frame(self):
+        from PIL import Image
+        from image import news_card
+        story={'id':'blue-fallback','title_si':'මාතර ප්‍රදේශයේ නව පුවතක්','published':1794921000}
+        with tempfile.TemporaryDirectory() as root:
+            previous=os.getcwd()
+            try:
+                os.chdir(root)
+                with Image.open(news_card(story)) as img:
+                    top=img.getpixel((10,150))
+                    bottom=img.getpixel((10,1200))
+                    blue=img.getpixel((500,170))
+                    self.assertGreater(top[0], top[2])  # orange-red border
+                    self.assertGreater(bottom[2], bottom[0])  # blue border
+                    self.assertGreater(blue[2], blue[0])  # blue photo fallback
+                    self.assertEqual(img.size,(1080,1350))
+            finally:
+                os.chdir(previous)
+
+    def test_photo_overrides_blue_fallback_without_changing_frame(self):
+        from PIL import Image
+        from image import news_card
+        story={'id':'with-photo','title_si':'මාතර ප්‍රදේශයේ නව පුවතක්','published':1794921000}
+        with tempfile.TemporaryDirectory() as root:
+            previous=os.getcwd()
+            try:
+                os.chdir(root)
+                Image.new('RGB',(1000,800),(218,43,37)).save('event.png')
+                with Image.open(news_card(story,image_path='event.png')) as img:
+                    self.assertEqual(img.getpixel((500,350)),(218,43,37))
+                    self.assertGreater(img.getpixel((10,1200))[2],img.getpixel((10,1200))[0])
+            finally:
+                os.chdir(previous)
+
     def test_verified_photo_is_rendered_with_poster_layout(self):
         from PIL import Image
         from image import news_card
