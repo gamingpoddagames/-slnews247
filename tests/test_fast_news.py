@@ -318,3 +318,28 @@ class AutomaticAdCandidateTests(unittest.TestCase):
             self.assertFalse(result['automatic_cut'])
             self.assertFalse(result['source_watermark_modified'])
             self.assertTrue(result['candidates'])
+
+
+class MultiPublisherCoverageTests(unittest.TestCase):
+    def test_multiple_independent_sinhala_publishers_and_sections(self):
+        sources = pipeline.SOURCES
+        self.assertGreaterEqual(len(sources), 20)
+        hosts = {__import__('urllib.parse', fromlist=['urlparse']).urlparse(u).hostname for _, u in sources}
+        self.assertTrue(any('adaderana' in (h or '') for h in hosts))
+        self.assertTrue(any('siyathanews' in (h or '') for h in hosts))
+        self.assertTrue(any('lankadeepa' in (h or '') for h in hosts))
+        self.assertTrue(any('nethnews' in (h or '') for h in hosts))
+        self.assertEqual(len({u for _,u in sources}),len(sources))
+
+    def test_batch_accepts_more_than_ten_valid_stories(self):
+        now = time.time()
+        stories = [
+            {'id':str(i), 'published':now, 'title_si':f'මාතර සිද්ධිය {i}',
+             'summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් පොලිසිය වැඩිදුර විමර්ශන සිදුකරමින් සිටින බව වාර්තා වෙයි.'}
+            for i in range(15)
+        ]
+        with patch.object(pipeline, 'save'), patch.dict(os.environ, {'MAX_NEWS_PER_RUN':'30'}):
+            result, selected = pipeline.deliver({}, stories, now, preview=True)
+        self.assertEqual(len(selected),15)
+        self.assertEqual(result['facebook']['sent'],0)
+
