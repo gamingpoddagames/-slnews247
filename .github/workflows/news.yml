@@ -62,18 +62,24 @@ jobs:
           mkdir -p data
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          # CI diagnostics are artifacts, not mutable branch state.
-          # Committing test logs every run creates unnecessary merge conflicts.
-          git add -A -- data/sri_lanka_delivery.json data/source_health.json
-          if [ -f data/translation_cache.json ]; then git add data/translation_cache.json; fi
-          if [ -f used.json ]; then git add used.json; fi
-          if ! git diff --cached --quiet; then
+          # Preserve local delivery state, then merge it with the latest remote
+          # records. Do not rebase checkpoint JSON files with conflicting edits.
+          snapshot=$(mktemp -d)
+          for file in data/sri_lanka_delivery.json data/source_health.json data/translation_cache.json used.json; do
+            if [ -f "$file" ]; then cp "$file" "$snapshot/$(basename "$file")"; fi
+          done
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/merge_news_checkpoint.py "$snapshot"
+            git add -A -- data/sri_lanka_delivery.json data/source_health.json
+            if [ -f data/translation_cache.json ]; then git add data/translation_cache.json; fi
+            if [ -f used.json ]; then git add used.json; fi
+            if git diff --cached --quiet; then break; fi
             git commit -m 'Record news delivery checkpoints'
-            # Test diagnostics change on each run; discard them before rebase.
-            git restore -- data/ci_test_results.txt
-            git -c rebase.autoStash=true pull --rebase origin main
-            git push origin HEAD:main
-          fi
+            if git push origin HEAD:main; then break; fi
+            if [ "$attempt" -eq 3 ]; then echo "Unable to save checkpoints after 3 retries"; exit 1; fi
+          done
       - name: Save preview and delivery report
         if: always()
         uses: actions/upload-artifact@v4
