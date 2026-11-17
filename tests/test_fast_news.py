@@ -291,3 +291,30 @@ class ReviewedFootageEditsTests(unittest.TestCase):
                 self.assertIn('-an',cmd)
                 self.assertIn('concat=n=3:v=1:a=0[out]',cmd[cmd.index('-filter_complex')+1])
 
+
+
+class AutomaticAdCandidateTests(unittest.TestCase):
+    def test_black_and_silent_transition_flags_intro_only_for_review(self):
+        from ad_detector import candidate_intervals
+        candidates = candidate_intervals(120, [(10, 10.5)], [(10, 11)])
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(candidates[0]['status'], 'review_required')
+        self.assertEqual((candidates[0]['start'], candidates[0]['end']), (0.0, 10.25))
+
+    def test_no_silence_or_midclip_transition_does_not_infer_ad(self):
+        from ad_detector import candidate_intervals
+        self.assertEqual(candidate_intervals(120, [(10, 10.5)], []), [])
+        self.assertEqual(candidate_intervals(120, [(60, 60.5)], [(60,61)]), [])
+
+    def test_detector_report_never_deletes_footage(self):
+        from unittest.mock import MagicMock
+        from ad_detector import detect_ad_candidates
+        stderr = ('black_start:10 black_end:10.5 black_duration:0.5\n'
+                  '[silencedetect] silence_start: 10\n'
+                  '[silencedetect] silence_end: 11 | silence_duration: 1')
+        process=MagicMock(returncode=0,stderr=stderr)
+        with tempfile.TemporaryDirectory() as directory,patch('video.probe_footage',return_value={'duration':120}),patch('ad_detector.subprocess.run',return_value=process):
+            result=detect_ad_candidates('video.mp4', str(Path(directory)/'review.json'))
+            self.assertFalse(result['automatic_cut'])
+            self.assertFalse(result['source_watermark_modified'])
+            self.assertTrue(result['candidates'])
