@@ -182,7 +182,10 @@ def caption(article):
     reviewed = brief_for(article) if article.get('id') and article.get('link') else {}
     body = reviewed.get('body_si', '') if reviewed else article.get('summary_si', '')
     body = complete_sentences(body, 3500)
-    return f"🇱🇰 {title}\n\n{body}\n\n🕒 {stamp}\n━━━━━━━━━━━━\nSL News 247"
+    attribution = ('\n\n📷 සංකේතාත්මක ඡායාරූපයක්: Dhanuja Menaka / Wikimedia Commons (CC0). '
+                   'මෙය රුවන්පුර අධිවේගී මාර්ගයේ ඉදිකිරීම් ස්ථානය නොවේ.'
+                   if article.get('illustrative_photo') == 'sri_lanka_expressway_cc0' else '')
+    return f"🇱🇰 {title}\n\n{body}{attribution}\n\n🕒 {stamp}\n━━━━━━━━━━━━\nSL NEWS 24/7"
 
 
 def send_text(platform, article):
