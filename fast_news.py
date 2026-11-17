@@ -104,18 +104,17 @@ def save(state):
 def caption(article):
     from zoneinfo import ZoneInfo
     stamp = datetime.fromtimestamp(article['published'], ZoneInfo('Asia/Colombo')).strftime('%Y-%m-%d %H:%M')
-    body = article['summary_si']
-    video = article.get('official_video_url')
-    return (f"🇱🇰 {article['title_si']}\n\n" +
-            (f"{body}\n\n" if body else '') +
-            (f"🎬 වීඩියෝව: {video}\n\n" if video else '') +
-            f"{stamp} | ශ්‍රී ලංකා වේලාව\nSL News 247")
+    title = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '', article['title_si'], flags=re.I)
+    title = title.removeprefix('විස්තරාත්මක පුවත | ')
+    body = re.sub(r'https?://\S+', '', article['summary_si'])
+    body = re.split(r'The post|මේ පිළිබඳ තවත් තොරතුරු පහතින්', body)[0].strip()
+    return f"🇱🇰 {title}\n\n{body}\n\n🕒 {stamp}\n━━━━━━━━━━━━\nSL News 247"
 
 
 def send_text(platform, article):
     from media import post_image
     try:
-        image_path = None if article.get('official_video_url') else post_image(article)
+        image_path = None if len(caption(article)) > 1024 else post_image(article)
     except Exception as exc:
         # No unlicensed substitute and no uncertain platform request on media failure.
         image_path = None
@@ -156,6 +155,9 @@ def send_text(platform, article):
 
 
 def deliver(state, articles, now, preview=False, sender=send_text):
+    # Publish complete reviewed briefs through share_editorial_update only.
+    return {name: {'sent': 0, 'failed': 0, 'uncertain': 0} for name in ('telegram', 'facebook')}, []
+
     results = {name: {'sent': 0, 'failed': 0, 'uncertain': 0} for name in ('telegram', 'facebook')}
     records = state.setdefault('stories', {})
     limit = max(1, min(20, int(os.getenv('MAX_NEWS_PER_RUN', '10'))))
@@ -257,6 +259,8 @@ def maybe_video(state, articles, now, preview):
 
 
 def share_official_video(state, articles, now, preview):
+    return 'disabled_link_posts_by_owner'
+
     from editorial import official_video_for
     history = state.setdefault('official_video_links', {})
     checks = 0
