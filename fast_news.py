@@ -298,6 +298,17 @@ def maybe_video(state, articles, now, preview):
     Path(audio).unlink(missing_ok=True)
     if not create_voice(brief['body_si'], audio):
         return 'skipped_narration_failed'
+    # Ad intervals are explicit newsroom-reviewed cuts for licensed footage only.
+    # Never hide or replace the source watermark/required attribution.
+    registry_path = Path('data/verified_event_media.json')
+    registry = json.loads(registry_path.read_text(encoding='utf-8')) if registry_path.exists() else {}
+    clip_record = registry.get(candidate['id'], {}).get('video', {})
+    if (clip_record.get('ad_segments_reviewed') is True
+            and clip_record.get('ad_segments')):
+        from video import trim_reviewed_ad_segments
+        trimmed = 'output/reviewed_event_footage.mp4'
+        footage = trim_reviewed_ad_segments(
+            footage, trimmed, clip_record['ad_segments'], reviewed=True)
     create_footage_video(footage, candidate['title_si'], candidate['summary_si'], video, audio_path=audio)
     if preview:
         return 'preview_created'
