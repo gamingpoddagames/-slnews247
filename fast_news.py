@@ -113,8 +113,9 @@ def caption(article):
 
 def send_text(platform, article):
     from image import news_card
+    from media import post_image
     try:
-        image_path = news_card(article) if article.get('sample') or article['title_si'].startswith('විස්තරාත්මක පුවත | ') else None
+        image_path = news_card(article) if article.get('sample') or article['title_si'].startswith('විස්තරාත්මක පුවත | ') else post_image(article)
         if platform == 'telegram' and len(caption(article)) > 1024:
             image_path = None
     except Exception as exc:
