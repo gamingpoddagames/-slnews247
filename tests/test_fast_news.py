@@ -376,3 +376,34 @@ class NewsCardTextBoundsTests(unittest.TestCase):
                     self.assertEqual(rendered.size, (1080, 1080))
             finally:
                 os.chdir(previous)
+
+
+class SinhalaGlyphRegressionTests(unittest.TestCase):
+    def test_unicode_range_splits_true_sinhala_from_english(self):
+        from image import script_runs, _sinhala_char
+        self.assertEqual(script_runs('SL NEWS ගෑස් 24/7'), ['SL NEWS ', 'ගෑස්', ' 24/7'])
+        self.assertTrue(_sinhala_char('ග'))
+        self.assertFalse(_sinhala_char('S'))
+        self.assertTrue(_sinhala_char('\u200D'))
+
+    def test_renderer_uses_noto_for_sinhala_and_latin_for_english(self):
+        from PIL import Image, ImageDraw
+        from image import draw_mixed, mixed_width
+        from unittest.mock import patch
+        canvas = Image.new('RGB', (900, 180), 'black')
+        draw = ImageDraw.Draw(canvas)
+        with patch('image.get_font', wraps=__import__('image').get_font) as sino, \
+             patch('image.latin_font', wraps=__import__('image').latin_font) as latin:
+            draw_mixed(draw, (10, 100), 'SL NEWS ගෑස් 24/7', 42)
+            self.assertTrue(sino.called)
+            self.assertTrue(latin.called)
+        self.assertGreater(mixed_width(draw, 'ගෑස්', 42), 10)
+        self.assertIsNotNone(canvas.getbbox())
+
+    def test_correct_sinhala_font_is_not_latin_missing_glyph(self):
+        from PIL import ImageFont
+        from image import get_font, latin_font
+        sinhala = get_font(45)
+        latin = latin_font(45)
+        self.assertNotEqual(sinhala.path, latin.path)
+        self.assertIsNotNone(sinhala.getmask('සිංහල').getbbox())
