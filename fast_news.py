@@ -115,7 +115,9 @@ def send_text(platform, article):
     from image import news_card
     from media import post_image
     try:
-        image_path = news_card(article) if article.get('sample') or article['title_si'].startswith('විස්තරාත්මක පුවත | ') else post_image(article)
+        # Original branded card for every headline; licensed event photos remain optional.
+        # This card is graphic design, not a claimed photograph of the event.
+        image_path = post_image(article) or news_card(article)
         if platform == 'telegram' and len(caption(article)) > 1024:
             image_path = None
     except Exception as exc:
