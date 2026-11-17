@@ -343,3 +343,36 @@ class MultiPublisherCoverageTests(unittest.TestCase):
         self.assertEqual(len(selected),15)
         self.assertEqual(result['facebook']['sent'],0)
 
+
+
+class NewsCardTextBoundsTests(unittest.TestCase):
+    def test_long_sinhala_headline_stays_inside_card(self):
+        from PIL import Image, ImageDraw
+        from image import fit_headline, mixed_width
+        draw = ImageDraw.Draw(Image.new('RGB', (1080, 1080)))
+        title = 'ශ්‍රී ලංකාවේ දිස්ත්‍රික්ක ගණනාවකට බලපාන අයහපත් කාලගුණික තත්ත්වය පිළිබඳ නවතම නිවේදනය සහ අදාළ ප්‍රදේශවලට දැනුම්දීමක්'
+        size, lines, step = fit_headline(draw, title)
+        self.assertEqual(' '.join(lines), title)
+        self.assertTrue(all(mixed_width(draw, line, size) <= 950 for line in lines))
+        self.assertLessEqual(len(lines) * step, 550)
+
+    def test_oversized_unbroken_word_is_rejected_not_clipped(self):
+        from PIL import Image, ImageDraw
+        from image import fit_headline
+        draw = ImageDraw.Draw(Image.new('RGB', (1080, 1080)))
+        with self.assertRaises(ValueError):
+            fit_headline(draw, 'EXTRALONGUNBROKEN' * 100)
+
+    def test_actual_branded_card_is_saved_at_correct_size(self):
+        from PIL import Image
+        from image import news_card
+        story = {'id': 'bounds-test', 'title_si': 'අම්බලන්ගොඩ ප්‍රදේශයේ වැටලීමකින් විශේෂ හෙළිදරව්වක් සිදු වී තිබෙන බව පොලිසිය පවසයි'}
+        with tempfile.TemporaryDirectory() as root:
+            previous = os.getcwd()
+            try:
+                os.chdir(root)
+                path = news_card(story)
+                with Image.open(path) as rendered:
+                    self.assertEqual(rendered.size, (1080, 1080))
+            finally:
+                os.chdir(previous)
