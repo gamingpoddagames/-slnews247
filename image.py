@@ -318,13 +318,20 @@ def news_card(article, image_path=None):
     width, height = 1080, 1350
     canvas = Image.new('RGB', (width, height))
     gradient = ImageDraw.Draw(canvas)
+    # Upper frame: existing warm news colors; lower frame: deep blue.
+    # Keep the transition at the poster's midpoint for a balanced two-tone border.
     for y in range(height):
-        weight = y / height
-        gradient.line((0, y, width, y), fill=(
-            round(255 - 75 * weight),
-            round(142 - 117 * weight),
-            round(23 + 13 * weight),
-        ))
+        if y < height // 2:
+            weight = y / (height // 2)
+            color = (round(255 - 52 * weight),
+                     round(142 - 117 * weight),
+                     round(23 + 28 * weight))
+        else:
+            weight = (y - height // 2) / (height - height // 2)
+            color = (round(17 - 7 * weight),
+                     round(101 - 60 * weight),
+                     round(184 - 79 * weight))
+        gradient.line((0, y, width, y), fill=color)
 
     # Inner panel has a thick rounded white frame and dark lower portion.
     draw = ImageDraw.Draw(canvas)
@@ -340,11 +347,19 @@ def news_card(article, image_path=None):
     else:
         # Honest graphic fallback; do not imply an unrelated or generated
         # picture is a real photograph of the event.
-        draw.rectangle(photo_rect, fill='#293a4e')
-        draw.ellipse((353, 200, 728, 575), outline='#687b93', width=13)
-        draw.line((455, 475, 620, 305), fill='#91a7c0', width=16)
-        draw.line((465, 325, 617, 481), fill='#91a7c0', width=16)
-        draw_mixed(draw, (240, 680), 'පුවත් සිරස්තලය', 53, fill='#e6eef7', bold=True)
+        # Decorative, unmistakably graphic blue field; not fabricated footage.
+        # Brighter at the top and gradually navy at the bottom of the photo area.
+        top, bottom = photo_rect[1], photo_rect[3]
+        for yy in range(top, bottom):
+            t = (yy - top) / (bottom - top)
+            draw.line((photo_rect[0], yy, photo_rect[2], yy), fill=(
+                round(20 - 12 * t), round(113 - 75 * t), round(202 - 75 * t)))
+        draw.rounded_rectangle((212, 238, 870, 556), radius=50,
+                               fill='#104c91', outline='#5ab7f4', width=5)
+        draw.ellipse((375, 271, 709, 521), outline='#68c7fa', width=8)
+        draw.line((463, 447, 623, 329), fill='#9ce1ff', width=15)
+        draw.line((470, 333, 617, 441), fill='#9ce1ff', width=15)
+        draw.line((112, 626, 970, 626), fill='#5ab7f4', width=5)
 
     # Top date and original brand only (no third-party logo/watermarks).
     draw = ImageDraw.Draw(canvas)
