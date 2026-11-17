@@ -25,7 +25,7 @@ def fit(draw, text, box, start, minimum=20):
         font = get_font(size)
         lines = wrap(draw, text, font, width)
         step = int(size * 1.65)
-        if len(lines) * step <= height and all(mixed_width(draw, line, size) <= width for line in lines):
+        if lines and len(lines) * step <= height and all(mixed_width(draw, line, size) <= width for line in lines):
             for line in lines:
                 draw_mixed(draw, (x, y + size), line, size, fill='white')
                 y += step
@@ -38,7 +38,7 @@ def create_card(title, summary, path, image_path=None, height=1920, contextual=T
     draw = ImageDraw.Draw(card)
     draw.rectangle((0, 0, 1080, 16), fill='#ef4056')
     english = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
-    draw.text((65, 65), 'SL NEWS 247', font=ImageFont.truetype(english, 52), fill='white')
+    draw.text((65, 65), 'SL NEWS 24/7', font=ImageFont.truetype(english, 52), fill='white')
     if height == 1920:
         draw_mixed(draw, (65, 196), 'සිංහල පුවත්', 38, fill='#52dbc3')
         photo_box = (45, 270, 1035, 1030)
