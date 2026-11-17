@@ -1,5 +1,5 @@
 {
-  "checked_at": 1794952716.6532116,
+  "checked_at": 1794952767.0844958,
   "configured_feeds": 25,
   "sources": [
     {
@@ -35,7 +35,7 @@
       "source": "Siyatha News",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 9,
+      "fresh_sinhala": 8,
       "feed_url": "https://siyathanews.lk/feed/"
     },
     {
@@ -125,7 +125,7 @@
       "source": "Siyatha Sports",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 1,
+      "fresh_sinhala": 0,
       "feed_url": "https://siyathanews.lk/archives/category/sports-news/feed"
     },
     {
