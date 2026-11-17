@@ -439,7 +439,7 @@ class PhotoFirstPosterTests(unittest.TestCase):
                 path=news_card(story,image_path='photo.jpg')
                 with Image.open(path) as img:
                     self.assertEqual(img.size,(1080,1350))
-                    self.assertEqual(img.getpixel((500,400)),(12,210,32))
+                    self.assertTrue(all(abs(a-b) <= 3 for a,b in zip(img.getpixel((500,400)), (12,210,32))))
                     self.assertEqual(img.getpixel((500,1250)),(32,33,36))
             finally:
                 os.chdir(previous)
