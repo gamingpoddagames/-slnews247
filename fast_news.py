@@ -53,6 +53,33 @@ def complete_sentences(text, limit=1800):
     return ' '.join(sentences)
 
 
+def relevant_summary(title, body):
+    """Reject unrelated feed descriptions, not just text truncation."""
+    if not body or len(body) < 45:
+        return False
+    # Match meaningful Sinhala/Latin words; do not translate English names.
+    words = lambda value: {
+        w.casefold() for w in re.findall(r'[\u0D80-\u0DFF\w]+', value)
+        if len(w) >= 5
+    }
+    excluded = {'ප්‍රදේශයේ', 'සම්බන්ධයෙන්', 'අදාල', 'අදාළ', 'පිළිබඳව',
+                'පිළිබඳ', 'සඳහා', 'සිදුවූ', 'තිබෙනවා', 'තිබේ',
+                'කරයි', 'කෙරේ', 'ලංකාවේ', 'පුවතක්'}
+    keywords = words(title) - excluded
+    if not keywords:
+        return False
+    return bool(keywords & words(body))
+
+
+def publishable(article):
+    """Fail closed for empty, unfinished, or mismatched news stories."""
+    from editorial import brief_for
+    reviewed = brief_for(article) if article.get('id') and article.get('link') else {}
+    raw = reviewed.get('body_si', '') if reviewed else article.get('summary_si', '')
+    text = complete_sentences(raw, 3500)
+    return bool(text and (reviewed or relevant_summary(article['title_si'], text)))
+
+
 def fingerprint(title):
     normalized = ''.join(c for c in unicodedata.normalize('NFC', title).lower()
                          if unicodedata.category(c)[0] in 'LMN')
@@ -79,7 +106,7 @@ def parse_feed(content, source, now):
             continue
         # A short excerpt with attribution, never the full article or publisher photo.
         summary = complete_sentences(item.get('summary', ''), 1800)
-        if fingerprint(summary) == fingerprint(title):
+        if fingerprint(summary) == fingerprint(title) or not relevant_summary(title, summary):
             summary = ''
         articles.append({'id': fingerprint(title), 'title_si': title,
                          'summary_si': summary, 'link': link, 'source': source,
@@ -142,6 +169,8 @@ def caption(article):
 
 
 def send_text(platform, article):
+    if not article.get('sample') and not publishable(article):
+        return {'error': 'missing_or_unrelated_story_details'}
     from image import news_card
     from media import post_image
     try:
@@ -198,6 +227,8 @@ def deliver(state, articles, now, preview=False, sender=send_text):
     limit = max(1, min(20, int(os.getenv('MAX_NEWS_PER_RUN', '10'))))
     selected = []
     for article in articles:
+        if not publishable(article):
+            continue
         record = records.setdefault(article['id'], {'article': article, 'receipts': {}})
         if all(name in record['receipts'] or record.get('uncertain', {}).get(name) for name in results):
             continue
