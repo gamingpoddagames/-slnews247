@@ -271,3 +271,23 @@ class QualityGateTests(unittest.TestCase):
         self.assertEqual(result['facebook']['sent'], 0)
         send.assert_not_called()
 
+
+
+class ReviewedFootageEditsTests(unittest.TestCase):
+    def test_ads_require_review_and_valid_intervals(self):
+        from unittest.mock import patch
+        from video import trim_reviewed_ad_segments
+        with patch('video.probe_footage', return_value={'duration':40, 'has_audio':True}):
+            with self.assertRaises(ValueError):
+                trim_reviewed_ad_segments('in.mp4','out.mp4',[[4,9]],reviewed=False)
+            with self.assertRaises(ValueError):
+                trim_reviewed_ad_segments('in.mp4','out.mp4',[[10,5]],reviewed=True)
+            with self.assertRaises(ValueError):
+                trim_reviewed_ad_segments('in.mp4','out.mp4',[[3,14],[12,21]],reviewed=True)
+            with patch('video.subprocess.run') as run:
+                path=trim_reviewed_ad_segments('in.mp4','out.mp4',[[3,8],[28,33]],reviewed=True)
+                self.assertEqual(path,'out.mp4')
+                cmd=run.call_args.args[0]
+                self.assertIn('-an',cmd)
+                self.assertIn('concat=n=3:v=1:a=0[out]',cmd[cmd.index('-filter_complex')+1])
+
