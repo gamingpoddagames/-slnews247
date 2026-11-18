@@ -42,7 +42,8 @@ SOURCES = [
     ('Lanka Truth Sport', 'https://lankatruth.com/si/?feed=rss2&cat=6'),
 ]
 STATE_FILE = Path('data/sri_lanka_delivery.json')
-MAX_AGE = 12 * 3600
+# A missed GitHub schedule should not permanently lose yesterday's news.
+MAX_AGE = 30 * 3600
 
 
 def clean(text):
@@ -534,11 +535,11 @@ def main():
         save(state)
 
     articles, health = collect(now)
-    # Retain receipts for two days; only publish fresh feed entries.
+    # Keep receipts long enough to suppress repeats after delayed schedules.
     state['stories'] = {key: val for key, val in state.get('stories', {}).items()
-                        if now - val['article']['published'] < 48 * 3600}
+                        if now - val['article']['published'] < 7 * 24 * 3600}
     state['videos'] = {key: val for key, val in state.get('videos', {}).items()
-                       if now - val['at'] < 48 * 3600}
+                       if now - val['at'] < 7 * 24 * 3600}
     report = {'preview': preview, 'feeds': health, 'fresh_unique_articles': len(articles),
               'configured_feeds': len(SOURCES),
               'working_feeds': sum(h.get('http') == 200 for h in health),
