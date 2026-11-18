@@ -203,7 +203,7 @@ def get_font(size, bold=False):
         f'/usr/share/fonts/truetype/noto/NotoSansSinhala-{weight}.ttf',
         f'/usr/share/fonts/truetype/noto/NotoSerifSinhala-{weight}.ttf',
         f'/usr/local/share/fonts/NotoSansSinhala-{weight}.ttf',
-        'assets/fonts/NotoSansSinhala-Variable.ttf',
+        'assets/sinhala_fonts/NotoSansSinhala-Variable.ttf',
     ]
     for candidate in candidates:
         if Path(candidate).exists():
