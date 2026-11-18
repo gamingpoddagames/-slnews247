@@ -1,5 +1,5 @@
 {
-  "checked_at": 1794975264.9991357,
+  "checked_at": 1794979351.8613045,
   "configured_feeds": 25,
   "sources": [
     {
@@ -35,7 +35,7 @@
       "source": "Siyatha News",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 23,
+      "fresh_sinhala": 26,
       "feed_url": "https://siyathanews.lk/feed/"
     },
     {
@@ -139,7 +139,7 @@
       "source": "Siyatha World",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 6,
+      "fresh_sinhala": 9,
       "feed_url": "https://siyathanews.lk/archives/category/world-news/feed"
     },
     {
