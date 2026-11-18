@@ -777,3 +777,27 @@ class RealFootageReliabilityTests(unittest.TestCase):
              patch.object(pipeline,'fallback_video',return_value='original_bulletin'):
             outcome=pipeline.maybe_video({},[article],time.time(),False)
         self.assertEqual(outcome,'original_bulletin')
+
+
+class HistoricalPublisherLinkBulletinTests(unittest.TestCase):
+    def test_old_publisher_link_does_not_block_original_bulletin(self):
+        article={'id':'linked-story','published':time.time(),
+                 'title_si':'මාතර ප්‍රදේශයේ නව පුවතක්',
+                 'summary_si':'මාතර ප්‍රදේශයේ නව පුවතක් සම්බන්ධයෙන් විශේෂ සාකච්ඡාවක් පැවැත්වෙන බව නිලධාරීන් දැනුම් දී තිබේ.',
+                 'link':'https://example.com/linked'}
+        now=time.time()
+        state={'official_video_links':{article['id']:{
+            'url':'https://www.youtube.com/watch?v=X5LpOsYyDiU',
+            'destinations':{'telegram':{'id':'1'},'facebook':{'id':'2'}}}},
+            'stories':{article['id']:{'receipts':{
+                'telegram':{'id':'3'},'facebook':{'id':'4'}}}}}
+        with patch('animated_bulletin.narration_for',return_value='වෙනම සිංහල පුවතකි.'), \
+             patch('animated_bulletin.render_bulletin',return_value='original.mp4'), \
+             patch('telegram.upload_news',return_value=True), \
+             patch('facebook.upload_news',return_value=True), \
+             patch.object(pipeline,'save'):
+            result=pipeline.maybe_animated_bulletin(state,[article],now,False)
+        self.assertEqual(result['status'],'delivered')
+        self.assertEqual(result['article_id'],article['id'])
+        self.assertEqual(result['destinations']['telegram'],'accepted')
+        self.assertEqual(result['destinations']['facebook'],'accepted')
