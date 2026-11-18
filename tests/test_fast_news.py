@@ -832,3 +832,39 @@ class ThreeSceneBroadcastTests(unittest.TestCase):
             self.assertEqual(len(paths),3)
             with Image.open(paths[0]) as photo:
                 self.assertEqual(photo.getpixel((360,500)),(254,0,0))
+
+
+class RssVideoEnclosureTests(unittest.TestCase):
+    def test_extracts_rss_video_without_authorizing_download(self):
+        import json
+        from footage_discovery import discover_candidates
+        now=time.time()
+        from datetime import datetime,timezone
+        date=datetime.fromtimestamp(now-60,timezone.utc).strftime('%a, %d %b %Y %H:%M:%S GMT')
+        xml=f'''<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+        <channel><item><title>මාතර ප්‍රදේශයේ විශේෂ පුවතක්</title>
+        <link>https://example.com/news</link><pubDate>{date}</pubDate>
+        <description>මාතර ප්‍රදේශයේ විශේෂ පුවතක් සම්බන්ධයෙන් නිලධාරීන් විමර්ශන ආරම්භ කර තිබේ.</description>
+        <enclosure url="https://cdn.example.com/event-clip.mp4" type="video/mp4" />
+        <media:content url="https://cdn.example.com/second.webm" type="video/webm"/>
+        </item></channel></rss>'''
+        stories,_=pipeline.parse_feed(xml.encode(),'Video feed',now)
+        self.assertEqual(len(stories),1)
+        self.assertEqual(stories[0]['rss_video_urls'],[
+            'https://cdn.example.com/event-clip.mp4',
+            'https://cdn.example.com/second.webm'])
+        with tempfile.TemporaryDirectory() as directory:
+            result=discover_candidates(stories,output_path=str(Path(directory)/'media.json'),
+                                       finder=lambda _:None)
+            candidates=json.loads(Path(directory,'media.json').read_text())
+        self.assertEqual(result['rss_direct_candidates'],2)
+        self.assertEqual(result['rights_approved'],0)
+        self.assertTrue(all(x['may_download_or_publish'] is False for x in candidates))
+
+    def test_does_not_treat_youtube_or_insecure_url_as_direct_media(self):
+        from rss_video import rss_video_urls
+        item={'enclosures':[
+            {'href':'https://www.youtube.com/watch?v=X5LpOsYyDiU','type':'video/mp4'},
+            {'href':'http://example.com/foo.mp4','type':'video/mp4'},
+            {'href':'https://example.com/approved.mp4','type':'video/mp4'}]}
+        self.assertEqual(rss_video_urls(item),['https://example.com/approved.mp4'])
