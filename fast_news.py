@@ -301,21 +301,38 @@ def maybe_animated_bulletin(state, articles, now, preview):
     if not preview and now - state.get('last_bulletin_at', 0) < 2700:
         return 'waiting_for_45_minute_bulletin_interval'
     history = state.setdefault('bulletins', {})
-    # A bulletin only follows a successfully delivered factual news post.
-    candidate = next((a for a in articles
-                      if a['id'] not in history
-                      and a['id'] not in state.get('official_video_links', {})
-                      and publishable(a)
-                      and (preview or all(dest in state.get('stories', {}).get(a['id'], {}).get('receipts', {})
-                                          for dest in ('telegram', 'facebook')))), None)
+    from animated_bulletin import render_bulletin, narration_for
+    # Skip a headline whose long/empty excerpt cannot be narrated completely.
+    # Try the next eligible story, rather than failing the entire news video scan.
+    candidate, path, failed = None, None, 0
+    for article in articles:
+        if (article['id'] in history
+                or article['id'] in state.get('official_video_links', {})
+                or not publishable(article)
+                or (not preview and not all(
+                    dest in state.get('stories', {}).get(article['id'], {}).get('receipts', {})
+                    for dest in ('telegram', 'facebook')))):
+            continue
+        if len(article.get('title_si','')) > 140:
+            continue
+        try:
+            narration_for(article)
+        except ValueError:
+            continue
+        try:
+            path = render_bulletin(article)
+            candidate = article
+            break
+        except ValueError as exc:
+            failed += 1
+            print('Bulletin skipped unsuitable article:', str(exc)[:150])
+            if failed >= 5:
+                break
+        except Exception as exc:
+            print('Animated bulletin unavailable:', type(exc).__name__, str(exc)[:150])
+            return 'animated_bulletin_failed_' + type(exc).__name__
     if not candidate:
-        return 'no_new_verified_story_for_bulletin'
-    from animated_bulletin import render_bulletin
-    try:
-        path = render_bulletin(candidate)
-    except Exception as exc:
-        print('Animated bulletin unavailable:', type(exc).__name__)
-        return 'animated_bulletin_failed_' + type(exc).__name__
+        return 'no_renderable_news_bulletin_candidate'
     if preview:
         return 'preview_animated_bulletin_created'
     # Store intent before an external API upload to avoid blind duplicates.
