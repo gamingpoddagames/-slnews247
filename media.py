@@ -20,7 +20,10 @@ def choose_media(article, kind):
     if (asset.get('article_url') != article.get('link')
             or asset.get('verified_event') is not True
             or asset.get('rights_verified') is not True
-            or asset.get('attribution_required') is not False
+            or (asset.get('attribution_required') is not False
+                and not (asset.get('attribution_required') is True
+                         and all(asset.get(field) for field in
+                                 ('creator', 'license', 'license_url', 'source_page'))))
             or not asset.get('verification_notes')
             or not asset.get('rights_evidence')
             or not asset.get('sha256')
@@ -111,3 +114,17 @@ def post_image(article):
         if not download_image(url, str(path)):
             return None
     return news_card(article, image_path=str(path), illustrative=True)
+
+def video_credit(article):
+    """Provide mandatory credits for licensed footage with attribution terms."""
+    registry = json.loads(REGISTRY.read_text()) if REGISTRY.exists() else {}
+    asset = registry.get(article.get('id'), {}).get('video', {})
+    if not isinstance(asset, dict) or not asset.get('attribution_required'):
+        return ''
+    if not all(asset.get(field) for field in ('creator','license','license_url','source_page')):
+        return ''
+    return ('\n\n🎥 වීඩියෝ ණය: ' + str(asset['creator'])
+            + ' | ' + str(asset['license'])
+            + '\n' + str(asset['source_page'])
+            + '\nබලපත්‍රය: ' + str(asset['license_url'])
+            + '\nසංස්කරණය: මුල් හඬ ඉවත් කර සිංහල හඬ එකතු කර ඇත.')
