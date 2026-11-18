@@ -1,5 +1,5 @@
 {
-  "checked_at": 1795026472.691847,
+  "checked_at": 1795040267.8417234,
   "configured_feeds": 25,
   "sources": [
     {
@@ -90,7 +90,7 @@
       "source": "Lanka Truth Sinhala",
       "http": 200,
       "entries": 24,
-      "fresh_sinhala": 14,
+      "fresh_sinhala": 10,
       "feed_url": "https://lankatruth.com/si/?feed=rss2"
     },
     {
@@ -146,7 +146,7 @@
       "source": "Lanka Truth World",
       "http": 200,
       "entries": 24,
-      "fresh_sinhala": 1,
+      "fresh_sinhala": 0,
       "feed_url": "https://lankatruth.com/si/?feed=rss2&cat=3"
     },
     {
