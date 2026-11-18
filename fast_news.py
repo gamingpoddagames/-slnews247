@@ -191,10 +191,12 @@ def caption(article):
     attribution = ('\n\n📷 සංකේතාත්මක ඡායාරූපයක්: Dhanuja Menaka / Wikimedia Commons (CC0). '
                    'මෙය රුවන්පුර අධිවේගී මාර්ගයේ ඉදිකිරීම් ස්ථානය නොවේ.'
                    if article.get('illustrative_photo') == 'sri_lanka_expressway_cc0' else '')
+    from media import video_credit
+    video_attribution = video_credit(article) if article.get('licensed_footage') else ''
     video_notice = ('\n\n🎬 මෙය Sinhala narration සහ graphic animation සහිත පුවත් සාරාංශයකි. '
                     'සිද්ධියේ සත්‍ය වීඩියෝ දර්ශන නොවේ.'
                     if article.get('animated_bulletin') else '')
-    return f"🇱🇰 {title}\n\n{body}{attribution}{video_notice}\n\n🕒 {stamp}\n━━━━━━━━━━━━\nSL NEWS 24/7"
+    return f"🇱🇰 {title}\n\n{body}{attribution}{video_notice}{video_attribution}\n\n🕒 {stamp}\n━━━━━━━━━━━━\nSL NEWS 24/7"
 
 
 def send_text(platform, article):
@@ -475,7 +477,7 @@ def maybe_video(state, articles, now, preview):
         recent[candidate['id']]['destinations'][name] = 'unconfirmed'
         save(state)
         try:
-            ok = publish(video, candidate)
+            ok = publish(video, dict(candidate, licensed_footage=True))
         except Exception as exc:
             print('Licensed video upload unconfirmed:', name, type(exc).__name__)
             ok = False
