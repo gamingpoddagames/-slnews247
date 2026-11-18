@@ -110,7 +110,7 @@ class ExactEventMediaTests(unittest.TestCase):
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
                 self.assertIn('files',request.call_args.kwargs)
         with patch('media.choose_video', return_value=None):
-            self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'skipped_no_verified_event_video_or_official_link')
+            self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'no_new_verified_story_for_bulletin')
 
     def test_exact_story_and_nonreuse_guards(self):
         import hashlib, io, json
