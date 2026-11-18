@@ -52,7 +52,7 @@ def download_approved_youtube(article, asset, directory='assets/events'):
         # playlists, cookies, authentication tokens or unrelated videos.
         command = [
             'yt-dlp', '--no-playlist', '--no-progress', '--no-warnings',
-            '--no-check-certificate' if False else '--no-overwrites',
+            '--no-overwrites',
             '--max-filesize', '60M', '--socket-timeout', '15',
             '--retries', '2', '--merge-output-format', 'mp4',
             '-f', 'b[ext=mp4][height<=720]/bv[ext=mp4][height<=720]+ba[ext=m4a]/b[height<=720]',
