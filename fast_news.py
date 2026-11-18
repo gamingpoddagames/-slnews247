@@ -394,7 +394,7 @@ def maybe_video(state, articles, now, preview):
     if not articles:
         return 'no_fresh_story'
     if not preview and now - state.get('last_video_at', 0) < 900 and state.get('video_style') == 'real-footage-v1':
-        return 'waiting_for_15_minute_interval'
+        return fallback_video(state, articles, now, preview)
     recent = state.setdefault('videos', {})
     candidate = next((a for a in articles if a['id'] not in recent), None)
     if not candidate:
@@ -408,7 +408,11 @@ def maybe_video(state, articles, now, preview):
             continue
         if not brief_for(article):
             continue
-        footage = choose_video(article)
+        try:
+            footage = choose_video(article)
+        except Exception as exc:
+            print('Licensed footage unavailable for article:', article['id'], type(exc).__name__)
+            continue
         if footage:
             candidate = article
             break
@@ -421,7 +425,8 @@ def maybe_video(state, articles, now, preview):
     audio = 'output/news_narration.mp3'
     Path(audio).unlink(missing_ok=True)
     if not create_voice(brief['body_si'], audio):
-        return 'skipped_narration_failed'
+        print('Licensed-footage voice unavailable; falling back to original bulletin')
+        return fallback_video(state, articles, now, preview)
     # Ad intervals are explicit newsroom-reviewed cuts for licensed footage only.
     # Never hide or replace the source watermark/required attribution.
     registry_path = Path('data/verified_event_media.json')
@@ -440,7 +445,11 @@ def maybe_video(state, articles, now, preview):
         trimmed = 'output/reviewed_event_footage.mp4'
         footage = trim_reviewed_ad_segments(
             footage, trimmed, clip_record['ad_segments'], reviewed=True)
-    create_footage_video(footage, candidate['title_si'], candidate['summary_si'], video, audio_path=audio)
+    try:
+        create_footage_video(footage, candidate['title_si'], candidate['summary_si'], video, audio_path=audio)
+    except Exception as exc:
+        print('Licensed-footage editing unavailable; falling back to original bulletin:', type(exc).__name__)
+        return fallback_video(state, articles, now, preview)
     if preview:
         return 'preview_created'
     # Prevent duplicate automatic uploads after an ambiguous video request.
@@ -455,15 +464,23 @@ def maybe_video(state, articles, now, preview):
     if os.getenv('TIKTOK_ENABLED', 'false').lower() == 'true':
         publishers.append(('tiktok', tiktok))
     for name, publish in publishers:
+        # Record intent before the request. An ambiguous API response must
+        # not cause a blind retry and duplicate real-event footage.
+        recent[candidate['id']]['destinations'][name] = 'unconfirmed'
+        save(state)
         try:
             ok = publish(video, candidate)
-        except Exception:
+        except Exception as exc:
+            print('Licensed video upload unconfirmed:', name, type(exc).__name__)
             ok = False
         recent[candidate['id']]['destinations'][name] = 'accepted' if ok else 'unconfirmed_or_failed'
         save(state)
-    recent[candidate['id']]['status'] = 'attempted'
+    receipts = recent[candidate['id']]['destinations']
+    recent[candidate['id']]['status'] = (
+        'delivered' if all(value == 'accepted' for value in receipts.values())
+        else 'delivery_needs_review')
     save(state)
-    return recent[candidate['id']]
+    return {'format': 'licensed_event_footage', **recent[candidate['id']]}
 
 
 def send_official_video_link(platform, article, url):
@@ -639,8 +656,14 @@ def main():
             handle.write('## Sri Lanka news results\n```json\n' + json.dumps(report, ensure_ascii=False, indent=2) + '\n```\n')
     if not any(h.get('entries', 0) for h in health):
         raise RuntimeError('All RSS sources unavailable')
+    licensed_video_failed = (
+        isinstance(video_result, dict)
+        and video_result.get('format') == 'licensed_event_footage'
+        and video_result.get('status') != 'delivered'
+    )
     video_issue = (
-        isinstance(animated, str) and animated.startswith(('failed:', 'animated_bulletin_failed_'))
+        licensed_video_failed
+        or isinstance(animated, str) and animated.startswith(('failed:', 'animated_bulletin_failed_'))
         or isinstance(animated, dict)
         and animated.get('format') == 'animated_news_bulletin_not_event_footage'
         and not report['original_video_upload_ok']
