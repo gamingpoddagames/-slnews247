@@ -197,16 +197,21 @@ def send_text(platform, article):
         return {'error': 'missing_or_unrelated_story_details'}
     from image import news_card
     from media import post_image
+    # The event-photo downloader is not allowed to bring down the entire
+    # graphic publishing path. If it fails, use the approved blue fallback.
     try:
-        # Original branded card for every headline; licensed event photos remain optional.
-        # This card is graphic design, not a claimed photograph of the event.
-        image_path = post_image(article) or news_card(article)
-        if platform == 'telegram' and len(caption(article)) > 1024:
-            image_path = None
+        image_path = post_image(article)
     except Exception as exc:
-        # No unlicensed substitute and no uncertain platform request on media failure.
+        print('Event photo unavailable; using original branded card:', type(exc).__name__)
         image_path = None
-        print('No verified event photo:', type(exc).__name__)
+    if not image_path:
+        try:
+            image_path = news_card(article)
+        except Exception as exc:
+            print('Branded card render unavailable:', type(exc).__name__)
+            image_path = None
+    if platform == 'telegram' and len(caption(article)) > 1024:
+        image_path = None
     message = caption(article)
     if platform == 'telegram' and len(message) > 4096:
         return {'error': 'caption_too_long_review_required'}
