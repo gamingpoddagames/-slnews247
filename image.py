@@ -203,12 +203,19 @@ def get_font(size, bold=False):
         f'/usr/share/fonts/truetype/noto/NotoSansSinhala-{weight}.ttf',
         f'/usr/share/fonts/truetype/noto/NotoSerifSinhala-{weight}.ttf',
         f'/usr/local/share/fonts/NotoSansSinhala-{weight}.ttf',
+        'assets/fonts/NotoSansSinhala-Variable.ttf',
     ]
     for candidate in candidates:
         if Path(candidate).exists():
             if not ImageFont.core.HAVE_RAQM:
                 raise RuntimeError('Pillow requires libraqm for correct Sinhala shaping')
-            return ImageFont.truetype(candidate, size, layout_engine=ImageFont.Layout.RAQM)
+            font = ImageFont.truetype(candidate, size, layout_engine=ImageFont.Layout.RAQM)
+            if bold and candidate.endswith('-Variable.ttf'):
+                try:
+                    font.set_variation_by_axes([100, 700])  # width=100, weight=700
+                except (OSError, ValueError):
+                    pass
+            return font
     raise RuntimeError('Sinhala font unavailable: install fonts-noto-core')
 
 
