@@ -30,7 +30,9 @@ def approved_youtube_asset(article, asset):
                 and asset.get('rights_verified') is True
                 and asset.get('audio_replacement_permitted') is True
                 and asset.get('republishing_permitted') is True
-                and asset.get('attribution_required') is False
+                and (asset.get('attribution_required') is False
+                     or (asset.get('attribution_required') is True
+                         and all(asset.get(k) for k in ('creator','license','license_url','source_page'))))
                 and asset.get('rights_evidence')
                 and asset.get('verification_notes'))
 
