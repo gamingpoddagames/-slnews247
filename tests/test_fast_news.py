@@ -555,3 +555,46 @@ class IllustrativePhotoSafetyTests(unittest.TestCase):
         with patch('media.choose_photo',return_value=None),patch('image.download_image') as download:
             self.assertIsNone(post_image(article))
             download.assert_not_called()
+
+
+class VideoSystemRecoveryTests(unittest.TestCase):
+    def test_official_video_fallback_is_not_an_unreachable_return(self):
+        article={'id':'video-story','title_si':'මාතර ප්‍රදේශයේ විශේෂ වීඩියෝ පුවත',
+                 'published':time.time(),'summary_si':'මාතර ප්‍රදේශයේ අද පැවැති විශේෂ වැඩසටහනක් පිළිබඳ නිල වාර්තාවක් නිකුත් කර තිබේ.',
+                 'link':'https://www.lankadeepa.lk/latest_news/video/1-123'}
+        with patch('editorial.official_video_for',return_value='https://www.youtube.com/watch?v=X5LpOsYyDiU'):
+            result=pipeline.share_official_video({},[article],time.time(),True)
+        self.assertEqual(result['format'],'official_video_link')
+
+    def test_official_video_link_sends_real_link_not_photo(self):
+        from unittest.mock import MagicMock
+        article={'id':'a','title_si':'මාතර පුවත්',
+                 'summary_si':'මාතර ප්‍රදේශයේ අද නව පුවතක් පිළිබඳ විස්තර ප්‍රකාශ කර තිබේ.',
+                 'published':time.time()}
+        response=MagicMock(ok=True,status_code=200)
+        response.json.return_value={'ok':True,'result':{'message_id':101}}
+        with patch.dict(os.environ,{'TG_TOKEN':'dummy','TG_CHAT_ID':'dummy'}),patch('requests.post',return_value=response) as send:
+            result=pipeline.send_official_video_link('telegram',article,'https://youtu.be/X5LpOsYyDiU')
+        self.assertEqual(result['format'],'official_video_link')
+        self.assertIn('youtube.com/watch',send.call_args.kwargs['json']['text'])
+        self.assertNotIn('files',send.call_args.kwargs)
+
+    def test_bulletin_throttled_and_only_after_real_news_receipts(self):
+        article={'id':'a','title_si':'මාතර ප්‍රදේශයේ විශේෂ පුවතක්',
+                 'summary_si':'මාතර ප්‍රදේශයේ අද සිදු වූ සිද්ධිය සම්බන්ධයෙන් නිලධාරීන් වැඩිදුර විමර්ශන ආරම්භ කර තිබේ.',
+                 'published':time.time()}
+        now=time.time()
+        self.assertEqual(pipeline.maybe_animated_bulletin({'last_bulletin_at':now-10},[article],now,False),
+                         'waiting_for_45_minute_bulletin_interval')
+        with patch('animated_bulletin.render_bulletin') as render:
+            self.assertEqual(pipeline.maybe_animated_bulletin({},[article],now,False),
+                             'no_new_verified_story_for_bulletin')
+            render.assert_not_called()
+
+    def test_original_bulletin_text_requires_factual_matching_summary(self):
+        from animated_bulletin import narration_for
+        article={'title_si':'මාතර ප්‍රදේශයේ විශේෂ සිද්ධියක්',
+                 'summary_si':'මාතර ප්‍රදේශයේ විශේෂ සිද්ධියක් සම්බන්ධයෙන් පොලිසිය විමර්ශන ආරම්භ කර තිබේ.'}
+        self.assertIn('මාතර',narration_for(article))
+        with self.assertRaises(ValueError):
+            narration_for(dict(article,summary_si=''))
