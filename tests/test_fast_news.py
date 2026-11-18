@@ -753,3 +753,27 @@ class FootageCandidateDiscoveryTests(unittest.TestCase):
             entries=json.loads(path.read_text())
         self.assertEqual(result['examined'],1)
         self.assertEqual(entries[0]['status'],'discovery_unavailable')
+
+
+class RealFootageReliabilityTests(unittest.TestCase):
+    def test_video_lookup_timeout_uses_safe_fallback(self):
+        article={'id':'timeout-video','link':'https://example.com/s','title_si':'විශේෂ පුවත',
+                 'summary_si':'ප්‍රදේශයේ විශේෂ පුවතක් සම්බන්ධයෙන් පරීක්ෂණ පවතී.',
+                 'published':time.time()}
+        with patch('editorial.brief_for',return_value={'body_si':'Verified article'}), \
+             patch('media.choose_video',side_effect=TimeoutError('provider')), \
+             patch.object(pipeline,'fallback_video',return_value='original_bulletin') as fallback:
+            outcome=pipeline.maybe_video({},[article],time.time(),False)
+        self.assertEqual(outcome,'original_bulletin')
+        fallback.assert_called_once()
+
+    def test_licensed_video_voice_failure_never_blocks_original_bulletin(self):
+        article={'id':'voice-video','link':'https://example.com/s','title_si':'විශේෂ පුවත',
+                 'summary_si':'ප්‍රදේශයේ විශේෂ පුවතක් සම්බන්ධයෙන් පරීක්ෂණ පවතී.',
+                 'published':time.time()}
+        with patch('editorial.brief_for',return_value={'body_si':'Verified article'}), \
+             patch('media.choose_video',return_value='reviewed.mp4'), \
+             patch('voice.create_voice',return_value=False), \
+             patch.object(pipeline,'fallback_video',return_value='original_bulletin'):
+            outcome=pipeline.maybe_video({},[article],time.time(),False)
+        self.assertEqual(outcome,'original_bulletin')
