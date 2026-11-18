@@ -36,12 +36,12 @@ jobs:
         run: |
           set -e
           python -m pip install -r requirements.txt
-          mkdir -p assets/fonts "$RUNNER_TEMP/newsbin"
+          mkdir -p assets/sinhala_fonts "$RUNNER_TEMP/newsbin"
           # Google Fonts' Noto Sans Sinhala (SIL Open Font License).
           curl -fLsS --retry 3 --max-time 75 \
             'https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssinhala/NotoSansSinhala%5Bwdth%2Cwght%5D.ttf' \
-            -o assets/fonts/NotoSansSinhala-Variable.ttf
-          test "$(wc -c < assets/fonts/NotoSansSinhala-Variable.ttf)" -gt 100000
+            -o assets/sinhala_fonts/NotoSansSinhala-Variable.ttf
+          test "$(wc -c < assets/sinhala_fonts/NotoSansSinhala-Variable.ttf)" -gt 100000
           FFMPEG_BINARY=$(python -c 'import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())')
           ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/newsbin/ffmpeg"
           echo "$RUNNER_TEMP/newsbin" >> "$GITHUB_PATH"
