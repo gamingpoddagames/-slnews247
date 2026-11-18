@@ -126,9 +126,14 @@ def parse_feed(content, source, now):
         summary = complete_sentences(item.get('summary', ''), 1800)
         if fingerprint(summary) == fingerprint(title) or not relevant_summary(title, summary):
             summary = ''
-        articles.append({'id': fingerprint(title), 'title_si': title,
-                         'summary_si': summary, 'link': link, 'source': source,
-                         'published': published})
+        from rss_video import rss_video_urls
+        video_urls = rss_video_urls(item)
+        article = {'id': fingerprint(title), 'title_si': title,
+                   'summary_si': summary, 'link': link, 'source': source,
+                   'published': published}
+        if video_urls:
+            article['rss_video_urls'] = video_urls
+        articles.append(article)
     return articles, len(feed.entries)
 
 
