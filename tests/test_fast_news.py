@@ -706,3 +706,24 @@ class QueuedRunDuplicateVideoTests(unittest.TestCase):
         self.assertLess(refresh,run)
         self.assertIn('git show origin/main:data/sri_lanka_delivery.json > data/sri_lanka_delivery.json',
                       workflow[refresh:run])
+
+
+class MediaFailureRecoveryTests(unittest.TestCase):
+    def test_photo_download_failure_uses_blue_gradient_card(self):
+        from unittest.mock import MagicMock
+        article = {'id':'news-media-error','title_si':'මාතර ප්‍රදේශයේ වැදගත් පුවතක්',
+                   'published':time.time(),'link':'https://example.com/newstory',
+                   'summary_si':'මාතර ප්‍රදේශයේ වැදගත් පුවතක් පිළිබඳ නිල වාර්තාවක් නිකුත් කර තිබේ.'}
+        reply=MagicMock(); reply.ok=True
+        reply.json.return_value={'ok':True,'result':{'message_id':777}}
+        with tempfile.TemporaryDirectory() as directory:
+            card=Path(directory)/'branded.png'
+            card.write_bytes(b'news-card')
+            with patch('media.post_image',side_effect=ConnectionError('photo unavailable')), \
+                 patch('image.news_card',return_value=str(card)) as renderer, \
+                 patch.dict(os.environ,{'TG_TOKEN':'token','TG_CHAT_ID':'123'}), \
+                 patch('requests.post',return_value=reply) as request:
+                result=pipeline.send_text('telegram',article)
+        self.assertEqual(result['format'],'photo')
+        renderer.assert_called_once_with(article)
+        self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
