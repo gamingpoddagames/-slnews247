@@ -54,10 +54,19 @@ def merge_state(remote, local):
             if isinstance(older, dict) and isinstance(local_entry, dict):
                 updated = {**older, **local_entry}
                 if 'destinations' in older or 'destinations' in local_entry:
-                    updated['destinations'] = {
-                        **(older.get('destinations') or {}),
-                        **(local_entry.get('destinations') or {}),
-                    }
+                    destinations = dict(older.get('destinations') or {})
+                    for platform, incoming in (local_entry.get('destinations') or {}).items():
+                        previous = destinations.get(platform)
+                        # A stale worker must never overwrite a confirmed
+                        # delivery with an unconfirmed/failed request.
+                        successful = lambda value: (
+                            value is True or value == 'accepted'
+                            or isinstance(value, dict) and bool(value.get('id'))
+                        )
+                        if successful(previous) and not successful(incoming):
+                            continue
+                        destinations[platform] = incoming
+                    updated['destinations'] = destinations
                 merged[article_id] = updated
         result[key] = merged
     for key in ('last_video_at', 'last_bulletin_at'):
