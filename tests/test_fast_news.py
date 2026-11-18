@@ -868,3 +868,39 @@ class RssVideoEnclosureTests(unittest.TestCase):
             {'href':'http://example.com/foo.mp4','type':'video/mp4'},
             {'href':'https://example.com/approved.mp4','type':'video/mp4'}]}
         self.assertEqual(rss_video_urls(item),['https://example.com/approved.mp4'])
+
+
+class AuthorizedPublisherVideoTests(unittest.TestCase):
+    def test_unapproved_youtube_video_cannot_download(self):
+        from authorized_youtube import approved_youtube_asset, download_approved_youtube
+        article={'id':'story','link':'https://siyathanews.lk/story'}
+        video={'youtube_url':'https://www.youtube.com/watch?v=X5LpOsYyDiU',
+               'verified_article_video_url':'https://www.youtube.com/watch?v=X5LpOsYyDiU',
+               'article_url':article['link'],'verified_event':True,
+               'real_footage_verified':True,'verification_notes':'exact story'}
+        self.assertFalse(approved_youtube_asset(article,video))
+        with patch('subprocess.run') as run:
+            self.assertIsNone(download_approved_youtube(article,video))
+        run.assert_not_called()
+
+    def test_granted_youtube_video_is_allowed_for_dubbing(self):
+        from authorized_youtube import approved_youtube_asset
+        article={'id':'story','link':'https://siyathanews.lk/story'}
+        video={'youtube_url':'https://www.youtube.com/watch?v=X5LpOsYyDiU',
+               'verified_article_video_url':'https://www.youtube.com/watch?v=X5LpOsYyDiU',
+               'article_url':article['link'],'verified_event':True,
+               'real_footage_verified':True,'verification_notes':'verified exact footage',
+               'rights_verified':True,'audio_replacement_permitted':True,
+               'republishing_permitted':True,'attribution_required':False,
+               'rights_evidence':'Documented grant from rights holder'}
+        self.assertTrue(approved_youtube_asset(article,video))
+        self.assertFalse(approved_youtube_asset(article,dict(video,republishing_permitted=False)))
+
+    def test_invalid_player_is_not_treated_as_downloadable_footage(self):
+        from authorized_youtube import approved_youtube_asset
+        article={'id':'story','link':'https://siyathanews.lk/story'}
+        self.assertFalse(approved_youtube_asset(article,{
+           'youtube_url':'https://example.com/news.mp4',
+           'article_url':article['link'],
+           'verified_event':True,'rights_verified':True,
+           'audio_replacement_permitted':True,'republishing_permitted':True}))
