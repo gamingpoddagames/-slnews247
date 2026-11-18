@@ -3555,6 +3555,75 @@
         }
       },
       "uncertain": {}
+    },
+    "e8f9d6beeb69bc64e6f3bb21": {
+      "article": {
+        "id": "e8f9d6beeb69bc64e6f3bb21",
+        "title_si": "’’හස්ති සේනා’’ යාං ඔය පීරති",
+        "summary_si": "‘හස්ති සේනා’ ජාතික මෙහෙයුම යටතේ කැබිතිගොල්ලෑව, යාං ඔය – වාහල්කඩ ප්‍රදේශයේ විශේෂ මෙහෙයුමක් අද ආරම්භ කෙරිණි.",
+        "link": "https://www.lankadeepa.lk/latest_news/’’හස්ති-සේනා’’-යාං-ඔය-පීරති/1-700850",
+        "source": "Lankadeepa Latest",
+        "published": 1795013820
+      },
+      "receipts": {
+        "telegram": {
+          "id": "905",
+          "at": 1795014864.119605,
+          "format": "photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126674317318605",
+          "at": 1795014864.119605,
+          "format": "photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "cb64f9e2d303d3a86ecdf5bb": {
+      "article": {
+        "id": "cb64f9e2d303d3a86ecdf5bb",
+        "title_si": "මහර නඩු බඩු කාමරයේ නිමි ඇඳුම් තොගයක් අතුරුදන්",
+        "summary_si": "මහර මහේස්ත්‍රාත් අධිකරණයේ නඩු බඩු කාමරයේ තිබූ නිමි ඇදුම් බහාලූ පොහොර උර කිසිවකු සොරාගෙන ඇති බවට මහර මහේස්ත්‍රාත් අධිකරණයේ රෙජිස්ට්‍රාර් වරිය පැමිණිල්ලක් කර ඇති බව කඩවත පොලිසිය පවසයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/මහර-නඩු-බඩු-කාමරයේ-නිමි-ඇඳුම්-තොගයක්-අතුරුදන්/1-700848",
+        "source": "Lankadeepa Latest",
+        "published": 1795013340
+      },
+      "receipts": {
+        "telegram": {
+          "id": "906",
+          "at": 1795014864.119605,
+          "format": "photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126674401318605",
+          "at": 1795014864.119605,
+          "format": "photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "1d4347e1eef779bd6670ebf6": {
+      "article": {
+        "id": "1d4347e1eef779bd6670ebf6",
+        "title_si": "කාවන්තිස්සගේ මරණයට හේතුව අධිකරණයෙන් එළියට",
+        "summary_si": "කාවන්තිස්‌ස හස්තියා මිය යෑමට හේතුව ලෙස මහාන්ත්‍රයේ ගැට ගැසිමි සහ ඒ ආශ්‍රිතව සිදු වූ පෙස්ටික් කම්පනය septic ahock සහ ඉන් පසු සිදු වූ බහු අවයව සංකූලතා හේතු වු බවට කාවන්තිස්ස හස්තියාගේ පශ්චාත් මරණ පරීක්ෂණය පැවැත්වු පේරාදෙණිය විශ්ව විද්‍යාලයේ පශුවෛද්‍ය හා සත්ත්ව විද්‍යා පීඨයේ මහචාර්ය ආර්. ආර්. එමි. කේ. කේ.",
+        "link": "https://www.lankadeepa.lk/latest_news/කාවන්තිස්සගේ-මරණයට-හේතුව-අධිකරණයෙන්-එළියට/1-700847",
+        "source": "Lankadeepa Latest",
+        "published": 1795012620
+      },
+      "receipts": {
+        "telegram": {
+          "id": "907",
+          "at": 1795014864.119605,
+          "format": "photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126674473318605",
+          "at": 1795014864.119605,
+          "format": "photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -3576,7 +3645,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795012084.7199488,
+  "last_scan_at": 1795014864.119605,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -3763,7 +3832,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "e8f9d6beeb69bc64e6f3bb21": {
+      "at": 1795014864.119605,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795012084.7199488
+  "last_bulletin_at": 1795014864.119605
 }
