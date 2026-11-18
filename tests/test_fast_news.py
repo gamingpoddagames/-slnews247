@@ -904,3 +904,31 @@ class AuthorizedPublisherVideoTests(unittest.TestCase):
            'article_url':article['link'],
            'verified_event':True,'rights_verified':True,
            'audio_replacement_permitted':True,'republishing_permitted':True}))
+
+
+class LicensedAttributionVideoTests(unittest.TestCase):
+    def test_open_license_with_full_attribution_is_eligible(self):
+        from authorized_youtube import approved_youtube_asset
+        article={'id':'commons-record','link':'https://example.com/news'}
+        asset={
+            'youtube_url':'https://www.youtube.com/watch?v=X5LpOsYyDiU',
+            'verified_article_video_url':'https://www.youtube.com/watch?v=X5LpOsYyDiU',
+            'article_url':article['link'],'verified_event':True,
+            'real_footage_verified':True,'rights_verified':True,
+            'audio_replacement_permitted':True,'republishing_permitted':True,
+            'attribution_required':True,'verification_notes':'Matched exact event',
+            'rights_evidence':'Verified CC license',
+            'creator':'Example creator','license':'CC BY 4.0',
+            'license_url':'https://creativecommons.org/licenses/by/4.0/',
+            'source_page':'https://example.com/video'}
+        self.assertTrue(approved_youtube_asset(article,asset))
+        self.assertFalse(approved_youtube_asset(article,dict(asset,creator='')))
+
+    def test_real_footage_credit_in_caption(self):
+        article={'id':'test-credit','title_si':'මාතර පුවතක්','summary_si':'මාතර පුවතක් සම්බන්ධයෙන් තවත් විස්තරයක් වාර්තා වී තිබේ.',
+                 'link':'https://example.com/story','published':time.time(),
+                 'licensed_footage':True}
+        with patch('media.video_credit',return_value='\\n\\nCC BY: Example Creator') as credits:
+            caption=pipeline.caption(article)
+        credits.assert_called_once_with(article)
+        self.assertIn('CC BY: Example Creator',caption)
