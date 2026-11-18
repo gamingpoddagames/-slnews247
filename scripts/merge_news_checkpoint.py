@@ -41,6 +41,30 @@ def merge_state(remote, local):
         old.setdefault('article', record.get('article'))
         stories[key] = old
     result['stories'] = stories
+    # Preserve all non-headline production journals as well. Formerly only
+    # 'stories' survived this merge, silently dropping video cooldowns,
+    # official-video-link receipts and editorial history every run.
+    for key in ('videos', 'bulletins', 'official_video_links', 'editorial_updates'):
+        merged = dict(remote.get(key) or {})
+        for article_id, local_entry in (local.get(key) or {}).items():
+            if article_id not in merged:
+                merged[article_id] = local_entry
+                continue
+            older = merged[article_id]
+            if isinstance(older, dict) and isinstance(local_entry, dict):
+                updated = {**older, **local_entry}
+                if 'destinations' in older or 'destinations' in local_entry:
+                    updated['destinations'] = {
+                        **(older.get('destinations') or {}),
+                        **(local_entry.get('destinations') or {}),
+                    }
+                merged[article_id] = updated
+        result[key] = merged
+    for key in ('last_video_at', 'last_bulletin_at'):
+        result[key] = max(remote.get(key, 0), local.get(key, 0))
+    for key in ('video_style', 'facebook_design_sample_v1'):
+        if key in local and key not in result:
+            result[key] = local[key]
     return result
 
 
