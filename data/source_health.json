@@ -1,11 +1,13 @@
 {
-  "checked_at": 1794982146.2615962,
+  "checked_at": 1794982190.7345212,
   "configured_feeds": 25,
   "sources": [
     {
       "source": "Ada Derana Sinhala",
-      "error": "HTTPError",
-      "http": 403
+      "http": 200,
+      "entries": 25,
+      "fresh_sinhala": 16,
+      "feed_url": "https://sinhala.adaderana.lk/rss.php"
     },
     {
       "source": "Dinamina",
@@ -102,24 +104,18 @@
     },
     {
       "source": "Neth Sports",
-      "http": 200,
-      "entries": 9,
-      "fresh_sinhala": 2,
-      "feed_url": "https://www.nethnews.lk/sports/feed/"
+      "error": "HTTPError",
+      "http": 403
     },
     {
       "source": "Neth International",
-      "http": 200,
-      "entries": 9,
-      "fresh_sinhala": 4,
-      "feed_url": "https://www.nethnews.lk/international-news/feed/"
+      "error": "HTTPError",
+      "http": 403
     },
     {
       "source": "Neth Politics",
-      "http": 200,
-      "entries": 9,
-      "fresh_sinhala": 5,
-      "feed_url": "https://www.nethnews.lk/politics/feed/"
+      "error": "HTTPError",
+      "http": 403
     },
     {
       "source": "Siyatha Sports",
