@@ -312,7 +312,8 @@ def maybe_animated_bulletin(state, articles, now, preview):
     candidate, path, failed = None, None, 0
     for article in articles:
         if (article['id'] in history
-                or article['id'] in state.get('official_video_links', {})
+                # An older publisher-link receipt must not prevent a new
+                # original Sinhala video for the same news story.
                 or not publishable(article)
                 or (not preview and not all(
                     dest in state.get('stories', {}).get(article['id'], {}).get('receipts', {})
