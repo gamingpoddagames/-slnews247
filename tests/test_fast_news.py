@@ -110,7 +110,7 @@ class ExactEventMediaTests(unittest.TestCase):
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
                 self.assertIn('files',request.call_args.kwargs)
         with patch('media.choose_video', return_value=None):
-            self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'no_new_verified_story_for_bulletin')
+            self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'no_renderable_news_bulletin_candidate')
 
     def test_exact_story_and_nonreuse_guards(self):
         import hashlib, io, json
@@ -558,6 +558,23 @@ class IllustrativePhotoSafetyTests(unittest.TestCase):
 
 
 class VideoSystemRecoveryTests(unittest.TestCase):
+
+    def test_skips_unnarratable_story_and_uses_next_delivered_story(self):
+        now=time.time()
+        bad={'id':'bad','title_si':'මාතර පුවතක්','summary_si':'', 'published':now}
+        good={'id':'good','title_si':'මාතර ප්‍රදේශයේ විශේෂ සිද්ධියක්',
+              'summary_si':'මාතර ප්‍රදේශයේ විශේෂ සිද්ධියක් සම්බන්ධයෙන් පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
+              'published':now}
+        state={'stories':{'bad':{'receipts':{'telegram':{},'facebook':{}}},
+                         'good':{'receipts':{'telegram':{},'facebook':{}}}}}
+        with patch('animated_bulletin.render_bulletin',return_value='demo.mp4'), \\
+             patch.object(pipeline,'save'), \\
+             patch('telegram.upload_news',return_value=True), \\
+             patch('facebook.upload_news',return_value=True):
+            report=pipeline.maybe_animated_bulletin(state,[bad,good],now,False)
+        self.assertEqual(report['article_id'],'good')
+        self.assertEqual(report['destinations']['telegram'],'accepted')
+
     def test_official_video_fallback_is_not_an_unreachable_return(self):
         article={'id':'video-story','title_si':'මාතර ප්‍රදේශයේ විශේෂ වීඩියෝ පුවත',
                  'published':time.time(),'summary_si':'මාතර ප්‍රදේශයේ අද පැවැති විශේෂ වැඩසටහනක් පිළිබඳ නිල වාර්තාවක් නිකුත් කර තිබේ.',
@@ -588,7 +605,7 @@ class VideoSystemRecoveryTests(unittest.TestCase):
                          'waiting_for_45_minute_bulletin_interval')
         with patch('animated_bulletin.render_bulletin') as render:
             self.assertEqual(pipeline.maybe_animated_bulletin({},[article],now,False),
-                             'no_new_verified_story_for_bulletin')
+                             'no_renderable_news_bulletin_candidate')
             render.assert_not_called()
 
     def test_original_bulletin_text_requires_factual_matching_summary(self):
