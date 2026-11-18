@@ -3624,6 +3624,29 @@
         }
       },
       "uncertain": {}
+    },
+    "6ecfca61f652854f031bc008": {
+      "article": {
+        "id": "6ecfca61f652854f031bc008",
+        "title_si": "වෛද්‍ය පුරප්පාඩු ඉක්මනින් පුරවනවා - සෞඛ්‍ය ඇමැති",
+        "summary_si": "රට පුරා රෝහල්වල ඉදිරි වසර තුනේදී ඇති වනු ඇතැයි අපේක්ෂා කරන වෛද්‍ය පුරප්පාඩු 7000 ප්‍රමාද නොකර පිරවීමට දැනටමත් සියලු ක්‍රියාමාර්ග ගෙන අැතැයි සෞඛ්‍ය හා ජනමාධ්‍ය අමාත්‍ය වෛද්‍ය නලින්ද ජයතිස්ස මහතා පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/වෛද්‍ය-පුරප්පාඩු-ඉක්මනින්-පුරවනවා---සෞඛ්‍ය ඇමැති/1-700849",
+        "source": "Lankadeepa Latest",
+        "published": 1795013580
+      },
+      "receipts": {
+        "telegram": {
+          "id": "912",
+          "at": 1795021357.4055903,
+          "format": "photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126680821318605",
+          "at": 1795021357.4055903,
+          "format": "photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -3645,7 +3668,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795019452.5144618,
+  "last_scan_at": 1795021357.4055903,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -3856,7 +3879,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "6ecfca61f652854f031bc008": {
+      "at": 1795021357.4055903,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795018880.7838008
+  "last_bulletin_at": 1795021357.4055903
 }
