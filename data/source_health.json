@@ -1,13 +1,11 @@
 {
-  "checked_at": 1794975147.8684456,
+  "checked_at": 1794975264.9991357,
   "configured_feeds": 25,
   "sources": [
     {
       "source": "Ada Derana Sinhala",
-      "http": 200,
-      "entries": 25,
-      "fresh_sinhala": 15,
-      "feed_url": "https://sinhala.adaderana.lk/rss.php"
+      "error": "HTTPError",
+      "http": 403
     },
     {
       "source": "Dinamina",
@@ -35,8 +33,10 @@
     },
     {
       "source": "Siyatha News",
-      "error": "ReadTimeout",
-      "http": null
+      "http": 200,
+      "entries": 50,
+      "fresh_sinhala": 23,
+      "feed_url": "https://siyathanews.lk/feed/"
     },
     {
       "source": "ITN News",
@@ -69,13 +69,17 @@
     },
     {
       "source": "Lankadeepa Video News",
-      "error": "ReadTimeout",
-      "http": null
+      "http": 200,
+      "entries": 12,
+      "fresh_sinhala": 3,
+      "feed_url": "https://www.lankadeepa.lk/rss/videos/12"
     },
     {
       "source": "Lankadeepa National",
-      "error": "ReadTimeout",
-      "http": null
+      "http": 200,
+      "entries": 12,
+      "fresh_sinhala": 0,
+      "feed_url": "https://www.lankadeepa.lk/rss/news/48"
     },
     {
       "source": "Neth News",
@@ -91,8 +95,10 @@
     },
     {
       "source": "Lankadeepa Politics",
-      "error": "ReadTimeout",
-      "http": null
+      "http": 200,
+      "entries": 12,
+      "fresh_sinhala": 0,
+      "feed_url": "https://www.lankadeepa.lk/rss/politics/13"
     },
     {
       "source": "Neth Sports",
