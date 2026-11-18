@@ -801,3 +801,34 @@ class HistoricalPublisherLinkBulletinTests(unittest.TestCase):
         self.assertEqual(result['article_id'],article['id'])
         self.assertEqual(result['destinations']['telegram'],'accepted')
         self.assertEqual(result['destinations']['facebook'],'accepted')
+
+
+class ThreeSceneBroadcastTests(unittest.TestCase):
+    def test_three_distinct_broadcast_scenes_are_generated(self):
+        from animated_bulletin import build_scene_images
+        article={'id':'scene-story','title_si':'මාතර ප්‍රදේශයේ නවතම පුවතක්',
+                 'link':'https://example.com/news','published':time.time()}
+        script='මාතර ප්‍රදේශයේ නවතම පුවතක්. මාතර ප්‍රදේශයේ නිලධාරීන් සාකච්ඡාවක් පැවැත්වූහ. ඉන් අනතුරුව කරුණු ප්‍රකාශ කළහ.'
+        with tempfile.TemporaryDirectory() as directory, \
+             patch('media.choose_photo',return_value=None):
+            paths=build_scene_images(article,script,directory)
+            self.assertEqual(len(paths),3)
+            from PIL import Image,ImageChops
+            pics=[Image.open(p).copy() for p in paths]
+            self.assertTrue(all(pic.size==(720,1280) for pic in pics))
+            self.assertIsNotNone(ImageChops.difference(pics[0],pics[1]).getbbox())
+            self.assertIsNotNone(ImageChops.difference(pics[1],pics[2]).getbbox())
+
+    def test_verified_event_photo_is_used_when_available(self):
+        from animated_bulletin import build_scene_images
+        from PIL import Image
+        article={'id':'scene-photo','title_si':'මාතර ප්‍රදේශයේ නවතම පුවතක්',
+                 'link':'https://example.com/news','published':time.time()}
+        with tempfile.TemporaryDirectory() as directory:
+            image=Path(directory)/'verified.jpg'
+            Image.new('RGB',(800,800),'red').save(image)
+            with patch('media.choose_photo',return_value=str(image)):
+                paths=build_scene_images(article,'මාතර නව පුවතක්. කරුණු වාර්තා වී තිබේ.',Path(directory)/'slides')
+            self.assertEqual(len(paths),3)
+            with Image.open(paths[0]) as photo:
+                self.assertEqual(photo.getpixel((360,500)),(254,0,0))
