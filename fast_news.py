@@ -286,6 +286,63 @@ def deliver(state, articles, now, preview=False, sender=send_text):
     return results, selected
 
 
+def maybe_animated_bulletin(state, articles, now, preview):
+    """One clearly labelled, original moving Sinhala bulletin per 45 minutes.
+
+    Source footage is never fabricated. Video delivery is checkpointed before
+    external requests, so lost responses do not cause duplicate uploads.
+    """
+    if os.getenv('VIDEO_BULLETINS_ENABLED', 'true').lower() != 'true':
+        return 'animated_bulletins_disabled'
+    if not preview and now - state.get('last_bulletin_at', 0) < 2700:
+        return 'waiting_for_45_minute_bulletin_interval'
+    history = state.setdefault('bulletins', {})
+    # A bulletin only follows a successfully delivered factual news post.
+    candidate = next((a for a in articles
+                      if a['id'] not in history and publishable(a)
+                      and (preview or all(dest in state.get('stories', {}).get(a['id'], {}).get('receipts', {})
+                                          for dest in ('telegram', 'facebook')))), None)
+    if not candidate:
+        return 'no_new_verified_story_for_bulletin'
+    from animated_bulletin import render_bulletin
+    try:
+        path = render_bulletin(candidate)
+    except Exception as exc:
+        print('Animated bulletin unavailable:', type(exc).__name__)
+        return 'animated_bulletin_failed_' + type(exc).__name__
+    if preview:
+        return 'preview_animated_bulletin_created'
+    # Store intent before an external API upload to avoid blind duplicates.
+    history[candidate['id']] = {'at': now, 'status': 'started', 'destinations': {}}
+    state['last_bulletin_at'] = now
+    save(state)
+    from telegram import upload_news as send_telegram
+    from facebook import upload_news as send_facebook
+    for platform, upload in (('telegram', send_telegram), ('facebook', send_facebook)):
+        history[candidate['id']]['destinations'][platform] = 'unconfirmed'
+        save(state)
+        try:
+            ok = upload(path, candidate)
+        except Exception as exc:
+            print('Bulletin upload exception:', platform, type(exc).__name__)
+            ok = False
+        history[candidate['id']]['destinations'][platform] = (
+            'accepted' if ok else 'unconfirmed_or_failed')
+        save(state)
+    history[candidate['id']]['status'] = 'attempted'
+    save(state)
+    return {'format': 'animated_news_bulletin_not_event_footage',
+            'article_id': candidate['id'],
+            'destinations': history[candidate['id']]['destinations']}
+
+
+def fallback_video(state, articles, now, preview):
+    linked = share_official_video(state, articles, now, preview)
+    if not isinstance(linked, str) or linked != 'skipped_no_verified_event_video_or_official_link':
+        return linked
+    return maybe_animated_bulletin(state, articles, now, preview)
+
+
 def maybe_video(state, articles, now, preview):
     if not articles:
         return 'no_fresh_story'
@@ -294,7 +351,7 @@ def maybe_video(state, articles, now, preview):
     recent = state.setdefault('videos', {})
     candidate = next((a for a in articles if a['id'] not in recent), None)
     if not candidate:
-        return share_official_video(state, articles, now, preview)
+        return fallback_video(state, articles, now, preview)
     from media import choose_video
     from editorial import brief_for
     candidate = None
@@ -309,7 +366,7 @@ def maybe_video(state, articles, now, preview):
             candidate = article
             break
     if not candidate:
-        return share_official_video(state, articles, now, preview)
+        return fallback_video(state, articles, now, preview)
     from video import create_footage_video
     video = 'output/news.mp4'
     from voice import create_voice
