@@ -589,6 +589,13 @@ def main():
               'failed_feeds': [h['source'] for h in health if h.get('http') != 200],
               'publishable_articles': sum(publishable(a) for a in articles),
               'tiktok': 'enabled' if os.getenv('TIKTOK_ENABLED', 'false').lower() == 'true' else 'blocked_authorization_required'}
+    # Find actual incident video links for permission review, without copying
+    # broadcaster footage or treating a public URL as a reuse license.
+    try:
+        from footage_discovery import discover_candidates
+        report['footage_discovery'] = discover_candidates(articles)
+    except Exception as exc:
+        report['footage_discovery'] = {'status': 'unavailable', 'error': type(exc).__name__}
     delivery, selected = deliver(state, articles, now, preview)
     report['quality_gate_skipped'] = sum(not publishable(article) for article in articles)
     report['delivery'] = delivery
