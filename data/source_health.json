@@ -1,5 +1,5 @@
 {
-  "checked_at": 1795023256.41438,
+  "checked_at": 1795023288.0684745,
   "configured_feeds": 25,
   "sources": [
     {
@@ -104,24 +104,18 @@
     },
     {
       "source": "Neth Sports",
-      "http": 200,
-      "entries": 9,
-      "fresh_sinhala": 0,
-      "feed_url": "https://www.nethnews.lk/sports/feed/"
+      "error": "HTTPError",
+      "http": 403
     },
     {
       "source": "Neth International",
-      "http": 200,
-      "entries": 9,
-      "fresh_sinhala": 1,
-      "feed_url": "https://www.nethnews.lk/international-news/feed/"
+      "error": "HTTPError",
+      "http": 403
     },
     {
       "source": "Neth Politics",
-      "http": 200,
-      "entries": 9,
-      "fresh_sinhala": 4,
-      "feed_url": "https://www.nethnews.lk/politics/feed/"
+      "error": "HTTPError",
+      "http": 403
     },
     {
       "source": "Siyatha Sports",
