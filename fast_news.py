@@ -291,15 +291,15 @@ def deliver(state, articles, now, preview=False, sender=send_text):
 
 
 def maybe_animated_bulletin(state, articles, now, preview):
-    """One clearly labelled, original moving Sinhala bulletin per 45 minutes.
+    """One clearly labelled, original moving Sinhala bulletin per 15 minutes.
 
     Source footage is never fabricated. Video delivery is checkpointed before
     external requests, so lost responses do not cause duplicate uploads.
     """
     if os.getenv('VIDEO_BULLETINS_ENABLED', 'true').lower() != 'true':
         return 'animated_bulletins_disabled'
-    if not preview and now - state.get('last_bulletin_at', 0) < 2700:
-        return 'waiting_for_45_minute_bulletin_interval'
+    if not preview and now - state.get('last_bulletin_at', 0) < 900:
+        return 'waiting_for_15_minute_bulletin_interval'
     history = state.setdefault('bulletins', {})
     from animated_bulletin import render_bulletin, narration_for
     # Skip a headline whose long/empty excerpt cannot be narrated completely.
@@ -326,7 +326,7 @@ def maybe_animated_bulletin(state, articles, now, preview):
         except ValueError as exc:
             failed += 1
             print('Bulletin skipped unsuitable article:', str(exc)[:150])
-            if failed >= 5:
+            if failed >= 12:
                 break
         except Exception as exc:
             print('Animated bulletin unavailable:', type(exc).__name__, str(exc)[:150])
@@ -368,7 +368,7 @@ def fallback_video(state, articles, now, preview):
         return bulletin
     if isinstance(bulletin, str) and bulletin in (
             'no_new_verified_story_for_bulletin',
-            'waiting_for_45_minute_bulletin_interval',
+            'waiting_for_15_minute_bulletin_interval',
             'animated_bulletins_disabled'):
         return linked
     return {'official_source_video': linked, 'original_animated_bulletin': bulletin}
@@ -584,6 +584,17 @@ def main():
         report['video'] = 'failed: ' + type(exc).__name__
     report['unconfirmed_headline_requests'] = sum(len(r.get('uncertain', {})) for r in state.get('stories', {}).values())
     report['selected_titles'] = [a['title_si'] for a in selected]
+    # Explicit publishing diagnostics, so a green CI badge is not confused
+    # with evidence that fresh posts or original video were actually sent.
+    report['publishing_status'] = {
+        'new_photo_posts': {dest: delivery[dest]['sent'] for dest in ('telegram','facebook')},
+        'fresh_publishable_found': report['publishable_articles'],
+        'not_new_or_already_delivered': max(0, report['publishable_articles'] - len(selected)),
+        'video_result': report['video'],
+        'next_video_minimum_interval_minutes': 15,
+        'note': 'Scheduled GitHub Actions are best effort, not a 5-minute SLA.',
+    }
+
     if not preview:
         Path('data/source_health.json').write_text(json.dumps({'checked_at': now, 'configured_feeds': len(SOURCES), 'sources': health}, ensure_ascii=False, indent=2), encoding='utf-8')
         state['last_scan_at'] = now
