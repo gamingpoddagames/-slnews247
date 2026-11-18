@@ -39,12 +39,9 @@ def render_bulletin(article, output_path='output/animated_news_bulletin.mp4'):
         raise RuntimeError('Sinhala voice generation unavailable')
 
     # Sound must have a real duration and audio track before video encoding.
-    probe = subprocess.run(
-        ['ffprobe','-v','error','-show_streams','-show_format','-of','json',str(voice_path)],
-        text=True, capture_output=True, check=True, timeout=20)
-    info = json.loads(probe.stdout)
-    duration = float(info.get('format', {}).get('duration') or 0)
-    if not 2 <= duration <= 90 or not any(s.get('codec_type') == 'audio' for s in info.get('streams', [])):
+    from mutagen.mp3 import MP3
+    duration = float(MP3(str(voice_path)).info.length)
+    if not 2 <= duration <= 90:
         raise ValueError('Invalid narration audio or overly long bulletin')
 
     # Make original static artwork then add actual motion with FFmpeg zoompan.
