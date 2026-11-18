@@ -362,9 +362,42 @@ def maybe_video(state, articles, now, preview):
     return recent[candidate['id']]
 
 
-def share_official_video(state, articles, now, preview):
-    return 'skipped_no_verified_event_video_or_official_link'
+def send_official_video_link(platform, article, url):
+    """Send a real publisher video link with preview; never upload its footage."""
+    from publisher_videos import youtube_watch
+    verified_url = youtube_watch(url)
+    if not verified_url:
+        return {'error': 'invalid_official_video_url'}
+    message = caption(article) + '\n\n🎥 මුල් පුවත් වීඩියෝව: ' + verified_url
+    if platform == 'telegram':
+        token, chat = os.getenv('TG_TOKEN'), os.getenv('TG_CHAT_ID')
+        if not token or not chat:
+            return {'error': 'missing_credentials'}
+        response = requests.post(
+            f'https://api.telegram.org/bot{token}/sendMessage',
+            json={'chat_id': chat, 'text': message,
+                  'link_preview_options': {'is_disabled': False}}, timeout=(5, 30))
+        data = response.json()
+        if response.ok and data.get('ok'):
+            return {'id': str(data['result']['message_id']), 'format': 'official_video_link'}
+    elif platform == 'facebook':
+        page, token = os.getenv('FB_PAGE_ID'), os.getenv('FB_PAGE_TOKEN')
+        if not page or not token:
+            return {'error': 'missing_credentials'}
+        response = requests.post(
+            f'https://graph.facebook.com/v22.0/{page}/feed',
+            data={'access_token': token, 'message': message, 'link': verified_url},
+            timeout=(5, 45))
+        data = response.json()
+        if response.ok and data.get('id'):
+            return {'id': str(data['id']), 'format': 'official_video_link'}
+    else:
+        return {'error': 'unsupported_destination'}
+    return {'error': 'api_rejected', 'http': response.status_code}
 
+
+def share_official_video(state, articles, now, preview):
+    """Share only a verified exact-article original publisher player URL."""
     from editorial import official_video_for
     history = state.setdefault('official_video_links', {})
     checks = 0
@@ -392,7 +425,7 @@ def share_official_video(state, articles, now, preview):
             record['destinations'][name] = {'status': 'unconfirmed'}
             save(state)
             try:
-                result = send_text(name, linked)
+                result = send_official_video_link(name, linked, url)
             except Exception:
                 result = {'error': 'unconfirmed_request'}
             record['destinations'][name] = result
