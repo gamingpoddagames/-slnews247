@@ -19,7 +19,7 @@ permissions:
   contents: write
 concurrency:
   group: sinhala-news-production
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   run:
     # Stable LTS image prevents slow / inconsistent development Ubuntu package mirrors.
