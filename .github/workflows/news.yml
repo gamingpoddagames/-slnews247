@@ -56,6 +56,21 @@ jobs:
           status=$?
           tail -n 150 data/ci_test_results.txt
           exit "$status"
+      - name: Refresh remote delivery state immediately before publishing
+        # Queued runs may have checked out the same stale commit. Fetch again
+        # after the preceding production run has saved its receipts.
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.publish }}
+        run: |
+          set -euo pipefail
+          git fetch --quiet origin main
+          git show origin/main:data/sri_lanka_delivery.json > data/sri_lanka_delivery.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          state = json.loads(Path('data/sri_lanka_delivery.json').read_text())
+          print('Fresh production state: {} article receipts, {} video bulletin journals'.format(
+              len(state.get('stories', {})), len(state.get('bulletins', {}))))
+          PY
       - name: Run news pipeline
         env:
           PREVIEW_ONLY: ${{ github.event_name == 'workflow_dispatch' && !inputs.publish }}
