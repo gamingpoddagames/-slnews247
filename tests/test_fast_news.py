@@ -675,3 +675,34 @@ class ProductionCheckpointSafetyTests(unittest.TestCase):
         self.assertEqual(result['status'],'delivery_needs_review')
         self.assertEqual(result['destinations']['telegram'],'accepted')
         self.assertNotEqual(result['destinations']['facebook'],'accepted')
+
+
+class QueuedRunDuplicateVideoTests(unittest.TestCase):
+    def test_remote_state_prevents_reuploading_recent_bulletin(self):
+        from unittest.mock import patch
+        now = time.time()
+        story = {'id':'already-posted-video','title_si':'මාතර නව සිදුවීමක්',
+                 'summary_si':'මාතර සිදුවීම පිළිබඳ වැඩිදුර විමර්ශන සිදුකර තිබේ.',
+                 'published':now,'link':'https://example.com/story'}
+        # Simulates the state reloaded by the queued run after a prior run
+        # saved confirmed Facebook and Telegram bulletin receipts.
+        latest = {'last_bulletin_at':now-100, 'bulletins':{
+            story['id']:{'at':now-100,'status':'delivered','destinations':{
+                'telegram':'accepted','facebook':'accepted'}}}}
+        with patch('animated_bulletin.render_bulletin') as render, \
+             patch('telegram.upload_news') as tg, \
+             patch('facebook.upload_news') as fb:
+            outcome = pipeline.maybe_animated_bulletin(latest,[story],now,False)
+        self.assertEqual(outcome,'waiting_for_15_minute_bulletin_interval')
+        render.assert_not_called()
+        tg.assert_not_called()
+        fb.assert_not_called()
+
+    def test_workflow_fetches_latest_receipts_after_tests_before_publish(self):
+        import pathlib
+        workflow=pathlib.Path('.github/workflows/news.yml').read_text()
+        refresh=workflow.index('name: Refresh remote delivery state immediately before publishing')
+        run=workflow.index('name: Run news pipeline')
+        self.assertLess(refresh,run)
+        self.assertIn('git show origin/main:data/sri_lanka_delivery.json > data/sri_lanka_delivery.json',
+                      workflow[refresh:run])
