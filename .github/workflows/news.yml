@@ -58,6 +58,10 @@ jobs:
           status=$?
           tail -n 150 data/ci_test_results.txt
           exit "$status"
+      - name: Smoke-test real three-scene video encoding
+        if: github.event_name == 'push'
+        timeout-minutes: 3
+        run: python scripts/video_smoke.py
       - name: Refresh remote delivery state immediately before publishing
         # Queued runs may have checked out the same stale commit. Fetch again
         # after the preceding production run has saved its receipts.
