@@ -362,9 +362,16 @@ def maybe_animated_bulletin(state, articles, now, preview):
 def fallback_video(state, articles, now, preview):
     # A publisher video link does not count as our own uploaded bulletin.
     # Attempt both distinct formats, on different stories, with checkpoints.
-    linked = share_official_video(state, articles, now, preview)
+    # Owner preference: deliver self-narrated SL NEWS bulletins, not links
+    # promoting other broadcasters. Keep original source references internal.
+    # External footage cannot be copied without verified rights.
+    linked = ('official_video_links_disabled'
+              if os.getenv('SHARE_OFFICIAL_VIDEO_LINKS', 'false').lower() != 'true'
+              else share_official_video(state, articles, now, preview))
     bulletin = maybe_animated_bulletin(state, articles, now, preview)
     if isinstance(linked, str) and linked == 'skipped_no_verified_event_video_or_official_link':
+        return bulletin
+    if linked == 'official_video_links_disabled':
         return bulletin
     if isinstance(bulletin, str) and bulletin in (
             'no_new_verified_story_for_bulletin',
