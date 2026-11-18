@@ -13,12 +13,17 @@ from PIL import Image, ImageDraw, ImageFont
 def narration_for(article):
     from fast_news import complete_sentences, relevant_summary
     title = article.get('title_si', '').strip()
-    summary = complete_sentences(article.get('summary_si', ''), 850)
+    # Prefer reviewed, fully sourced editorial detail rather than a short RSS
+    # teaser. Use original Sinhala wording, not the publisher's voice/audio.
+    from editorial import brief_for
+    reviewed = brief_for(article) if article.get('id') and article.get('link') else {}
+    source_text = reviewed.get('body_si') or article.get('summary_si', '')
+    summary = complete_sentences(source_text, 1250)
     if not summary or not relevant_summary(title, summary):
         raise ValueError('Factual, matching Sinhala narration required')
     clauses = []
     for sentence in __import__('re').findall(r'[^.!?।]+[.!?।]+', summary):
-        if len(' '.join(clauses + [sentence])) > 410:
+        if len(' '.join(clauses + [sentence])) > 580:
             break
         clauses.append(sentence.strip())
     if not clauses:
