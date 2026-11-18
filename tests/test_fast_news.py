@@ -727,3 +727,29 @@ class MediaFailureRecoveryTests(unittest.TestCase):
         self.assertEqual(result['format'],'photo')
         renderer.assert_called_once_with(article)
         self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
+
+
+class FootageCandidateDiscoveryTests(unittest.TestCase):
+    def test_embedded_publisher_video_is_not_authorized_for_reupload(self):
+        from footage_discovery import discover_candidates
+        import json
+        article={'id':'story-1','title_si':'මාතර විශේෂ පුවත (VIDEO)','link':'https://example.com/story'}
+        with tempfile.TemporaryDirectory() as temp:
+            path=Path(temp)/'candidates.json'
+            result=discover_candidates([article], finder=lambda a:'https://www.youtube.com/watch?v=X5LpOsYyDiU',output_path=str(path))
+            entries=json.loads(path.read_text())
+        self.assertEqual(result['candidates'],1)
+        self.assertEqual(result['rights_approved'],0)
+        self.assertFalse(entries[0]['may_download_or_publish'])
+        self.assertEqual(entries[0]['status'],'rights_verification_required')
+
+    def test_source_discovery_failure_does_not_block_news(self):
+        from footage_discovery import discover_candidates
+        import json
+        article={'id':'story-2','title_si':'විශේෂ වීඩියෝ පුවත','link':'https://example.com/story2'}
+        with tempfile.TemporaryDirectory() as temp:
+            path=Path(temp)/'candidates.json'
+            result=discover_candidates([article],finder=lambda a:(_ for _ in ()).throw(TimeoutError()),output_path=str(path))
+            entries=json.loads(path.read_text())
+        self.assertEqual(result['examined'],1)
+        self.assertEqual(entries[0]['status'],'discovery_unavailable')
