@@ -85,8 +85,27 @@ def probe_footage(path):
     duration = float(info.get('format', {}).get('duration', 0))
     if not video or duration < 1 or video.get('disposition', {}).get('attached_pic'):
         raise ValueError('File is not a usable video clip')
-    if int(video.get('nb_frames', '2')) < 2:
-        raise ValueError('A still photo is not event footage')
+    frames = video.get('nb_frames')
+    # Many valid H.264 streams report N/A rather than an integer frame count.
+    # Reject explicitly single-frame files, but accept unknown counts only when
+    # their encoded frame rate and duration indicate moving footage is possible.
+    if frames not in (None, '', 'N/A'):
+        try:
+            if int(frames) < 2:
+                raise ValueError('A still photo is not event footage')
+        except (TypeError, ValueError) as exc:
+            if str(exc) == 'A still photo is not event footage':
+                raise
+            raise ValueError('Invalid frame count') from exc
+    else:
+        rate = video.get('avg_frame_rate') or video.get('r_frame_rate') or '0/1'
+        try:
+            from fractions import Fraction
+            fps = float(Fraction(rate))
+        except (ValueError, ZeroDivisionError):
+            fps = 0
+        if fps <= 0 or fps * duration < 2:
+            raise ValueError('Footage does not contain enough video frames')
     return {'duration': duration, 'has_audio': any(s.get('codec_type') == 'audio' for s in info['streams'])}
 
 
