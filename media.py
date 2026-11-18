@@ -71,7 +71,16 @@ def choose_photo(article):
 
 
 def choose_video(article):
-    return choose_media(article, 'video')
+    # First use a preapproved direct exact-event file with verified bytes.
+    direct = choose_media(article, 'video')
+    if direct:
+        return direct
+    registry = json.loads(REGISTRY.read_text()) if REGISTRY.exists() else {}
+    asset = registry.get(article['id'], {}).get('video', {})
+    if not isinstance(asset, dict) or not asset.get('youtube_url'):
+        return None
+    from authorized_youtube import download_approved_youtube
+    return download_approved_youtube(article, asset)
 
 
 # Curated license-checked contextual example; it is NOT the construction site
