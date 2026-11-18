@@ -615,3 +615,35 @@ class VideoSystemRecoveryTests(unittest.TestCase):
         self.assertIn('මාතර',narration_for(article))
         with self.assertRaises(ValueError):
             narration_for(dict(article,summary_si=''))
+
+
+class OwnVoiceNoPublisherLinksTests(unittest.TestCase):
+    def test_external_publisher_video_links_disabled_by_default(self):
+        story={'id':'test','title_si':'මාතර පුවතක්','published':time.time(),
+               'summary_si':'මාතර ප්‍රදේශයේ පුවතක් සම්බන්ධයෙන් තවත් කරුණු අනාවරණය වී තිබේ.'}
+        with patch.dict(os.environ, {'SHARE_OFFICIAL_VIDEO_LINKS':'false'}), \
+             patch.object(pipeline, 'share_official_video') as links, \
+             patch.object(pipeline, 'maybe_animated_bulletin',return_value='video_created') as original:
+            result=pipeline.fallback_video({},[story],time.time(),False)
+        self.assertEqual(result,'video_created')
+        links.assert_not_called()
+        original.assert_called_once()
+
+    def test_narration_prefers_reviewed_full_sinhala_brief(self):
+        from animated_bulletin import narration_for
+        title='මාතර වරායේ ව්‍යාපෘතිය සඳහා නව නිවේදනයක්'
+        story={'id':'unique','title_si':title,'link':'https://example.com/story',
+               'summary_si':'මාතර වරායේ ව්‍යාපෘතිය සම්බන්ධයෙන් විශේෂ නිවේදනයක් නිකුත් කර තිබේ.'}
+        reviewed='මාතර වරායේ ව්‍යාපෘතිය සම්බන්ධයෙන් අදාළ නිලධාරීන් අද සාකච්ඡාවක් පවත්වා තිබේ. ව්‍යාපෘතියේ ඉදිරි වැඩසටහන පිළිබඳ කරුණු ද එහිදී අවධානයට ලක්වී තිබේ.'
+        with patch('editorial.brief_for', return_value={'body_si':reviewed}):
+            script=narration_for(story)
+        self.assertIn('නිලධාරීන් අද සාකච්ඡාවක්',script)
+        self.assertIn('ඉදිරි වැඩසටහන',script)
+
+    def test_licensed_footage_excludes_source_audio(self):
+        import inspect
+        from video import create_footage_video
+        source=inspect.getsource(create_footage_video)
+        self.assertIn("'2:a:0'",source)
+        self.assertNotIn("'-map', '0:a'",source)
+        self.assertIn("Sinhala narration is required",source)
