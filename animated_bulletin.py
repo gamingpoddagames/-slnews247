@@ -31,50 +31,148 @@ def narration_for(article):
     return title + '. ' + ' '.join(clauses)
 
 
+def _story_facts(article, narration):
+    """Display only factual sentences actually present in the approved script."""
+    import re
+    text = narration.split('. ', 1)[-1]
+    sentences = [x.strip() for x in re.findall(r'[^.!?।]+[.!?।]+', text) if x.strip()]
+    return (sentences + [article['title_si']] * 3)[:3]
+
+
+def _slide(article, text, index, image_path, destination):
+    """Three intentionally different broadcast scenes; no fabricated event shots."""
+    from image import draw_mixed, fit_headline, cover_resize, latin_font
+    from PIL import ImageOps
+    import re
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+
+    W, H = 720, 1280
+    palette = [('#071329', '#123966', '#f9bc39'),
+               ('#051626', '#18517a', '#67d8e2'),
+               ('#101329', '#3b3465', '#ff9c6e')]
+    bg, accent, highlight = palette[index]
+    canvas = Image.new('RGB', (W, H), bg)
+    draw = ImageDraw.Draw(canvas)
+    draw.rectangle((0, 0, W, 19), fill=highlight)
+    draw.rounded_rectangle((35, 44, 685, 117), radius=22, fill=accent)
+    draw.text((58, 65), 'SL NEWS 24/7', font=latin_font(34, bold=True), fill='white')
+    draw.rounded_rectangle((35, 144, 205, 191), radius=12, fill='#a9223c')
+    draw.text((53, 151), 'NEWS  /  0' + str(index+1),
+              font=latin_font(21, bold=True), fill='white')
+
+    # Only verified licensed exact-event media may fill the video window.
+    # Without one, animate original editorial facts, never unrelated stock.
+    if image_path:
+        with Image.open(image_path) as source:
+            shot = ImageOps.fit(source.convert('RGB'), (650, 520),
+                                method=Image.Resampling.LANCZOS)
+        canvas.paste(shot, (35, 210))
+        draw = ImageDraw.Draw(canvas)
+    else:
+        for y in range(215, 735, 4):
+            factor = (y - 215) / 520
+            draw.rectangle((35, y, 685, y+4),
+                           fill=(int(7 + 16*factor), int(35 + 35*factor),
+                                 int(70 + 40*factor)))
+        # Structured broadcast typography is better than an empty window.
+        draw.rounded_rectangle((65, 279, 655, 652), radius=36,
+                               fill='#122e52', outline='#3978a9', width=3)
+        heading = ['ප්‍රධාන පුවත', 'වැදගත් තොරතුරු', 'නවතම තත්ත්වය'][index]
+        draw_mixed(draw, (97, 385), heading, 43, bold=True, fill=highlight)
+        draw.line((97, 420, 605, 420), fill=highlight, width=5)
+        draw.text((95, 481), 'NEWS UPDATE',
+                  font=latin_font(44, bold=True), fill='#c8dceb')
+        draw.text((97, 558), 'SL NEWS 24/7',
+                  font=latin_font(26, bold=True), fill='#87bedc')
+
+    headline = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '',
+                      article.get('title_si', ''), flags=re.I)
+    draw.rounded_rectangle((35, 758, 685, 1029), radius=25, fill='#101d37')
+    size, lines, step = fit_headline(draw, headline, width=570,
+                                      max_height=227, start_size=40, min_size=20)
+    baseline = 820
+    for line in lines:
+        draw_mixed(draw, (68, baseline), line, size, bold=True, fill='white')
+        baseline += step
+
+    # Fact line as a lower-third; fit or omit, never cut off characters.
+    draw.rectangle((0, 1055, W, H), fill='#06132a')
+    draw.line((37, 1058, 683, 1058), fill=highlight, width=5)
+    try:
+        size, lines, step = fit_headline(draw, text, width=622,
+                                         max_height=137, start_size=26, min_size=18)
+        baseline = 1118
+        for line in lines:
+            draw_mixed(draw, (48, baseline), line, size, fill='#f4f7fb')
+            baseline += step
+    except ValueError:
+        # The full fact is still narrated and in the post text.
+        pass
+    draw_mixed(draw, (44, 1241), 'සංකේතාත්මක පුවත් ඉදිරිපත් කිරීමකි' if not image_path
+               else 'තහවුරු කළ සිද්ධියේ ඡායාරූපයකි', 18, fill='#a6bed1')
+    canvas.save(destination)
+    return str(destination)
+
+
+def build_scene_images(article, script, directory):
+    """Create distinct slides; reuse one exact-event photo only if licensed."""
+    from media import choose_photo
+    folder = Path(directory)
+    folder.mkdir(parents=True, exist_ok=True)
+    try:
+        image_path = choose_photo(article)
+    except Exception as exc:
+        print('Bulletin photo unavailable, using original information scenes:',
+              type(exc).__name__)
+        image_path = None
+    facts = _story_facts(article, script)
+    return [_slide(article, facts[i], i, image_path,
+                   folder / f'scene_{i+1}.png') for i in range(3)]
+
+
 def render_bulletin(article, output_path='output/animated_news_bulletin.mp4'):
-    """Generate a moving 9:16 graphic with real Sinhala voice narration."""
-    from image import news_card, draw_mixed
+    """Three-scene vertical Sinhala voice bulletin; never copy TV footage."""
+    import math
+    from mutagen.mp3 import MP3
     from voice import create_voice
-    from fast_news import complete_sentences
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     voice_path = output.with_suffix('.mp3')
     script = narration_for(article)
     if not create_voice(script, str(voice_path)):
         raise RuntimeError('Sinhala voice generation unavailable')
-
-    # Sound must have a real duration and audio track before video encoding.
-    from mutagen.mp3 import MP3
     duration = float(MP3(str(voice_path)).info.length)
-    if not 2 <= duration <= 90:
-        raise ValueError('Invalid narration audio or overly long bulletin')
+    if not 3 <= duration <= 90:
+        raise ValueError('Invalid narration length')
 
-    # Make original static artwork then add actual motion with FFmpeg zoompan.
-    poster_path = news_card(article)
-    with Image.open(poster_path) as original:
-        poster = original.convert('RGB')
-        background = Image.new('RGB', (1080,1920), '#061335')
-        background.paste(poster, (0,160))
-    canvas = ImageDraw.Draw(background)
-    canvas.rectangle((0,0,1080,26),fill='#ed6826')
-    canvas.rectangle((0,1580,1080,1920),fill='#091b45')
-    canvas.line((72,1610,1008,1610), fill='#2d76cf',width=5)
-    draw_mixed(canvas,(80,1680),'සිංහල පුවත් සාරාංශ වීඩියෝව',48,fill='white',bold=True)
-    draw_mixed(canvas,(80,1756),'සිද්ධියේ සැබෑ වීඩියෝ දර්ශන නොවේ',32,fill='#b4d2fc')
-    label_path = str(output.with_suffix('.png'))
-    background.save(label_path)
-
-    # Zoom varies gradually with frame number; this is an animated bulletin,
-    # not a still image relabelled as event footage.
-    cmd = ['ffmpeg','-y','-loglevel','error','-loop','1','-framerate','20','-i',label_path,
-           '-i',str(voice_path),
-           '-filter_complex',
-           "[0:v]zoompan=z='min(zoom+0.00018,1.09)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=720x1280:fps=20,format=yuv420p[v]",
-           '-map','[v]','-map','1:a:0','-t',str(duration),'-r','20',
-           '-c:v','libx264','-preset','veryfast','-crf','25',
-           '-c:a','aac','-b:a','96k','-movflags','+faststart',
-           '-shortest',str(output)]
-    subprocess.run(cmd,check=True,timeout=240,capture_output=True)
+    scene_files = build_scene_images(article, script,
+                                     output.parent / (output.stem + '_scenes'))
+    frames = max(1, math.ceil(duration * 20))
+    counts = [frames // 3] * 3
+    for i in range(frames % 3):
+        counts[i] += 1
+    # Each distinct scene gets independent subtle zoom/pan; transitions are
+    # clean cuts, never time-frozen blank backgrounds or unrelated imagery.
+    filters = []
+    args = ['ffmpeg', '-y', '-loglevel', 'error']
+    for path in scene_files:
+        args.extend(['-loop', '1', '-framerate', '20', '-i', str(path)])
+    args.extend(['-i', str(voice_path)])
+    for i, count in enumerate(counts):
+        filters.append(
+            f'[{i}:v]zoompan=z=\'min(zoom+0.00055,1.07)\':'
+            f'x=\'iw/2-(iw/zoom/2)\':y=\'ih/2-(ih/zoom/2)\':'
+            f'd={count}:s=720x1280:fps=20,trim=duration={count/20:.3f},'
+            f'setpts=PTS-STARTPTS,format=yuv420p[v{i}]')
+    filters.append(''.join(f'[v{i}]' for i in range(3)) +
+                   'concat=n=3:v=1:a=0[v]')
+    args.extend(['-filter_complex', ';'.join(filters), '-map', '[v]',
+                 '-map', '3:a:0', '-t', str(duration), '-r', '20',
+                 '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '26',
+                 '-c:a', 'aac', '-b:a', '96k', '-pix_fmt', 'yuv420p',
+                 '-movflags', '+faststart', '-shortest', str(output)])
+    subprocess.run(args, check=True, timeout=240, capture_output=True)
     if not output.is_file() or output.stat().st_size < 20000:
-        raise RuntimeError('Bulletin video not created')
+        raise RuntimeError('Three-scene bulletin not created')
     return str(output)
