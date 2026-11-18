@@ -3003,6 +3003,29 @@
         }
       },
       "uncertain": {}
+    },
+    "b90c23f56da288c99f13de37": {
+      "article": {
+        "id": "b90c23f56da288c99f13de37",
+        "title_si": "දින 15ට සංචාරකයින් ලක්ෂයකට අධික පිරිසක් මෙරටට",
+        "summary_si": "මේ මස පළමු දින 15 තුළ පමණක් විදෙස් සංචාරකයින් 102,469 දෙනෙකු ශ්‍රී ලංකාවට පැමිණ ඇති බව ශ්‍රී ලංකා සංචාරක සංවර්ධන අධිකාරියේ නවතම සංඛ්‍යාලේඛන පෙන්වා දෙයි. මෙම කාලය තුළ වැඩිම සංචාරකයින් පිරිසක් පැමිණ ඇත්තේ ඉන්දියාවෙන් වන අතර එම සංඛ්‍යාව 31,185 කි (සමස්ත පැමිණීමෙන් 30%ක්).",
+        "link": "https://siyathanews.lk/archives/174478",
+        "source": "Siyatha News",
+        "published": 1794980393
+      },
+      "receipts": {
+        "telegram": {
+          "id": "876",
+          "at": 1794981414.471004,
+          "format": "photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126595405318605",
+          "at": 1794981414.471004,
+          "format": "photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -3024,7 +3047,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1794980271.1757126,
+  "last_scan_at": 1794981414.471004,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -3187,7 +3210,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "b90c23f56da288c99f13de37": {
+      "at": 1794981414.471004,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1794979437.4821763
+  "last_bulletin_at": 1794981414.471004
 }
