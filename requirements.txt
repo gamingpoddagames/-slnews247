@@ -3,3 +3,5 @@ requests==2.32.4
 beautifulsoup4==4.13.4
 Pillow==11.3.0
 gTTS==2.5.4
+imageio-ffmpeg==0.6.0
+mutagen==1.47.0
