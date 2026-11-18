@@ -1,4 +1,8 @@
-"""Discover exact-article publisher video players for rights review; never download them."""
+"""Discover exact-article video candidates from RSS and embedded publisher players.
+
+Discovery is not authorization. No broadcaster files are downloaded or copied
+until the exact-event rights registry approves reuse and verifies a file hash.
+"""
 import json
 import re
 from pathlib import Path
@@ -10,24 +14,39 @@ def discover_candidates(articles, limit=3, output_path='output/footage_candidate
     results = []
     examined = 0
     for article in articles:
+        rss_urls = article.get('rss_video_urls', [])
+        video_label = re.search(r'video|වීඩියෝ', article.get('title_si', ''), re.I)
+        if not (rss_urls or video_label):
+            continue
         if examined >= limit:
             break
-        if not re.search(r'video|වීඩියෝ', article.get('title_si', ''), re.I):
-            continue
         examined += 1
-        try:
-            found = finder(article)
-        except Exception as exc:
-            results.append({'article_id': article.get('id'), 'article_url': article.get('link'),
-                            'status': 'discovery_unavailable', 'error': type(exc).__name__})
-            continue
-        if found:
-            results.append({'article_id': article.get('id'), 'title': article.get('title_si'),
-                            'article_url': article.get('link'), 'player_url': found,
-                            'status': 'rights_verification_required',
-                            'may_download_or_publish': False})
+        for url in rss_urls[:5]:
+            results.append({
+                'article_id': article.get('id'), 'title': article.get('title_si'),
+                'article_url': article.get('link'), 'video_url': url,
+                'source': 'rss_video_enclosure', 'status': 'rights_verification_required',
+                'may_download_or_publish': False})
+        # Embedded player discovery is a secondary lead, not downloadable footage.
+        if video_label:
+            try:
+                found = finder(article)
+            except Exception as exc:
+                results.append({
+                    'article_id': article.get('id'), 'article_url': article.get('link'),
+                    'source': 'publisher_page', 'status': 'discovery_unavailable',
+                    'error': type(exc).__name__})
+                continue
+            if found:
+                results.append({
+                    'article_id': article.get('id'), 'title': article.get('title_si'),
+                    'article_url': article.get('link'), 'player_url': found,
+                    'source': 'publisher_page', 'status': 'rights_verification_required',
+                    'may_download_or_publish': False})
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
     return {'examined': examined, 'candidates': len(results),
+            'rss_direct_candidates': sum(x.get('source') == 'rss_video_enclosure'
+                                         for x in results),
             'rights_approved': 0, 'report_file': str(output)}
