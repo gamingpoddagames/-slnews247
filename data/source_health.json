@@ -1,5 +1,5 @@
 {
-  "checked_at": 1794966873.9305048,
+  "checked_at": 1794973567.9665034,
   "configured_feeds": 25,
   "sources": [
     {
@@ -21,7 +21,7 @@
       "source": "Lankadeepa Latest",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 1,
+      "fresh_sinhala": 5,
       "feed_url": "https://www.lankadeepa.lk/rss/latest_news/1"
     },
     {
@@ -69,8 +69,10 @@
     },
     {
       "source": "Lankadeepa Video News",
-      "error": "ReadTimeout",
-      "http": null
+      "http": 200,
+      "entries": 12,
+      "fresh_sinhala": 0,
+      "feed_url": "https://www.lankadeepa.lk/rss/videos/12"
     },
     {
       "source": "Lankadeepa National",
@@ -88,7 +90,7 @@
       "source": "Lanka Truth Sinhala",
       "http": 200,
       "entries": 24,
-      "fresh_sinhala": 4,
+      "fresh_sinhala": 7,
       "feed_url": "https://lankatruth.com/si/?feed=rss2"
     },
     {
