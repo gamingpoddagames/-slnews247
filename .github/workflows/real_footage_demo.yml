@@ -1,0 +1,35 @@
+name: Genuine Footage Sinhala Video Demo
+on:
+  push:
+    paths:
+      - 'scripts/real_footage_demo.py'
+      - '.github/workflows/real_footage_demo.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  edit_real_footage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install voice and video dependencies
+        run: |
+          python -m pip install 'gTTS==2.5.4' 'requests==2.32.4' 'mutagen==1.47.0' 'imageio-ffmpeg==0.6.0'
+          mkdir -p "$RUNNER_TEMP/bin"
+          FFMPEG_BINARY=$(python -c 'import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())')
+          ln -sf "$FFMPEG_BINARY" "$RUNNER_TEMP/bin/ffmpeg"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - name: Download actual video, mute original, dub in Sinhala, verify MP4
+        run: python -m scripts.real_footage_demo
+      - name: Upload the finished real-footage MP4
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-footage-sinhala-demo-${{ github.run_id }}
+          path: output/real_footage_demo/
+          if-no-files-found: warn
+          retention-days: 14
