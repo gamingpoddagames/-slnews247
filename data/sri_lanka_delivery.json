@@ -2886,7 +2886,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1794974240.3135793,
+  "last_scan_at": 1794974415.2931373,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -2985,6 +2985,19 @@
         },
         "facebook": {
           "id": "1020689164470492_122126585943318605",
+          "format": "official_video_link"
+        }
+      }
+    },
+    "a97022d96b4c17d8656a1f71": {
+      "url": "https://www.youtube.com/watch?v=cC12ALQVQtA",
+      "destinations": {
+        "telegram": {
+          "id": "858",
+          "format": "official_video_link"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126586087318605",
           "format": "official_video_link"
         }
       }
