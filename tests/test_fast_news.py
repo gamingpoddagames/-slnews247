@@ -647,3 +647,31 @@ class OwnVoiceNoPublisherLinksTests(unittest.TestCase):
         self.assertIn("'2:a:0'",source)
         self.assertNotIn("'-map', '0:a'",source)
         self.assertIn("Sinhala narration is required",source)
+
+
+class ProductionCheckpointSafetyTests(unittest.TestCase):
+    def test_stale_video_result_never_overwrites_accepted_upload(self):
+        from scripts.merge_news_checkpoint import merge_state
+        remote={'bulletins':{'item':{'at':100,'status':'delivered','destinations':{
+            'telegram':'accepted','facebook':'accepted'}}}}
+        local={'bulletins':{'item':{'at':90,'status':'attempted','destinations':{
+            'telegram':'unconfirmed_or_failed','facebook':'unconfirmed'}}}}
+        merged=merge_state(remote,local)
+        result=merged['bulletins']['item']
+        self.assertEqual(result['destinations'],{'telegram':'accepted','facebook':'accepted'})
+
+    def test_video_delivery_status_reports_partial_failure(self):
+        now=time.time()
+        article={'id':'video-partial','published':now,'link':'https://example.com/a',
+                 'title_si':'මාතර ප්‍රදේශයේ නව සිදුවීමක්',
+                 'summary_si':'මාතර ප්‍රදේශයේ සිදුවීමක් පිළිබඳ පොලිසිය වැඩිදුර විමර්ශන සිදුකරමින් සිටින බව වාර්තා වේ.'}
+        state={'stories':{article['id']:{'article':article,'receipts':{
+            'telegram':{'id':'5'},'facebook':{'id':'9'}}}}}
+        with patch('animated_bulletin.render_bulletin',return_value='demo.mp4'), \
+             patch('telegram.upload_news',return_value=True), \
+             patch('facebook.upload_news',return_value=False), \
+             patch.object(pipeline,'save'):
+            result=pipeline.maybe_animated_bulletin(state,[article],now,False)
+        self.assertEqual(result['status'],'delivery_needs_review')
+        self.assertEqual(result['destinations']['telegram'],'accepted')
+        self.assertNotEqual(result['destinations']['facebook'],'accepted')
