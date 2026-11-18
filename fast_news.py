@@ -352,11 +352,15 @@ def maybe_animated_bulletin(state, articles, now, preview):
         history[candidate['id']]['destinations'][platform] = (
             'accepted' if ok else 'unconfirmed_or_failed')
         save(state)
-    history[candidate['id']]['status'] = 'attempted'
+    destinations = history[candidate['id']]['destinations']
+    history[candidate['id']]['status'] = (
+        'delivered' if all(value == 'accepted' for value in destinations.values())
+        else 'delivery_needs_review')
     save(state)
     return {'format': 'animated_news_bulletin_not_event_footage',
             'article_id': candidate['id'],
-            'destinations': history[candidate['id']]['destinations']}
+            'status': history[candidate['id']]['status'],
+            'destinations': destinations}
 
 
 def fallback_video(state, articles, now, preview):
@@ -590,6 +594,16 @@ def main():
     except Exception as exc:
         report['video'] = 'failed: ' + type(exc).__name__
     report['unconfirmed_headline_requests'] = sum(len(r.get('uncertain', {})) for r in state.get('stories', {}).values())
+    # Report independent video results, not just a green workflow status.
+    video_result = report['video']
+    animated = (video_result.get('original_animated_bulletin', video_result)
+                if isinstance(video_result, dict) else video_result)
+    report['original_video_upload_ok'] = (
+        isinstance(animated, dict)
+        and animated.get('format') == 'animated_news_bulletin_not_event_footage'
+        and all(v == 'accepted' for v in animated.get('destinations', {}).values())
+        and len(animated.get('destinations', {})) == 2
+    )
     report['selected_titles'] = [a['title_si'] for a in selected]
     # Explicit publishing diagnostics, so a green CI badge is not confused
     # with evidence that fresh posts or original video were actually sent.
@@ -613,8 +627,16 @@ def main():
             handle.write('## Sri Lanka news results\n```json\n' + json.dumps(report, ensure_ascii=False, indent=2) + '\n```\n')
     if not any(h.get('entries', 0) for h in health):
         raise RuntimeError('All RSS sources unavailable')
-    if report['unconfirmed_headline_requests'] or any(v['failed'] or v['uncertain'] for v in delivery.values()):
-        raise RuntimeError('One or more headline destinations failed or need inspection')
+    video_issue = (
+        isinstance(animated, str) and animated.startswith(('failed:', 'animated_bulletin_failed_'))
+        or isinstance(animated, dict)
+        and animated.get('format') == 'animated_news_bulletin_not_event_footage'
+        and not report['original_video_upload_ok']
+    )
+    if (report['unconfirmed_headline_requests']
+            or any(v['failed'] or v['uncertain'] for v in delivery.values())
+            or video_issue):
+        raise RuntimeError('News delivery or original bulletin upload needs inspection')
 
 
 if __name__ == '__main__':
