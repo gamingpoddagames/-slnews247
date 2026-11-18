@@ -567,9 +567,9 @@ class VideoSystemRecoveryTests(unittest.TestCase):
               'published':now}
         state={'stories':{'bad':{'receipts':{'telegram':{},'facebook':{}}},
                          'good':{'receipts':{'telegram':{},'facebook':{}}}}}
-        with patch('animated_bulletin.render_bulletin',return_value='demo.mp4'), \\
-             patch.object(pipeline,'save'), \\
-             patch('telegram.upload_news',return_value=True), \\
+        with patch('animated_bulletin.render_bulletin',return_value='demo.mp4'), \
+             patch.object(pipeline,'save'), \
+             patch('telegram.upload_news',return_value=True), \
              patch('facebook.upload_news',return_value=True):
             report=pipeline.maybe_animated_bulletin(state,[bad,good],now,False)
         self.assertEqual(report['article_id'],'good')
