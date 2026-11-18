@@ -303,7 +303,9 @@ def maybe_animated_bulletin(state, articles, now, preview):
     history = state.setdefault('bulletins', {})
     # A bulletin only follows a successfully delivered factual news post.
     candidate = next((a for a in articles
-                      if a['id'] not in history and publishable(a)
+                      if a['id'] not in history
+                      and a['id'] not in state.get('official_video_links', {})
+                      and publishable(a)
                       and (preview or all(dest in state.get('stories', {}).get(a['id'], {}).get('receipts', {})
                                           for dest in ('telegram', 'facebook')))), None)
     if not candidate:
@@ -341,10 +343,18 @@ def maybe_animated_bulletin(state, articles, now, preview):
 
 
 def fallback_video(state, articles, now, preview):
+    # A publisher video link does not count as our own uploaded bulletin.
+    # Attempt both distinct formats, on different stories, with checkpoints.
     linked = share_official_video(state, articles, now, preview)
-    if not isinstance(linked, str) or linked != 'skipped_no_verified_event_video_or_official_link':
+    bulletin = maybe_animated_bulletin(state, articles, now, preview)
+    if isinstance(linked, str) and linked == 'skipped_no_verified_event_video_or_official_link':
+        return bulletin
+    if isinstance(bulletin, str) and bulletin in (
+            'no_new_verified_story_for_bulletin',
+            'waiting_for_45_minute_bulletin_interval',
+            'animated_bulletins_disabled'):
         return linked
-    return maybe_animated_bulletin(state, articles, now, preview)
+    return {'official_source_video': linked, 'original_animated_bulletin': bulletin}
 
 
 def maybe_video(state, articles, now, preview):
