@@ -602,7 +602,7 @@ class VideoSystemRecoveryTests(unittest.TestCase):
                  'published':time.time()}
         now=time.time()
         self.assertEqual(pipeline.maybe_animated_bulletin({'last_bulletin_at':now-10},[article],now,False),
-                         'waiting_for_45_minute_bulletin_interval')
+                         'waiting_for_15_minute_bulletin_interval')
         with patch('animated_bulletin.render_bulletin') as render:
             self.assertEqual(pipeline.maybe_animated_bulletin({},[article],now,False),
                              'no_renderable_news_bulletin_candidate')
