@@ -22,6 +22,7 @@ API = "https://commons.wikimedia.org/w/api.php"
 USER_AGENT = "SLNews247/1.0 (licensed contextual photo discovery; Wikimedia Commons)"
 # Conservative subject-level matches only: no person/event-specific imagery.
 SEARCH = {
+    "religion": ["Asgiriya Maha Viharaya Kandy", "Sri Lanka Buddhist temple", "Buddhist temple Kandy"],
     "education": ["school classroom Sri Lanka", "school classroom"],
     "weather": ["rain clouds Sri Lanka", "monsoon clouds"],
     "health": ["hospital building Sri Lanka", "hospital building"],
@@ -134,7 +135,11 @@ def discover_licensed_photo(article, session=None):
 
 def select_real_photo(article):
     """Prefer staff-verified exact-event photo, then clearly labelled Commons context."""
-    photo = choose_photo(article)
+    try:
+        photo = choose_photo(article)
+    except (requests.RequestException, OSError, ValueError, KeyError) as exc:
+        print("Approved event photo not accessible; trying Commons:", type(exc).__name__)
+        photo = None
     if photo:
         return photo, "verified_event_photo", None
     photo, credit = discover_licensed_photo(article)
