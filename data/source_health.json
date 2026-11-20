@@ -1,5 +1,5 @@
 {
-  "checked_at": 1795059762.0104084,
+  "checked_at": 1795139786.2542052,
   "configured_feeds": 25,
   "sources": [
     {
@@ -28,14 +28,14 @@
       "source": "Lankadeepa Business",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 0,
+      "fresh_sinhala": 12,
       "feed_url": "https://www.lankadeepa.lk/rss/business/9"
     },
     {
       "source": "Siyatha News",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 15,
+      "fresh_sinhala": 16,
       "feed_url": "https://siyathanews.lk/feed/"
     },
     {
@@ -64,14 +64,14 @@
       "source": "Lankadeepa World",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 1,
+      "fresh_sinhala": 2,
       "feed_url": "https://www.lankadeepa.lk/rss/world_news/14"
     },
     {
       "source": "Lankadeepa Video News",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 2,
+      "fresh_sinhala": 3,
       "feed_url": "https://www.lankadeepa.lk/rss/videos/12"
     },
     {
@@ -90,7 +90,7 @@
       "source": "Lanka Truth Sinhala",
       "http": 200,
       "entries": 24,
-      "fresh_sinhala": 9,
+      "fresh_sinhala": 5,
       "feed_url": "https://lankatruth.com/si/?feed=rss2"
     },
     {
@@ -104,14 +104,14 @@
       "source": "Neth Sports",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 0,
+      "fresh_sinhala": 1,
       "feed_url": "https://www.nethnews.lk/sports/feed/"
     },
     {
       "source": "Neth International",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 8,
+      "fresh_sinhala": 6,
       "feed_url": "https://www.nethnews.lk/international-news/feed/"
     },
     {
@@ -125,7 +125,7 @@
       "source": "Siyatha Sports",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 1,
+      "fresh_sinhala": 0,
       "feed_url": "https://siyathanews.lk/archives/category/sports-news/feed"
     },
     {
@@ -139,14 +139,14 @@
       "source": "Siyatha World",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 5,
+      "fresh_sinhala": 6,
       "feed_url": "https://siyathanews.lk/archives/category/world-news/feed"
     },
     {
       "source": "Lanka Truth World",
       "http": 200,
       "entries": 24,
-      "fresh_sinhala": 0,
+      "fresh_sinhala": 1,
       "feed_url": "https://lankatruth.com/si/?feed=rss2&cat=3"
     },
     {
