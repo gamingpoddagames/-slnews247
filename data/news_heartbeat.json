@@ -1,0 +1,6 @@
+{
+  "timestamp": "2026-11-20T14:53:00Z",
+  "reason": "stale_production_run",
+  "last_success_run_id": 44733881558,
+  "note": "Last production success 2026-11-20T12:13:47Z; no queued or running workflow at recheck. Owner-authorized hourly recovery."
+}
