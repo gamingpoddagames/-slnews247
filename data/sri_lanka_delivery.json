@@ -5373,6 +5373,75 @@
         }
       },
       "uncertain": {}
+    },
+    "fc7bde29077869ba4584b695": {
+      "article": {
+        "id": "fc7bde29077869ba4584b695",
+        "title_si": "ගුටිබැට අස්සේ මිල්ලනිය සභා අය වැය සම්මතයි",
+        "summary_si": "ආණ්ඩු පක්ෂයේ සහ විපක්ෂයේ මන්ත්‍රීවරුන් අතර ගුටිබැට හුවමාරුවක් දක්වා දුරදිග ගිය දැඩි උණුසුම්කාරී හා කලහකාරී තත්ත්වයක් මධ්‍යයේ ජාතික ජන බලවේගයට බලය හිමි මිල්ලනිය ප්‍රාදේශීය සභාවේ අයවැය ආණ්ඩු පක්ෂයේ මන්ත්‍රීවරුන් ගුටිබැට හුව මාර කර ගන්නා අතර තුර සභා සම්මත කර ගත්තේය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ගුටිබැට-අස්සේ-මිල්ලනිය-සභා-අය-වැය-සම්මතයි/1-700925",
+        "source": "Lankadeepa Latest",
+        "published": 1795167780
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1001",
+          "at": 1795205977.448089,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127003975318605",
+          "at": 1795205977.448089,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "c137b67e2c29c6357e74ba78": {
+      "article": {
+        "id": "c137b67e2c29c6357e74ba78",
+        "title_si": "සියතෙන් තවත් අලුත් වැඩක් – ‘Dance of Family’ ළඟදීම (VIDEO)",
+        "summary_si": "සියත කියන්නේ ඔබේ පවුලේ නාලිකාව. ඕනම සමාජයක පවුල තරම් වටින සම්පතක් තවත් නැහැ. පවුලක සාමය, සමගිය වර්ධනය කරන්න වගේම දක්ෂතා ලෝකයට පෙන්වන්නත් සියත අප කටයුතු කළා. සියත ටී. වී ගෙන එන අලුත්ම රියැලිටි වැඩසටහන. සියත ඩාන්ස් ඔෆ් ෆැමිලි, ළඟදීම ජනගත කරන්න අප සූදානම්.",
+        "link": "https://siyathanews.lk/archives/174620",
+        "source": "Siyatha News",
+        "published": 1795167551
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1002",
+          "at": 1795205977.448089,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127004053318605",
+          "at": 1795205977.448089,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "cf4455285d1e9a360bdef824": {
+      "article": {
+        "id": "cf4455285d1e9a360bdef824",
+        "title_si": "අයවැය දෙවනවර කියවීමේ විවාදයේ ඡන්ද විමසීම අද (VIDEO)",
+        "summary_si": "2027 අයවැය දෙවන වර කියවීමේ විවාදයේ අවසන් දිනය අදයි. අද පස්වරු 06 ට දෙවන වර කියවීමේ විවාදයේ ඡන්ද විමසීම පැවැත්වීමට නියමිතයි. භාණ්ඩාගාරයේ මුදල් තිබියදීත් ඒවා අවශ්‍ය කටයුතුවලට ලබා දෙන්නේ නැති බවටයි විපක්ෂ නායක සජිත් ප්‍රේමදාස චෝදනා කර සිටියේ. ක්‍රමානුකූලව සැලසුමකට අනුව එම කටයුතු සිදු කරන බව අමාත්‍ය චන්දන අබේරත්න ඊට පිළිතුරු ලබා දෙමින් පැවසුවා.",
+        "link": "https://siyathanews.lk/archives/174617",
+        "source": "Siyatha News",
+        "published": 1795167061
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1003",
+          "at": 1795205977.448089,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127004143318605",
+          "at": 1795205977.448089,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -5394,7 +5463,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795200539.6819923,
+  "last_scan_at": 1795205977.448089,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -5717,7 +5786,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "2a07b75acef544f84adf85bd": {
+      "at": 1795205977.448089,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795200539.6819923
+  "last_bulletin_at": 1795205977.448089
 }
