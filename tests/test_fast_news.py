@@ -100,6 +100,27 @@ class PresentationTests(unittest.TestCase):
                 card.assert_called_once_with(article, image_path=str(img), illustrative=False)
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
 
+    def test_missing_event_photo_can_publish_honest_headline_card_when_enabled(self):
+        from unittest.mock import MagicMock
+        article = {'id': 'headline', 'title_si': 'මාතර සිද්ධිය',
+                   'summary_si': 'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
+                   'published': time.time()}
+        reply = MagicMock(ok=True)
+        reply.json.return_value = {'ok': True, 'result': {'message_id': 81}}
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory, 'headline.png')
+            image.write_bytes(b'news-card' * 200)
+            with patch.dict(os.environ, {'ALLOW_HEADLINE_CARD_FALLBACK': 'true',
+                                         'TG_TOKEN': 'test', 'TG_CHAT_ID': 'test'}), \
+                 patch('real_photo.select_real_photo', return_value=(None, None, None)), \
+                 patch('image.news_card', return_value=str(image)) as render, \
+                 patch('requests.post', return_value=reply) as sender:
+                result = pipeline.send_text('telegram', article)
+        self.assertEqual(result['format'], 'headline_only_no_event_photo')
+        render.assert_called_once_with(article, image_path=None, illustrative=False)
+        self.assertTrue(sender.call_args.args[0].endswith('/sendPhoto'))
+        self.assertNotIn('සිද්ධියේ සැබෑ ඡායාරූපයක්', sender.call_args.kwargs['data']['caption'])
+
     def test_unrelated_contextual_photo_is_never_published(self):
         article = {'id': 'two', 'title_si': 'මාතර සිද්ධිය',
                    'summary_si': 'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
