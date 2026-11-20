@@ -70,7 +70,7 @@ class PresentationTests(unittest.TestCase):
         response.ok = True
         response.json.return_value = {'ok':True,'result':{'message_id':99}}
         with tempfile.TemporaryDirectory() as directory:
-            image = Path(directory, 'test.jpg');image.write_bytes(b'image-fixture')
+            image = Path(directory, 'test.jpg');image.write_bytes(b'image-fixture' * 100)
             with patch('media.choose_photo', return_value=str(image)), patch('image.news_card', return_value=str(image)), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
                 result = pipeline.send_text('telegram', article)
                 self.assertIn(result['format'], ('verified_event_photo', 'original_topic_illustration'))
@@ -88,10 +88,10 @@ class PresentationTests(unittest.TestCase):
         response.json.return_value = {'ok':True,'result':{'message_id':101}}
         with tempfile.TemporaryDirectory() as directory:
             image = Path(directory, 'card.png')
-            image.write_bytes(b'graphic-test')
+            image.write_bytes(b'graphic-test' * 100)
             with patch('media.choose_photo', return_value=None), patch('visual_news.original_illustration', return_value=str(image)), patch('image.news_card', return_value=str(image)) as card, patch.dict(os.environ, {'TG_TOKEN':'test', 'TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
                 result = pipeline.send_text('telegram', article)
-                self.assertEqual(result['format'], 'photo')
+                self.assertEqual(result['format'], 'original_topic_illustration')
                 card.assert_called_once_with(article, image_path=str(image), illustrative=True)
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
 
@@ -103,7 +103,7 @@ class ExactEventMediaTests(unittest.TestCase):
         response.json.return_value={'ok':True,'result':{'message_id':100}}
         with tempfile.TemporaryDirectory() as directory:
             card_path = Path(directory, 'news.png')
-            card_path.write_bytes(b'original-typography-card')
+            card_path.write_bytes(b'original-typography-card' * 100)
             with patch('media.choose_photo', return_value=None), patch('visual_news.original_illustration', return_value=str(card_path)), patch('image.news_card', return_value=str(card_path)), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
                 result=pipeline.send_text('telegram', article)
                 self.assertIn(result['format'], ('verified_event_photo', 'original_topic_illustration'))
@@ -718,14 +718,14 @@ class MediaFailureRecoveryTests(unittest.TestCase):
         reply.json.return_value={'ok':True,'result':{'message_id':777}}
         with tempfile.TemporaryDirectory() as directory:
             card=Path(directory)/'branded.png'
-            card.write_bytes(b'news-card')
+            card.write_bytes(b'news-card' * 200)
             with patch('media.choose_photo',side_effect=ConnectionError('photo unavailable')), \
                  patch('visual_news.original_illustration',return_value=str(card)), \
                  patch('image.news_card',return_value=str(card)) as renderer, \
                  patch.dict(os.environ,{'TG_TOKEN':'token','TG_CHAT_ID':'123'}), \
                  patch('requests.post',return_value=reply) as request:
                 result=pipeline.send_text('telegram',article)
-        self.assertEqual(result['format'],'photo')
+        self.assertEqual(result['format'],'original_topic_illustration')
         renderer.assert_called_once_with(article, image_path=str(card), illustrative=True)
         self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
 
