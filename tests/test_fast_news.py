@@ -535,6 +535,22 @@ class NewsCheckpointMergeTests(unittest.TestCase):
         self.assertIn('new',result['stories'])
 
 
+class PhotoHoldMergeTests(unittest.TestCase):
+    def test_photo_hold_survives_checkpoint_merge_and_clears_after_delivery(self):
+        from scripts.merge_news_checkpoint import merge_state
+        old = {'stories': {'s': {'article': {'id': 's'}, 'receipts': {}, 'uncertain': {}}}}
+        hold = {'status': 'awaiting_exact_event_photo', 'at': 111}
+        local = {'stories': {'s': {'article': {'id': 's'}, 'receipts': {},
+                                    'uncertain': {}, 'photo_review': hold}}}
+        merged = merge_state(old, local)
+        self.assertEqual(merged['stories']['s']['photo_review'], hold)
+        delivered = {'stories': {'s': {'article': {'id': 's'}, 'receipts':
+                                      {'telegram': {'id': '1'}, 'facebook': {'id': '2'}},
+                                      'uncertain': {}}}}
+        confirmed = merge_state(merged, delivered)
+        self.assertNotIn('photo_review', confirmed['stories']['s'])
+
+
 class IllustrativePhotoSafetyTests(unittest.TestCase):
     def test_cc0_photo_is_labelled_and_not_claimed_as_event(self):
         from PIL import Image
