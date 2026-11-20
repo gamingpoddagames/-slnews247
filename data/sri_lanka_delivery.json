@@ -5166,6 +5166,75 @@
         }
       },
       "uncertain": {}
+    },
+    "eebb1a63e352b3cdc8003c53": {
+      "article": {
+        "id": "eebb1a63e352b3cdc8003c53",
+        "title_si": "අයවැය 02 වන වර කියවීම වැඩි ඡන්ද 97 කින් සම්මත වෙයි",
+        "summary_si": "2027 අයවැය දෙවන වර කියවීම වැඩි ඡන්ද 97 කින් අද (20) සම්මත වුණා. අයවැයට පක්ෂව ඡන්ද 157ක් ලැබුණු අතර විපක්ෂව ලැබුණේ ඡන්ද 60ක් පමණයි. මුදල් අමාත්‍යවරයා ලෙස ජනාධිපති අනුර කුමාර දිසානායක මහතා විසින් පසුගිය 12වැනිදා අයවැය කතාව ඉදිරිපත්කරනු ලැබුවා. ඒ අනුව නොවැම්බර් 13 දින සිට අද දිනය දක්වා දින 7ක කාලයක් අයවැය දෙවන වර කියවීමේ ...",
+        "link": "https://www.nethnews.lk/breaking-news/local-news/%e0%b6%85%e0%b6%ba%e0%b7%80%e0%b7%90%e0%b6%ba-02-%e0%b7%80%e0%b6%b1-%e0%b7%80%e0%b6%bb-%e0%b6%9a%e0%b7%92%e0%b6%ba%e0%b7%80%e0%b7%93%e0%b6%b8-%e0%b7%80%e0%b7%90%e0%b6%a9%e0%b7%92-%e0%b6%a1%e0%b6%b1/",
+        "source": "Neth Politics",
+        "published": 1795185711
+      },
+      "receipts": {
+        "telegram": {
+          "id": "989",
+          "at": 1795186408.1020246,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126981085318605",
+          "at": 1795186408.1020246,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "c26977ae123279131b767729": {
+      "article": {
+        "id": "c26977ae123279131b767729",
+        "title_si": "අයවැය ඡන්ද විමසීම ඇරඹෙයි…",
+        "summary_si": "2027 අයවැය දෙවැනි වර කියවීමේ ඡන්ද විමසීම අද (20) පැවැත්වීමට නියමිත අතර මේ වනවිට එම ඡන්ද විමසීම ආරම්භ වී තිබේ.",
+        "link": "https://lankatruth.com/si/?p=206873",
+        "source": "Lanka Truth Sinhala",
+        "published": 1795181781
+      },
+      "receipts": {
+        "telegram": {
+          "id": "990",
+          "at": 1795186408.1020246,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126981163318605",
+          "at": 1795186408.1020246,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "2e62106ca2ae3accb3cded77": {
+      "article": {
+        "id": "2e62106ca2ae3accb3cded77",
+        "title_si": "අයවැය දෙවැනි වර කියවීම වැඩි ඡන්දයෙන් සම්මතයි",
+        "summary_si": "අයවැය (2027) දෙවැනි වර කියවීම වැඩි ඡන්ද 97 කින් පාර්ලිමේන්තුවේ දී අද (20) පස්වරුවේ සම්මත විය.",
+        "link": "https://www.lankadeepa.lk/latest_news/අයවැය-දෙවැනි-වර-කියවීම-වැඩි-ඡන්දයෙන්-සම්මතයි/1-700929",
+        "source": "Lankadeepa Latest",
+        "published": 1795181580
+      },
+      "receipts": {
+        "telegram": {
+          "id": "991",
+          "at": 1795186408.1020246,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126981223318605",
+          "at": 1795186408.1020246,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -5187,7 +5256,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795176785.7967753,
+  "last_scan_at": 1795186408.1020246,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -5486,7 +5555,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "eebb1a63e352b3cdc8003c53": {
+      "at": 1795186408.1020246,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795176785.7967753
+  "last_bulletin_at": 1795186408.1020246
 }
