@@ -38,6 +38,24 @@ class NewsTests(unittest.TestCase):
             self.assertEqual(Path(directory, 'state.json').read_text(), saved)
             self.assertEqual(len(calls),3)
 
+    def test_missing_approved_event_photo_stays_pending_not_api_failed(self):
+        story = {'id': 'one', 'published': time.time(), 'title_si': 'මාතර සිද්ධිය',
+                 'summary_si': 'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
+                 'source': 'Test', 'link': 'https://example.com/incident'}
+        state = {}
+        with tempfile.TemporaryDirectory() as directory, \
+             patch.object(pipeline, 'STATE_FILE', Path(directory) / 'state.json'):
+            result, selected = pipeline.deliver(
+                state, [story], time.time(),
+                sender=lambda platform, item: {'error': 'exact_event_photo_required'})
+        self.assertEqual(len(selected), 1)
+        self.assertEqual(result['telegram']['awaiting_event_photo'], 1)
+        self.assertEqual(result['facebook']['awaiting_event_photo'], 1)
+        self.assertEqual(result['telegram']['failed'], 0)
+        self.assertEqual(result['facebook']['failed'], 0)
+        self.assertEqual(state['stories']['one']['receipts'], {})
+        self.assertFalse(state['stories']['one']['uncertain'])
+
     def test_lost_response_does_not_repeat_or_block_new_story(self):
         story = {'id':'one','published':time.time(),'title_si':'මාතර සිද්ධිය','summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.','source':'Test','link':'https://example.com'}
         state = {}
