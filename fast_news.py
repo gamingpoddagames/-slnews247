@@ -248,7 +248,7 @@ def send_text(platform, article):
 
 
 def deliver(state, articles, now, preview=False, sender=send_text):
-    results = {name: {'sent': 0, 'failed': 0, 'uncertain': 0} for name in ('telegram', 'facebook')}
+    results = {name: {'sent': 0, 'failed': 0, 'uncertain': 0, 'awaiting_event_photo': 0} for name in ('telegram', 'facebook')}
     records = state.setdefault('stories', {})
     limit = max(1, min(60, int(os.getenv('MAX_NEWS_PER_RUN', '30'))))
     selected = []
@@ -284,6 +284,13 @@ def deliver(state, articles, now, preview=False, sender=send_text):
                 record['receipts'][name] = {'id': result['id'], 'at': now, 'format': result.get('format', 'text')}
                 record['uncertain'].pop(name, None)
                 results[name]['sent'] += 1
+            elif result.get('error') == 'exact_event_photo_required':
+                # Lack of a licensed photograph is an editorial hold, not an
+                # API outage. Keep the story eligible for the next scan.
+                record['uncertain'].pop(name, None)
+                results[name]['awaiting_event_photo'] += 1
+                record['photo_review'] = {'status': 'awaiting_exact_event_photo',
+                                          'at': now}
             else:
                 record['uncertain'].pop(name, None)
                 results[name]['failed'] += 1
@@ -627,6 +634,8 @@ def main():
     # with evidence that fresh posts or original video were actually sent.
     report['publishing_status'] = {
         'new_photo_posts': {dest: delivery[dest]['sent'] for dest in ('telegram','facebook')},
+        'awaiting_exact_event_photo': {dest: delivery[dest]['awaiting_event_photo']
+                                       for dest in ('telegram', 'facebook')},
         'fresh_publishable_found': report['publishable_articles'],
         'not_new_or_already_delivered': max(0, report['publishable_articles'] - len(selected)),
         'video_result': report['video'],
