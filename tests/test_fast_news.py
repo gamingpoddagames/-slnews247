@@ -83,8 +83,8 @@ class PresentationTests(unittest.TestCase):
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
 
     def test_unrelated_contextual_photo_is_never_published(self):
-        article = {'id': 'two', 'title_si': 'විභාග නිවේදනය',
-                   'summary_si': 'අධ්‍යාපන අමාත්‍යාංශය නව නිවේදනයක් නිකුත් කර ඇත.',
+        article = {'id': 'two', 'title_si': 'මාතර සිද්ධිය',
+                   'summary_si': 'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
                    'published': time.time()}
         with patch('real_photo.select_real_photo',
                    return_value=('other-event.jpg', 'licensed_context_photo', {})), \
