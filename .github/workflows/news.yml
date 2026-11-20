@@ -50,12 +50,13 @@ jobs:
           export PATH="$RUNNER_TEMP/newsbin:$PATH"
           python -c "from image import get_font; get_font(32)"
           ffmpeg -version | head -n 1
-          # Real-footage verification and narration duration checks require ffprobe.
-          if ! command -v ffprobe >/dev/null 2>&1; then
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq ffmpeg
+          # The Ubuntu hosted runner already includes ffprobe. Avoid apt-get
+          # update/install: package-mirror stalls previously timed out this job.
+          if command -v ffprobe >/dev/null 2>&1; then
+            ffprobe -version | head -n 1
+          else
+            echo "::warning::ffprobe unavailable; licensed video probing may be skipped"
           fi
-          ffprobe -version | head -n 1
       - name: Verify feed parsing and delivery checkpoints
         run: |
           mkdir -p data
