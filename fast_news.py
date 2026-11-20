@@ -202,39 +202,34 @@ def caption(article):
 def send_text(platform, article):
     if not article.get('sample') and not publishable(article):
         return {'error': 'missing_or_unrelated_story_details'}
-    from image import news_card
-    from media import post_image
-    # The event-photo downloader is not allowed to bring down the entire
-    # graphic publishing path. If it fails, use the approved blue fallback.
+    from media import choose_photo
+    from pathlib import Path
+    # Publishing is photo-only: no text-only, generic branded, or unrelated fallback.
+    # choose_photo verifies story URL, event evidence, permission, and file checksum.
+    if article.get('sample'):
+        return {'error': 'sample_posts_disabled'}
     try:
-        image_path = post_image(article)
+        photo_path = choose_photo(article)
+        if not photo_path or not Path(photo_path).is_file() or Path(photo_path).stat().st_size == 0:
+            return {'error': 'verified_story_photo_required'}
+        from image import news_card
+        image_path = news_card(article, image_path=photo_path)
+        if not image_path or not Path(image_path).is_file() or Path(image_path).stat().st_size == 0:
+            return {'error': 'story_photo_card_failed'}
     except Exception as exc:
-        print('Event photo unavailable; using original branded card:', type(exc).__name__)
-        image_path = None
-    if not image_path:
-        try:
-            image_path = news_card(article)
-        except Exception as exc:
-            print('Branded card render unavailable:', type(exc).__name__)
-            image_path = None
-    if platform == 'telegram' and len(caption(article)) > 1024:
-        image_path = None
+        print('Verified story photo unavailable; post blocked:', type(exc).__name__)
+        return {'error': 'verified_story_photo_unavailable'}
     message = caption(article)
-    if platform == 'telegram' and len(message) > 4096:
+    if platform == 'telegram' and len(message) > 1024:
         return {'error': 'caption_too_long_review_required'}
     if platform == 'telegram':
         token, chat = os.getenv('TG_TOKEN'), os.getenv('TG_CHAT_ID')
         if not token or not chat:
             return {'error': 'missing_credentials'}
-        if image_path:
-            with open(image_path, 'rb') as photo:
-                response = requests.post(f'https://api.telegram.org/bot{token}/sendPhoto',
-                                         data={'chat_id': chat, 'caption': message},
-                                         files={'photo': photo}, timeout=(5, 45))
-        else:
-            response = requests.post(f'https://api.telegram.org/bot{token}/sendMessage',
-                                     json={'chat_id': chat, 'text': message,
-                                           'link_preview_options': {'is_disabled': not bool(article.get('official_video_url'))}}, timeout=(5, 30))
+        with open(image_path, 'rb') as photo:
+            response = requests.post(f'https://api.telegram.org/bot{token}/sendPhoto',
+                                     data={'chat_id': chat, 'caption': message},
+                                     files={'photo': photo}, timeout=(5, 45))
         data = response.json()
         if response.ok and data.get('ok'):
             return {'id': str(data['result']['message_id']), 'format': 'photo' if image_path else 'text'}
@@ -242,14 +237,10 @@ def send_text(platform, article):
         page, token = os.getenv('FB_PAGE_ID'), os.getenv('FB_PAGE_TOKEN')
         if not page or not token:
             return {'error': 'missing_credentials'}
-        if image_path:
-            with open(image_path, 'rb') as photo:
-                response = requests.post(f'https://graph.facebook.com/v22.0/{page}/photos',
-                                         data={'access_token': token, 'caption': caption(article)},
-                                         files={'source': photo}, timeout=(5, 60))
-        else:
-            response = requests.post(f'https://graph.facebook.com/v22.0/{page}/feed',
-                                     data={'access_token': token, 'message': caption(article)}, timeout=(5, 45))
+        with open(image_path, 'rb') as photo:
+            response = requests.post(f'https://graph.facebook.com/v22.0/{page}/photos',
+                                     data={'access_token': token, 'caption': message},
+                                     files={'source': photo}, timeout=(5, 60))
         data = response.json()
         if response.ok and data.get('id'):
             return {'id': str(data.get('post_id') or data['id']), 'format': 'photo' if image_path else 'text'}
@@ -592,16 +583,7 @@ def main():
     Path('output').mkdir(exist_ok=True)
     state = json.loads(STATE_FILE.read_text()) if STATE_FILE.exists() else {}
 
-    # Owner-authorized one-time Facebook design sample, checkpointed before sending.
-    if not preview and 'facebook_design_sample_v1' not in state:
-        state['facebook_design_sample_v1'] = {'status': 'unconfirmed'}
-        save(state)
-        sample = {'id': 'design_sample_v1', 'sample': True, 'published': now,
-                  'title_si': 'පුවතේ වැදගත්ම තොරතුරු එකම තැනක',
-                  'summary_si': 'ආදර්ශ පළ කිරීමකි.\n\nමෙය SL News 247 නව පුවත් සැලසුම පෙන්වීම සඳහා පළ කරන ආදර්ශයකි. රතු පසුබිම මත සුදු පැහැයෙන් සිරස්තලයත්, කහ පැහැයෙන් වැදගත් කොටසත් දක්වා තිබෙනවා.\n\nඉදිරි පුවත් සඳහා තහවුරු කළ කරුණු පැහැදිලි ඡේද ලෙස මෙහි ඇතුළත් කෙරෙනවා. මෙය සැබෑ සිද්ධියක් පිළිබඳ පුවතක් නොවේ.'}
-        state['facebook_design_sample_v1'] = send_text('facebook', sample)
-        save(state)
-
+    # No demo/sample posts: only verified real stories with reviewed photos.
     articles, health = collect(now)
     # Keep receipts long enough to suppress repeats after delayed schedules.
     state['stories'] = {key: val for key, val in state.get('stories', {}).items()
