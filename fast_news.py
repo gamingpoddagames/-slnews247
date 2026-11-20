@@ -226,7 +226,7 @@ def send_text(platform, article):
         return {'error': 'visual_generation_failed'}
     message = caption(article)
     if image_kind == 'original_topic_illustration':
-        message += '\\n\\n🖼️ සංකේතාත්මක රූපයක් — සිද්ධියේ සැබෑ ඡායාරූපයක් නොවේ.'
+        message += '\n\n🖼️ සංකේතාත්මක රූපයක් — සිද්ධියේ සැබෑ ඡායාරූපයක් නොවේ.'
     if platform == 'telegram' and len(message) > 1024:
         return {'error': 'caption_too_long_review_required'}
     if platform == 'telegram':
