@@ -5235,6 +5235,75 @@
         }
       },
       "uncertain": {}
+    },
+    "4fd6b5f6f2d3e106476f8521": {
+      "article": {
+        "id": "4fd6b5f6f2d3e106476f8521",
+        "title_si": "සංවිධානාත්මක අපරාධ වැළැක්වීමේ පනත් කෙටුම්පත පිළිබඳ ශ්‍රේෂ්ඨාධිකරණ තීරණය කථානායකට",
+        "summary_si": "සංවිධානාත්මක අපරාධ වැළැක්වීමේ පනත් කෙටුම්පත පිළිබඳ ශ්‍රේෂ්ඨාධිකරණ ලබාදුන් තීරණය පාර්ලිමේන්තුවේ කථානායක කාර්යාලය වෙත ලැබී ඇති බව වාර්තා වේ.",
+        "link": "https://lankatruth.com/si/?p=206880",
+        "source": "Lanka Truth Sinhala",
+        "published": 1795190382
+      },
+      "receipts": {
+        "telegram": {
+          "id": "993",
+          "at": 1795193614.2264845,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126990103318605",
+          "at": 1795193614.2264845,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "5da9d5a50e7287986a0927c1": {
+      "article": {
+        "id": "5da9d5a50e7287986a0927c1",
+        "title_si": "රොටුඹ අමිල දිවයිනට රැගෙන එයි",
+        "summary_si": "රුසියාවේදී අත්අඩංගුවට ගත්, මෙරට සංවිධානාත්මක අපරාධකරුවෙකු වන ‘රොටුඹ අමිල’ නමැත්තා අද (20) දිවයිනට රැගෙන විත් තිබේ.",
+        "link": "https://lankatruth.com/si/?p=206877",
+        "source": "Lanka Truth Sinhala",
+        "published": 1795188296
+      },
+      "receipts": {
+        "telegram": {
+          "id": "994",
+          "at": 1795193614.2264845,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126990199318605",
+          "at": 1795193614.2264845,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "2a07b75acef544f84adf85bd": {
+      "article": {
+        "id": "2a07b75acef544f84adf85bd",
+        "title_si": "අයවැය ඡන්ද විමසීම ඇරඹෙයි… වැඩි ඡන්ද 97කින් සම්මතයි…",
+        "summary_si": "2027 අයවැය දෙවැනි වර කියවීමේ ඡන්ද විමසීම අද (20) පැවැත්වීමට නියමිත අතර මේ වනවිට එම ඡන්ද විමසීම ආරම්භ වී තිබේ.",
+        "link": "https://lankatruth.com/si/?p=206873",
+        "source": "Lanka Truth Sinhala",
+        "published": 1795181781
+      },
+      "receipts": {
+        "telegram": {
+          "id": "995",
+          "at": 1795193614.2264845,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126990283318605",
+          "at": 1795193614.2264845,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -5256,7 +5325,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795186408.1020246,
+  "last_scan_at": 1795193614.2264845,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -5563,7 +5632,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "4fd6b5f6f2d3e106476f8521": {
+      "at": 1795193614.2264845,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795186408.1020246
+  "last_bulletin_at": 1795193614.2264845
 }
