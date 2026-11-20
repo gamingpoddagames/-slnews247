@@ -202,24 +202,31 @@ def caption(article):
 def send_text(platform, article):
     if not article.get('sample') and not publishable(article):
         return {'error': 'missing_or_unrelated_story_details'}
-    from media import choose_photo
     from pathlib import Path
-    # Publishing is photo-only: no text-only, generic branded, or unrelated fallback.
-    # choose_photo verifies story URL, event evidence, permission, and file checksum.
+    from media import choose_photo
     if article.get('sample'):
         return {'error': 'sample_posts_disabled'}
     try:
         photo_path = choose_photo(article)
-        if not photo_path or not Path(photo_path).is_file() or Path(photo_path).stat().st_size == 0:
-            return {'error': 'verified_story_photo_required'}
         from image import news_card
-        image_path = news_card(article, image_path=photo_path)
-        if not image_path or not Path(image_path).is_file() or Path(image_path).stat().st_size == 0:
-            return {'error': 'story_photo_card_failed'}
+        if photo_path:
+            image_path = news_card(article, image_path=photo_path)
+            image_kind = 'verified_event_photo'
+        else:
+            # Original topic-matched visual. No copied publisher imagery and
+            # never represent this artwork as a photograph of the incident.
+            from visual_news import original_illustration
+            illustration_path = original_illustration(article)
+            image_path = news_card(article, image_path=illustration_path, illustrative=True)
+            image_kind = 'original_topic_illustration'
+        if not image_path or not Path(image_path).is_file() or Path(image_path).stat().st_size < 1000:
+            return {'error': 'visual_generation_failed'}
     except Exception as exc:
-        print('Verified story photo unavailable; post blocked:', type(exc).__name__)
-        return {'error': 'verified_story_photo_unavailable'}
+        print('News artwork generation blocked:', type(exc).__name__, str(exc)[:150])
+        return {'error': 'visual_generation_failed'}
     message = caption(article)
+    if image_kind == 'original_topic_illustration':
+        message += '\\n\\n🖼️ සංකේතාත්මක රූපයක් — සිද්ධියේ සැබෑ ඡායාරූපයක් නොවේ.'
     if platform == 'telegram' and len(message) > 1024:
         return {'error': 'caption_too_long_review_required'}
     if platform == 'telegram':
@@ -232,7 +239,7 @@ def send_text(platform, article):
                                      files={'photo': photo}, timeout=(5, 45))
         data = response.json()
         if response.ok and data.get('ok'):
-            return {'id': str(data['result']['message_id']), 'format': 'photo' if image_path else 'text'}
+            return {'id': str(data['result']['message_id']), 'format': image_kind}
     else:
         page, token = os.getenv('FB_PAGE_ID'), os.getenv('FB_PAGE_TOKEN')
         if not page or not token:
@@ -243,7 +250,7 @@ def send_text(platform, article):
                                      files={'source': photo}, timeout=(5, 60))
         data = response.json()
         if response.ok and data.get('id'):
-            return {'id': str(data.get('post_id') or data['id']), 'format': 'photo' if image_path else 'text'}
+            return {'id': str(data.get('post_id') or data['id']), 'format': image_kind}
     return {'error': 'api_rejected', 'http': response.status_code,
             'code': data.get('error', {}).get('code')}
 
