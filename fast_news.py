@@ -208,23 +208,17 @@ def send_text(platform, article):
     try:
         from real_photo import select_real_photo
         photo_path, image_kind, credit = select_real_photo(article)
-        if not photo_path:
-            return {'error': 'real_photo_unavailable_review_required'}
+        if not photo_path or image_kind != 'verified_event_photo':
+            return {'error': 'exact_event_photo_required'}
         from image import news_card
         image_path = news_card(article, image_path=photo_path,
-                               illustrative=(image_kind == 'licensed_context_photo'))
+                               illustrative=False)
         if not image_path or not Path(image_path).is_file() or Path(image_path).stat().st_size < 1000:
             return {'error': 'real_photo_card_failed'}
     except Exception as exc:
         print('Real photo processing blocked:', type(exc).__name__, str(exc)[:160])
         return {'error': 'real_photo_processing_failed'}
     message = caption(article)
-    if image_kind == 'licensed_context_photo':
-        message += ('\n\n📷 සංකේතාත්මක සැබෑ ඡායාරූපයකි; මෙම සිද්ධියේ ඡායාරූපයක් නොවේ.'
-                    + '\nඡායාරූපය: ' + credit['creator'] + ' / Wikimedia Commons'
-                    + '\nබලපත්‍රය: ' + credit['license']
-                    + '\nමූලාශ්‍රය: ' + credit['source']
-                    + ('\nබලපත්‍ර සබැඳිය: ' + credit['license_url'] if credit['license_url'] else ''))
     if platform == 'telegram' and len(message) > 1024:
         return {'error': 'caption_too_long_review_required'}
     if platform == 'telegram':
