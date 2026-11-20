@@ -9,6 +9,7 @@ import re
 from PIL import Image, ImageDraw, ImageFont
 
 CATEGORIES = (
+    ("religion", ("අස්ගිරි", "මල්වතු", "විහාර", "කඨින", "පන්සල", "බෞද්ධ", "දළදා", "temple", "buddhist")),
     ("education", ("විභාග", "පාසල්", "සිසු", "අධ්‍යාපන", "ශිෂ්‍ය", "exam", "school")),
     ("weather", ("වැසි", "කාලගුණ", "සුළං", "ගංවතුර", "නායයෑ", "weather", "rain")),
     ("health", ("රෝහල", "වෛද්‍ය", "සෞඛ්‍ය", "රෝග", "health", "hospital")),
@@ -37,7 +38,7 @@ def original_illustration(article):
               "health": (22, 119, 112), "transport": (54, 90, 130),
               "economy": (103, 69, 133), "sport": (24, 111, 86),
               "government": (95, 73, 124), "energy": (148, 91, 30),
-              "general": (45, 85, 144)}
+              "general": (45, 85, 144), "religion": (112, 83, 47)}
     base = colors[topic]
     image = Image.new("RGB", (width, height))
     draw = ImageDraw.Draw(image)
