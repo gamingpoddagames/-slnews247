@@ -208,6 +208,10 @@ def send_text(platform, article):
         return {'error': 'sample_posts_disabled'}
     try:
         photo_path = choose_photo(article)
+    except Exception as exc:
+        print('Licensed photo lookup failed; using original illustration:', type(exc).__name__)
+        photo_path = None
+    try:
         from image import news_card
         if photo_path:
             image_path = news_card(article, image_path=photo_path)
