@@ -82,26 +82,16 @@ class PresentationTests(unittest.TestCase):
                 card.assert_called_once_with(article, image_path=str(img), illustrative=False)
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
 
-    def test_licensed_context_photo_has_credit_and_label(self):
-        from unittest.mock import MagicMock
-        article = {'id':'two', 'title_si':'විභාග ප්‍රවේශපත්‍ර ගැන නිවේදනය',
-                   'summary_si':'විභාග ප්‍රවේශපත්‍ර ගැන අධ්‍යාපන අමාත්‍යාංශය විසින් නව නිවේදනයක් නිකුත් කර තිබේ.',
-                   'published':time.time()}
-        credit = {'creator':'Photographer','source':'https://commons.wikimedia.org/wiki/File:Photo.jpg',
-                  'license':'CC BY 4.0','license_url':'https://creativecommons.org/licenses/by/4.0/'}
-        reply = MagicMock(ok=True)
-        reply.json.return_value = {'ok':True,'result':{'message_id':100}}
-        with tempfile.TemporaryDirectory() as directory:
-            img = Path(directory, 'photo.jpg')
-            img.write_bytes(b'photo' * 300)
-            with patch('real_photo.select_real_photo', return_value=(str(img), 'licensed_context_photo', credit)), \
-                 patch('image.news_card', return_value=str(img)) as card, \
-                 patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), \
-                 patch('requests.post', return_value=reply) as request:
-                result = pipeline.send_text('telegram', article)
-                self.assertEqual(result['format'], 'licensed_context_photo')
-                card.assert_called_once_with(article, image_path=str(img), illustrative=True)
-                self.assertIn('Photographer', request.call_args.kwargs['data']['caption'])
+    def test_unrelated_contextual_photo_is_never_published(self):
+        article = {'id': 'two', 'title_si': 'විභාග නිවේදනය',
+                   'summary_si': 'අධ්‍යාපන අමාත්‍යාංශය නව නිවේදනයක් නිකුත් කර ඇත.',
+                   'published': time.time()}
+        with patch('real_photo.select_real_photo',
+                   return_value=('other-event.jpg', 'licensed_context_photo', {})), \
+             patch('requests.post') as request:
+            result = pipeline.send_text('telegram', article)
+        self.assertEqual(result['error'], 'exact_event_photo_required')
+        request.assert_not_called()
 
 class ExactEventMediaTests(unittest.TestCase):
     def test_missing_real_photo_never_publishes(self):
@@ -111,7 +101,7 @@ class ExactEventMediaTests(unittest.TestCase):
         with patch('real_photo.select_real_photo', return_value=(None, None, None)), \
              patch('requests.post') as sender:
             result = pipeline.send_text('telegram', article)
-        self.assertEqual(result['error'], 'real_photo_unavailable_review_required')
+        self.assertEqual(result['error'], 'exact_event_photo_required')
         sender.assert_not_called()
 
     def test_exact_story_and_nonreuse_guards(self):
