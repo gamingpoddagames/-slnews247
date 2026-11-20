@@ -134,15 +134,16 @@ def discover_licensed_photo(article, session=None):
 
 
 def select_real_photo(article):
-    """Prefer staff-verified exact-event photo, then clearly labelled Commons context."""
+    """Return only a licensed, reviewed photograph of this *exact* news event.
+
+    Topic-related archive photos, Commons keyword results and generated images
+    are never substitutes for a verified photo of the named incident.
+    """
     try:
         photo = choose_photo(article)
     except (requests.RequestException, OSError, ValueError, KeyError) as exc:
-        print("Approved event photo not accessible; trying Commons:", type(exc).__name__)
-        photo = None
+        print("Verified exact-event photo unavailable:", type(exc).__name__)
+        return None, None, None
     if photo:
         return photo, "verified_event_photo", None
-    photo, credit = discover_licensed_photo(article)
-    if photo:
-        return photo, "licensed_context_photo", credit
     return None, None, None
