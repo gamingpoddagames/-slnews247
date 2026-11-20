@@ -203,34 +203,28 @@ def send_text(platform, article):
     if not article.get('sample') and not publishable(article):
         return {'error': 'missing_or_unrelated_story_details'}
     from pathlib import Path
-    from media import choose_photo
     if article.get('sample'):
         return {'error': 'sample_posts_disabled'}
     try:
-        photo_path = choose_photo(article)
-    except Exception as exc:
-        print('Licensed photo lookup failed; using original illustration:', type(exc).__name__)
-        photo_path = None
-    try:
+        from real_photo import select_real_photo
+        photo_path, image_kind, credit = select_real_photo(article)
+        if not photo_path:
+            return {'error': 'real_photo_unavailable_review_required'}
         from image import news_card
-        if photo_path:
-            image_path = news_card(article, image_path=photo_path)
-            image_kind = 'verified_event_photo'
-        else:
-            # Original topic-matched visual. No copied publisher imagery and
-            # never represent this artwork as a photograph of the incident.
-            from visual_news import original_illustration
-            illustration_path = original_illustration(article)
-            image_path = news_card(article, image_path=illustration_path, illustrative=True)
-            image_kind = 'original_topic_illustration'
+        image_path = news_card(article, image_path=photo_path,
+                               illustrative=(image_kind == 'licensed_context_photo'))
         if not image_path or not Path(image_path).is_file() or Path(image_path).stat().st_size < 1000:
-            return {'error': 'visual_generation_failed'}
+            return {'error': 'real_photo_card_failed'}
     except Exception as exc:
-        print('News artwork generation blocked:', type(exc).__name__, str(exc)[:150])
-        return {'error': 'visual_generation_failed'}
+        print('Real photo processing blocked:', type(exc).__name__, str(exc)[:160])
+        return {'error': 'real_photo_processing_failed'}
     message = caption(article)
-    if image_kind == 'original_topic_illustration':
-        message += '\n\n🖼️ සංකේතාත්මක රූපයක් — සිද්ධියේ සැබෑ ඡායාරූපයක් නොවේ.'
+    if image_kind == 'licensed_context_photo':
+        message += ('\\n\\n📷 සංකේතාත්මක සැබෑ ඡායාරූපයකි; මෙම සිද්ධියේ ඡායාරූපයක් නොවේ.'
+                    + '\\nඡායාරූපය: ' + credit['creator'] + ' / Wikimedia Commons'
+                    + '\\nබලපත්‍රය: ' + credit['license']
+                    + '\\nමූලාශ්‍රය: ' + credit['source']
+                    + ('\\nබලපත්‍ර සබැඳිය: ' + credit['license_url'] if credit['license_url'] else ''))
     if platform == 'telegram' and len(message) > 1024:
         return {'error': 'caption_too_long_review_required'}
     if platform == 'telegram':
