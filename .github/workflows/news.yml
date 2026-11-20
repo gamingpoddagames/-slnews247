@@ -95,7 +95,8 @@ jobs:
           TIKTOK_ENABLED: ${{ vars.TIKTOK_ENABLED || 'false' }}
           TIKTOK_PRIVACY_LEVEL: ${{ vars.TIKTOK_PRIVACY_LEVEL || 'SELF_ONLY' }}
           MYMEMORY_EMAIL: ${{ secrets.MYMEMORY_EMAIL }}
-          MAX_NEWS_PER_RUN: '30'
+          MAX_NEWS_PER_RUN: '3'
+          ALLOW_HEADLINE_CARD_FALLBACK: 'true'
         run: python -u fast_news.py
       - name: Preserve delivery checkpoints and translation cache
         if: always() && (github.event_name != 'workflow_dispatch' || inputs.publish)
