@@ -4981,6 +4981,49 @@
         }
       },
       "uncertain": {}
+    },
+    "809f7284ae2362d4dba1b14e": {
+      "article": {
+        "id": "809f7284ae2362d4dba1b14e",
+        "title_si": "අස්ගිරි මහා විහාරයේ කඨින පින්කමට තායිලන්ත නි. අගමැති අද දිවයිනට",
+        "summary_si": "අස්ගිරි මහා විහාරයේ කඨින පින්කමට තායිලන්ත නි.",
+        "link": "https://sinhala.adaderana.lk/news/254922",
+        "source": "Ada Derana Sinhala",
+        "published": 1795139914
+      },
+      "receipts": {},
+      "uncertain": {},
+      "errors": {
+        "telegram": {
+          "error": "real_photo_unavailable_review_required"
+        },
+        "facebook": {
+          "error": "real_photo_unavailable_review_required"
+        }
+      }
+    },
+    "cb9ee531c1d8cbaba8916848": {
+      "article": {
+        "id": "cb9ee531c1d8cbaba8916848",
+        "title_si": "වසර 90ක නුවරඑළිය පාපන්දු ඉතිහාසයට ජාත්‍යන්තර අභිමානයක් එක්කළ ටී.එෆ්.සූඩීන්",
+        "summary_si": "වසර 90ක නුවරඑළිය පාපන්දු ඉතිහාසයට ජාත්‍යන්තර අභිමානයක් එක්කළ ටී. එෆ්.",
+        "link": "https://sinhala.adaderana.lk/news/254879",
+        "source": "Ada Derana Sinhala",
+        "published": 1795070563
+      },
+      "receipts": {
+        "telegram": {
+          "id": "978",
+          "at": 1795143922.6531928,
+          "format": "licensed_context_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126865399318605",
+          "at": 1795143922.6531928,
+          "format": "licensed_context_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -5002,7 +5045,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795143875.8085809,
+  "last_scan_at": 1795143922.6531928,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
