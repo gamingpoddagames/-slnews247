@@ -71,9 +71,9 @@ class PresentationTests(unittest.TestCase):
         response.json.return_value = {'ok':True,'result':{'message_id':99}}
         with tempfile.TemporaryDirectory() as directory:
             image = Path(directory, 'test.jpg');image.write_bytes(b'image-fixture')
-            with patch('media.post_image', return_value=str(image)), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
+            with patch('media.choose_photo', return_value=str(image)), patch('image.news_card', return_value=str(image)), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
                 result = pipeline.send_text('telegram', article)
-                self.assertEqual(result['format'], 'photo')
+                self.assertIn(result['format'], ('verified_event_photo', 'original_topic_illustration'))
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
                 self.assertIn('photo', request.call_args.kwargs['files'])
                 self.assertNotIn('https://', request.call_args.kwargs['data']['caption'])
@@ -89,10 +89,10 @@ class PresentationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             image = Path(directory, 'card.png')
             image.write_bytes(b'graphic-test')
-            with patch('media.post_image', return_value=None), patch('image.news_card', return_value=str(image)) as card, patch.dict(os.environ, {'TG_TOKEN':'test', 'TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
+            with patch('media.choose_photo', return_value=None), patch('visual_news.original_illustration', return_value=str(image)), patch('image.news_card', return_value=str(image)) as card, patch.dict(os.environ, {'TG_TOKEN':'test', 'TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
                 result = pipeline.send_text('telegram', article)
                 self.assertEqual(result['format'], 'photo')
-                card.assert_called_once_with(article)
+                card.assert_called_once_with(article, image_path=str(image), illustrative=True)
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
 
 class ExactEventMediaTests(unittest.TestCase):
@@ -104,9 +104,9 @@ class ExactEventMediaTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             card_path = Path(directory, 'news.png')
             card_path.write_bytes(b'original-typography-card')
-            with patch('media.post_image', return_value=None), patch('image.news_card', return_value=str(card_path)), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
+            with patch('media.choose_photo', return_value=None), patch('visual_news.original_illustration', return_value=str(card_path)), patch('image.news_card', return_value=str(card_path)), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
                 result=pipeline.send_text('telegram', article)
-                self.assertEqual(result['format'],'photo')
+                self.assertIn(result['format'], ('verified_event_photo', 'original_topic_illustration'))
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
                 self.assertIn('files',request.call_args.kwargs)
         with patch('media.choose_video', return_value=None):
@@ -719,13 +719,14 @@ class MediaFailureRecoveryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             card=Path(directory)/'branded.png'
             card.write_bytes(b'news-card')
-            with patch('media.post_image',side_effect=ConnectionError('photo unavailable')), \
+            with patch('media.choose_photo',side_effect=ConnectionError('photo unavailable')), \
+                 patch('visual_news.original_illustration',return_value=str(card)), \
                  patch('image.news_card',return_value=str(card)) as renderer, \
                  patch.dict(os.environ,{'TG_TOKEN':'token','TG_CHAT_ID':'123'}), \
                  patch('requests.post',return_value=reply) as request:
                 result=pipeline.send_text('telegram',article)
         self.assertEqual(result['format'],'photo')
-        renderer.assert_called_once_with(article)
+        renderer.assert_called_once_with(article, image_path=str(card), illustrative=True)
         self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
 
 
