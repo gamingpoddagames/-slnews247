@@ -42,11 +42,12 @@ def plain(value):
 
 def permitted(info):
     meta = info.get("extmetadata", {})
-    license_name = plain(meta.get("LicenseShortName", {}).get("value", "")).lower().replace(" ", "")
-    # Commons may describe public domain as PD-*.
-    if license_name.startswith("pd-"):
+    license_name = plain(meta.get("LicenseShortName", {}).get("value", "")).lower()
+    normalized = re.sub(r"[^a-z0-9]", "", license_name)
+    allowed = {re.sub(r"[^a-z0-9]", "", name) for name in PERMITTED}
+    if normalized.startswith("pd") or normalized == "publicdomain":
         return True
-    if license_name not in {x.replace(" ", "") for x in PERMITTED}:
+    if normalized not in allowed:
         return False
     restrictions = plain(meta.get("Restrictions", {}).get("value", ""))
     return not restrictions
