@@ -19,6 +19,20 @@ class RealPhotoTests(unittest.TestCase):
             self.assertEqual((photo, kind, credit), ("event.jpg", "verified_event_photo", None))
             commons.assert_not_called()
 
+    def test_no_exact_event_photo_never_uses_contextual_image(self):
+        article = {"id": "story", "title_si": "අස්ගිරි විහාරයේ උත්සවයක්"}
+        with patch("real_photo.choose_photo", return_value=None), \
+             patch("real_photo.discover_licensed_photo") as fallback:
+            self.assertEqual(select_real_photo(article), (None, None, None))
+            fallback.assert_not_called()
+
+    def test_approved_photo_download_error_does_not_publish_wrong_image(self):
+        article = {"id": "story", "title_si": "සත්‍ය සිද්ධියක්"}
+        with patch("real_photo.choose_photo", side_effect=ConnectionError("unavailable")), \
+             patch("real_photo.discover_licensed_photo") as fallback:
+            self.assertEqual(select_real_photo(article), (None, None, None))
+            fallback.assert_not_called()
+
     def test_no_license_means_no_download(self):
         session = MagicMock()
         session.get.return_value.json.return_value = {
