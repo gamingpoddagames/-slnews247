@@ -392,7 +392,7 @@ def news_card(article, image_path=None, illustrative=False):
     if image_path and illustrative:
         # Explicitly distinguish a contextual archive photo from event footage.
         draw.rounded_rectangle((110, 708, 720, 777), radius=16, fill='#15243f')
-        draw_mixed(draw, (132, 758), 'සංකේතාත්මක ඡායාරූපයක්', 33,
+        draw_mixed(draw, (132, 758), 'සංකේතාත්මක රූපයක්', 33,
                    fill='#ffffff', bold=True)
 
     # Fade/cover lower photo margin with a charcoal headline field.
