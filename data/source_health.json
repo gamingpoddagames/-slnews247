@@ -1,5 +1,5 @@
 {
-  "checked_at": 1795143973.4330816,
+  "checked_at": 1795144052.893552,
   "configured_feeds": 25,
   "sources": [
     {
@@ -35,10 +35,8 @@
     },
     {
       "source": "Siyatha News",
-      "http": 200,
-      "entries": 50,
-      "fresh_sinhala": 16,
-      "feed_url": "https://siyathanews.lk/feed/"
+      "error": "ReadTimeout",
+      "http": null
     },
     {
       "source": "ITN News",
@@ -47,8 +45,8 @@
     },
     {
       "source": "Lankasara Sinhala",
-      "error": "HTTPError",
-      "http": 403
+      "error": "ReadTimeout",
+      "http": null
     },
     {
       "source": "Newsfirst Sinhala",
@@ -97,10 +95,8 @@
     },
     {
       "source": "Lankadeepa Politics",
-      "http": 200,
-      "entries": 12,
-      "fresh_sinhala": 0,
-      "feed_url": "https://www.lankadeepa.lk/rss/politics/13"
+      "error": "ReadTimeout",
+      "http": null
     },
     {
       "source": "Neth Sports",
