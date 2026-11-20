@@ -5304,6 +5304,75 @@
         }
       },
       "uncertain": {}
+    },
+    "121b6c04861399cd31d57f50": {
+      "article": {
+        "id": "121b6c04861399cd31d57f50",
+        "title_si": "නාරාහේන්පිට RMV සේවාවට එන්න කලින් වේලාවක් වෙන් කරවා ගන්න",
+        "summary_si": "මෝටර් රථ ප්‍රවාහන දෙපාර්තමේන්තුවේ නාරාහේන්පිට ප්‍රධාන කාර්යාලය මගින් සපයනු ලබන සියලුම මහජන සේවාවන්, සදුදා (23) සිට පූර්ව වේලාවන් වෙන්කර ගැනීමේ ක්‍රම වේදය යටතේ පමණක් සිදු කිරීමට තීරණය කර ඇති බව එම දෙපාර්තමේන්තුව පවසයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/නාරාහේන්පිට-RMV-සේවාවට-එන්න-කලින්-වේලාවක්-වෙන්-කරවා-ගන්න/1-700927",
+        "source": "Lankadeepa Latest",
+        "published": 1795178640
+      },
+      "receipts": {
+        "telegram": {
+          "id": "997",
+          "at": 1795200539.6819923,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126997465318605",
+          "at": 1795200539.6819923,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "23562f2cc98c9dbd0057d8e9": {
+      "article": {
+        "id": "23562f2cc98c9dbd0057d8e9",
+        "title_si": "ශ්‍රී ලංකා – මුරුසි මිත්‍රත්ව සංගමයේ විශේෂ මාධ්‍ය හමුවක් (VIDEO)",
+        "summary_si": "ශ්‍රී ලංකා මුරුසි මිත්‍රත්ව සංගමය කොළඹ දී විශේෂ මාධ්‍ය හමුවක් කැඳවා තිබුණා. දෙරට අතර සහයෝගීතාව තවදුරටත් ශක්තිමත් කිරීම පිළිබඳවයි එහිදී අවධානය යොමු කර ඇත්තේ.",
+        "link": "https://siyathanews.lk/archives/174629",
+        "source": "Siyatha News",
+        "published": 1795168529
+      },
+      "receipts": {
+        "telegram": {
+          "id": "998",
+          "at": 1795200539.6819923,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126997531318605",
+          "at": 1795200539.6819923,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "bfa5000266761d4d6bb97b43": {
+      "article": {
+        "id": "bfa5000266761d4d6bb97b43",
+        "title_si": "අයවැයට විරුද්ධව සංගම් රැසක් වැඩ වර්ජනයේ (VIDEO)",
+        "summary_si": "2027 අයවැයට විරෝධය පළ කරමින් රාජ්‍ය වෘත්තිය සමිති සංගම් රැසක් මේ වනවිට විරෝධතාවල නිරත වනවා. රජයේ විධායක නිලධාරින්ගේ සංගමය සංගමය අද දින දීප ව්‍යාප්ත වැඩවර්ජනයක් ආරම්භ කර තිබෙනවා. ඊට සහයෝගය දැක්වීමට රජයේ පශු වෛද්‍යවරුන්ද වැඩවර්ජනයක් ආරම්භ කර තඇති බවයි වාර්තා වන්නේ.",
+        "link": "https://siyathanews.lk/archives/174626",
+        "source": "Siyatha News",
+        "published": 1795168312
+      },
+      "receipts": {
+        "telegram": {
+          "id": "999",
+          "at": 1795200539.6819923,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122126997651318605",
+          "at": 1795200539.6819923,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -5325,7 +5394,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795193614.2264845,
+  "last_scan_at": 1795200539.6819923,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -5640,7 +5709,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "5da9d5a50e7287986a0927c1": {
+      "at": 1795200539.6819923,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795193614.2264845
+  "last_bulletin_at": 1795200539.6819923
 }
