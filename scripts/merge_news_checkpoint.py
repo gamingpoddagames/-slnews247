@@ -39,6 +39,13 @@ def merge_state(remote, local):
         old['receipts'] = receipts
         old['uncertain'] = uncertain
         old.setdefault('article', record.get('article'))
+        # A rights-review hold must survive merging against the latest main
+        # branch; without this, the queue disappears at the end of every scan.
+        hold = record.get('photo_review')
+        if hold and hold.get('at', 0) >= (old.get('photo_review') or {}).get('at', 0):
+            old['photo_review'] = hold
+        if 'telegram' in receipts and 'facebook' in receipts:
+            old.pop('photo_review', None)
         stories[key] = old
     result['stories'] = stories
     # Preserve all non-headline production journals as well. Formerly only
