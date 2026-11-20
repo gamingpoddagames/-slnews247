@@ -65,52 +65,54 @@ class PresentationTests(unittest.TestCase):
 
     def test_photo_post_request_uses_uploaded_image(self):
         from unittest.mock import MagicMock
-        article = {'id':'one', 'title_si':'මාතර සිද්ධිය', 'summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.', 'published':time.time()}
-        response = MagicMock()
-        response.ok = True
-        response.json.return_value = {'ok':True,'result':{'message_id':99}}
+        article = {'id':'one', 'title_si':'මාතර සිද්ධිය',
+                   'summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
+                   'published':time.time()}
+        reply = MagicMock(ok=True)
+        reply.json.return_value = {'ok':True,'result':{'message_id':99}}
         with tempfile.TemporaryDirectory() as directory:
-            image = Path(directory, 'test.jpg');image.write_bytes(b'image-fixture' * 100)
-            with patch('media.choose_photo', return_value=str(image)), patch('image.news_card', return_value=str(image)), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
+            img = Path(directory, 'test.jpg')
+            img.write_bytes(b'photo' * 300)
+            with patch('real_photo.select_real_photo', return_value=(str(img), 'verified_event_photo', None)), \
+                 patch('image.news_card', return_value=str(img)) as card, \
+                 patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), \
+                 patch('requests.post', return_value=reply) as request:
                 result = pipeline.send_text('telegram', article)
-                self.assertIn(result['format'], ('verified_event_photo', 'original_topic_illustration'))
+                self.assertEqual(result['format'], 'verified_event_photo')
+                card.assert_called_once_with(article, image_path=str(img), illustrative=False)
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
-                self.assertIn('photo', request.call_args.kwargs['files'])
-                self.assertNotIn('https://', request.call_args.kwargs['data']['caption'])
 
-
-    def test_unlicensed_story_still_gets_original_brand_card(self):
+    def test_licensed_context_photo_has_credit_and_label(self):
         from unittest.mock import MagicMock
-        article = {'id':'new', 'title_si':'මාතර සිද්ධිය', 'summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
-                   'published':time.time(), 'link':'https://example.com/a'}
-        response = MagicMock()
-        response.ok = True
-        response.json.return_value = {'ok':True,'result':{'message_id':101}}
+        article = {'id':'two', 'title_si':'විභාග ප්‍රවේශපත්‍ර ගැන නිවේදනය',
+                   'summary_si':'විභාග ප්‍රවේශපත්‍ර ගැන අධ්‍යාපන අමාත්‍යාංශය විසින් නව නිවේදනයක් නිකුත් කර තිබේ.',
+                   'published':time.time()}
+        credit = {'creator':'Photographer','source':'https://commons.wikimedia.org/wiki/File:Photo.jpg',
+                  'license':'CC BY 4.0','license_url':'https://creativecommons.org/licenses/by/4.0/'}
+        reply = MagicMock(ok=True)
+        reply.json.return_value = {'ok':True,'result':{'message_id':100}}
         with tempfile.TemporaryDirectory() as directory:
-            image = Path(directory, 'card.png')
-            image.write_bytes(b'graphic-test' * 100)
-            with patch('media.choose_photo', return_value=None), patch('visual_news.original_illustration', return_value=str(image)), patch('image.news_card', return_value=str(image)) as card, patch.dict(os.environ, {'TG_TOKEN':'test', 'TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
+            img = Path(directory, 'photo.jpg')
+            img.write_bytes(b'photo' * 300)
+            with patch('real_photo.select_real_photo', return_value=(str(img), 'licensed_context_photo', credit)), \
+                 patch('image.news_card', return_value=str(img)) as card, \
+                 patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), \
+                 patch('requests.post', return_value=reply) as request:
                 result = pipeline.send_text('telegram', article)
-                self.assertEqual(result['format'], 'original_topic_illustration')
-                card.assert_called_once_with(article, image_path=str(image), illustrative=True)
-                self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
+                self.assertEqual(result['format'], 'licensed_context_photo')
+                card.assert_called_once_with(article, image_path=str(img), illustrative=True)
+                self.assertIn('Photographer', request.call_args.kwargs['data']['caption'])
 
 class ExactEventMediaTests(unittest.TestCase):
-    def test_no_event_photo_uses_branded_card_and_skips_video(self):
-        from unittest.mock import MagicMock
-        article = {'id':'new','title_si':'මාතර සිද්ධිය','summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.','published':time.time(),'link':'https://example.com/a'}
-        response = MagicMock();response.ok=True
-        response.json.return_value={'ok':True,'result':{'message_id':100}}
-        with tempfile.TemporaryDirectory() as directory:
-            card_path = Path(directory, 'news.png')
-            card_path.write_bytes(b'original-typography-card' * 100)
-            with patch('media.choose_photo', return_value=None), patch('visual_news.original_illustration', return_value=str(card_path)), patch('image.news_card', return_value=str(card_path)), patch.dict(os.environ, {'TG_TOKEN':'test','TG_CHAT_ID':'test'}), patch('requests.post', return_value=response) as request:
-                result=pipeline.send_text('telegram', article)
-                self.assertIn(result['format'], ('verified_event_photo', 'original_topic_illustration'))
-                self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
-                self.assertIn('files',request.call_args.kwargs)
-        with patch('media.choose_video', return_value=None):
-            self.assertEqual(pipeline.maybe_video({},[article],time.time(),False),'no_renderable_news_bulletin_candidate')
+    def test_missing_real_photo_never_publishes(self):
+        article = {'id':'new', 'title_si':'මාතර සිද්ධිය',
+                   'summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
+                   'published':time.time(), 'link':'https://example.com/a'}
+        with patch('real_photo.select_real_photo', return_value=(None, None, None)), \
+             patch('requests.post') as sender:
+            result = pipeline.send_text('telegram', article)
+        self.assertEqual(result['error'], 'real_photo_unavailable_review_required')
+        sender.assert_not_called()
 
     def test_exact_story_and_nonreuse_guards(self):
         import hashlib, io, json
@@ -709,25 +711,15 @@ class QueuedRunDuplicateVideoTests(unittest.TestCase):
 
 
 class MediaFailureRecoveryTests(unittest.TestCase):
-    def test_photo_download_failure_uses_blue_gradient_card(self):
-        from unittest.mock import MagicMock
-        article = {'id':'news-media-error','title_si':'මාතර ප්‍රදේශයේ වැදගත් පුවතක්',
+    def test_photo_discovery_failure_does_not_publish_unverified_image(self):
+        article = {'id':'news-media-error', 'title_si':'මාතර ප්‍රදේශයේ වැදගත් පුවතක්',
                    'published':time.time(),'link':'https://example.com/newstory',
                    'summary_si':'මාතර ප්‍රදේශයේ වැදගත් පුවතක් පිළිබඳ නිල වාර්තාවක් නිකුත් කර තිබේ.'}
-        reply=MagicMock(); reply.ok=True
-        reply.json.return_value={'ok':True,'result':{'message_id':777}}
-        with tempfile.TemporaryDirectory() as directory:
-            card=Path(directory)/'branded.png'
-            card.write_bytes(b'news-card' * 200)
-            with patch('media.choose_photo',side_effect=ConnectionError('photo unavailable')), \
-                 patch('visual_news.original_illustration',return_value=str(card)), \
-                 patch('image.news_card',return_value=str(card)) as renderer, \
-                 patch.dict(os.environ,{'TG_TOKEN':'token','TG_CHAT_ID':'123'}), \
-                 patch('requests.post',return_value=reply) as request:
-                result=pipeline.send_text('telegram',article)
-        self.assertEqual(result['format'],'original_topic_illustration')
-        renderer.assert_called_once_with(article, image_path=str(card), illustrative=True)
-        self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
+        with patch('real_photo.select_real_photo', side_effect=ConnectionError('media unavailable')), \
+             patch('requests.post') as sender:
+            result = pipeline.send_text('telegram', article)
+        self.assertEqual(result['error'], 'real_photo_processing_failed')
+        sender.assert_not_called()
 
 
 class FootageCandidateDiscoveryTests(unittest.TestCase):
