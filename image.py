@@ -418,9 +418,7 @@ def news_card(article, image_path=None, illustrative=False):
     center_lines(upper, 880, '#ffdd32')
     if lower:
         center_lines(lower, 1068, 'white')
-    # Quote-shaped original accents, outside the headline text region.
-    draw.text((72, 1128), '“', font=latin_font(74, bold=True), fill='#fb5722')
-    draw.text((953, 1190), '”', font=latin_font(74, bold=True), fill='#fb5722')
+    # Keep lower portion clean: no extra footer text or decorative captions.
 
     Path('output').mkdir(exist_ok=True)
     safe_id = re.sub('[^a-zA-Z0-9_-]', '', str(article.get('id', 'news'))) or 'news'
