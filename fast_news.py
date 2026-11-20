@@ -208,13 +208,19 @@ def send_text(platform, article):
     try:
         from real_photo import select_real_photo
         photo_path, image_kind, credit = select_real_photo(article)
-        if not photo_path or image_kind != 'verified_event_photo':
-            return {'error': 'exact_event_photo_required'}
         from image import news_card
-        image_path = news_card(article, image_path=photo_path,
-                               illustrative=False)
+        if photo_path and image_kind == 'verified_event_photo':
+            image_path = news_card(article, image_path=photo_path, illustrative=False)
+        elif os.getenv('ALLOW_HEADLINE_CARD_FALLBACK', 'false').lower() == 'true':
+            # Never pass a different incident's photograph as this story.
+            # A graphic containing only the real news headline is honest,
+            # while the accompanying post contains the full checked facts.
+            image_kind = 'headline_only_no_event_photo'
+            image_path = news_card(article, image_path=None, illustrative=False)
+        else:
+            return {'error': 'exact_event_photo_required'}
         if not image_path or not Path(image_path).is_file() or Path(image_path).stat().st_size < 1000:
-            return {'error': 'real_photo_card_failed'}
+            return {'error': 'news_card_failed'}
     except Exception as exc:
         print('Real photo processing blocked:', type(exc).__name__, str(exc)[:160])
         return {'error': 'real_photo_processing_failed'}
