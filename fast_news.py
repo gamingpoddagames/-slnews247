@@ -220,11 +220,11 @@ def send_text(platform, article):
         return {'error': 'real_photo_processing_failed'}
     message = caption(article)
     if image_kind == 'licensed_context_photo':
-        message += ('\\n\\n📷 සංකේතාත්මක සැබෑ ඡායාරූපයකි; මෙම සිද්ධියේ ඡායාරූපයක් නොවේ.'
-                    + '\\nඡායාරූපය: ' + credit['creator'] + ' / Wikimedia Commons'
-                    + '\\nබලපත්‍රය: ' + credit['license']
-                    + '\\nමූලාශ්‍රය: ' + credit['source']
-                    + ('\\nබලපත්‍ර සබැඳිය: ' + credit['license_url'] if credit['license_url'] else ''))
+        message += ('\n\n📷 සංකේතාත්මක සැබෑ ඡායාරූපයකි; මෙම සිද්ධියේ ඡායාරූපයක් නොවේ.'
+                    + '\nඡායාරූපය: ' + credit['creator'] + ' / Wikimedia Commons'
+                    + '\nබලපත්‍රය: ' + credit['license']
+                    + '\nමූලාශ්‍රය: ' + credit['source']
+                    + ('\nබලපත්‍ර සබැඳිය: ' + credit['license_url'] if credit['license_url'] else ''))
     if platform == 'telegram' and len(message) > 1024:
         return {'error': 'caption_too_long_review_required'}
     if platform == 'telegram':
