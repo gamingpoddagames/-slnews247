@@ -5442,6 +5442,75 @@
         }
       },
       "uncertain": {}
+    },
+    "6ab2404fb45f9bfac07dc57b": {
+      "article": {
+        "id": "6ab2404fb45f9bfac07dc57b",
+        "title_si": "රොටුඹ අමිල ලංකාවට රැගෙන එයි (VIDEO)",
+        "summary_si": "රුසියාවේදී එරට පොලීසිය මගින් අත්අඩංගුවට ගත් ප්‍රබල පාතාල කල්ලි සාමාජිකයෙකු වන රොටුඹ අමිල නැමැත්තා අද දිවයිනට රැගෙන එනු ලැබුවා. මේ අතර ශ්‍රී ලංකාවට ගෙන ඒමට සූදානම් කර තිබූ හොරොයින් කිලෝ 70 කට අධික ප්‍රමාණයක් ඉන්දියාවේ චෙන්නායිහිදී එරට ආරක්ෂක අංශ සිය භාරයට ගෙන තිබෙනවා.",
+        "link": "https://siyathanews.lk/archives/174614",
+        "source": "Siyatha News",
+        "published": 1795166793
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1005",
+          "at": 1795211473.2887318,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127009075318605",
+          "at": 1795211473.2887318,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "20f0b4b514d6352596797116": {
+      "article": {
+        "id": "20f0b4b514d6352596797116",
+        "title_si": "එක්දින ප්‍රතිපත්ති පොලී අනුපාතය ඉහළට (VIDEO)",
+        "summary_si": "ශ්‍රී ලංකා මහ බැංකුව සිය එක්දින ප්‍රතිපත්ති පොලී අනුපාතය ඉහළ දැමීමට තීරණය කර තිබෙනවා. ඒ අනුව නව එක්දින ප්‍රතිපත්ති පොලී අනුපාතය 9%ක් දක්වා ඉහළ ගියා. මෙහි බලපෑම සහ මේ පිළිබඳව වැඩිදුර කරුණු අනාවරණය කිරීම සඳහා ශ්‍රී ලංකා මහ බැංකුව මේ වනවිට එම පරිශ්‍රයේ මාධ්‍ය සාකච්ඡාවක් පවත්වමින් තිබෙනවා.",
+        "link": "https://siyathanews.lk/archives/174611",
+        "source": "Siyatha News",
+        "published": 1795166635
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1006",
+          "at": 1795211473.2887318,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127009165318605",
+          "at": 1795211473.2887318,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "d4b77ace01d1124e8cad39f2": {
+      "article": {
+        "id": "d4b77ace01d1124e8cad39f2",
+        "title_si": "දකුණු ආසියාවේ ප්‍රථම වරට මාස්ටර්කාඩ් Cloud Commerce තාක්ෂණය යොදාගනිමින් කොමර්ෂල් බැංකුව ‘Payable TAP’ හඳුන්වා දෙයි",
+        "summary_si": "ශ්‍රී ලංකාවේ තාක්ෂණික හා ඩිජිටල් බැංකුකරණ නව්‍යෝත්පාදනයේ ප්‍රමුඛයා ලෙස තම ස්ථානය යළිත් තහවුරු කරමින්, කොමර්ෂල් බැංකුව Payable පුද්ගලික සමාගම සහ මාස්ටර්කාඩ් සමග එක්ව දකුණු ආසියාවේ ප්‍රථම වරට මාස්ටර්කාඩ් Cloud Commerce තාක්ෂණය යොදාගත් zPayable TAPZ පහසුකම් හඳුන්වා දී තිබේ.",
+        "link": "https://www.lankadeepa.lk/business/දකුණු-ආසියාවේ-ප්‍රථම-වරට-මාස්ටර්කාඩ්-Cloud-Commerce-තාක්ෂණය-යොදාගනිමින්-කොමර්ෂල්-බැංකුව-‘Payable-TAP’-හඳුන්වා-දෙයි/9-700920",
+        "source": "Lankadeepa Business",
+        "published": 1795161180
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1007",
+          "at": 1795211473.2887318,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127009249318605",
+          "at": 1795211473.2887318,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -5463,7 +5532,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795205977.448089,
+  "last_scan_at": 1795211473.2887318,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -5794,7 +5863,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "2e62106ca2ae3accb3cded77": {
+      "at": 1795211473.2887318,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795205977.448089
+  "last_bulletin_at": 1795211473.2887318
 }
