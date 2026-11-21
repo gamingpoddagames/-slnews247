@@ -1,11 +1,13 @@
 {
-  "checked_at": 1795240271.3435075,
+  "checked_at": 1795247506.0007305,
   "configured_feeds": 25,
   "sources": [
     {
       "source": "Ada Derana Sinhala",
-      "error": "HTTPError",
-      "http": 403
+      "http": 200,
+      "entries": 25,
+      "fresh_sinhala": 13,
+      "feed_url": "https://sinhala.adaderana.lk/rss.php"
     },
     {
       "source": "Dinamina",
@@ -111,7 +113,7 @@
       "source": "Neth International",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 5,
+      "fresh_sinhala": 8,
       "feed_url": "https://www.nethnews.lk/international-news/feed/"
     },
     {
