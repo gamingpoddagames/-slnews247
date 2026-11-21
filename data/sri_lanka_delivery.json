@@ -6153,7 +6153,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795290388.7994466,
+  "last_scan_at": 1795297511.6936276,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -6588,7 +6588,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "1aaa0e99e2ed330a584628d3": {
+      "at": 1795297511.6936276,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795290388.7994466
+  "last_bulletin_at": 1795297511.6936276
 }
