@@ -6063,6 +6063,75 @@
         }
       },
       "uncertain": {}
+    },
+    "efca2dc417d5795831457ae0": {
+      "article": {
+        "id": "efca2dc417d5795831457ae0",
+        "title_si": "ඉන්දියන් සාගරයේ භූ කම්පනයක්",
+        "summary_si": "ඉන්දියන් සාගරයේ Banda Aceh ප්‍රදේශය ආසන්නයේ කිලෝ මීටර් 156ක් වූ ගැඹුරු මුහුදේ රික්ටර් මාපක 6. 8ක ප්‍රබලත්වයෙන් යුත් භූකම්පනයක් සිදුව ඇතැයි කලගුණ විද්‍යා දෙපාර්තමේන්තුව නිවේදනයක් නිකුත් කරමින් කියයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/ඉන්දියන්-සාගරයේ-භූ-කම්පනයක්/1-700942",
+        "source": "Lankadeepa Latest",
+        "published": 1795271340
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1041",
+          "at": 1795272551.2834306,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127134625318605",
+          "at": 1795272551.2834306,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "2100ed61a0312cd8120afcc3": {
+      "article": {
+        "id": "2100ed61a0312cd8120afcc3",
+        "title_si": "බිලියන හතරක් වංචා කළ අධ්‍යක්ෂවරු දෙකක් මාට්ටු",
+        "summary_si": "මුදල් ආයෝජනය කරන පුද්ගලයන්ට ඉහළ ලාභාංශ ලබාදෙන බව පවසා රුපියල් බිලියන 4 කට ආසන්න මුදලක් වංචා කිරීමේ සිද්ධියක් සම්බන්ධයෙන් පෞද්ගලික ආයතන දෙකක අධ්‍යක්ෂවරුන් දෙදෙනකු අත්අඩංගුවට ගත් බව මධ්‍යම අපරාධ විමර්ශන කාර්යාංශය පවසයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/බිලියන-හතරක්-වංචා-කළ-අධ්‍යක්ෂවරු-දෙකක්-මාට්ටු/1-700941",
+        "source": "Lankadeepa Latest",
+        "published": 1795270560
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1042",
+          "at": 1795272551.2834306,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127134685318605",
+          "at": 1795272551.2834306,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "5d4104ef3898ed30c91778b0": {
+      "article": {
+        "id": "5d4104ef3898ed30c91778b0",
+        "title_si": "ජනපති අගමැති වැය ශීර්ෂ සම්මතයි",
+        "summary_si": "ජනාධිපති, අග්‍රාමාත්‍ය කාර්යාලය ඇතුළු විශේෂ වියදම් ඒකක 21ක වැය ශීර්ෂ පාර්ලිමේන්තුවේදී අද පස්වරුවේ ඡන්ද විමසීමකින් තොරව සංශෝධන රහිතව සම්මත විය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ජනපති-අගමැති-වැය-ශීර්ෂ-සම්මතයි/1-700940",
+        "source": "Lankadeepa Latest",
+        "published": 1795270260
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1043",
+          "at": 1795272551.2834306,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127134751318605",
+          "at": 1795272551.2834306,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -6084,7 +6153,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795265424.5842388,
+  "last_scan_at": 1795272551.2834306,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -6487,7 +6556,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "efca2dc417d5795831457ae0": {
+      "at": 1795272551.2834306,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795265424.5842388
+  "last_bulletin_at": 1795272551.2834306
 }
