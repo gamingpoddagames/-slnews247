@@ -1,5 +1,5 @@
 {
-  "checked_at": 1795272551.2834306,
+  "checked_at": 1795278269.195625,
   "configured_feeds": 25,
   "sources": [
     {
@@ -23,7 +23,7 @@
       "source": "Lankadeepa Latest",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 12,
+      "fresh_sinhala": 11,
       "feed_url": "https://www.lankadeepa.lk/rss/latest_news/1"
     },
     {
@@ -37,7 +37,7 @@
       "source": "Siyatha News",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 10,
+      "fresh_sinhala": 2,
       "feed_url": "https://siyathanews.lk/feed/"
     },
     {
