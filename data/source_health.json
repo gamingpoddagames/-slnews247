@@ -1,12 +1,12 @@
 {
-  "checked_at": 1795278269.195625,
+  "checked_at": 1795283408.7793305,
   "configured_feeds": 25,
   "sources": [
     {
       "source": "Ada Derana Sinhala",
       "http": 200,
       "entries": 25,
-      "fresh_sinhala": 11,
+      "fresh_sinhala": 12,
       "feed_url": "https://sinhala.adaderana.lk/rss.php"
     },
     {
@@ -37,7 +37,7 @@
       "source": "Siyatha News",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 2,
+      "fresh_sinhala": 1,
       "feed_url": "https://siyathanews.lk/feed/"
     },
     {
@@ -92,7 +92,7 @@
       "source": "Lanka Truth Sinhala",
       "http": 200,
       "entries": 24,
-      "fresh_sinhala": 9,
+      "fresh_sinhala": 8,
       "feed_url": "https://lankatruth.com/si/?feed=rss2"
     },
     {
