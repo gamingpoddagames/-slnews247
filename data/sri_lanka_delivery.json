@@ -5925,6 +5925,75 @@
         }
       },
       "uncertain": {}
+    },
+    "df4be976e3ac0f9019bd721e": {
+      "article": {
+        "id": "df4be976e3ac0f9019bd721e",
+        "title_si": "රු. බිලියන 4කට ආසන්න මුදලක් වංචා කළ සමාගම් අධ්‍යක්ෂවරු දෙදෙනා දෙසැ. 04 දක්වා රිමාන්ඩ්",
+        "summary_si": "රු. බිලියන 4කට ආසන්න මුදලක් වංචා කළ සමාගම් අධ්‍යක්ෂවරු දෙදෙනා දෙසැ.",
+        "link": "https://sinhala.adaderana.lk/news/254996",
+        "source": "Ada Derana Sinhala",
+        "published": 1795253335
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1033",
+          "at": 1795257961.4820857,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127102417318605",
+          "at": 1795257961.4820857,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "42fd5d38ac64bc86b3957c74": {
+      "article": {
+        "id": "42fd5d38ac64bc86b3957c74",
+        "title_si": "සංවිධානාත්මක අපරාධ වැළැක්වීමේ කෙටුම්පත ව්‍යවස්ථාවට එකඟයි",
+        "summary_si": "’සංවිධානාත්මක අපරාධ වැළැක්වීමේ’ පනත් කෙටුම්පත ආණ්ඩුක්‍රම ව්‍යවස්ථාවට අනුකූල බවත්, සංශෝධන කිහිපයකට යටත්ව පාර්ලිමේන්තුවේ සරල බහුතරයකින් සම්මත කළ හැකි බවත් ශ්‍රේෂ්ඨාධිකරණය තීරණය කර ඇති බව කතානායක වෛද්‍ය ජගත් වික්‍රමරත්න මහතා අද (21) පාර්ලිමේන්තුවට දැනුම් දුන්නේය.",
+        "link": "https://www.lankadeepa.lk/latest_news/සංවිධානාත්මක-අපරාධ-වැළැක්වීමේ-කෙටුම්පත-ව්‍යවස්ථාවට-එකඟයි/1-700932",
+        "source": "Lankadeepa Latest",
+        "published": 1795252020
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1034",
+          "at": 1795257961.4820857,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127102507318605",
+          "at": 1795257961.4820857,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "adeab6fbe35a90ea641ae3c3": {
+      "article": {
+        "id": "adeab6fbe35a90ea641ae3c3",
+        "title_si": "ඉම්රාන් කාන් නිදහස් කරගන්න මැති සබයට යෝජනාවක්",
+        "summary_si": "පාකිස්ථානයේ හිටපු අග්‍රාමාත්‍ය සහ ලෝක පූජිත ක්‍රිකට් ක්‍රීඩක ඉම්රාන් කාන් මහතා නිදහස් කර ගැනීමට පක්ෂ බේදයෙන් තොරව සියළු දෙනා මැදිහත් විය යුතු බව සමගි ජන බලවේගයේ කළුතර දිස්ත්‍රික් මන්ත්‍රී නීතිඥ අජිත් පී පෙරේරාා මහතා පාර්ලිමේන්තුවේද අද පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ඉම්රාන්-කාන්-නිදහස්-කරගන්න-මැති-සබයට-යෝජනාවක්/1-700931",
+        "source": "Lankadeepa Latest",
+        "published": 1795251840
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1035",
+          "at": 1795257961.4820857,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127102597318605",
+          "at": 1795257961.4820857,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -5946,7 +6015,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795250684.9380383,
+  "last_scan_at": 1795257961.4820857,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -6333,7 +6402,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "df4be976e3ac0f9019bd721e": {
+      "at": 1795257961.4820857,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795250684.9380383
+  "last_bulletin_at": 1795257961.4820857
 }
