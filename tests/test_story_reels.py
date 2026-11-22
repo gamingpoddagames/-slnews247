@@ -59,6 +59,27 @@ class PerStoryReelTests(unittest.TestCase):
         self.assertEqual(followup['rendered'], 0)
         telegram.assert_called_once()
 
+    def test_approved_exact_clip_is_preferred_over_graphic_reel(self):
+        from story_reels import render_story_reel
+        with patch('media.choose_video', return_value='real-event.mp4'), \
+             patch('voice.create_voice', return_value=True), \
+             patch('animated_bulletin.narration_for', return_value='Factual Sinhala script'), \
+             patch('video.create_footage_video', return_value=True) as encode, \
+             patch('animated_bulletin.render_bulletin') as graphic:
+            path, mode = render_story_reel(self.article, 'output/reels/one.mp4')
+        self.assertEqual(mode, 'verified_event_clip')
+        self.assertEqual(path, 'output/reels/one.mp4')
+        encode.assert_called_once()
+        graphic.assert_not_called()
+
+    def test_unavailable_approved_clip_uses_branded_reel(self):
+        from story_reels import render_story_reel
+        with patch('media.choose_video', return_value=None), \
+             patch('animated_bulletin.render_bulletin', return_value='graphic.mp4'):
+            path, mode = render_story_reel(self.article, 'graphic.mp4')
+        self.assertEqual((path, mode),
+                         ('graphic.mp4', 'original_graphic_or_verified_photo'))
+
     def test_attribution_added_for_copyright_licensed_bank_image(self):
         from story_reels import _media_attribution
         credit = {'label_si': 'ශ්‍රී ලංකා මහ බැංකුවේ ගොඩනැගිල්ල',
