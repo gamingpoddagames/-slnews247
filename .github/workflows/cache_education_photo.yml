@@ -1,0 +1,66 @@
+name: Cache checked education photo
+on:
+  push:
+    paths:
+      - '.github/workflows/cache_education_photo.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  pin-classroom-photo:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve exact rights-reviewed Sri Lankan classroom image
+        run: |
+          python - <<'PY'
+          import base64
+          import hashlib
+          import pathlib
+          import urllib.request
+          filename = 'Classroom_in_defence_servies_college.png'
+          src = 'https://commons.wikimedia.org/wiki/File:' + filename
+          urls = [
+              'https://upload.wikimedia.org/wikipedia/commons/3/39/' + filename,
+              'https://commons.wikimedia.org/wiki/Special:Redirect/file/' + filename,
+              'https://en.wikipedia.org/wiki/Special:Redirect/file/' + filename,
+          ]
+          expected = 'f6bc91bc70c7f76c759f145fc7351f71a31d260f'
+          headers = {
+              'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/130 Safari/537.36',
+              'Referer': src,
+              'Accept': 'image/png,image/*;q=0.8'
+          }
+          photo = None
+          for url in urls:
+              try:
+                  request = urllib.request.Request(url, headers=headers)
+                  with urllib.request.urlopen(request, timeout=17) as response:
+                      blob = response.read(5_000_001)
+                  if hashlib.sha1(blob).hexdigest() == expected:
+                      photo = blob
+                      break
+                  print('Source returned other bytes; rejected')
+              except Exception as e:
+                  print('Commons host temporarily unavailable:', type(e).__name__)
+          if photo is None:
+              raise SystemExit('No approved classroom original available')
+          target = pathlib.Path('assets/verified_photos/sri_lanka_classroom.png.b64')
+          target.parent.mkdir(parents=True, exist_ok=True)
+          target.write_text(base64.b64encode(photo).decode('ascii') + '\n', encoding='ascii')
+          print('Pinned CC BY-SA 4.0 original; bytes:', len(photo))
+          PY
+      - name: Persist the vetted, versioned real photo
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/verified_photos/sri_lanka_classroom.png.b64
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Pin real Sri Lanka classroom photo and its verified bytes'
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git pull --rebase origin main
+          done
+          exit 1
