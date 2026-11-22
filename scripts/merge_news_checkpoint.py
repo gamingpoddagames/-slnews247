@@ -78,6 +78,12 @@ def merge_state(remote, local):
         result[key] = merged
     for key in ('last_video_at', 'last_bulletin_at'):
         result[key] = max(remote.get(key, 0), local.get(key, 0))
+    # Preserve the rollout boundary: queued per-story reels must not be
+    # silently lost when a delayed GitHub scan merges its checkpoint.
+    starts = [value for value in (remote.get('reels_started_at'),
+                                 local.get('reels_started_at')) if value is not None]
+    if starts:
+        result['reels_started_at'] = min(starts)
     for key in ('video_style', 'facebook_design_sample_v1'):
         if key in local and key not in result:
             result[key] = local[key]
