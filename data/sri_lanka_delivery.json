@@ -6431,6 +6431,29 @@
         }
       },
       "uncertain": {}
+    },
+    "education-ministry-union-talks-before-nov30-20261122-realclassroom": {
+      "article": {
+        "id": "education-ministry-union-talks-before-nov30-20261122-realclassroom",
+        "title_si": "ගුරු විදුහල්පති සමිති සමඟ සාකච්ඡාවට අධ්‍යාපන අමාත්‍යාංශය සූදානම්",
+        "summary_si": "නොවැම්බර් 30 වැනිදාට සැලසුම් කර ඇති ගුරු සහ විදුහල්පති වෘත්තීය ක්‍රියාමාර්ගයට පෙර අදාළ වෘත්තීය සමිති සමඟ සාකච්ඡා කිරීමට අධ්‍යාපන අමාත්‍යාංශය අපේක්ෂා කරයි. අධ්‍යාපන නියෝජ්‍ය අමාත්‍ය මධුර සෙනෙවිරත්න මහතා සඳහන් කරන්නේ රාජ්‍ය සේවකයන්ට ලබාදෙන වැටුප් වැඩිවීම් අධ්‍යාපන සේවයේ පිරිස්වලටද අදාළ වන බවයි. දීර්ඝ කාලයක සිට පවතින වැටුප් විෂමතා සම්බන්ධයෙන් වැටුප් කොමිෂන් සභාව හරහා විසඳුම් සොයාගත යුතු බවද ඔහු පවසයි. සාකච්ඡා හරහා පාසල් අධ්‍යාපන කටයුතු අඩාල වීම වැළැක්වීම අමාත්‍යාංශයේ අපේක්ෂාව බව වාර්තා වේ. ගුරු සහ විදුහල්පති සමිති නොවැම්බර් 30 වැනිදාට වර්ජනයක් සැලසුම් කර තිබුණද එය අවලංගු කළ බවට මෙතෙක් තහවුරු කළ නිවේදනයක් නැත.",
+        "link": "https://www.sundaytimes.lk/261122/education/education-ministry-to-engage-unions-ahead-of-threatened-strike-next-week-664546.html",
+        "source": "Sunday Times Education, November 22, 2026; verified against Daily Mirror Nov 22 strike update",
+        "published": 1795355160
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1078",
+          "at": 1795355369.2113664,
+          "format": "verified_education_context_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127288927318605",
+          "at": 1795355369.2113664,
+          "format": "verified_education_context_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -6452,7 +6475,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795355306.9226835,
+  "last_scan_at": 1795355369.2113664,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -7056,6 +7079,24 @@
       },
       "format": "branded_sinhala_voice_reel",
       "last_attempt_at": 1795354819.9133363
+    },
+    "education-ministry-union-talks-before-nov30-20261122-realclassroom": {
+      "at": 1795355369.2113664,
+      "article": {
+        "id": "education-ministry-union-talks-before-nov30-20261122-realclassroom",
+        "title_si": "ගුරු විදුහල්පති සමිති සමඟ සාකච්ඡාවට අධ්‍යාපන අමාත්‍යාංශය සූදානම්",
+        "summary_si": "නොවැම්බර් 30 වැනිදාට සැලසුම් කර ඇති ගුරු සහ විදුහල්පති වෘත්තීය ක්‍රියාමාර්ගයට පෙර අදාළ වෘත්තීය සමිති සමඟ සාකච්ඡා කිරීමට අධ්‍යාපන අමාත්‍යාංශය අපේක්ෂා කරයි. අධ්‍යාපන නියෝජ්‍ය අමාත්‍ය මධුර සෙනෙවිරත්න මහතා සඳහන් කරන්නේ රාජ්‍ය සේවකයන්ට ලබාදෙන වැටුප් වැඩිවීම් අධ්‍යාපන සේවයේ පිරිස්වලටද අදාළ වන බවයි. දීර්ඝ කාලයක සිට පවතින වැටුප් විෂමතා සම්බන්ධයෙන් වැටුප් කොමිෂන් සභාව හරහා විසඳුම් සොයාගත යුතු බවද ඔහු පවසයි. සාකච්ඡා හරහා පාසල් අධ්‍යාපන කටයුතු අඩාල වීම වැළැක්වීම අමාත්‍යාංශයේ අපේක්ෂාව බව වාර්තා වේ. ගුරු සහ විදුහල්පති සමිති නොවැම්බර් 30 වැනිදාට වර්ජනයක් සැලසුම් කර තිබුණද එය අවලංගු කළ බවට මෙතෙක් තහවුරු කළ නිවේදනයක් නැත.",
+        "link": "https://www.sundaytimes.lk/261122/education/education-ministry-to-engage-unions-ahead-of-threatened-strike-next-week-664546.html",
+        "source": "Sunday Times Education, November 22, 2026; verified against Daily Mirror Nov 22 strike update",
+        "published": 1795355160
+      },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "branded_sinhala_voice_reel",
+      "last_attempt_at": 1795355369.2113664
     }
   },
   "reels_started_at": 1795349700
