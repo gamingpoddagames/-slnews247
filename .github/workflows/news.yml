@@ -98,6 +98,7 @@ jobs:
           MAX_NEWS_PER_RUN: '3'
           ALLOW_HEADLINE_CARD_FALLBACK: 'true'
           MAX_REELS_PER_RUN: '1'
+          STORY_REELS_ENABLED: 'true'
         run: python -u fast_news.py
       - name: Preserve delivery checkpoints and translation cache
         if: always() && (github.event_name != 'workflow_dispatch' || inputs.publish)
