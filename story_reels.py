@@ -27,6 +27,33 @@ def _media_attribution(article):
             + ' ' + credit['license_url'])
 
 
+def render_story_reel(article, path):
+    """Prioritize verified reusable real footage; otherwise animate real photos
+    or original graphics with the existing consistent Sinhala reel renderer.
+    """
+    from animated_bulletin import render_bulletin, narration_for
+    from media import choose_video
+    try:
+        footage = choose_video(article)
+    except Exception as exc:
+        print('Approved event clip unavailable:', type(exc).__name__)
+        footage = None
+    if footage:
+        from voice import create_voice
+        from video import create_footage_video
+        narration_path = str(Path(path).with_suffix('.mp3'))
+        try:
+            if not create_voice(narration_for(article), narration_path):
+                raise RuntimeError('Narration synthesis unavailable')
+            create_footage_video(footage, article['title_si'], '',
+                                 path, audio_path=narration_path)
+            return path, 'verified_event_clip'
+        except Exception as exc:
+            print('Licensed event footage edit unavailable; using branded reel:',
+                  type(exc).__name__)
+    return render_bulletin(article, path), 'original_graphic_or_verified_photo'
+
+
 def publish_reels(state, articles, now, preview=False, max_per_run=None):
     """Progress persistent per-story reel queue after photo delivery.
 
@@ -34,7 +61,7 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
     licensed matching photo/video. This is not a guarantee of API acceptance.
     """
     from fast_news import publishable, save, caption
-    from animated_bulletin import render_bulletin, narration_for
+    from animated_bulletin import narration_for
     from telegram import upload_video as telegram_video
     from facebook import upload_video as facebook_video
     max_per_run = (max_per_run if max_per_run is not None
@@ -75,7 +102,7 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
             continue
         video_path = str(Path('output') / 'reels' / (article['id'] + '.mp4'))
         try:
-            path = render_bulletin(article, video_path)
+            path, reel_mode = render_story_reel(article, video_path)
         except Exception as exc:
             status['failed_or_uncertain'] += 1
             print('Reel rendering error:', article['id'], type(exc).__name__)
@@ -85,9 +112,11 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
         # Persist before external calls. An ambiguous response needs human
         # inspection; never send a duplicate reel automatically.
         journal[article['id']] = {'at': now, 'status': 'upload_started',
-                                  'destinations': {}}
+                                  'mode': reel_mode, 'destinations': {}}
         save(state)
-        attribution = _media_attribution(article)
+        attribution = (_media_attribution(article)
+                       if reel_mode != 'verified_event_clip'
+                       else __import__('media').video_credit(article))
         if attribution and len(caption(article) + attribution) > 1024:
             # Keep CC credits intact; trim only the factual summary for TG.
             title = article['title_si']
