@@ -5,6 +5,7 @@ of a monetary-policy meeting. Do not substitute topical stock photographs.
 The source license must permit reuse and require attribution in the post.
 """
 import hashlib
+import base64
 from io import BytesIO
 from pathlib import Path
 
@@ -47,15 +48,21 @@ def select_institution_photo(article, session=None):
         "https://en.wikipedia.org/wiki/Special:Redirect/file/Sri_lanka2024.png",
         "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sri_lanka2024.png",
     )
+    # The approved original file is pinned in the repository by a separate
+    # workflow. Never depend on Wikimedia access for regular publication.
+    cached = Path(__file__).resolve().parent / "assets/verified_photos/cbsl_building.png.b64"
     raw = None
-    for url in urls:
-        try:
-            response = session.get(url, headers=headers, timeout=(5, 22))
-            response.raise_for_status()
-            raw = response.content
-            break
-        except requests.RequestException as exc:
-            print("Verified Commons image retrieval retry:", type(exc).__name__)
+    if cached.is_file():
+        raw = base64.b64decode(cached.read_text(encoding="ascii").strip(), validate=True)
+    else:
+        for url in urls:
+            try:
+                response = session.get(url, headers=headers, timeout=(5, 22))
+                response.raise_for_status()
+                raw = response.content
+                break
+            except requests.RequestException as exc:
+                print("Verified Commons image retrieval retry:", type(exc).__name__)
     if raw is None:
         raise ValueError("Verified Central Bank photo source unavailable")
     if not raw or len(raw) > 8_000_000:
