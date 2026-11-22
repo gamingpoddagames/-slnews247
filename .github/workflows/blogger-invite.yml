@@ -4,7 +4,7 @@ on:
     - cron: '30 3 * * *'
   push:
     branches: [main]
-    paths: ['.github/workflows/blogger-invite.yml']
+    paths: ['.github/workflows/blogger-invite.yml', 'scripts/blogger_invite.py']
   workflow_dispatch:
 permissions:
   contents: write
