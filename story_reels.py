@@ -8,23 +8,46 @@ import os
 from pathlib import Path
 
 
-def _media_attribution(article):
-    """Only mandatory Creative Commons terms appear publicly.
+def _approved_asset_attribution(article, kind):
+    """Required media licence credit only; never general news-source boilerplate."""
+    import json
+    from media import REGISTRY
+    if not REGISTRY.exists():
+        return ''
+    try:
+        registry = json.loads(REGISTRY.read_text(encoding='utf-8'))
+        entry = registry.get(article.get('id'), {})
+        asset = entry.get(kind) if kind in entry else (
+            entry if kind == 'photo' else {})
+    except (OSError, ValueError, AttributeError):
+        return ''
+    if not isinstance(asset, dict) or asset.get('attribution_required') is not True:
+        return ''
+    if not all(asset.get(key) for key in
+               ('creator', 'license', 'license_url', 'source_page')):
+        raise ValueError('Licensed news media requires visible credit')
+    symbol = '🎬' if kind == 'video' else '📷'
+    return ('\n\n' + symbol + ' ' + asset['creator'] + ' · ' + asset['license']
+            + ' (edited for news). ' + asset['source_page']
+            + ' ' + asset['license_url'])
 
-    The full discovery records stay in the internal newsroom journals.
-    """
+
+def _media_attribution(article):
+    """Keep compulsory CC photo credit, omit optional source/about-image prose."""
     from real_photo import select_real_photo
     try:
         _, kind, credit = select_real_photo(article)
     except Exception as exc:
         print('Reel media lookup:', type(exc).__name__)
         return ''
-    if kind != 'verified_institution_photo' or not credit:
-        return ''
-    return ('\n\n📷 ' + credit['label_si'] + ' — '
-            + credit['creator'] + ', ' + credit['license']
-            + ' (cropped/resized). ' + credit['source']
-            + ' ' + credit['license_url'])
+    if kind == 'verified_institution_photo' and credit:
+        return ('\n\n📷 ' + credit['label_si'] + ' — '
+                + credit['creator'] + ', ' + credit['license']
+                + ' (cropped/resized). ' + credit['source']
+                + ' ' + credit['license_url'])
+    if kind == 'verified_event_photo':
+        return _approved_asset_attribution(article, 'photo')
+    return ''
 
 
 def render_story_reel(article, path):
@@ -157,8 +180,9 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
         entry.update(status='upload_started', format=format_name,
                      last_attempt_at=now)
         save(state)
-        attribution = (_media_attribution(article)
-                       if format_name != 'approved_exact_event_clip' else '')
+        attribution = (_approved_asset_attribution(article, 'video')
+                       if format_name == 'approved_exact_event_clip'
+                       else _media_attribution(article))
         normal = caption(article)
         # Telegram video captions have a 1024-character limit. Do not cut
         # off the mandatory licence details; shorten the news summary instead.
