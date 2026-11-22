@@ -134,16 +134,26 @@ def discover_licensed_photo(article, session=None):
 
 
 def select_real_photo(article):
-    """Return only a licensed, reviewed photograph of this *exact* news event.
+    """Use real exact-event photography, then a verified *named institution*.
 
-    Topic-related archive photos, Commons keyword results and generated images
-    are never substitutes for a verified photo of the named incident.
+    A photograph of the actual Central Bank building can illustrate policy
+    news ABOUT the Central Bank; it must be labelled as building/archive
+    photography, never as a picture of the meeting or participants.
+    Arbitrary topic-based stock photos remain forbidden.
     """
     try:
         photo = choose_photo(article)
     except (requests.RequestException, OSError, ValueError, KeyError) as exc:
         print("Verified exact-event photo unavailable:", type(exc).__name__)
-        return None, None, None
+        photo = None
     if photo:
         return photo, "verified_event_photo", None
+
+    from institution_photo import select_institution_photo
+    try:
+        institutional, credit = select_institution_photo(article)
+        if institutional:
+            return institutional, "verified_institution_photo", credit
+    except (requests.RequestException, OSError, ValueError) as exc:
+        print("Verified institution photo unavailable:", type(exc).__name__)
     return None, None, None
