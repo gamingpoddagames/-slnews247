@@ -38,6 +38,24 @@ class PerStoryReelTests(unittest.TestCase):
         self.assertEqual(renderer.call_count, 1)
         self.assertEqual(self.state['reels']['event-one']['status'], 'delivered')
 
+    def test_news_first_posted_now_enters_reel_queue_even_if_article_older(self):
+        article = dict(self.article)
+        article['published'] = 1795327320  # Published several hours before reel rollout
+        state = {'reels_started_at': 1795353000,
+                 'stories': {'event-one': {'receipts': {
+                     'telegram': {'id': 'a', 'at': 1795354034},
+                     'facebook': {'id': 'b', 'at': 1795354034}}}}}
+        with patch('fast_news.publishable', return_value=True), \
+             patch('animated_bulletin.narration_for', return_value='Narration'), \
+             patch('story_reels._render_reel', return_value=('reel.mp4', 'branded_graphic_reel')), \
+             patch('story_reels._media_attribution', return_value=''), \
+             patch('fast_news.save'), \
+             patch('telegram.upload_video', return_value=True), \
+             patch('facebook.upload_video', return_value=True):
+            result = publish_reels(state, [article], 1795354100)
+        self.assertEqual(result['sent']['facebook'], 1)
+        self.assertEqual(state['reels']['event-one']['status'], 'delivered')
+
     def test_no_image_receipts_means_no_reel(self):
         with patch('fast_news.publishable', return_value=True), \
              patch('animated_bulletin.render_bulletin') as render:
