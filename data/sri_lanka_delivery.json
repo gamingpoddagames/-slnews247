@@ -6339,6 +6339,29 @@
         }
       },
       "uncertain": {}
+    },
+    "cbsl-opr-9-percent-loans-explainer-photo-2026-11-22": {
+      "article": {
+        "id": "cbsl-opr-9-percent-loans-explainer-photo-2026-11-22",
+        "title_si": "මහ බැංකුවේ OPR 9%ක් — ණය පොලියට එයින් ඇති බලපෑම",
+        "summary_si": "ශ්‍රී ලංකා මහ බැංකුව 2026 නොවැම්බර් 20 වැනිදා ප්‍රකාශයට පත් කළ තීරණය අනුව එක්දින ප්‍රතිපත්ති පොලී අනුපාතය (OPR) සියයට 8.75 සිට සියයට 9.00 දක්වා ඉහළ දමා තිබේ. එය පදනම් අංක 25ක වැඩිවීමකි. ඔක්තෝබර් මාසයේ වාර්ෂික උද්ධමනය සියයට 8.3ක් දක්වා ඉහළ යාම සහ මිල පීඩනය මෙම තීරණයට බලපා ඇත. මහ බැංකුවේ OPR යනු සියලුම පුද්ගලික ණය සඳහා අයකරන පොලිය නොවන අතර, බැංකු ණය හා තැන්පතු අනුපාත එක් එක් බැංකුවේ කොන්දේසි සහ වෙළෙඳපොළ තත්ත්වය අනුව වෙනස් විය හැකිය. වාණිජ බැංකුවල ව්‍යවස්ථාපිත සංචිත අනුපාතයද සියයට 2 සිට 3 දක්වා දෙසැම්බර් 9 වැනිදා සිට වැඩිකිරීමට තීරණය කර තිබේ.",
+        "link": "https://www.newsfirst.lk/2026/11/20/central-bank-raises-key-interest-rate-as-inflation-climbs",
+        "source": "News First Nov 20, 2026; monetary policy explainer Nov 22",
+        "published": 1795352070
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1068",
+          "at": 1795352156.5905392,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127283515318605",
+          "at": 1795352156.5905392,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -6360,7 +6383,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795352089.763069,
+  "last_scan_at": 1795352156.5905392,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
