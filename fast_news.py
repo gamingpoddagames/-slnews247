@@ -243,7 +243,7 @@ def send_text(platform, article):
         # factual headline, shortening only ancillary story details.
         short = '🇱🇰 ' + article['title_si'] + '\n\n'
         available = 1024 - len(short + required_credit + '\n\nSL NEWS 24/7')
-        sentences = __import__('re').split(r'(?<=[.!?।])\\s+', article.get('summary_si', ''))
+        sentences = __import__('re').split(r'(?<=[.!?।])\s+', article.get('summary_si', ''))
         facts = []
         for sentence in sentences:
             sentence = sentence.strip()
