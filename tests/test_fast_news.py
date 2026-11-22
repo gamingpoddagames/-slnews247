@@ -894,7 +894,8 @@ class ThreeSceneBroadcastTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             image=Path(directory)/'verified.jpg'
             Image.new('RGB',(800,800),'red').save(image)
-            with patch('media.choose_photo',return_value=str(image)):
+            with patch('real_photo.select_real_photo',
+                       return_value=(str(image), 'verified_event_photo', None)):
                 paths=build_scene_images(article,'මාතර නව පුවතක්. කරුණු වාර්තා වී තිබේ.',Path(directory)/'slides')
             self.assertEqual(len(paths),3)
             with Image.open(paths[0]) as photo:
