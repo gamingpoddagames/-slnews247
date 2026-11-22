@@ -22,6 +22,7 @@ CBSL_PHOTO = {
     "label_si": "ශ්‍රී ලංකා මහ බැංකුවේ ගොඩනැගිල්ල",
 }
 CBSL_NAMES = ("මහ බැංකුව", "මහබැංකුව", "central bank of sri lanka", "cbsl")
+CACHE_FILE = Path(__file__).resolve().parent / "assets/verified_photos/cbsl_building.png.b64"
 
 
 def select_institution_photo(article, session=None):
@@ -50,7 +51,7 @@ def select_institution_photo(article, session=None):
     )
     # The approved original file is pinned in the repository by a separate
     # workflow. Never depend on Wikimedia access for regular publication.
-    cached = Path(__file__).resolve().parent / "assets/verified_photos/cbsl_building.png.b64"
+    cached = CACHE_FILE
     raw = None
     if cached.is_file():
         raw = base64.b64decode(cached.read_text(encoding="ascii").strip(), validate=True)
