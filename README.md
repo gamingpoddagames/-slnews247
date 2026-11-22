@@ -19,9 +19,15 @@ has published a public video.
 
 ### Connect the correct TikTok news account
 
-1. Use the existing **Sinhala World News** TikTok developer app if its current
-   configuration and review status allow it, and authorize a **dedicated SL News 24/7**
-   TikTok profile (not the FreeSignal trading profile). Apply for Login Kit
+1. The developer portal currently shows the existing **World Video Publisher**
+   app in **Production → Draft**, with unsaved app details and no icon in the
+   reviewed screenshot (22 November 2026). Complete its 1024×1024 app icon,
+   branded app description, platform/redirect URI, Terms and Privacy URL,
+   URL ownership verification, product/scopes and App Review demonstration
+   before requesting production approval. Do not expose its client secret.
+   Authorize a **dedicated SL News 24/7** TikTok profile; a developer Client
+   key/secret alone is not a user access token, and the FreeSignal trading
+   profile must not be substituted. Apply for Login Kit
    `user.info.basic` plus either Content Posting `video.upload` (draft
    handoff), or `video.publish` (direct-post mode, subject to TikTok audit
    and individual video consent).
