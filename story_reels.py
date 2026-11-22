@@ -125,12 +125,20 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
     queued = []
 
     for article in articles:
-        if (article.get('id') in journal or not publishable(article)
-                or article.get('published', 0) < since):
+        if article.get('id') in journal or not publishable(article):
             continue
         record = state.get('stories', {}).get(article['id'], {})
-        if not all(record.get('receipts', {}).get(p, {}).get('id')
+        receipts = record.get('receipts', {})
+        if not all(receipts.get(p, {}).get('id')
                    for p in ('telegram', 'facebook')):
+            continue
+        # News reported earlier today can be published for the first time
+        # after reel rollout. Use its NEW primary-post delivery receipt as
+        # eligibility, without backfilling every already-posted old story.
+        new_primary_delivery = any(
+            receipts.get(p, {}).get('at', 0) >= since
+            for p in ('telegram', 'facebook'))
+        if article.get('published', 0) < since and not new_primary_delivery:
             continue
         # Previously completed original bulletin is a real uploaded video;
         # do not post another near-identical reel about the same news item.
