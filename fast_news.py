@@ -633,6 +633,14 @@ def main():
         report['video'] = maybe_video(state, articles, now, preview)
     except Exception as exc:
         report['video'] = 'failed: ' + type(exc).__name__
+    # Separate persistent per-story reels. Unlike the periodic bulletin,
+    # this queue eventually attempts every already-published verified story.
+    try:
+        from story_reels import publish_reels
+        report['reels'] = publish_reels(state, articles, now, preview)
+    except Exception as exc:
+        report['reels'] = {'error': type(exc).__name__}
+        print('Story reel pipeline:', type(exc).__name__, str(exc)[:120])
     report['unconfirmed_headline_requests'] = sum(len(r.get('uncertain', {})) for r in state.get('stories', {}).values())
     # Report independent video results, not just a green workflow status.
     video_result = report['video']
@@ -654,6 +662,7 @@ def main():
         'fresh_publishable_found': report['publishable_articles'],
         'not_new_or_already_delivered': max(0, report['publishable_articles'] - len(selected)),
         'video_result': report['video'],
+        'story_reels': report.get('reels'),
         'next_video_minimum_interval_minutes': 15,
         'note': 'Scheduled GitHub Actions are best effort, not a 5-minute SLA.',
     }
@@ -683,7 +692,10 @@ def main():
     )
     if (report['unconfirmed_headline_requests']
             or any(v['failed'] or v['uncertain'] for v in delivery.values())
-            or video_issue):
+            or video_issue
+            or (isinstance(report.get('reels'), dict)
+                and (report['reels'].get('error')
+                     or report['reels'].get('failed_or_uncertain', 0)))):
         raise RuntimeError('News delivery or original bulletin upload needs inspection')
 
 
