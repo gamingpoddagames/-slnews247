@@ -6406,7 +6406,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795352386.4633386,
+  "last_scan_at": 1795353545.365699,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -6923,8 +6923,25 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "cbsl-reserve-ratio-3percent-dec-9-photo-2026-11-22": {
+      "at": 1795353545.365699,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795351805.3268912,
-  "reels": {}
+  "last_bulletin_at": 1795353545.365699,
+  "reels": {
+    "cbsl-reserve-ratio-3percent-dec-9-photo-2026-11-22": {
+      "at": 1795353545.365699,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
+    }
+  }
 }
