@@ -630,7 +630,13 @@ def main():
     report['editorial_update'] = share_editorial_update(state, articles, now, preview)
     Path('output/stories.json').write_text(json.dumps(selected, ensure_ascii=False, indent=2), encoding='utf-8')
     try:
-        report['video'] = maybe_video(state, articles, now, preview)
+        # One branded reel per story replaces the old periodic bulletin
+        # when the new production feature is enabled. Avoid posting two
+        # near-identical videos about the same news on both accounts.
+        if os.getenv('STORY_REELS_ENABLED', 'false').lower() == 'true':
+            report['video'] = 'per_story_reels_enabled'
+        else:
+            report['video'] = maybe_video(state, articles, now, preview)
     except Exception as exc:
         report['video'] = 'failed: ' + type(exc).__name__
     # Separate persistent per-story reels. Unlike the periodic bulletin,
