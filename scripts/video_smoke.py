@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 from unittest.mock import patch
 
-from animated_bulletin import render_bulletin
+from animated_bulletin import render_bulletin, render_graphic_reel
 
 def create_demo_voice(_script, path):
     # Real playable synthetic audio, not a mocked success response.
@@ -37,6 +37,17 @@ def main():
         if Path(path).stat().st_size < 20000:
             raise RuntimeError('MP4 unexpectedly small')
         print('3-scene original news video rendered and decoded successfully:', Path(path).stat().st_size)
+        # A reel must still exist when online Sinhala TTS is unavailable.
+        graphic = str(Path(directory) / 'graphic_fallback.mp4')
+        with patch('real_photo.select_real_photo', return_value=(None, None, None)):
+            render_graphic_reel(article, graphic)
+        check = subprocess.run(
+            ['ffmpeg', '-v', 'error', '-i', graphic, '-f', 'null', '-'],
+            timeout=60, capture_output=True, text=True)
+        if check.returncode != 0 or Path(graphic).stat().st_size < 20000:
+            raise RuntimeError('Graphic-only reel smoke test failed: ' + check.stderr[-500:])
+        print('Graphic-motion fallback video rendered and decoded:',
+              Path(graphic).stat().st_size)
 
 if __name__ == '__main__':
     main()
