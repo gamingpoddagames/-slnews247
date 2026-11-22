@@ -487,26 +487,30 @@ class SinhalaGlyphRegressionTests(unittest.TestCase):
 
 class PhotoFirstPosterTests(unittest.TestCase):
 
-    def test_blank_photo_area_is_seamless_shaded_navy_no_shapes(self):
+    def test_no_photo_displays_news_specific_infographic_and_retains_brand(self):
         from PIL import Image
         from image import news_card
-        story={'id':'seamless-blue','title_si':'ශ්‍රී ලංකාවේ නව පුවතක්',
-               'published':1794921000}
+        from story_visual import story_theme, highlight
+        story = {
+            'id':'teachers-visual', 'title_si':'නොවැම්බර් 30 ගුරු විදුහල්පති වර්ජනයක් සැලසුම්',
+            'summary_si': 'ගුරු හා විදුහල්පති සංගම් නොවැම්බර් 30 වැනිදා වැඩ වර්ජනයක් කිරීමට සැලසුම් කර තිබේ.',
+            'published':1794921000
+        }
         with tempfile.TemporaryDirectory() as root:
             previous=os.getcwd()
             try:
                 os.chdir(root)
                 with Image.open(news_card(story)) as img:
-                    center=img.getpixel((540,430))
-                    edge=img.getpixel((110,430))
-                    # Subtle royal-blue center and navy edges; no icon or box.
-                    self.assertGreater(center[2], center[0] * 4)
-                    self.assertGreater(center[2], edge[2] + 40)
-                    # Close neighbors should never create a geometric outline.
-                    for x,y in ((280,320),(540,430),(760,500),(450,600)):
-                        a=img.getpixel((x,y))
-                        b=img.getpixel((x+2,y+2))
-                        self.assertLessEqual(max(abs(u-v) for u,v in zip(a,b)), 7)
+                    self.assertEqual(img.size, (1080,1350))
+                    self.assertEqual(story_theme(story)[0], 'education')
+                    self.assertEqual(highlight(story), ('30', 'නොවැම්බර්'))
+                    # The hero has a thematic subject graphic and actual
+                    # fact panel; it is no longer an empty shaded rectangle.
+                    colors = set()
+                    for x in range(120, 930, 45):
+                        for y in range(255, 735, 40):
+                            colors.add(img.getpixel((x,y)))
+                    self.assertGreater(len(colors), 20)
                     self.assertGreater(img.getpixel((12,155))[0],img.getpixel((12,155))[2])
                     self.assertGreater(img.getpixel((12,1190))[2],img.getpixel((12,1190))[0])
             finally:
