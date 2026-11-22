@@ -6544,7 +6544,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795370430.660038,
+  "last_scan_at": 1795370479.455068,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -7222,5 +7222,7 @@
       "last_attempt_at": 1795370347.926077
     }
   },
-  "reels_started_at": 1795349700
+  "reels_started_at": 1795349700,
+  "tiktok_news": {},
+  "tiktok_started_at": 1795370479.455068
 }
