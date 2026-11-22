@@ -76,6 +76,33 @@ def merge_state(remote, local):
                     updated['destinations'] = destinations
                 merged[article_id] = updated
         result[key] = merged
+    # TikTok has its own publish_id journal. A stale queued copy may NOT
+    # overwrite a response whose upload was already accepted or submitted.
+    ranks = {'queued': 0, 'submission_unconfirmed': 1, 'processing': 2,
+             'inbox_ready_for_creator': 3, 'failed_review_required': 3,
+             'published': 4}
+    external = dict(remote.get('tiktok_news') or {})
+    for article_id, incoming in (local.get('tiktok_news') or {}).items():
+        old = external.get(article_id)
+        if not isinstance(old, dict):
+            external[article_id] = incoming
+            continue
+        if (old.get('publish_id') and incoming.get('publish_id')
+                and old['publish_id'] != incoming['publish_id']):
+            # Conflicting posting IDs indicate concurrent external requests:
+            # retain both records for manual reconciliation, never retry.
+            external[article_id] = {**old, 'status': 'failed_review_required',
+                                    'merge_conflict': True}
+            continue
+        if (ranks.get(old.get('status'), 0) > ranks.get(incoming.get('status'), 0)):
+            external[article_id] = {**incoming, **old}
+        else:
+            external[article_id] = {**old, **incoming}
+    result['tiktok_news'] = external
+    times = [v for v in (remote.get('tiktok_started_at'),
+                         local.get('tiktok_started_at')) if v is not None]
+    if times:
+        result['tiktok_started_at'] = min(times)
     for key in ('last_video_at', 'last_bulletin_at'):
         result[key] = max(remote.get(key, 0), local.get(key, 0))
     # Preserve the rollout boundary: queued per-story reels must not be
