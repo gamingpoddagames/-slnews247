@@ -6293,6 +6293,29 @@
         }
       },
       "uncertain": {}
+    },
+    "de97cae98b51bcd74c278093": {
+      "article": {
+        "id": "de97cae98b51bcd74c278093",
+        "title_si": "එෆ්.බී.අයි කාර්යාංශයට ප්‍රහාරයක්",
+        "summary_si": "ඇමෙරිකාවේ, එෆ්. බී. අයි. හෙවත් ෆෙඩරල් විමර්ශන කාර්යාංශය සතු ජාතික අපරාධ තොරතුරු දත්ත පද්ධතිය සයිබර් ප්‍රහාරයක් එල්ල විය. එෆ්. බී. අයි. කාර්යාංශය නිවේදනය කළේ එම ප්‍රහාරය සම්බන්ධයෙන් මේ වනවිට විමර්ශන ආරම්භ කර ඇති බවය.",
+        "link": "https://www.lankadeepa.lk/latest_news/එෆ්-බී-අයි--කාර්යාංශයට-ප්‍රහාරයක්/1-700952",
+        "source": "Lankadeepa Latest",
+        "published": 1795346760
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1065",
+          "at": 1795351805.3268912,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127282801318605",
+          "at": 1795351805.3268912,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -6314,7 +6337,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795344671.2735403,
+  "last_scan_at": 1795351805.3268912,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -6823,7 +6846,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "de97cae98b51bcd74c278093": {
+      "at": 1795351805.3268912,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795344671.2735403
+  "last_bulletin_at": 1795351805.3268912
 }
