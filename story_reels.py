@@ -40,7 +40,7 @@ def _media_attribution(article):
     except Exception as exc:
         print('Reel media lookup:', type(exc).__name__)
         return ''
-    if kind == 'verified_institution_photo' and credit:
+    if kind in ('verified_institution_photo', 'verified_education_context_photo') and credit:
         return ('\n\n📷 ' + credit['label_si'] + ' — '
                 + credit['creator'] + ', ' + credit['license']
                 + ' (cropped/resized). ' + credit['source']
