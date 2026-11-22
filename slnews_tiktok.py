@@ -315,8 +315,10 @@ def process_tiktok_queue(state, now, preview=False, render=None,
             duration = _duration(video)
             if not 3 <= duration <= min(90, creator.get("max_video_post_duration_sec", 90)):
                 raise TikTokError("creator_video_duration_restriction")
-        from story_reels import _media_attribution
-        credit = _media_attribution(article) if style != "approved_exact_event_clip" else ""
+        from story_reels import _media_attribution, _approved_asset_attribution
+        credit = (_approved_asset_attribution(article, 'video')
+                  if style == 'approved_exact_event_clip'
+                  else _media_attribution(article))
         title = build_caption(article, credit)
     except (OSError, ValueError, TikTokError, subprocess.SubprocessError) as exc:
         result["status"] = "render_retry_next_run"
