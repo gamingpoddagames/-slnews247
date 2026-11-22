@@ -100,6 +100,35 @@ class PresentationTests(unittest.TestCase):
                 card.assert_called_once_with(article, image_path=str(img), illustrative=False)
                 self.assertTrue(request.call_args.args[0].endswith('/sendPhoto'))
 
+    def test_cbsl_news_post_uploads_genuine_named_building_photo(self):
+        from unittest.mock import MagicMock
+        article = {'id': 'bank', 'title_si': 'මහ බැංකුව පොලී අනුපාතය වැඩි කරයි',
+                   'summary_si': 'මහ බැංකුවේ මණ්ඩලය පොලී අනුපාතය ඉහළ දැමීමට තීරණය කර ඇති බව නිවේදනය කර තිබේ.',
+                   'published': time.time()}
+        credit = {'label_si': 'ශ්‍රී ලංකා මහ බැංකුවේ ගොඩනැගිල්ල',
+                  'source': 'https://commons.wikimedia.org/wiki/File:Sri_lanka2024.png',
+                  'license': 'CC BY 4.0', 'creator': 'Zsastaba',
+                  'license_url': 'https://creativecommons.org/licenses/by/4.0/'}
+        response = MagicMock(ok=True)
+        response.json.return_value = {'ok': True, 'result': {'message_id': 120}}
+        with tempfile.TemporaryDirectory() as directory:
+            photo = Path(directory, 'bank.jpg')
+            photo.write_bytes(b'jpg-test' * 250)
+            with patch('real_photo.select_real_photo',
+                       return_value=(str(photo), 'verified_institution_photo', credit)), \
+                 patch('image.news_card', return_value=str(photo)) as renderer, \
+                 patch.dict(os.environ, {'TG_TOKEN': 'test', 'TG_CHAT_ID': 'test'}), \
+                 patch('requests.post', return_value=response) as sender:
+                result = pipeline.send_text('telegram', article)
+        self.assertEqual(result['format'], 'verified_institution_photo')
+        renderer.assert_called_once_with(
+            article, image_path=str(photo), illustrative=False,
+            photo_label='ශ්‍රී ලංකා මහ බැංකුවේ ගොඩනැගිල්ල')
+        self.assertIn('Zsastaba', sender.call_args.kwargs['data']['caption'])
+        self.assertIn('creativecommons.org/licenses/by/4.0/',
+                      sender.call_args.kwargs['data']['caption'])
+        self.assertTrue(sender.call_args.args[0].endswith('/sendPhoto'))
+
     def test_missing_event_photo_can_publish_honest_headline_card_when_enabled(self):
         from unittest.mock import MagicMock
         article = {'id': 'headline', 'title_si': 'මාතර සිද්ධිය',
