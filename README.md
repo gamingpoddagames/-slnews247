@@ -1,5 +1,86 @@
 # SL News 247 — Sri Lankan Sinhala news automation
 
+## TikTok automation — existing SL NEWS 24/7 project (22 Nov 2026)
+
+This update extends the **same** five-minute `Auto News Bot` and the already
+working `story_reels.py` output. It does **not** create a separate account,
+bot or repository. Original matching Sinhala vertical video is rendered from
+approved event clips, a verified named photo, or factual illustrated scenes.
+A reel first succeeds on Facebook and Telegram, then becomes an independent
+TikTok news queue item. Upload history lives in the merged
+`data/sri_lanka_delivery.json` under `tiktok_news`; it never blind-retries
+ambiguous uploads and stops duplicate reels.
+
+**IMPORTANT:** There is not yet a confirmed authorized **SL News 24/7** TikTok
+account for this repository. Older `TIKTOK_ACCESS_TOKEN` is intentionally NOT
+used because it may belong to another account. TikTok publishing is OFF by
+default. The presence of code or a green GitHub run does not mean that TikTok
+has published a public video.
+
+### Connect the correct TikTok news account
+
+1. Register/authenticate the **SL News 24/7** TikTok account in the official
+   TikTok for Developers application. Apply for Login Kit
+   `user.info.basic` plus either Content Posting `video.upload` (draft
+   handoff), or `video.publish` (direct-post mode, subject to TikTok audit
+   and individual video consent).
+2. In GitHub repository **Settings > Secrets and variables > Actions > Secrets**,
+   set `SLNEWS_TIKTOK_ACCESS_TOKEN` using the news account's OAuth access
+   token, and `SLNEWS_TIKTOK_EXPECTED_OPEN_ID` using the same OAuth account's
+   returned `open_id`. Never copy a trading account token here. The open ID
+   is checked before *any* TikTok upload.
+3. For private draft handoff, set repository **Variable**
+   `SLNEWS_TIKTOK_MODE=draft`. Videos may be uploaded to the TikTok inbox,
+   but the account owner must click the inbox notification and publish them
+   in TikTok. Scope `video.upload` and app authorization are needed.
+4. For Direct Post (which requires `video.publish` and TikTok app audit for
+   public viewership), choose `SLNEWS_TIKTOK_MODE=direct`, set
+   `SLNEWS_TIKTOK_EXPECTED_USERNAME` to the exact news account handle
+   (without `@`), and use `data/tiktok_approved_posts.json` for
+   creator-approved **individual** videos. Review each actual rendered video,
+   post title, privacy, copyright disclosures and interaction controls.
+   Example approval once the specific video has been reviewed:
+
+   ```json
+   {"articles":{"EXACT_ARTICLE_ID":{
+     "approved":true,
+     "article_url":"https://same-original-article-url.example/news",
+     "privacy_level":"SELF_ONLY"
+   }}}
+   ```
+
+   TikTok automatically limits unaudited Direct Posts to private visibility;
+   **do not** set `SLNEWS_TIKTOK_APP_AUDITED=true` unless TikTok actually
+   approved the app for Direct Post. A public post needs
+   `PUBLIC_TO_EVERYONE` as an offered creator privacy choice and
+   corresponding approval for that exact video. Some accounts or apps may be
+   ineligible for Direct Post despite correct credentials.
+
+5. Go to **Actions > SL News TikTok connection check > Run workflow** for a
+   safe non-publishing account and permission check. The five-minute news
+   workflow subsequently publishes only authorized, queued TikTok media.
+   `SLNEWS_TIKTOK_MAX_PER_DAY` is restricted to two attempts per 24 hours
+   in GitHub Actions, with at least three hours between attempts.
+   Existing Facebook and Telegram publishing is unaffected.
+
+TikTok draft upload is **not** public publication. The program records
+`publish_id`, checks `status/fetch` on future runs, and distinguishes
+`SEND_TO_USER_INBOX`, `PUBLISH_COMPLETE`, in-progress and failed attempts.
+A source-rights credit legally required by the image or clip's license remains
+in the TikTok caption. No unrelated image is used.
+
+**Token life cycle:** TikTok user access tokens expire, and refreshing may
+rotate the refresh token. The OAuth account connection must provide a secure
+token-refresh service for indefinite unattended operation; a static GitHub
+secret alone is not permanent. This repository deliberately does not store
+tokens or unencrypted refresh tokens in its version-controlled files.
+
+Official API documentation:
+- https://developers.tiktok.com/docs/en/content-posting-api-get-started
+- https://developers.tiktok.com/docs/en/content-posting-api-get-started-upload-content
+- https://developers.tiktok.com/docs/en/oauth-user-access-token-management/
+- https://developers.tiktok.com/docs/en/content-sharing-guidelines
+
 ## Current production upgrade — 22 November 2026
 
 The **existing** repository and configured Facebook Page / Telegram channel are
