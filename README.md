@@ -1,5 +1,43 @@
 # SL News 247 — Sri Lankan Sinhala news automation
 
+## Current production upgrade — 22 November 2026
+
+The **existing** repository and configured Facebook Page / Telegram channel are
+used; this is **not a new project**. The live entrypoint is fast_news.py and the
+Auto News Bot GitHub Actions workflow runs on a best-effort 5-minute schedule.
+
+- **Every eligible story:** verify Sinhala headline and factual summary, send
+  a consistent SL NEWS 24/7 image post on both platforms, and persist receipts.
+  Prefer approved exact-event photographs, then vetted *named-institution*
+  photographs (for example the real Central Bank building only for CBSL news).
+  If neither is usable, publish an original headline graphic without a fake
+  event image.
+- **Every new completed story:** queue a separate vertical video in
+  story_reels.py. Authorized same-event clips can be edited with original
+  Sinhala narration; otherwise use real approved images with motion graphics,
+  or fully original animated scenes. If online voice fails, produce a playable
+  motion-graphic video without invented narration. The queue survives RSS scans.
+- **Duplicate protection:** do not publish an older completed original
+  bulletin again as an additional reel. Preserve per-platform intent/receipts
+  in data/sri_lanka_delivery.json; ambiguous API results must be inspected
+  before another attempt.
+- **Presentation:** one consistent branded style, no irrelevant event clips,
+  misleading pictures or unnecessary source/about-image text in public news.
+  Mandatory Creative Commons attribution remains where a media licence
+  requires it; full provenance and evidence stay in private workflow records.
+- **Practical limits:** a green workflow confirms execution, not necessarily
+  delivery; check the output delivery_report.json and platform receipts.
+  Source outages, missing verified facts, external voice/API outages, platform
+  permissions and GitHub scheduling can delay publication; do not pretend to
+  have delivered when a platform has not acknowledged it.
+
+Relevant files: fast_news.py, real_photo.py, institution_photo.py, image.py,
+animated_bulletin.py, story_reels.py, media.py, facebook.py, telegram.py,
+and .github/workflows/news.yml. No additional bot tokens are required beyond
+the existing account secrets. The older sections below describe legacy steps
+and may refer to superseded posting modes.
+
+
 Native Sinhala RSS headlines → fast Telegram + Facebook alerts with optional verified event photos → Sinhala voice and 1080×1920 video → Telegram + Facebook + optional authorized TikTok.
 
 ## Production
