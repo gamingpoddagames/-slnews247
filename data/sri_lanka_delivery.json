@@ -6132,6 +6132,29 @@
         }
       },
       "uncertain": {}
+    },
+    "04fccf6186293ef7c63f165b": {
+      "article": {
+        "id": "04fccf6186293ef7c63f165b",
+        "title_si": "“ඉම්රාන් ඛාන් වහාම නිදහස් කරන්න” එක්සත් ජාතීන්ගේ මානව හිමිකම් ප්‍රධානියාගෙන් පකිස්ථානයට දරුණු තරවටුවක්",
+        "summary_si": "පාකිස්තානයේ හිටපු අග්‍රාමාත්‍ය ඉම්රාන් ඛාන් වහාම නිදහස් කරන ලෙස එක්සත් ජාතීන්ගේ මානව හිමිකම් පිළිබඳ මහ කොමසාරිස් වොල්කර් ටර්ක් පාකිස්තාන බලධාරීන්ගෙන් ඉල්ලීමක් කර තිබෙනවා. ඉම්රාන් ඛාන්ට නිසි සැලකීමක් ලබාදීම, ඔහුගේ මූලික අයිතිවාසිකම් ආරක්ෂා කිරීම සහ නීතියේ නියමිත ක්‍රියාපටිපාටියට ගරු කිරීම ද බලධාරීන්ගේ වගකීමක් බවයි එක්සත් ජාතීන්ගේ මානව හිමිකම් පිළිබඳ මහ කොමසාරිස්වරයා අවධාරණය කරන්නේ. CNN නාලිකාවේ ක්‍රිස්ටියන් ...",
+        "link": "https://www.nethnews.lk/breaking-news/foreign-news/44836/",
+        "source": "Neth International",
+        "published": 1795309236
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1050",
+          "at": 1795311534.5108442,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127177027318605",
+          "at": 1795311534.5108442,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -6153,7 +6176,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795305118.5628283,
+  "last_scan_at": 1795311534.5108442,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -6604,7 +6627,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "04fccf6186293ef7c63f165b": {
+      "at": 1795311534.5108442,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795305118.5628283
+  "last_bulletin_at": 1795311534.5108442
 }
