@@ -34,13 +34,30 @@ def select_institution_photo(article, session=None):
         return None, None
     info = CBSL_PHOTO
     session = session or requests
-    response = session.get(
+    headers = {
+        "User-Agent": ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                       "Chrome/130.0 Safari/537.36"),
+        "Referer": info["source"],
+        "Accept": "image/avif,image/webp,image/png,image/*;q=0.8",
+    }
+    # Wikimedia limits some automated clients. An approved Wikimedia file
+    # redirect is our fallback, and the SHA-1 below must still match EXACTLY.
+    urls = (
         info["url"],
-        headers={"User-Agent": "SLNews247/1.0 (educational news; Wikimedia CC attribution)"},
-        timeout=(5, 22),
+        "https://en.wikipedia.org/wiki/Special:Redirect/file/Sri_lanka2024.png",
+        "https://commons.wikimedia.org/wiki/Special:Redirect/file/Sri_lanka2024.png",
     )
-    response.raise_for_status()
-    raw = response.content
+    raw = None
+    for url in urls:
+        try:
+            response = session.get(url, headers=headers, timeout=(5, 22))
+            response.raise_for_status()
+            raw = response.content
+            break
+        except requests.RequestException as exc:
+            print("Verified Commons image retrieval retry:", type(exc).__name__)
+    if raw is None:
+        raise ValueError("Verified Central Bank photo source unavailable")
     if not raw or len(raw) > 8_000_000:
         raise ValueError("Institution image missing or too large")
     if hashlib.sha1(raw).hexdigest() != info["sha1"]:
