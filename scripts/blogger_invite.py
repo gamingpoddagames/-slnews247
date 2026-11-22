@@ -6,7 +6,7 @@ from zoneinfo import ZoneInfo
 import requests
 
 URL = "https://slnews247live.blogspot.com/"
-MESSAGE = """🇱🇰 SL NEWS 247 — දැන් වෙබ් අඩවියෙන්!
+MESSAGE = """🇱🇰 Twenty Four Seven — පැය විසිහතර පුරාම — දැන් වෙබ් අඩවියෙන්!
 
 වැදගත් පුවත් පැහැදිලි සිංහලෙන් කියවන්න. ශ්‍රී ලංකාවේ සිදුවීම්, ආර්ථිකය, අධ්‍යාපනය, ක්‍රීඩා සහ ලෝක පුවත් සඳහා අප සමඟ එක්වන්න.
 
@@ -17,7 +17,7 @@ https://slnews247live.blogspot.com/
 💬 ඔබේ අදහස් අපට කියන්න.
 🤝 පුවත් කියවන්න කැමති මිතුරන් සමඟ බෙදාගන්න.
 
-SL NEWS 247"""
+Twenty Four Seven"""
 STATE = Path("data/blogger_invite_delivery.json")
 
 def main():
