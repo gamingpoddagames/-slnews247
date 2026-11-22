@@ -33,6 +33,48 @@ class RealPhotoTests(unittest.TestCase):
             self.assertEqual(select_real_photo(article), (None, None, None))
             fallback.assert_not_called()
 
+    def test_verified_bank_building_photo_selected_for_cbsl_news_only(self):
+        from institution_photo import select_institution_photo, CBSL_PHOTO
+        import hashlib
+        import tempfile
+        from pathlib import Path
+        import os
+        buf = io.BytesIO()
+        Image.new('RGB', (772, 548), 'navy').save(buf, format='PNG')
+        blob = buf.getvalue()
+        client = MagicMock()
+        client.get.return_value.content = blob
+        with tempfile.TemporaryDirectory() as folder:
+            previous = os.getcwd()
+            try:
+                os.chdir(folder)
+                with patch.dict(CBSL_PHOTO, {'sha1': hashlib.sha1(blob).hexdigest()}):
+                    path, credit = select_institution_photo(
+                        {'title_si': 'මහ බැංකුව පොලී අනුපාතය වෙනස් කරයි'}, session=client)
+                self.assertTrue(Path(path).exists())
+                self.assertEqual(credit['creator'], 'Zsastaba')
+                self.assertEqual(credit['license'], 'CC BY 4.0')
+            finally:
+                os.chdir(previous)
+        photo, credit = select_institution_photo(
+            {'title_si': 'මාතර පාලම අසල අනතුරක්'}, session=client)
+        self.assertIsNone(photo)
+        self.assertIsNone(credit)
+        self.assertEqual(client.get.call_count, 1)
+
+    def test_named_institution_fallback_does_not_claim_event_footage(self):
+        credit = {'label_si': 'ශ්‍රී ලංකා මහ බැංකුවේ ගොඩනැගිල්ල',
+                  'source': 'https://commons.wikimedia.org/wiki/File:Sri_lanka2024.png',
+                  'license': 'CC BY 4.0', 'creator': 'Zsastaba',
+                  'license_url': 'https://creativecommons.org/licenses/by/4.0/'}
+        with patch('real_photo.choose_photo', return_value=None), \
+             patch('institution_photo.select_institution_photo',
+                   return_value=('bank-building.jpg', credit)):
+            photo, kind, actual_credit = select_real_photo(
+                {'title_si': 'ශ්‍රී ලංකා මහ බැංකුව පොලී අනුපාතය සංශෝධනය කරයි'})
+        self.assertEqual((photo, kind), ('bank-building.jpg', 'verified_institution_photo'))
+        self.assertEqual(actual_credit, credit)
+
     def test_no_license_means_no_download(self):
         session = MagicMock()
         session.get.return_value.json.return_value = {
