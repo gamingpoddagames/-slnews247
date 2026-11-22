@@ -19,8 +19,9 @@ has published a public video.
 
 ### Connect the correct TikTok news account
 
-1. Register/authenticate the **SL News 24/7** TikTok account in the official
-   TikTok for Developers application. Apply for Login Kit
+1. Use the existing **Sinhala World News** TikTok developer app if its current
+   configuration and review status allow it, and authorize a **dedicated SL News 24/7**
+   TikTok profile (not the FreeSignal trading profile). Apply for Login Kit
    `user.info.basic` plus either Content Posting `video.upload` (draft
    handoff), or `video.publish` (direct-post mode, subject to TikTok audit
    and individual video consent).
