@@ -6408,6 +6408,29 @@
         }
       },
       "uncertain": {}
+    },
+    "teachers-principals-nov30-explainer-visual-2026-11-22": {
+      "article": {
+        "id": "teachers-principals-nov30-explainer-visual-2026-11-22",
+        "title_si": "නොවැම්බර් 30 ගුරු විදුහල්පති වර්ජනය: සැලැස්ම සහ හේතුව",
+        "summary_si": "නොවැම්බර් 30 වැනිදා දිවයින පුරා එක්දින වැඩ වර්ජනයක් පැවැත්වීමට ගුරු හා විදුහල්පති වෘත්තීය සමිති කිහිපයක් සැලසුම් කර තිබේ. 2027 අයවැය මගින් වැටුප් ඇතුළු දිගුකාලීන ගැටලු විසඳී නැති බව එම සමිති සඳහන් කරයි. ගුරු හා විදුහල්පතිවරුන් අසනීප නිවාඩු වාර්තා කිරීමේ ක්‍රියාමාර්ගයකට එක්වීමට නියමිත බව වාර්තා වේ. මෙම වැඩ වර්ජනය තවම සිදු වී නැති අතර, නොවැම්බර් 30 සඳහා ප්‍රකාශිත සැලැස්මකි. වෘත්තීය ක්‍රියාමාර්ගය ක්‍රියාත්මක වුවහොත් එදින පාසල් කටයුතුවලට බලපෑම් ඇති විය හැකිය.",
+        "link": "https://www.dailymirror.lk/breaking-news/Teachers--principals-to-launch-island-wide-strike-on-November-30/108-355490",
+        "source": "Daily Mirror, 22 November 2026, education union statement; visual explainer",
+        "published": 1795354500
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1076",
+          "at": 1795354819.9133363,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127287955318605",
+          "at": 1795354819.9133363,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -6429,7 +6452,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795354744.5284424,
+  "last_scan_at": 1795354819.9133363,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -7015,6 +7038,24 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "teachers-principals-nov30-explainer-visual-2026-11-22": {
+      "at": 1795354819.9133363,
+      "article": {
+        "id": "teachers-principals-nov30-explainer-visual-2026-11-22",
+        "title_si": "නොවැම්බර් 30 ගුරු විදුහල්පති වර්ජනය: සැලැස්ම සහ හේතුව",
+        "summary_si": "නොවැම්බර් 30 වැනිදා දිවයින පුරා එක්දින වැඩ වර්ජනයක් පැවැත්වීමට ගුරු හා විදුහල්පති වෘත්තීය සමිති කිහිපයක් සැලසුම් කර තිබේ. 2027 අයවැය මගින් වැටුප් ඇතුළු දිගුකාලීන ගැටලු විසඳී නැති බව එම සමිති සඳහන් කරයි. ගුරු හා විදුහල්පතිවරුන් අසනීප නිවාඩු වාර්තා කිරීමේ ක්‍රියාමාර්ගයකට එක්වීමට නියමිත බව වාර්තා වේ. මෙම වැඩ වර්ජනය තවම සිදු වී නැති අතර, නොවැම්බර් 30 සඳහා ප්‍රකාශිත සැලැස්මකි. වෘත්තීය ක්‍රියාමාර්ගය ක්‍රියාත්මක වුවහොත් එදින පාසල් කටයුතුවලට බලපෑම් ඇති විය හැකිය.",
+        "link": "https://www.dailymirror.lk/breaking-news/Teachers--principals-to-launch-island-wide-strike-on-November-30/108-355490",
+        "source": "Daily Mirror, 22 November 2026, education union statement; visual explainer",
+        "published": 1795354500
+      },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "branded_sinhala_voice_reel",
+      "last_attempt_at": 1795354819.9133363
     }
   },
   "reels_started_at": 1795349700
