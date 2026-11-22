@@ -128,6 +128,30 @@ class TikTokNewsTests(unittest.TestCase):
                   "privacy_level_options":["PUBLIC_TO_EVERYONE"]})
             self.assertIsNone(result)
 
+    def test_tiktok_status_cannot_be_overwritten_by_stale_github_run(self):
+        from scripts.merge_news_checkpoint import merge_state
+        remote = {"tiktok_started_at": 100,
+                  "tiktok_news": {"story": {"status": "published",
+                                              "publish_id": "v_pub_file~123"}}}
+        stale = {"tiktok_started_at": 120,
+                 "tiktok_news": {"story": {"status": "queued"}}}
+        merged = merge_state(remote, stale)
+        self.assertEqual(merged["tiktok_started_at"], 100)
+        self.assertEqual(merged["tiktok_news"]["story"]["status"], "published")
+        self.assertEqual(merged["tiktok_news"]["story"]["publish_id"],
+                         "v_pub_file~123")
+
+    def test_conflicting_tiktok_publish_ids_require_manual_reconciliation(self):
+        from scripts.merge_news_checkpoint import merge_state
+        remote = {"tiktok_news": {"story": {"status": "processing",
+                                               "publish_id": "publish-id-A"}}}
+        local = {"tiktok_news": {"story": {"status": "processing",
+                                              "publish_id": "publish-id-B"}}}
+        merged = merge_state(remote, local)
+        self.assertTrue(merged["tiktok_news"]["story"]["merge_conflict"])
+        self.assertEqual(merged["tiktok_news"]["story"]["status"],
+                         "failed_review_required")
+
     def test_never_put_video_to_unknown_upload_server(self):
         with self.assertRaises(tt.TikTokError) as err:
             tt._put_video("https://malicious.example/upload","video.mp4")
