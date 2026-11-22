@@ -46,3 +46,15 @@ jobs:
               except Exception as exc:
                   print(name, type(exc).__name__, str(exc)[:160])
           PY
+      - name: Verify real production photo downloader
+        run: |
+          python -m pip install --quiet Pillow requests
+          python - <<'PY'
+          from institution_photo import select_institution_photo
+          photo, credit = select_institution_photo(
+              {'title_si': 'ශ්‍රී ලංකා මහ බැංකුව පොලී අනුපාතය වෙනස් කරයි'})
+          assert photo and credit['creator'] == 'Zsastaba', 'vetted image missing'
+          from PIL import Image
+          with Image.open(photo) as im:
+              print('Verified actual bank building:', photo, im.size, credit['license'])
+          PY
