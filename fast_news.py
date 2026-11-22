@@ -211,7 +211,8 @@ def send_text(platform, article):
         from image import news_card
         if photo_path and image_kind == 'verified_event_photo':
             image_path = news_card(article, image_path=photo_path, illustrative=False)
-        elif photo_path and image_kind == 'verified_institution_photo' and credit:
+        elif (photo_path and credit and image_kind in (
+                'verified_institution_photo', 'verified_education_context_photo')):
             image_path = news_card(article, image_path=photo_path, illustrative=False,
                                    photo_label=credit['label_si'])
         elif os.getenv('ALLOW_HEADLINE_CARD_FALLBACK', 'false').lower() == 'true':
@@ -228,14 +229,32 @@ def send_text(platform, article):
         print('Real photo processing blocked:', type(exc).__name__, str(exc)[:160])
         return {'error': 'real_photo_processing_failed'}
     message = caption(article)
-    if image_kind == 'verified_institution_photo' and credit:
-        # CC BY attribution: title/creator, link to source & license, changes.
-        message += ('\n\n📷 ' + credit['label_si'] + ' (පැරණි ඡායාරූපය). '
-                    + credit['creator'] + ' / ' + credit['license']
-                    + ' • crop/resize\n' + credit['source']
-                    + '\n' + credit['license_url'])
+    required_credit = ''
+    if image_kind in ('verified_institution_photo', 'verified_education_context_photo') and credit:
+        # Legally mandatory CC BY/CC BY-SA credit is part of the post, not
+        # news-source boilerplate. Never hide required copyright terms.
+        required_credit = ('\n\n📷 ' + credit['label_si'] + ' — '
+                           + credit['creator'] + ' / ' + credit['license']
+                           + ' (crop/resize)\n' + credit['source']
+                           + '\n' + credit['license_url'])
+        message += required_credit
     if platform == 'telegram' and len(message) > 1024:
-        return {'error': 'caption_too_long_review_required'}
+        # Telegram caps photo captions; keep the full license credit and a
+        # factual headline, shortening only ancillary story details.
+        short = '🇱🇰 ' + article['title_si'] + '\n\n'
+        available = 1024 - len(short + required_credit + '\n\nSL NEWS 24/7')
+        sentences = __import__('re').split(r'(?<=[.!?।])\\s+', article.get('summary_si', ''))
+        facts = []
+        for sentence in sentences:
+            sentence = sentence.strip()
+            if (sentence.endswith(('.', '!', '?', '।'))
+                    and len(' '.join(facts + [sentence])) <= available):
+                facts.append(sentence)
+            else:
+                break
+        message = short + (' '.join(facts) + '\n\n' if facts else '') + 'SL NEWS 24/7' + required_credit
+        if len(message) > 1024:
+            return {'error': 'required_media_credit_exceeds_caption_limit'}
     if platform == 'telegram':
         token, chat = os.getenv('TG_TOKEN'), os.getenv('TG_CHAT_ID')
         if not token or not chat:
