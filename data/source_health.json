@@ -1,13 +1,11 @@
 {
-  "checked_at": 1795351805.3268912,
+  "checked_at": 1795351853.559199,
   "configured_feeds": 25,
   "sources": [
     {
       "source": "Ada Derana Sinhala",
-      "http": 200,
-      "entries": 25,
-      "fresh_sinhala": 19,
-      "feed_url": "https://sinhala.adaderana.lk/rss.php"
+      "error": "HTTPError",
+      "http": 403
     },
     {
       "source": "Dinamina",
@@ -90,8 +88,10 @@
     },
     {
       "source": "Lanka Truth Sinhala",
-      "error": "HTTPError",
-      "http": 401
+      "http": 200,
+      "entries": 24,
+      "fresh_sinhala": 4,
+      "feed_url": "https://lankatruth.com/si/?feed=rss2"
     },
     {
       "source": "Lankadeepa Politics",
@@ -144,18 +144,24 @@
     },
     {
       "source": "Lanka Truth World",
-      "error": "HTTPError",
-      "http": 401
+      "http": 200,
+      "entries": 24,
+      "fresh_sinhala": 0,
+      "feed_url": "https://lankatruth.com/si/?feed=rss2&cat=3"
     },
     {
       "source": "Lanka Truth Economy",
-      "error": "HTTPError",
-      "http": 401
+      "http": 200,
+      "entries": 24,
+      "fresh_sinhala": 0,
+      "feed_url": "https://lankatruth.com/si/?feed=rss2&cat=5"
     },
     {
       "source": "Lanka Truth Sport",
-      "error": "HTTPError",
-      "http": 401
+      "http": 200,
+      "entries": 24,
+      "fresh_sinhala": 0,
+      "feed_url": "https://lankatruth.com/si/?feed=rss2&cat=6"
     }
   ]
 }
