@@ -32,11 +32,10 @@ def narration_for(article):
 
 
 def _story_facts(article, narration):
-    """Display only factual sentences actually present in the approved script."""
-    import re
-    text = narration.split('. ', 1)[-1]
-    sentences = [x.strip() for x in re.findall(r'[^.!?।]+[.!?।]+', text) if x.strip()]
-    return (sentences + [article['title_si']] * 3)[:3]
+    """Display three DIFFERENT complete factual sentences about this story."""
+    from story_visual import story_facts
+    facts = story_facts(article)
+    return (facts + [article['title_si']] * 3)[:3]
 
 
 def _slide(article, text, index, image_path, destination, photo_label=None):
@@ -68,21 +67,12 @@ def _slide(article, text, index, image_path, destination, photo_label=None):
         canvas.paste(shot, (35, 210))
         draw = ImageDraw.Draw(canvas)
     else:
-        for y in range(215, 735, 4):
-            factor = (y - 215) / 520
-            draw.rectangle((35, y, 685, y+4),
-                           fill=(int(7 + 16*factor), int(35 + 35*factor),
-                                 int(70 + 40*factor)))
-        # Structured broadcast typography is better than an empty window.
-        draw.rounded_rectangle((65, 279, 655, 652), radius=36,
-                               fill='#122e52', outline='#3978a9', width=3)
-        heading = ['ප්‍රධාන පුවත', 'වැදගත් තොරතුරු', 'නවතම තත්ත්වය'][index]
-        draw_mixed(draw, (97, 385), heading, 43, bold=True, fill=highlight)
-        draw.line((97, 420, 605, 420), fill=highlight, width=5)
-        draw.text((95, 481), 'NEWS UPDATE',
-                  font=latin_font(44, bold=True), fill='#c8dceb')
-        draw.text((97, 558), 'SL NEWS 24/7',
-                  font=latin_font(26, bold=True), fill='#87bedc')
+        # Display the actual article's topic, numeric detail and sourced fact
+        # as a prominent moving infographic, never an unrelated stock image.
+        from story_visual import draw_story_hero
+        draw_story_hero(canvas, article, (35, 210, 685, 735), scene=index,
+                        fact=text)
+        draw = ImageDraw.Draw(canvas)
 
     headline = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '',
                       article.get('title_si', ''), flags=re.I)
