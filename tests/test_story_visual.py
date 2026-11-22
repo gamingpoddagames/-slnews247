@@ -55,9 +55,9 @@ class StoryVisualAccuracyTests(unittest.TestCase):
     def test_reel_scene_receives_same_story_facts(self):
         from animated_bulletin import build_scene_images
         from story_visual import story_facts
-        with tempfile.TemporaryDirectory() as tmp, \\
+        with tempfile.TemporaryDirectory() as tmp, \
              patch('real_photo.select_real_photo',
-                   return_value=(None, None, None)), \\
+                   return_value=(None, None, None)), \
              patch('animated_bulletin._slide', side_effect=lambda *args, **kwargs: str(args[4])) as render:
             build_scene_images(self.article, 'approved', tmp)
         self.assertEqual(render.call_count, 3)
