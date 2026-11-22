@@ -39,7 +39,7 @@ def _story_facts(article, narration):
     return (sentences + [article['title_si']] * 3)[:3]
 
 
-def _slide(article, text, index, image_path, destination):
+def _slide(article, text, index, image_path, destination, photo_label=None):
     """Three intentionally different broadcast scenes; no fabricated event shots."""
     from image import draw_mixed, fit_headline, cover_resize, latin_font
     from PIL import ImageOps
@@ -48,9 +48,7 @@ def _slide(article, text, index, image_path, destination):
     from zoneinfo import ZoneInfo
 
     W, H = 720, 1280
-    palette = [('#071329', '#123966', '#f9bc39'),
-               ('#051626', '#18517a', '#67d8e2'),
-               ('#101329', '#3b3465', '#ff9c6e')]
+    palette = [('#071329', '#123966', '#f9bc39')] * 3
     bg, accent, highlight = palette[index]
     canvas = Image.new('RGB', (W, H), bg)
     draw = ImageDraw.Draw(canvas)
@@ -109,26 +107,30 @@ def _slide(article, text, index, image_path, destination):
     except ValueError:
         # The full fact is still narrated and in the post text.
         pass
-    draw_mixed(draw, (44, 1241), 'සංකේතාත්මක පුවත් ඉදිරිපත් කිරීමකි' if not image_path
-               else 'තහවුරු කළ සිද්ධියේ ඡායාරූපයකි', 18, fill='#a6bed1')
+    # Brand and factual news only; archive institution imagery is identified
+    # by its subject in the picture, not misrepresented as event footage.
+    if image_path and photo_label:
+        draw_mixed(draw, (44, 1241), photo_label, 18, fill='#a6bed1')
     canvas.save(destination)
     return str(destination)
 
 
 def build_scene_images(article, script, directory):
     """Create distinct slides; reuse one exact-event photo only if licensed."""
-    from media import choose_photo
+    from real_photo import select_real_photo
     folder = Path(directory)
     folder.mkdir(parents=True, exist_ok=True)
     try:
-        image_path = choose_photo(article)
+        image_path, image_kind, credit = select_real_photo(article)
     except Exception as exc:
         print('Bulletin photo unavailable, using original information scenes:',
               type(exc).__name__)
-        image_path = None
+        image_path, image_kind, credit = None, None, None
+    label = (credit.get('label_si') if image_kind == 'verified_institution_photo'
+             and credit else None)
     facts = _story_facts(article, script)
     return [_slide(article, facts[i], i, image_path,
-                   folder / f'scene_{i+1}.png') for i in range(3)]
+                   folder / f'scene_{i+1}.png', photo_label=label) for i in range(3)]
 
 
 def render_bulletin(article, output_path='output/animated_news_bulletin.mp4'):
