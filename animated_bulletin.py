@@ -116,8 +116,9 @@ def build_scene_images(article, script, directory):
         print('Bulletin photo unavailable, using original information scenes:',
               type(exc).__name__)
         image_path, image_kind, credit = None, None, None
-    label = (credit.get('label_si') if image_kind == 'verified_institution_photo'
-             and credit else None)
+    label = (credit.get('label_si') if image_kind in (
+        'verified_institution_photo', 'verified_education_context_photo')
+        and credit else None)
     facts = _story_facts(article, script)
     return [_slide(article, facts[i], i, image_path,
                    folder / f'scene_{i+1}.png', photo_label=label) for i in range(3)]
