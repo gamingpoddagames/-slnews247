@@ -80,6 +80,63 @@ class PerStoryReelTests(unittest.TestCase):
         self.assertEqual((path, mode),
                          ('graphic.mp4', 'original_graphic_or_verified_photo'))
 
+    def test_queued_story_still_gets_reel_after_it_disappears_from_rss(self):
+        second = dict(self.article, id='event-two',
+                      published=self.article['published'] + 3)
+        self.state['stories']['event-two'] = {
+            'receipts': {'telegram': {'id': '3'}, 'facebook': {'id': '4'}}}
+        with patch('fast_news.publishable', return_value=True), \
+             patch('media.choose_video', return_value=None), \
+             patch('animated_bulletin.render_bulletin', return_value='mock.mp4') as renderer, \
+             patch('story_reels._media_attribution', return_value=''), \
+             patch('fast_news.save'), \
+             patch('telegram.upload_video', return_value=True) as tg, \
+             patch('facebook.upload_video', return_value=True) as fb:
+            first = publish_reels(self.state, [self.article, second],
+                                  1795350300, max_per_run=1)
+            # Second story is no longer in the fresh feed, but queued.
+            followup = publish_reels(self.state, [],
+                                     1795350600, max_per_run=1)
+        self.assertEqual(first['pending'], 1)
+        self.assertEqual(followup['sent'], {'telegram': 1, 'facebook': 1})
+        self.assertEqual(self.state['reels']['event-two']['status'], 'delivered')
+        self.assertEqual(renderer.call_count, 2)
+        self.assertEqual(tg.call_count, 2)
+        self.assertEqual(fb.call_count, 2)
+
+    def test_old_bulletin_is_not_posted_again_as_reel(self):
+        self.state['bulletins'] = {'event-one': {
+            'destinations': {'telegram': 'accepted', 'facebook': 'accepted'}}}
+        with patch('fast_news.publishable', return_value=True), \
+             patch('animated_bulletin.render_bulletin') as renderer, \
+             patch('fast_news.save'):
+            result = publish_reels(self.state, [self.article], 1795350300)
+        self.assertEqual(result['sent'], {'telegram': 0, 'facebook': 0})
+        self.assertEqual(self.state['reels']['event-one']['status'],
+                         'delivered_earlier')
+        renderer.assert_not_called()
+
+    def test_online_voice_failure_uses_original_graphic_video(self):
+        from story_reels import _render_reel
+        with patch('media.choose_video', return_value=None), \
+             patch('animated_bulletin.render_bulletin',
+                   side_effect=RuntimeError('TTS unavailable')), \
+             patch('animated_bulletin.render_graphic_reel',
+                   return_value='graphic.mp4') as fallback:
+            result = _render_reel(self.article, 'graphic.mp4')
+        self.assertEqual(result, ('graphic.mp4', 'branded_graphic_reel'))
+        fallback.assert_called_once()
+
+    def test_reel_boundary_survives_checkpoint_merge(self):
+        from scripts.merge_news_checkpoint import merge_state
+        remote = {'reels_started_at': 100, 'reels': {
+            'a': {'status': 'queued', 'article': self.article}}}
+        local = {'reels_started_at': 120, 'reels': {
+            'b': {'status': 'queued', 'article': self.article}}}
+        result = merge_state(remote, local)
+        self.assertEqual(result['reels_started_at'], 100)
+        self.assertEqual(set(result['reels']), {'a', 'b'})
+
     def test_attribution_added_for_copyright_licensed_bank_image(self):
         from story_reels import _media_attribution
         credit = {'label_si': 'ශ්‍රී ලංකා මහ බැංකුවේ ගොඩනැගිල්ල',
