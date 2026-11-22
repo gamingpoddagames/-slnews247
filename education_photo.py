@@ -23,7 +23,7 @@ PHOTO = {
     'creator': 'Janith Dulshan',
     'license': 'CC BY-SA 4.0',
     'license_url': 'https://creativecommons.org/licenses/by-sa/4.0/',
-    'label_si': 'ශ්‍රී ලංකාවේ පාසල් පන්ති කාමරයක් — පසුබිම් දර්ශනය',
+    'label_si': 'පාසල් පසුබිම් ඡායාරූපයක්',
 }
 CACHE_FILE = Path(__file__).resolve().parent / 'assets/verified_photos/sri_lanka_classroom.png.b64'
 
