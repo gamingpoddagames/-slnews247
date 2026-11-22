@@ -6544,7 +6544,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795370347.926077,
+  "last_scan_at": 1795370430.660038,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -7177,8 +7177,13 @@
         "source": "Lankadeepa Latest",
         "published": 1795366680
       },
-      "status": "queued",
-      "destinations": {}
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "branded_sinhala_voice_reel",
+      "last_attempt_at": 1795370430.660038
     },
     "bd225e4664b0fcb1c368fbf6": {
       "at": 1795370347.926077,
