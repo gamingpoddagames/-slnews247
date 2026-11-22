@@ -6385,6 +6385,29 @@
         }
       },
       "uncertain": {}
+    },
+    "teachers-principals-nov-30-planned-strike-2026-11-22-sl247": {
+      "article": {
+        "id": "teachers-principals-nov-30-planned-strike-2026-11-22-sl247",
+        "title_si": "නොවැම්බර් 30 ගුරු විදුහල්පති එක්දින වැඩ වර්ජනයක් සැලසුම්",
+        "summary_si": "නොවැම්බර් 30 වැනිදා දිවයින පුරා එක්දින වැඩ වර්ජනයක් පැවැත්වීමට ගුරු හා විදුහල්පති වෘත්තීය සමිති කිහිපයක් තීරණය කර තිබේ. 2027 අයවැය මගින් වැටුප් සම්බන්ධ ගැටලු ඇතුළු දිගුකාලීන ඉල්ලීම්වලට විසඳුම් නොලැබුණු බව එම සමිති පවසයි. ලංකා ගුරු සංගමය සඳහන් කරන්නේ එදින ගුරු හා විදුහල්පතිවරුන් අසනීප නිවාඩු වාර්තා කරමින් වෘත්තීය ක්‍රියාමාර්ගයට එක්වීමට සැලසුම් කර ඇති බවයි. මෙය දැනට ප්‍රකාශිත සැලැස්මක් වන අතර වර්ජනය තවම සිදුවී නැත. දෙසැම්බර් 1 වැනිදා අධ්‍යාපන අමාත්‍යාංශයේ අයවැය වැය ශීර්ෂ විවාදයට පෙර මෙම පියවර ගැනීමට නියමිතය. ක්‍රියාමාර්ගය සිදු වුවහොත් පාසල් කටයුතුවලට බලපෑම් ඇති විය හැකි බව වෘත්තීය සමිති අනතුරු අඟවා තිබේ.",
+        "link": "https://www.dailymirror.lk/breaking-news/Teachers-principals-to-launch-island-wide-strike-on-November-30/108-355490",
+        "source": "Daily Mirror, report published November 22 2026; cross-checked Newswire November 21",
+        "published": 1795327320
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1074",
+          "at": 1795354034.8546681,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127286917318605",
+          "at": 1795354034.8546681,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -6406,7 +6429,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795353916.6746933,
+  "last_scan_at": 1795354034.8546681,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
