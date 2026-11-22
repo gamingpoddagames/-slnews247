@@ -1,0 +1,54 @@
+name: SL News Blogger invitations
+on:
+  schedule:
+    - cron: '30 3 * * *'
+  push:
+    branches: [main]
+    paths: ['.github/workflows/blogger-invite.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: slnews-blogger-invite
+  cancel-in-progress: false
+jobs:
+  invite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Refresh invitation receipts
+        run: |
+          git fetch origin main
+          if git cat-file -e origin/main:data/blogger_invite_delivery.json 2>/dev/null; then
+            git show origin/main:data/blogger_invite_delivery.json > data/blogger_invite_delivery.json
+          fi
+      - name: Publish daily invitation
+        env:
+          PUBLISH_INVITE: 'true'
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        run: python scripts/blogger_invite.py
+      - name: Preserve independent invitation receipts
+        if: always()
+        run: |
+          if [ ! -f data/blogger_invite_delivery.json ]; then exit 0; fi
+          cp data/blogger_invite_delivery.json /tmp/slnews-invite-state.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp /tmp/slnews-invite-state.json data/blogger_invite_delivery.json
+            git add data/blogger_invite_delivery.json
+            if git diff --cached --quiet; then break; fi
+            git commit -m 'Record Blogger invitation delivery'
+            if git push origin HEAD:main; then break; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+          done
