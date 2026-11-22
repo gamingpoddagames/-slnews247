@@ -1,5 +1,5 @@
 {
-  "checked_at": 1795352156.5905392,
+  "checked_at": 1795352264.5373049,
   "configured_feeds": 25,
   "sources": [
     {
@@ -90,10 +90,8 @@
     },
     {
       "source": "Lanka Truth Sinhala",
-      "http": 200,
-      "entries": 24,
-      "fresh_sinhala": 4,
-      "feed_url": "https://lankatruth.com/si/?feed=rss2"
+      "error": "HTTPError",
+      "http": 401
     },
     {
       "source": "Lankadeepa Politics",
@@ -146,24 +144,18 @@
     },
     {
       "source": "Lanka Truth World",
-      "http": 200,
-      "entries": 24,
-      "fresh_sinhala": 0,
-      "feed_url": "https://lankatruth.com/si/?feed=rss2&cat=3"
+      "error": "HTTPError",
+      "http": 401
     },
     {
       "source": "Lanka Truth Economy",
-      "http": 200,
-      "entries": 24,
-      "fresh_sinhala": 0,
-      "feed_url": "https://lankatruth.com/si/?feed=rss2&cat=5"
+      "error": "HTTPError",
+      "http": 401
     },
     {
       "source": "Lanka Truth Sport",
-      "http": 200,
-      "entries": 24,
-      "fresh_sinhala": 0,
-      "feed_url": "https://lankatruth.com/si/?feed=rss2&cat=6"
+      "error": "HTTPError",
+      "http": 401
     }
   ]
 }
