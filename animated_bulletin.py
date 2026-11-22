@@ -178,3 +178,39 @@ def render_bulletin(article, output_path='output/animated_news_bulletin.mp4'):
     if not output.is_file() or output.stat().st_size < 20000:
         raise RuntimeError('Three-scene bulletin not created')
     return str(output)
+
+
+def render_graphic_reel(article, output_path):
+    """Generate a genuine moving branded news reel even if online Sinhala TTS fails.
+
+    Uses only original slides or a vetted, correctly named institution photo;
+    no unrelated live footage, borrowed audio or pretend voiceover.
+    """
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    script = narration_for(article)
+    slides = build_scene_images(article, script,
+                                output.parent / (output.stem + '_graphic_scenes'))
+    args = ['ffmpeg', '-y', '-loglevel', 'error']
+    for image in slides:
+        args.extend(['-loop', '1', '-framerate', '20', '-i', str(image)])
+    args.extend(['-f', 'lavfi', '-i',
+                 'anullsrc=channel_layout=stereo:sample_rate=44100'])
+    filters = []
+    for index in range(3):
+        filters.append(
+            f"[{index}:v]zoompan=z='min(zoom+0.0007,1.06)':"
+            f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
+            f"d=80:s=720x1280:fps=20,trim=duration=4,"
+            f"setpts=PTS-STARTPTS,format=yuv420p[v{index}]")
+    filters.append(''.join(f'[v{i}]' for i in range(3))
+                   + 'concat=n=3:v=1:a=0[out]')
+    args.extend(['-filter_complex', ';'.join(filters), '-map', '[out]',
+                 '-map', '3:a:0', '-t', '12', '-r', '20', '-c:v', 'libx264',
+                 '-preset', 'veryfast', '-crf', '26', '-c:a', 'aac',
+                 '-b:a', '96k', '-pix_fmt', 'yuv420p', '-movflags',
+                 '+faststart', '-shortest', str(output)])
+    subprocess.run(args, check=True, timeout=180, capture_output=True)
+    if not output.is_file() or output.stat().st_size < 20000:
+        raise RuntimeError('Original graphic reel not created')
+    return str(output)
