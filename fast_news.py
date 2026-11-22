@@ -666,6 +666,17 @@ def main():
     except Exception as exc:
         report['reels'] = {'error': type(exc).__name__}
         print('Story reel pipeline:', type(exc).__name__, str(exc)[:120])
+    # TikTok uses the SAME factual Sinhala video renderer and delivery state.
+    # Dedicated SL News account credentials prevent a trading-channel token
+    # being mistakenly used. Disabled/unapproved modes do not call TikTok.
+    try:
+        from slnews_tiktok import process_tiktok_queue
+        report['tiktok_delivery'] = process_tiktok_queue(
+            state, now, preview=preview, save=save)
+    except Exception as exc:
+        report['tiktok_delivery'] = {'status': 'integration_error',
+                                     'error': type(exc).__name__}
+        print('TikTok integration:', type(exc).__name__)
     report['unconfirmed_headline_requests'] = sum(len(r.get('uncertain', {})) for r in state.get('stories', {}).values())
     # Report independent video results, not just a green workflow status.
     video_result = report['video']
@@ -688,6 +699,7 @@ def main():
         'not_new_or_already_delivered': max(0, report['publishable_articles'] - len(selected)),
         'video_result': report['video'],
         'story_reels': report.get('reels'),
+        'tiktok_news': report.get('tiktok_delivery'),
         'next_video_minimum_interval_minutes': 15,
         'note': 'Scheduled GitHub Actions are best effort, not a 5-minute SLA.',
     }
