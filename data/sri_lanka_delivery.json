@@ -6155,6 +6155,75 @@
         }
       },
       "uncertain": {}
+    },
+    "d195c01a65fb3fc05e42458f": {
+      "article": {
+        "id": "d195c01a65fb3fc05e42458f",
+        "title_si": "නියෝජ්‍ය පොලිස්පති හයකට ස්ථාන මාරු",
+        "summary_si": "රාජ්‍ය බුද්ධි සේවයේ නියෝජ්‍ය පොලිස්පතිවරයකු ඇතුළු නියෝජ්‍ය පොලිස්පතිවරුන් 6 දෙනකුට ස්ථාන මාරු ලබා දී ඇති බව පොලිස් මූලස්ථානය පවසයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/නියෝජ්‍ය-පොලිස්පති-හයකට-ස්ථාන-මාරු/1-700948",
+        "source": "Lankadeepa Latest",
+        "published": 1795320900
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1054",
+          "at": 1795326317.534795,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127213837318605",
+          "at": 1795326317.534795,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "1bfd939c5a1d2dd78af46788": {
+      "article": {
+        "id": "1bfd939c5a1d2dd78af46788",
+        "title_si": "වැස්සට වැහෙන උඩරට දුම්රිය මඟ",
+        "summary_si": "දිට්වා සුළි කුණාටුවෙන් පසු උඩරට දුම්රිය මාර්ගයට සිදු වූ හානි අතරින්, රඹුක්කන සහ කඩුගන්නාව අතර ප්‍රදේශය තවමත් දැඩි අභියෝගයකට මුහුණ දී සිටී.",
+        "link": "https://www.lankadeepa.lk/latest_news/වැස්සට-වැහෙන-උඩරට-දුම්රිය-මඟ/1-700947",
+        "source": "Lankadeepa Latest",
+        "published": 1795320600
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1055",
+          "at": 1795326317.534795,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127213915318605",
+          "at": 1795326317.534795,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "b039a263e7799dafc7dd596c": {
+      "article": {
+        "id": "b039a263e7799dafc7dd596c",
+        "title_si": "නින්දවුර් මුහුදේ දෙකක් සැඟවේ",
+        "summary_si": "නින්දවුර් 01 ප්‍රදේශයේ මුහුදු තීරයේ දිය නෑමට ගිය තරුණයන් තිදෙනකු දියවැලකට හසුවී මුහුදට ගසාගෙන යද්දී එක් අයකු බේරාගෙන ඇති අතර දෙදෙනෙකු අතුරුදන්ව ඇතැයි නින්දවුර් පොලිසිය පවසයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/නින්දවුර්-මුහුදේ-දෙකක්-සැඟවේ/1-700946",
+        "source": "Lankadeepa Latest",
+        "published": 1795320120
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1056",
+          "at": 1795326317.534795,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127214011318605",
+          "at": 1795326317.534795,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -6176,7 +6245,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795319370.8101075,
+  "last_scan_at": 1795326317.534795,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -6653,7 +6722,15 @@
         "telegram": "accepted",
         "facebook": "accepted"
       }
+    },
+    "d195c01a65fb3fc05e42458f": {
+      "at": 1795326317.534795,
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      }
     }
   },
-  "last_bulletin_at": 1795319370.8101075
+  "last_bulletin_at": 1795326317.534795
 }
