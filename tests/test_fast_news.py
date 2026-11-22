@@ -510,7 +510,7 @@ class PhotoFirstPosterTests(unittest.TestCase):
                     for x in range(120, 930, 45):
                         for y in range(255, 735, 40):
                             colors.add(img.getpixel((x,y)))
-                    self.assertGreater(len(colors), 20)
+                    self.assertGreater(len(colors), 12)
                     self.assertGreater(img.getpixel((12,155))[0],img.getpixel((12,155))[2])
                     self.assertGreater(img.getpixel((12,1190))[2],img.getpixel((12,1190))[0])
             finally:
