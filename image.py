@@ -352,30 +352,10 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
                 method=Image.Resampling.LANCZOS)
         canvas.paste(photo, (photo_rect[0], photo_rect[1]))
     else:
-        # Approved no-photo treatment: one uninterrupted dark-blue, softly
-        # shaded news field. Never show boxes, icons, crossed lines or labels.
-        # Rendering at quarter resolution then Lanczos-scaling makes a soft
-        # radial glow without expensive per-pixel work on GitHub Actions.
-        from math import exp
-        pw = photo_rect[2] - photo_rect[0]
-        ph = photo_rect[3] - photo_rect[1]
-        sample_w, sample_h = 247, 188
-        shade = Image.new('RGB', (sample_w, sample_h))
-        pixels = shade.load()
-        for sy in range(sample_h):
-            ny = sy / max(1, sample_h - 1)
-            for sx in range(sample_w):
-                nx = sx / max(1, sample_w - 1)
-                # Deep navy at the perimeter; gentle royal-blue glow in center.
-                r2 = ((nx - 0.48) / 0.53) ** 2 + ((ny - 0.47) / 0.68) ** 2
-                glow = exp(-2.3 * r2)
-                pixels[sx, sy] = (
-                    round(3 + 9 * glow),
-                    round(13 + 51 * glow),
-                    round(57 + 101 * glow),
-                )
-        shade = shade.resize((pw, ph), Image.Resampling.LANCZOS)
-        canvas.paste(shade, (photo_rect[0], photo_rect[1]))
+        # An original, incident-specific news infographic—not an empty gradient
+        # or an unrelated illustration—uses factual figures and topic artwork.
+        from story_visual import draw_story_hero
+        draw_story_hero(canvas, article, photo_rect)
 
     # Top date and original brand only (no third-party logo/watermarks).
     draw = ImageDraw.Draw(canvas)
