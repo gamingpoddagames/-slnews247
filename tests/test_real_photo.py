@@ -48,7 +48,8 @@ class RealPhotoTests(unittest.TestCase):
             previous = os.getcwd()
             try:
                 os.chdir(folder)
-                with patch.dict(CBSL_PHOTO, {'sha1': hashlib.sha1(blob).hexdigest()}):
+                with patch.dict(CBSL_PHOTO, {'sha1': hashlib.sha1(blob).hexdigest()}), \
+                     patch('institution_photo.CACHE_FILE', Path(folder) / 'not-cached.b64'):
                     path, credit = select_institution_photo(
                         {'title_si': 'මහ බැංකුව පොලී අනුපාතය වෙනස් කරයි'}, session=client)
                 self.assertTrue(Path(path).exists())
