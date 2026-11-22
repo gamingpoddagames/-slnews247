@@ -1,12 +1,12 @@
 {
-  "checked_at": 1795384972.7005525,
+  "checked_at": 1795391199.6826808,
   "configured_feeds": 25,
   "sources": [
     {
       "source": "Ada Derana Sinhala",
       "http": 200,
       "entries": 25,
-      "fresh_sinhala": 18,
+      "fresh_sinhala": 17,
       "feed_url": "https://sinhala.adaderana.lk/rss.php"
     },
     {
@@ -113,14 +113,14 @@
       "source": "Neth International",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 2,
+      "fresh_sinhala": 3,
       "feed_url": "https://www.nethnews.lk/international-news/feed/"
     },
     {
       "source": "Neth Politics",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 2,
+      "fresh_sinhala": 3,
       "feed_url": "https://www.nethnews.lk/politics/feed/"
     },
     {
