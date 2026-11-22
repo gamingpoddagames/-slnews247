@@ -156,4 +156,14 @@ def select_real_photo(article):
             return institutional, "verified_institution_photo", credit
     except (requests.RequestException, OSError, ValueError) as exc:
         print("Verified institution photo unavailable:", type(exc).__name__)
+
+    # Classroom archive photo only for teacher/principal labour and policy
+    # news. No image is ever claimed to depict that union announcement.
+    from education_photo import select_education_photo
+    try:
+        classroom, credit = select_education_photo(article)
+        if classroom:
+            return classroom, "verified_education_context_photo", credit
+    except (requests.RequestException, OSError, ValueError) as exc:
+        print("Vetted classroom archive photo unavailable:", type(exc).__name__)
     return None, None, None
