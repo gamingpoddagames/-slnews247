@@ -63,6 +63,16 @@ class RealPhotoTests(unittest.TestCase):
         self.assertIsNone(credit)
         self.assertEqual(client.get.call_count, 1)
 
+    def test_committed_real_bank_photo_matches_licensed_source_sha(self):
+        import base64
+        import hashlib
+        from institution_photo import CACHE_FILE, CBSL_PHOTO
+        self.assertTrue(CACHE_FILE.is_file())
+        raw = base64.b64decode(CACHE_FILE.read_text(encoding='ascii').strip(), validate=True)
+        self.assertEqual(hashlib.sha1(raw).hexdigest(), CBSL_PHOTO['sha1'])
+        with Image.open(io.BytesIO(raw)) as im:
+            self.assertEqual(im.size, (772, 548))
+
     def test_named_institution_fallback_does_not_claim_event_footage(self):
         credit = {'label_si': 'ශ්‍රී ලංකා මහ බැංකුවේ ගොඩනැගිල්ල',
                   'source': 'https://commons.wikimedia.org/wiki/File:Sri_lanka2024.png',
