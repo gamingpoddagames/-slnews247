@@ -211,6 +211,9 @@ def send_text(platform, article):
         from image import news_card
         if photo_path and image_kind == 'verified_event_photo':
             image_path = news_card(article, image_path=photo_path, illustrative=False)
+        elif photo_path and image_kind == 'verified_institution_photo' and credit:
+            image_path = news_card(article, image_path=photo_path, illustrative=False,
+                                   photo_label=credit['label_si'])
         elif os.getenv('ALLOW_HEADLINE_CARD_FALLBACK', 'false').lower() == 'true':
             # Never pass a different incident's photograph as this story.
             # A graphic containing only the real news headline is honest,
@@ -225,6 +228,12 @@ def send_text(platform, article):
         print('Real photo processing blocked:', type(exc).__name__, str(exc)[:160])
         return {'error': 'real_photo_processing_failed'}
     message = caption(article)
+    if image_kind == 'verified_institution_photo' and credit:
+        # CC BY attribution: title/creator, link to source & license, changes.
+        message += ('\n\n📷 ' + credit['label_si'] + ' (පැරණි ඡායාරූපය). '
+                    + credit['creator'] + ' / ' + credit['license']
+                    + ' • crop/resize\n' + credit['source']
+                    + '\n' + credit['license_url'])
     if platform == 'telegram' and len(message) > 1024:
         return {'error': 'caption_too_long_review_required'}
     if platform == 'telegram':
