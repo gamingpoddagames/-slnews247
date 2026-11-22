@@ -51,7 +51,7 @@ def merge_state(remote, local):
     # Preserve all non-headline production journals as well. Formerly only
     # 'stories' survived this merge, silently dropping video cooldowns,
     # official-video-link receipts and editorial history every run.
-    for key in ('videos', 'bulletins', 'official_video_links', 'editorial_updates'):
+    for key in ('videos', 'bulletins', 'reels', 'official_video_links', 'editorial_updates'):
         merged = dict(remote.get(key) or {})
         for article_id, local_entry in (local.get(key) or {}).items():
             if article_id not in merged:
