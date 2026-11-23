@@ -6845,6 +6845,75 @@
         }
       },
       "uncertain": {}
+    },
+    "7eba3bcbfea0874eed9cc0f4": {
+      "article": {
+        "id": "7eba3bcbfea0874eed9cc0f4",
+        "title_si": "සිංහරාජ රක්ෂිතයේ ප්‍රේරක කලාපයේ ජාන සොරකම් කළ චීන්නු හතරට රු.කෝටි 7කට වැඩි දඩයක්",
+        "summary_si": "සිංහරාජ රක්ෂිතයේ ප්‍රේරක කලාපයේ ජාන සොරකම් කළ චීන්නු හතරට රු.",
+        "link": "https://sinhala.adaderana.lk/news/255097",
+        "source": "Ada Derana Sinhala",
+        "published": 1795434318
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1114",
+          "at": 1795438427.6491172,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127446229318605",
+          "at": 1795438427.6491172,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "19a748cdb194c976a8b624fa": {
+      "article": {
+        "id": "19a748cdb194c976a8b624fa",
+        "title_si": "මැතිසබා අයවැය කන්තෝරැව කොටඋඩ",
+        "summary_si": "පාර්ලිමේන්තු අයවැය කාර්යාලය පිහිටුවීම සුදුස්සන් ඉදිරිපත් නොවීම හේතුවෙන් දිනෙන් දින කල් යමින් පවතින බව පාර්ලිමේන්තු ආරංචි මාර්ග සඳහන් කළේය.",
+        "link": "https://www.lankadeepa.lk/latest_news/මැතිසබා-අයවැය-කන්තෝරැව-කොටඋඩ/1-701016",
+        "source": "Lankadeepa Latest",
+        "published": 1795433820
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1115",
+          "at": 1795438427.6491172,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127446319318605",
+          "at": 1795438427.6491172,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "833a74cd509ade476bb5608b": {
+      "article": {
+        "id": "833a74cd509ade476bb5608b",
+        "title_si": "කලා සම්ප්‍රදාය ගැන ගැඹුරු දැනුමැති පරපුරක් ඕනෑ",
+        "summary_si": "​කලා සම්ප්‍රදායන් පිළිබඳ ගැඹුරු දැනුමක් ඇති සහ ඒවායේ වටිනාකම හඳුනාගත් පරම්පරාවක් බිහි කිරීමට අවශ්‍ය පදනම සැකසීම රජයේ වගකීමක් බව අග්‍රාමාත්‍ය ආචාර්ය හරිනි අමරසූය පැවසුවාය.",
+        "link": "https://www.lankadeepa.lk/latest_news/කලා-සම්ප්‍රදාය-ගැන-ගැඹුරු-දැනුමැති-පරපුරක්-ඕනෑ/1-701002",
+        "source": "Lankadeepa Latest",
+        "published": 1795426260
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1116",
+          "at": 1795438427.6491172,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127446409318605",
+          "at": 1795438427.6491172,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -6866,7 +6935,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795432043.4729195,
+  "last_scan_at": 1795438427.6491172,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -7740,8 +7809,13 @@
         "source": "Siyatha News",
         "published": 1795426649
       },
-      "status": "queued",
-      "destinations": {}
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "branded_sinhala_voice_reel",
+      "last_attempt_at": 1795438427.6491172
     },
     "b50cd6d8f8281bdbdcd1c2be": {
       "at": 1795427162.9871588,
@@ -7804,6 +7878,50 @@
       },
       "format": "branded_sinhala_voice_reel",
       "last_attempt_at": 1795432043.4729195
+    },
+    "7eba3bcbfea0874eed9cc0f4": {
+      "at": 1795438427.6491172,
+      "article": {
+        "id": "7eba3bcbfea0874eed9cc0f4",
+        "title_si": "සිංහරාජ රක්ෂිතයේ ප්‍රේරක කලාපයේ ජාන සොරකම් කළ චීන්නු හතරට රු.කෝටි 7කට වැඩි දඩයක්",
+        "summary_si": "සිංහරාජ රක්ෂිතයේ ප්‍රේරක කලාපයේ ජාන සොරකම් කළ චීන්නු හතරට රු.",
+        "link": "https://sinhala.adaderana.lk/news/255097",
+        "source": "Ada Derana Sinhala",
+        "published": 1795434318
+      },
+      "status": "queued",
+      "destinations": {}
+    },
+    "19a748cdb194c976a8b624fa": {
+      "at": 1795438427.6491172,
+      "article": {
+        "id": "19a748cdb194c976a8b624fa",
+        "title_si": "මැතිසබා අයවැය කන්තෝරැව කොටඋඩ",
+        "summary_si": "පාර්ලිමේන්තු අයවැය කාර්යාලය පිහිටුවීම සුදුස්සන් ඉදිරිපත් නොවීම හේතුවෙන් දිනෙන් දින කල් යමින් පවතින බව පාර්ලිමේන්තු ආරංචි මාර්ග සඳහන් කළේය.",
+        "link": "https://www.lankadeepa.lk/latest_news/මැතිසබා-අයවැය-කන්තෝරැව-කොටඋඩ/1-701016",
+        "source": "Lankadeepa Latest",
+        "published": 1795433820
+      },
+      "status": "queued",
+      "destinations": {}
+    },
+    "833a74cd509ade476bb5608b": {
+      "at": 1795438427.6491172,
+      "article": {
+        "id": "833a74cd509ade476bb5608b",
+        "title_si": "කලා සම්ප්‍රදාය ගැන ගැඹුරු දැනුමැති පරපුරක් ඕනෑ",
+        "summary_si": "​කලා සම්ප්‍රදායන් පිළිබඳ ගැඹුරු දැනුමක් ඇති සහ ඒවායේ වටිනාකම හඳුනාගත් පරම්පරාවක් බිහි කිරීමට අවශ්‍ය පදනම සැකසීම රජයේ වගකීමක් බව අග්‍රාමාත්‍ය ආචාර්ය හරිනි අමරසූය පැවසුවාය.",
+        "link": "https://www.lankadeepa.lk/latest_news/කලා-සම්ප්‍රදාය-ගැන-ගැඹුරු-දැනුමැති-පරපුරක්-ඕනෑ/1-701002",
+        "source": "Lankadeepa Latest",
+        "published": 1795426260
+      },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "branded_sinhala_voice_reel",
+      "last_attempt_at": 1795438427.6491172
     }
   },
   "reels_started_at": 1795349700,
@@ -7927,6 +8045,30 @@
       },
       "status": "queued",
       "queued_at": 1795432043.4729195
+    },
+    "5a9a64d7eab520705de9a1ce": {
+      "article": {
+        "id": "5a9a64d7eab520705de9a1ce",
+        "title_si": "කාවන්තිස්සගේ මරණයට හේතුව පාචන තත්ත්වයක් බවට තමා ප්‍රකශ කලේ නෑ කියන ධම්මික (VIDEO)",
+        "summary_si": "කාවන්තිස්ස ඇතා මරණයට පත්වූයේ පාචනය වැළඳීමෙන් බවට තමා ප්‍රකාශ කළා යැයි පළවන පුවත් අසත්‍ය බව අමාත්‍ය වෛද්‍ය ධම්මික පටබැඳි පවසනවා. මරණයට හේතුව තමාට තීරණය කළ නොහැකි බවයි නිවේදනයක් නිකුත් කරමින් ඔහු සඳහන් කළේ.",
+        "link": "https://siyathanews.lk/archives/174697",
+        "source": "Siyatha News",
+        "published": 1795426649
+      },
+      "status": "queued",
+      "queued_at": 1795438427.6491172
+    },
+    "833a74cd509ade476bb5608b": {
+      "article": {
+        "id": "833a74cd509ade476bb5608b",
+        "title_si": "කලා සම්ප්‍රදාය ගැන ගැඹුරු දැනුමැති පරපුරක් ඕනෑ",
+        "summary_si": "​කලා සම්ප්‍රදායන් පිළිබඳ ගැඹුරු දැනුමක් ඇති සහ ඒවායේ වටිනාකම හඳුනාගත් පරම්පරාවක් බිහි කිරීමට අවශ්‍ය පදනම සැකසීම රජයේ වගකීමක් බව අග්‍රාමාත්‍ය ආචාර්ය හරිනි අමරසූය පැවසුවාය.",
+        "link": "https://www.lankadeepa.lk/latest_news/කලා-සම්ප්‍රදාය-ගැන-ගැඹුරු-දැනුමැති-පරපුරක්-ඕනෑ/1-701002",
+        "source": "Lankadeepa Latest",
+        "published": 1795426260
+      },
+      "status": "queued",
+      "queued_at": 1795438427.6491172
     }
   },
   "tiktok_started_at": 1795370479.455068
