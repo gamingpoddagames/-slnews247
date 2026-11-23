@@ -90,6 +90,7 @@ jobs:
       - name: Run news pipeline
         env:
           PREVIEW_ONLY: ${{ github.event_name == 'workflow_dispatch' && !inputs.publish }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
