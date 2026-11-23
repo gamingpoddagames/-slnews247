@@ -250,7 +250,7 @@ def send_text(platform, article):
         from real_photo import select_real_photo
         photo_path, image_kind, credit = select_real_photo(article)
         from image import news_card
-        if photo_path and image_kind == 'verified_event_photo':
+        if photo_path and image_kind in ('verified_event_photo', 'licensed_subject_photo'):
             image_path = news_card(article, image_path=photo_path, illustrative=False)
         elif (photo_path and credit and image_kind in (
                 'verified_institution_photo', 'verified_education_context_photo')):
