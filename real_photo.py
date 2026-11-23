@@ -133,6 +133,93 @@ def discover_licensed_photo(article, session=None):
     return None, None
 
 
+def select_subject_photo(article):
+    """Neutral commodity photos only; never imply an incident or person."""
+    title = article.get('title_si', '')
+    if not any(w in title for w in ('මිල', 'අපනයන', 'ආදායම')):
+        return None
+    if any(w in title for w in ('ගිනි', 'මරණ', 'විෂ', 'අනතුර', 'විරෝධ', 'අත්අඩංගු')):
+        return None
+    term = next((e for s, e in [('එළවළු', 'vegetables'), ('තැඹිලි', 'king coconut')] if s in title), None)
+    if not term:
+        return None
+    session = requests.Session()
+    for page in _metadata_search('intitle:"' + term + '"', session):
+        info = (page.get('imageinfo') or [{}])[0]
+        meta = info.get('extmetadata', {})
+        licence = re.sub(r'[^a-z0-9]', '', plain(meta.get('LicenseShortName', {}).get('value')).lower())
+        if licence not in ('cc0', 'cc010', 'publicdomain', 'pdself', 'pdold'):
+            continue
+        if plain(meta.get('Restrictions', {}).get('value')) or term not in page.get('title', '').lower():
+            continue
+        url = info.get('thumburl') or info.get('url', '')
+        if urlparse(url).scheme != 'https' or urlparse(url).hostname != 'upload.wikimedia.org':
+            continue
+        if not re.search(r'\.(jpg|jpeg|webp)
+    """Use real exact-event photography, then a verified *named institution*.
+
+    A photograph of the actual Central Bank building can illustrate policy
+    news ABOUT the Central Bank; it must be labelled as building/archive
+    photography, never as a picture of the meeting or participants.
+    Arbitrary topic-based stock photos remain forbidden.
+    """
+    try:
+        photo = choose_photo(article)
+    except (requests.RequestException, OSError, ValueError, KeyError) as exc:
+        print("Verified exact-event photo unavailable:", type(exc).__name__)
+        photo = None
+    if photo:
+        return photo, "verified_event_photo", None
+
+    try:
+        subject = select_subject_photo(article)
+        if subject:
+            return subject, "licensed_subject_photo", None
+    except (requests.RequestException, OSError, ValueError, KeyError):
+        pass
+
+    from institution_photo import select_institution_photo
+    try:
+        institutional, credit = select_institution_photo(article)
+        if institutional:
+            return institutional, "verified_institution_photo", credit
+    except (requests.RequestException, OSError, ValueError) as exc:
+        print("Verified institution photo unavailable:", type(exc).__name__)
+
+    # Classroom archive photo only for teacher/principal labour and policy
+    # news. No image is ever claimed to depict that union announcement.
+    from education_photo import select_education_photo
+    try:
+        classroom, credit = select_education_photo(article)
+        if classroom:
+            return classroom, "verified_education_context_photo", credit
+    except (requests.RequestException, OSError, ValueError) as exc:
+        print("Vetted classroom archive photo unavailable:", type(exc).__name__)
+    return None, None, None
+, page.get('title', ''), re.I):
+            continue
+        response = session.get(url, timeout=(5, 12), stream=True)
+        response.raise_for_status()
+        data = bytearray()
+        for chunk in response.iter_content(65536):
+            data.extend(chunk)
+            if len(data) > MAX_BYTES:
+                raise ValueError('Subject photo too large')
+        with Image.open(BytesIO(data)) as img:
+            img.verify()
+        with Image.open(BytesIO(data)) as img:
+            if img.width < 700 or img.height < 450:
+                continue
+            path = Path('output') / ('subject_' + hashlib.sha256(article['id'].encode()).hexdigest()[:24] + '.jpg')
+            path.parent.mkdir(parents=True, exist_ok=True)
+            img.convert('RGB').save(path, quality=90)
+        Path(str(path) + '.credit.json').write_text(json.dumps({
+            'source': info.get('descriptionurl'), 'license': licence,
+            'kind': 'neutral_subject_not_event'}, ensure_ascii=False), encoding='utf-8')
+        return str(path)
+    return None
+
+
 def select_real_photo(article):
     """Use real exact-event photography, then a verified *named institution*.
 
