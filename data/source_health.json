@@ -1,5 +1,5 @@
 {
-  "checked_at": 1795454744.2601852,
+  "checked_at": 1795455348.865408,
   "configured_feeds": 25,
   "sources": [
     {
@@ -64,7 +64,7 @@
       "source": "Lankadeepa World",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 6,
+      "fresh_sinhala": 5,
       "feed_url": "https://www.lankadeepa.lk/rss/world_news/14"
     },
     {
