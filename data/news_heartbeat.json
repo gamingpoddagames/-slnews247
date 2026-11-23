@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-11-22T23:46:12.329Z",
+  "timestamp": "2026-11-23T01:48:27.876Z",
   "reason": "stale_production_run",
-  "last_success_run_id": 45075419738,
-  "note": "Last production success 2026-11-22T22:03:06Z; no queued or in-progress workflow at recheck."
+  "last_success_run_id": 45085017768,
+  "note": "Last success 2026-11-22T23:47:11Z; no queued or running workflow at recheck."
 }
