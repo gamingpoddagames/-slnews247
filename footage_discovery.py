@@ -44,15 +44,19 @@ def discover_candidates(articles, limit=3, output_path='output/footage_candidate
                     'article_url': article.get('link'), 'player_url': found,
                     'source': 'publisher_page', 'status': 'rights_verification_required',
                     'may_download_or_publish': False})
+    photos = {'status': 'not_requested'}
     if inspect_photos:
-        discover_article_photos(articles, limit=limit)
+        try:
+            photos = discover_article_photos(articles, limit=limit)
+        except Exception as exc:
+            photos = {'status': 'unavailable', 'error': type(exc).__name__}
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
     return {'examined': examined, 'candidates': len(results),
             'rss_direct_candidates': sum(x.get('source') == 'rss_video_enclosure'
                                          for x in results),
-            'rights_approved': 0, 'report_file': str(output)}
+            'rights_approved': 0, 'photos': photos, 'report_file': str(output)}
 
 
 def discover_article_photos(articles, limit=3, output_path='output/photo_candidates.json', fetcher=None):
