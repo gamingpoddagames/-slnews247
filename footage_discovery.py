@@ -50,13 +50,19 @@ def discover_candidates(articles, limit=3, output_path='output/footage_candidate
             photos = discover_article_photos(articles, limit=limit)
         except Exception as exc:
             photos = {'status': 'unavailable', 'error': type(exc).__name__}
+    commons = {'status': 'not_requested'}
+    if inspect_photos:
+        try:
+            commons = discover_commons_media(articles, limit=limit)
+        except Exception as exc:
+            commons = {'status': 'unavailable', 'error': type(exc).__name__}
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
     return {'examined': examined, 'candidates': len(results),
             'rss_direct_candidates': sum(x.get('source') == 'rss_video_enclosure'
                                          for x in results),
-            'rights_approved': 0, 'photos': photos, 'report_file': str(output)}
+            'rights_approved': 0, 'commons': commons, 'photos': photos, 'report_file': str(output)}
 
 
 def discover_article_photos(articles, limit=3, output_path='output/photo_candidates.json', fetcher=None):
@@ -97,3 +103,49 @@ def discover_article_photos(articles, limit=3, output_path='output/photo_candida
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
     return {'examined': examined, 'candidates': len(results), 'report_file': str(output)}
+
+
+def discover_commons_media(articles, limit=3, output_path='output/commons_candidates.json', fetcher=None):
+    """Search reusable Commons media; event identity still requires review."""
+    import requests
+    from real_photo import permitted, plain
+    from urllib.parse import urlsplit
+    fetcher = fetcher or requests.get
+    results = []
+    for article in articles[:max(0, min(limit, 3))]:
+        query = article.get('media_search_query') or article.get('title_si', '')
+        if not query:
+            continue
+        try:
+            response = fetcher('https://commons.wikimedia.org/w/api.php',
+                params={'action': 'query', 'generator': 'search',
+                        'gsrsearch': query, 'gsrnamespace': 6, 'gsrlimit': 4,
+                        'prop': 'imageinfo', 'iiprop': 'url|mime|extmetadata',
+                        'format': 'json'},
+                headers={'User-Agent': 'SLNews247/1.0 (media licence review)'},
+                timeout=(5, 8))
+            response.raise_for_status()
+            for page in response.json().get('query', {}).get('pages', {}).values():
+                info = (page.get('imageinfo') or [{}])[0]
+                meta = info.get('extmetadata', {})
+                url = info.get('url', '')
+                if not permitted(info) or urlsplit(url).hostname != 'upload.wikimedia.org':
+                    continue
+                if not info.get('mime', '').startswith(('image/', 'video/')):
+                    continue
+                results.append({
+                    'article_id': article.get('id'), 'article_url': article.get('link'),
+                    'media_url': url, 'source_page': info.get('descriptionurl'),
+                    'creator': plain(meta.get('Artist', {}).get('value')),
+                    'license': plain(meta.get('LicenseShortName', {}).get('value')),
+                    'license_url': plain(meta.get('LicenseUrl', {}).get('value')),
+                    'source': 'Wikimedia Commons', 'file_title': page.get('title'),
+                    'status': 'licence_candidate_event_review_required',
+                    'verified_event': False, 'may_download_or_publish': False})
+        except (requests.RequestException, ValueError, TypeError) as exc:
+            results.append({'article_id': article.get('id'), 'status': 'source_unavailable',
+                            'error': type(exc).__name__})
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
+    return {'candidates': len(results), 'report_file': str(output)}
