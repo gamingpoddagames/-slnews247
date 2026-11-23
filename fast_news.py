@@ -201,6 +201,8 @@ def caption(article):
 
 def send_article_preview(platform, article):
     """Share the original article player/card; never copy its image bytes."""
+    if os.getenv("EXTERNAL_NEWS_LINK_POSTS", "true").lower() != "true":
+        return {"error": "external_link_posts_disabled"}
     from urllib.parse import urlsplit
     link = article.get('link', '')
     if urlsplit(link).scheme != 'https' or not urlsplit(link).hostname:
@@ -602,6 +604,8 @@ def send_official_video_link(platform, article, url):
 
 def share_official_video(state, articles, now, preview):
     """Share only a verified exact-article original publisher player URL."""
+    if os.getenv("EXTERNAL_NEWS_LINK_POSTS", "true").lower() != "true":
+        return "disabled_owner_requires_native_posts"
     from editorial import official_video_for
     history = state.setdefault('official_video_links', {})
     checks = 0
