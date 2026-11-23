@@ -11,6 +11,7 @@ on:
       - 'requirements.txt'
       - 'data/urgent_news.json'
       - 'data/editorial_briefs.json'
+      - 'data/verified_event_media.json'
       - 'data/news_heartbeat.json'
       - '.github/workflows/news.yml'
   workflow_dispatch:
