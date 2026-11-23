@@ -199,6 +199,45 @@ def caption(article):
     return f"🇱🇰 {title}\n\n{body}{attribution}{video_notice}{video_attribution}\n\n🕒 {stamp}\n━━━━━━━━━━━━\nSL NEWS 24/7"
 
 
+def send_article_preview(platform, article):
+    """Share the original article player/card; never copy its image bytes."""
+    from urllib.parse import urlsplit
+    link = article.get('link', '')
+    if urlsplit(link).scheme != 'https' or not urlsplit(link).hostname:
+        return {'error': 'invalid_article_url'}
+    message = caption(article)
+    if platform == 'telegram':
+        token, chat = os.getenv('TG_TOKEN'), os.getenv('TG_CHAT_ID')
+        if not token or not chat:
+            return {'error': 'missing_credentials'}
+        # Telegram text messages have a 4096-character limit.
+        if len(message + '\n\n' + link) > 4096:
+            return {'error': 'article_preview_text_too_long'}
+        response = requests.post(
+            f'https://api.telegram.org/bot{token}/sendMessage',
+            json={'chat_id': chat, 'text': message + '\n\n' + link,
+                  'link_preview_options': {'is_disabled': False}},
+            timeout=(5, 45))
+        data = response.json()
+        if response.ok and data.get('ok'):
+            return {'id': str(data['result']['message_id']),
+                    'format': 'publisher_article_preview'}
+    elif platform == 'facebook':
+        page, token = os.getenv('FB_PAGE_ID'), os.getenv('FB_PAGE_TOKEN')
+        if not page or not token:
+            return {'error': 'missing_credentials'}
+        response = requests.post(
+            f'https://graph.facebook.com/v22.0/{page}/feed',
+            data={'access_token': token, 'message': message, 'link': link},
+            timeout=(5, 60))
+        data = response.json()
+        if response.ok and data.get('id'):
+            return {'id': str(data['id']), 'format': 'publisher_article_preview'}
+    else:
+        return {'error': 'unsupported_destination'}
+    return {'error': 'api_rejected', 'http': response.status_code}
+
+
 def send_text(platform, article):
     if not article.get('sample') and not publishable(article):
         return {'error': 'missing_or_unrelated_story_details'}
@@ -215,6 +254,8 @@ def send_text(platform, article):
                 'verified_institution_photo', 'verified_education_context_photo')):
             image_path = news_card(article, image_path=photo_path, illustrative=False,
                                    photo_label=credit['label_si'])
+        elif os.getenv('ARTICLE_PREVIEW_FALLBACK', 'false').lower() == 'true':
+            return send_article_preview(platform, article)
         elif os.getenv('ALLOW_HEADLINE_CARD_FALLBACK', 'false').lower() == 'true':
             # Never pass a different incident's photograph as this story.
             # A graphic containing only the real news headline is honest,
