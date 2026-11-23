@@ -1,11 +1,13 @@
 {
-  "checked_at": 1795402328.4499123,
+  "checked_at": 1795405647.9971921,
   "configured_feeds": 25,
   "sources": [
     {
       "source": "Ada Derana Sinhala",
-      "error": "HTTPError",
-      "http": 403
+      "http": 200,
+      "entries": 25,
+      "fresh_sinhala": 18,
+      "feed_url": "https://sinhala.adaderana.lk/rss.php"
     },
     {
       "source": "Dinamina",
@@ -90,7 +92,7 @@
       "source": "Lanka Truth Sinhala",
       "http": 200,
       "entries": 24,
-      "fresh_sinhala": 5,
+      "fresh_sinhala": 9,
       "feed_url": "https://lankatruth.com/si/?feed=rss2"
     },
     {

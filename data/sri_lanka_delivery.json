@@ -6590,7 +6590,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795402328.4499123,
+  "last_scan_at": 1795405647.9971921,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -6640,6 +6640,16 @@
       },
       "facebook": {
         "id": "1020689164470492_122127358851318605",
+        "format": "headline_only_no_event_photo"
+      }
+    },
+    "062ab947bbb2e2b2094da747": {
+      "telegram": {
+        "id": "1093",
+        "format": "headline_only_no_event_photo"
+      },
+      "facebook": {
+        "id": "1020689164470492_122127361257318605",
         "format": "headline_only_no_event_photo"
       }
     }
