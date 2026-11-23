@@ -6776,6 +6776,75 @@
         }
       },
       "uncertain": {}
+    },
+    "1850eb29fddd2d3f6efac5f8": {
+      "article": {
+        "id": "1850eb29fddd2d3f6efac5f8",
+        "title_si": "’’ආර්ථිකය හයිය කරන විදේශ ප්‍රතිපත්තියක් නෑ’’",
+        "summary_si": "වර්තමාන විදේශ ප්‍රතිපත්තිය ඇතුලේ ලංකා ආර්ථිකය ශක්තිමත් කිරීමට තිබෙන වැඩපිළිවෙළ කුමක්දැයි පත් කළ මන්ත්‍රී නාමල් රාජපක්ෂ මහතා (පො. පෙ) පාර්ලිමේන්තුවේදී ප්‍රශ්න කළේය.",
+        "link": "https://www.lankadeepa.lk/latest_news/’’ආර්ථිකය-හයිය-කරන-විදේශ-ප්‍රතිපත්තියක්-නෑ’’/1-701011",
+        "source": "Lankadeepa Latest",
+        "published": 1795431420
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1109",
+          "at": 1795432043.4729195,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127428883318605",
+          "at": 1795432043.4729195,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "54441b93c16034ba122c49cb": {
+      "article": {
+        "id": "54441b93c16034ba122c49cb",
+        "title_si": "අයවැයෙන් සහන ඉල්ලා නුවරඑළියේ රාජ්‍ය සේවක හා හෙද විරෝධතා",
+        "summary_si": "ජාතික විරෝධතා දිනයට සමගාමීව නුවරඑළිය නගරයේ රාජ්‍ය ආයතන කිහිපයක සේවක සේවිකාවන් පිරිසක් නුවරඑළිය තැපැල් කාර්යාලය ඉදිරිපිට ප්‍රධාන මාර්ගයේ අද දහවල් උද්ගෝෂණයක නිරත විය.",
+        "link": "https://www.lankadeepa.lk/latest_news/අයවැයෙන්-සහන-ඉල්ලා-නුවරඑළියේ-රාජ්‍ය-සේවක-හා-හෙද-විරෝධතා/1-701015",
+        "source": "Lankadeepa Latest",
+        "published": 1795429800
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1110",
+          "at": 1795432043.4729195,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127429147318605",
+          "at": 1795432043.4729195,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "d0cc364521433f15b52c0a06": {
+      "article": {
+        "id": "d0cc364521433f15b52c0a06",
+        "title_si": "IMF 7වන සමාලෝචනය දෙවැනිදා (VIDEO)",
+        "summary_si": "ශ්‍රී ලංකාවට ලබා දී ඇති විස්තීර්ණ ණය පහසුකම් යටතේ 07 වන සමාලෝචනය ඇගයීමට ලක් කිරීම ලබන දෙසැම්බර් 02වනදා සිදු කිරීමට නියමිතයි. ඒ ජාත්‍යන්තර මූල්‍ය අරමුදලේ විධායක මණ්ඩලය විසිනුයි.",
+        "link": "https://siyathanews.lk/archives/174694",
+        "source": "Siyatha News",
+        "published": 1795426378
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1111",
+          "at": 1795432043.4729195,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127429231318605",
+          "at": 1795432043.4729195,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -6797,7 +6866,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795427162.9871588,
+  "last_scan_at": 1795432043.4729195,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -7684,8 +7753,57 @@
         "source": "Lankadeepa Business",
         "published": 1795426380
       },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "branded_sinhala_voice_reel",
+      "last_attempt_at": 1795432043.4729195
+    },
+    "1850eb29fddd2d3f6efac5f8": {
+      "at": 1795432043.4729195,
+      "article": {
+        "id": "1850eb29fddd2d3f6efac5f8",
+        "title_si": "’’ආර්ථිකය හයිය කරන විදේශ ප්‍රතිපත්තියක් නෑ’’",
+        "summary_si": "වර්තමාන විදේශ ප්‍රතිපත්තිය ඇතුලේ ලංකා ආර්ථිකය ශක්තිමත් කිරීමට තිබෙන වැඩපිළිවෙළ කුමක්දැයි පත් කළ මන්ත්‍රී නාමල් රාජපක්ෂ මහතා (පො. පෙ) පාර්ලිමේන්තුවේදී ප්‍රශ්න කළේය.",
+        "link": "https://www.lankadeepa.lk/latest_news/’’ආර්ථිකය-හයිය-කරන-විදේශ-ප්‍රතිපත්තියක්-නෑ’’/1-701011",
+        "source": "Lankadeepa Latest",
+        "published": 1795431420
+      },
       "status": "queued",
       "destinations": {}
+    },
+    "54441b93c16034ba122c49cb": {
+      "at": 1795432043.4729195,
+      "article": {
+        "id": "54441b93c16034ba122c49cb",
+        "title_si": "අයවැයෙන් සහන ඉල්ලා නුවරඑළියේ රාජ්‍ය සේවක හා හෙද විරෝධතා",
+        "summary_si": "ජාතික විරෝධතා දිනයට සමගාමීව නුවරඑළිය නගරයේ රාජ්‍ය ආයතන කිහිපයක සේවක සේවිකාවන් පිරිසක් නුවරඑළිය තැපැල් කාර්යාලය ඉදිරිපිට ප්‍රධාන මාර්ගයේ අද දහවල් උද්ගෝෂණයක නිරත විය.",
+        "link": "https://www.lankadeepa.lk/latest_news/අයවැයෙන්-සහන-ඉල්ලා-නුවරඑළියේ-රාජ්‍ය-සේවක-හා-හෙද-විරෝධතා/1-701015",
+        "source": "Lankadeepa Latest",
+        "published": 1795429800
+      },
+      "status": "queued",
+      "destinations": {}
+    },
+    "d0cc364521433f15b52c0a06": {
+      "at": 1795432043.4729195,
+      "article": {
+        "id": "d0cc364521433f15b52c0a06",
+        "title_si": "IMF 7වන සමාලෝචනය දෙවැනිදා (VIDEO)",
+        "summary_si": "ශ්‍රී ලංකාවට ලබා දී ඇති විස්තීර්ණ ණය පහසුකම් යටතේ 07 වන සමාලෝචනය ඇගයීමට ලක් කිරීම ලබන දෙසැම්බර් 02වනදා සිදු කිරීමට නියමිතයි. ඒ ජාත්‍යන්තර මූල්‍ය අරමුදලේ විධායක මණ්ඩලය විසිනුයි.",
+        "link": "https://siyathanews.lk/archives/174694",
+        "source": "Siyatha News",
+        "published": 1795426378
+      },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "branded_sinhala_voice_reel",
+      "last_attempt_at": 1795432043.4729195
     }
   },
   "reels_started_at": 1795349700,
@@ -7785,6 +7903,30 @@
       },
       "status": "queued",
       "queued_at": 1795427162.9871588
+    },
+    "b50cd6d8f8281bdbdcd1c2be": {
+      "article": {
+        "id": "b50cd6d8f8281bdbdcd1c2be",
+        "title_si": "රටේ ආර්ථික වර්ධනයට පෙර සේවක හිඟයට විසඳුම් සොයන්න - කර්මාන්තකරුවෝ රජයෙන් ඉල්ලති",
+        "summary_si": "රට තුළ පවතින සේවක හිඟය වෙත කඩිනමින් විසඳුම් සෙවීම අත්‍යවශ්‍ය බව කර්මාන්තකරුවෝ පවසති. විශේෂයෙන්ම සංචාරක කර්මාන්තය, තොරතුරු තාක්ෂණ කර්මාන්තය මෙන්ම ඉදිකිරිම් ක්ෂේත්‍රය තුළ අද වන විට දරුණු පුහුණු සේවක හිඟයක් පවතින බවත්, ඒ හේතුවෙන් අදාළ කර්මාන්ත පවත්වාගෙන යාමේ ගැටලු‍ මතු කර ඇතැයිද ඔවුහු පෙන්වා දෙති.",
+        "link": "https://www.lankadeepa.lk/business/රටේ-ආර්ථික-වර්ධනයට-පෙර-සේවක-හිඟයට-විසඳුම්-සොයන්න---කර්මාන්තකරුවෝ-රජයෙන්-ඉල්ලති/9-701008",
+        "source": "Lankadeepa Business",
+        "published": 1795426380
+      },
+      "status": "queued",
+      "queued_at": 1795432043.4729195
+    },
+    "d0cc364521433f15b52c0a06": {
+      "article": {
+        "id": "d0cc364521433f15b52c0a06",
+        "title_si": "IMF 7වන සමාලෝචනය දෙවැනිදා (VIDEO)",
+        "summary_si": "ශ්‍රී ලංකාවට ලබා දී ඇති විස්තීර්ණ ණය පහසුකම් යටතේ 07 වන සමාලෝචනය ඇගයීමට ලක් කිරීම ලබන දෙසැම්බර් 02වනදා සිදු කිරීමට නියමිතයි. ඒ ජාත්‍යන්තර මූල්‍ය අරමුදලේ විධායක මණ්ඩලය විසිනුයි.",
+        "link": "https://siyathanews.lk/archives/174694",
+        "source": "Siyatha News",
+        "published": 1795426378
+      },
+      "status": "queued",
+      "queued_at": 1795432043.4729195
     }
   },
   "tiktok_started_at": 1795370479.455068
