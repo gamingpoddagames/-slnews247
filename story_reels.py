@@ -95,6 +95,12 @@ def _render_reel(article, video_path):
     except Exception as exc:
         print('Approved reel clip unavailable; using branded graphics:',
               type(exc).__name__)
+    # A verified event photograph is a photo reel, never labelled as live footage.
+    if os.getenv('REELS_REQUIRE_EVENT_MEDIA', 'false').lower() == 'true':
+        from media import choose_photo
+        if not choose_photo(article):
+            raise ValueError('No verified event photo available for photo reel')
+        return render_bulletin(article, video_path), 'verified_event_photo_reel'
     try:
         return render_bulletin(article, video_path), 'branded_sinhala_voice_reel'
     except Exception as exc:
