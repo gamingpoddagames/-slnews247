@@ -116,6 +116,9 @@ def build_scene_images(article, script, directory):
         print('Bulletin photo unavailable, using original information scenes:',
               type(exc).__name__)
         image_path, image_kind, credit = None, None, None
+    if __import__('os').getenv('REELS_REQUIRE_EVENT_MEDIA', 'false').lower() == 'true':
+        if not image_path or image_kind != 'verified_event_photo':
+            raise ValueError('Verified exact-event photo required for reel scenes')
     label = (credit.get('label_si') if image_kind in (
         'verified_institution_photo', 'verified_education_context_photo')
         and credit else None)
