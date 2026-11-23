@@ -669,6 +669,17 @@ def main():
     except Exception as exc:
         report['reels'] = {'error': type(exc).__name__}
         print('Story reel pipeline:', type(exc).__name__, str(exc)[:120])
+    # Publisher players remain available even when original branded reels are enabled.
+    # Share only stories with factual details and confirmed primary delivery.
+    try:
+        link_candidates = [a for a in articles if publishable(a) and
+                           (preview or all(p in state.get('stories', {}).get(a['id'], {}).get('receipts', {})
+                                           for p in ('telegram', 'facebook')))]
+        report['official_video_link'] = share_official_video(
+            state, link_candidates, now, preview)
+    except Exception as exc:
+        report['official_video_link'] = {'status': 'unavailable',
+                                         'error': type(exc).__name__}
     # TikTok uses the SAME factual Sinhala video renderer and delivery state.
     # Dedicated SL News account credentials prevent a trading-channel token
     # being mistakenly used. Disabled/unapproved modes do not call TikTok.
