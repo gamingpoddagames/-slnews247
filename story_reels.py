@@ -170,8 +170,21 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
     if preview:
         return status
 
-    for story_id, entry in pending[:max_per_run]:
+    for story_id, entry in pending:
+        if status['rendered'] >= max_per_run:
+            break
         article = entry['article']
+        if os.getenv('REELS_REQUIRE_EVENT_MEDIA', 'false').lower() == 'true':
+            from media import choose_photo, choose_video
+            try:
+                has_media = bool(choose_video(article) or choose_photo(article))
+            except Exception:
+                has_media = False
+            if not has_media:
+                entry['last_attempt_at'] = now
+                entry['media_status'] = 'awaiting_verified_event_media'
+                save(state)
+                continue
         status['stories'].append(story_id)
         video_path = str(Path('output') / 'reels' / (story_id + '.mp4'))
         Path(video_path).parent.mkdir(parents=True, exist_ok=True)
