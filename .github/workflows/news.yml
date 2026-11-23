@@ -107,6 +107,7 @@ jobs:
           MYMEMORY_EMAIL: ${{ secrets.MYMEMORY_EMAIL }}
           MAX_NEWS_PER_RUN: '3'
           ALLOW_HEADLINE_CARD_FALLBACK: 'true'
+          ARTICLE_PREVIEW_FALLBACK: 'true'
           MAX_REELS_PER_RUN: '2'
           STORY_REELS_ENABLED: 'true'
           REELS_REQUIRE_EVENT_MEDIA: 'true'
