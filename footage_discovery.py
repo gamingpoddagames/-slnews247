@@ -56,13 +56,19 @@ def discover_candidates(articles, limit=3, output_path='output/footage_candidate
             commons = discover_commons_media(articles, limit=limit)
         except Exception as exc:
             commons = {'status': 'unavailable', 'error': type(exc).__name__}
+    pexels = {'status': 'not_requested'}
+    if inspect_photos:
+        try:
+            pexels = discover_pexels_media(articles, limit=limit)
+        except Exception as exc:
+            pexels = {'status': 'unavailable', 'error': type(exc).__name__}
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
     return {'examined': examined, 'candidates': len(results),
             'rss_direct_candidates': sum(x.get('source') == 'rss_video_enclosure'
                                          for x in results),
-            'rights_approved': 0, 'commons': commons, 'photos': photos, 'report_file': str(output)}
+            'rights_approved': 0, 'commons': commons, 'pexels': pexels, 'photos': photos, 'report_file': str(output)}
 
 
 def discover_article_photos(articles, limit=3, output_path='output/photo_candidates.json', fetcher=None):
@@ -149,3 +155,45 @@ def discover_commons_media(articles, limit=3, output_path='output/commons_candid
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
     return {'candidates': len(results), 'report_file': str(output)}
+
+
+def discover_pexels_media(articles, limit=3, output_path='output/pexels_candidates.json', fetcher=None):
+    """Pexels photo/video review leads; never presume stock depicts an event."""
+    import os
+    import requests
+    key = os.getenv('PEXELS_API_KEY', '').strip()
+    if not key:
+        return {'status': 'missing_api_key', 'candidates': 0}
+    fetcher = fetcher or requests.get
+    results = []
+    for article in articles[:max(0, min(limit, 3))]:
+        query = article.get('media_search_query') or article.get('title_si', '')
+        if not query:
+            continue
+        for kind, endpoint, field in (
+                ('photo', 'https://api.pexels.com/v1/search', 'photos'),
+                ('video', 'https://api.pexels.com/v1/videos/search', 'videos')):
+            try:
+                response = fetcher(endpoint, headers={'Authorization': key},
+                                   params={'query': query, 'per_page': 3}, timeout=(5, 8))
+                if response.status_code == 429:
+                    break
+                response.raise_for_status()
+                for item in response.json().get(field, []):
+                    results.append({
+                        'article_id': article.get('id'), 'article_url': article.get('link'),
+                        'source': 'Pexels', 'kind': kind, 'source_page': item.get('url'),
+                        'creator': item.get('photographer') or (item.get('user') or {}).get('name'),
+                        'media_url': (item.get('src') or {}).get('original') if kind == 'photo' else None,
+                        'video_files': item.get('video_files', []) if kind == 'video' else [],
+                        'license_url': 'https://www.pexels.com/license/',
+                        'provider_credit_url': 'https://www.pexels.com',
+                        'status': 'stock_media_event_and_terms_review_required',
+                        'verified_event': False, 'may_download_or_publish': False})
+            except (requests.RequestException, ValueError, TypeError) as exc:
+                results.append({'article_id': article.get('id'), 'kind': kind,
+                                'status': 'source_unavailable', 'error': type(exc).__name__})
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
+    return {'status': 'checked', 'candidates': len(results), 'report_file': str(output)}
