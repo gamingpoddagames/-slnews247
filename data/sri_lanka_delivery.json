@@ -7466,6 +7466,75 @@
         }
       },
       "uncertain": {}
+    },
+    "2b7deb72b31e02b0d4481271": {
+      "article": {
+        "id": "2b7deb72b31e02b0d4481271",
+        "title_si": "හෝර්ටන්තැන්න මාර්ගය කාපට් කිරීම ඇරඹේ",
+        "summary_si": "වත්මන් රජයේ මුදල් ප්‍රතිපාදන මත ක්‍රියාත්මක දිට්වා සුළි කුණාටුවෙන් හානි වූ මාර්ග ප්‍රතිසංස්කරණය කිරීමේ වැඩසටහන යටතේ නුවරඑළිය බ්ලැක්පූල් මංසන්ධියේ සිට අඹේවෙල පට්ටිපොල හෝර්ටන්තැන්න (B 512) මාර්ගයේ කිලෝමීටර් 19ක් කාපට් අතුරා ප්‍රතිසංස්කරණය කිරිමේ කටයුතු අධ්‍යාපන නියෝජ්‍ය අමාත්‍ය මධුර සෙනෙවිරත්න සහ නුවරඑළිය දිස්ත්‍රික් පාර්ලිමේන්තු මන්ත්‍රී මංජුල සුරවීරආරච්චි මහතාගේ ප්‍රධානත්වයෙන් ආරම්භ කෙරිණ.",
+        "link": "https://www.lankadeepa.lk/videos/හෝර්ටන්තැන්න-මාර්ගය-කාපට්-කිරීම-ඇරඹේ/12-700975",
+        "source": "Lankadeepa Video News",
+        "published": 1795420140
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1162",
+          "at": 1795452710.6896195,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127469329318605",
+          "at": 1795452710.6896195,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "5ecd13b6dbb588878f1ce6d3": {
+      "article": {
+        "id": "5ecd13b6dbb588878f1ce6d3",
+        "title_si": "මිදිගමදී දුම්රියේ ගැටුණු STF ජීප් රථය – නිලධාරීන් 4කට තුවාල",
+        "summary_si": "වැලිගම, මිදිගම ප්‍රදේශයේ දුම්රිය හරස් මාර්ගයකදී පොලිස් විශේෂ කාර්ය බළකායේ (STF) නිලධාරීන් පිරිසක් ගමන් කළ ජීප් රථයක් දුම්රියක ගැටීමෙන් නිලධාරීන් සිව්දෙනෙකු තුවාල ලබා තිබේ. අනතුරින් තුවාල ලැබූ නිලධාරීන් සිව්දෙනා ප්‍රතිකාර සඳහා මාතර රෝහලට ඇතුළත් කර ඇති බව වාර්තා වේ.",
+        "link": "https://siyathanews.lk/archives/174672",
+        "source": "Siyatha News",
+        "published": 1795413705
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1163",
+          "at": 1795452710.6896195,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127469401318605",
+          "at": 1795452710.6896195,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "52e72e725aab32aa2763b868": {
+      "article": {
+        "id": "52e72e725aab32aa2763b868",
+        "title_si": "රුසියානු ප්‍රහාරයකින් යුක්‍රේනයේ කියෙව් කලාපයේ 12ක් මරුට",
+        "summary_si": "රුසියානු හමුදා විසින් එල්ල කරන ලද ප්‍රහාරයකින් යුක්‍රේනයේ කියෙව් කලාපයේ මහල් නිවාස ගොඩනැගිල්ලක කොටසක් කඩා වැටීමෙන් පුද්ගලයින් 12 දෙනෙකු ජීවිතක්ෂයට පත්ව ඇති බව විදෙස් මාධ්‍ය වාර්තා කරයි. කියෙව් නගරයට කිලෝමීටර් 45ක් පමණ උතුරින් පිහිටි ඩයිමර් ප්‍රදේශයේ මහල් පහකින් සමන්විත ගොඩනැගිල්ලකට මෙලෙස හානි සිදුවී ඇත.",
+        "link": "https://siyathanews.lk/archives/174669",
+        "source": "Siyatha News",
+        "published": 1795413425
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1164",
+          "at": 1795452710.6896195,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127469479318605",
+          "at": 1795452710.6896195,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -7487,7 +7556,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795452627.0672328,
+  "last_scan_at": 1795452710.6896195,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -7691,6 +7760,19 @@
         },
         "facebook": {
           "id": "1020689164470492_122127469059318605",
+          "format": "official_video_link"
+        }
+      }
+    },
+    "d0cc364521433f15b52c0a06": {
+      "url": "https://www.youtube.com/watch?v=1oIjLGHUp_g",
+      "destinations": {
+        "telegram": {
+          "id": "1165",
+          "format": "official_video_link"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127469533318605",
           "format": "official_video_link"
         }
       }
@@ -8429,7 +8511,9 @@
         "published": 1795431420
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "54441b93c16034ba122c49cb": {
       "at": 1795432043.4729195,
@@ -8442,7 +8526,9 @@
         "published": 1795429800
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "d0cc364521433f15b52c0a06": {
       "at": 1795432043.4729195,
@@ -8473,7 +8559,9 @@
         "published": 1795434318
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "19a748cdb194c976a8b624fa": {
       "at": 1795438427.6491172,
@@ -8486,7 +8574,9 @@
         "published": 1795433820
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "833a74cd509ade476bb5608b": {
       "at": 1795438427.6491172,
@@ -8571,7 +8661,9 @@
         "published": 1795446180
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "f2b19d84ae8e19cb652040d6": {
       "at": 1795447277.9037757,
@@ -8620,7 +8712,9 @@
         "published": 1795449420
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "fde8d925f6c7883dc064c1b5": {
       "at": 1795451193.0440147,
@@ -8633,7 +8727,9 @@
         "published": 1795447920
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "34db6ba8e9c49161db6c623d": {
       "at": 1795451193.0440147,
@@ -8646,7 +8742,9 @@
         "published": 1795446960
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "91e0bb08720d099e32bf24c4": {
       "at": 1795451788.950679,
@@ -8659,7 +8757,9 @@
         "published": 1795425660
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "6e37376fc512bf393b62ee45": {
       "at": 1795451788.950679,
@@ -8708,7 +8808,9 @@
         "published": 1795425480
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "605aed87c68ff37981073fb2": {
       "at": 1795451905.2768896,
@@ -8757,7 +8859,9 @@
         "published": 1795425300
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "f55ef5dbf9d1bbc87acab0e9": {
       "at": 1795451982.2058744,
@@ -8806,7 +8910,9 @@
         "published": 1795425041
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "c0e095b7fdf5b038c1d42e85": {
       "at": 1795452223.2871368,
@@ -8855,7 +8961,9 @@
         "published": 1795424292
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     },
     "bdb36f570fcdc1cd61811c7f": {
       "at": 1795452627.0672328,
@@ -8892,6 +9000,51 @@
       },
       "format": "branded_sinhala_voice_reel",
       "last_attempt_at": 1795452627.0672328
+    },
+    "2b7deb72b31e02b0d4481271": {
+      "at": 1795452710.6896195,
+      "article": {
+        "id": "2b7deb72b31e02b0d4481271",
+        "title_si": "හෝර්ටන්තැන්න මාර්ගය කාපට් කිරීම ඇරඹේ",
+        "summary_si": "වත්මන් රජයේ මුදල් ප්‍රතිපාදන මත ක්‍රියාත්මක දිට්වා සුළි කුණාටුවෙන් හානි වූ මාර්ග ප්‍රතිසංස්කරණය කිරීමේ වැඩසටහන යටතේ නුවරඑළිය බ්ලැක්පූල් මංසන්ධියේ සිට අඹේවෙල පට්ටිපොල හෝර්ටන්තැන්න (B 512) මාර්ගයේ කිලෝමීටර් 19ක් කාපට් අතුරා ප්‍රතිසංස්කරණය කිරිමේ කටයුතු අධ්‍යාපන නියෝජ්‍ය අමාත්‍ය මධුර සෙනෙවිරත්න සහ නුවරඑළිය දිස්ත්‍රික් පාර්ලිමේන්තු මන්ත්‍රී මංජුල සුරවීරආරච්චි මහතාගේ ප්‍රධානත්වයෙන් ආරම්භ කෙරිණ.",
+        "link": "https://www.lankadeepa.lk/videos/හෝර්ටන්තැන්න-මාර්ගය-කාපට්-කිරීම-ඇරඹේ/12-700975",
+        "source": "Lankadeepa Video News",
+        "published": 1795420140
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "5ecd13b6dbb588878f1ce6d3": {
+      "at": 1795452710.6896195,
+      "article": {
+        "id": "5ecd13b6dbb588878f1ce6d3",
+        "title_si": "මිදිගමදී දුම්රියේ ගැටුණු STF ජීප් රථය – නිලධාරීන් 4කට තුවාල",
+        "summary_si": "වැලිගම, මිදිගම ප්‍රදේශයේ දුම්රිය හරස් මාර්ගයකදී පොලිස් විශේෂ කාර්ය බළකායේ (STF) නිලධාරීන් පිරිසක් ගමන් කළ ජීප් රථයක් දුම්රියක ගැටීමෙන් නිලධාරීන් සිව්දෙනෙකු තුවාල ලබා තිබේ. අනතුරින් තුවාල ලැබූ නිලධාරීන් සිව්දෙනා ප්‍රතිකාර සඳහා මාතර රෝහලට ඇතුළත් කර ඇති බව වාර්තා වේ.",
+        "link": "https://siyathanews.lk/archives/174672",
+        "source": "Siyatha News",
+        "published": 1795413705
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "52e72e725aab32aa2763b868": {
+      "at": 1795452710.6896195,
+      "article": {
+        "id": "52e72e725aab32aa2763b868",
+        "title_si": "රුසියානු ප්‍රහාරයකින් යුක්‍රේනයේ කියෙව් කලාපයේ 12ක් මරුට",
+        "summary_si": "රුසියානු හමුදා විසින් එල්ල කරන ලද ප්‍රහාරයකින් යුක්‍රේනයේ කියෙව් කලාපයේ මහල් නිවාස ගොඩනැගිල්ලක කොටසක් කඩා වැටීමෙන් පුද්ගලයින් 12 දෙනෙකු ජීවිතක්ෂයට පත්ව ඇති බව විදෙස් මාධ්‍ය වාර්තා කරයි. කියෙව් නගරයට කිලෝමීටර් 45ක් පමණ උතුරින් පිහිටි ඩයිමර් ප්‍රදේශයේ මහල් පහකින් සමන්විත ගොඩනැගිල්ලකට මෙලෙස හානි සිදුවී ඇත.",
+        "link": "https://siyathanews.lk/archives/174669",
+        "source": "Siyatha News",
+        "published": 1795413425
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795452710.6896195,
+      "media_status": "awaiting_verified_event_media"
     }
   },
   "reels_started_at": 1795349700,
