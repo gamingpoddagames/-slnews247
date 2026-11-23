@@ -199,3 +199,17 @@ The scanner now configures nine feed endpoints: the original five plus Siyatha N
 Video-labelled stories from supported publisher sites are checked for a single YouTube player within the exact article content. Sidebar/global livestream embeds and multi-player ambiguity are rejected. Up to three article pages are checked per scan; results are cached for an hour. The resulting publisher-embedded video link is shared on Telegram/Facebook with link preview enabled, not uploaded as our own clip. A real MP4 still requires reviewed reuse permission. This does not guarantee player availability, embedding rights on every platform, or a video for every story.
 
 Sri Lankan TV publishers researched include Ada Derana, Hiru, Newsfirst, Siyatha, ITN, Rupavahini and Swarnavahini. Only sources whose configured feed can actually be retrieved contribute stories. The last two do not yet have verified working RSS connectors in this project; their entire TV output is not connected. Do not describe this deployment as all Sri Lankan TV channels connected.
+
+
+## SL NEWS 247 — Telegram → YouTube bridge (24 Nov 2026)
+
+A separate optional GitHub Actions uploader is prepared at
+[telegram-to-social/youtube_bridge](https://github.com/gamingpoddagames/telegram-to-social/tree/main/youtube_bridge)
+to watch new **video posts** in the existing SL NEWS 247 Telegram channel
+(documented historically as `@slnews247`) and upload them to an explicitly
+authorized YouTube channel. It is intentionally **OFF** until the owner connects
+a dedicated Telegram reader bot and authorizes YouTube OAuth. It does **not**
+change the existing news bot, Facebook, Telegram, or TikTok publishing routines.
+Because a YouTube upload has not yet been verified, do not mark YouTube
+delivery as operational. Setup instructions are in
+[the bridge README](https://github.com/gamingpoddagames/telegram-to-social/blob/main/youtube_bridge/README.md).
