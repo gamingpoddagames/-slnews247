@@ -7535,6 +7535,75 @@
         }
       },
       "uncertain": {}
+    },
+    "cf88ddb77089c2daa22a13e0": {
+      "article": {
+        "id": "cf88ddb77089c2daa22a13e0",
+        "title_si": "ඉඟුරුකඩේ අන්තර් හුවමාරුවේ පිවිසුම් හා පිටවීම් මාර්ග මාර්ග තාවකාලිකව වසා දැමේ",
+        "summary_si": "නව කැලණි පාලම සහ වරාය පිවිසුම් ගුවන් අධිවේගී මාර්ගය අතර සම්බන්ධක කොටසේ ඉදිකිරීම් කටයුතු හේතුවෙන් ඉඟුරුකඩේ අන්තර් හුවමාරුවේ පිවිසුම් හා පිටවීම් මාර්ග තාවකාලිකව වසා දැමීම පිළිබඳව මාර්ග සංවර්ධන අධිකාරිය නිවේදනයක් නිකුත් කර තිබේ.",
+        "link": "https://siyathanews.lk/archives/174666",
+        "source": "Siyatha News",
+        "published": 1795413254
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1166",
+          "at": 1795453303.1341069,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127471081318605",
+          "at": 1795453303.1341069,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "febd76b4267437c6eef2c907": {
+      "article": {
+        "id": "febd76b4267437c6eef2c907",
+        "title_si": "එළවළු මිල ඉහළ යාමෙන් වෙළඳුන්ටත් පාරිභෝගිකයන්ටත් දැඩි බලපෑම්",
+        "summary_si": "උඩරට සහ පහතරට එළවළුවල මිල විශාල ලෙස ඉහළ යෑම හේතුවෙන් එළවළු වෙළඳුන් මෙන්ම පාරිභෝගිකයන්ද දැඩි අසීරුතාවකට පත්ව තිබේ. ඒ අනුව, මාළු මිරිස් කිලෝවක් රු. 950ත් 1,000ත් අතර මිලකටත්, වම්බටු රු. 500කටත්, අමු මිරිස් රු. 800කටත්, බෝංචි රු. 450කටත්, කැරට් රු. 600ත් 700ත් අතර මිලකටත් අලෙවි වේ. එමෙන්ම, වට්ටක්කා රු. 400ක්, අළු කෙසෙල් රු.",
+        "link": "https://siyathanews.lk/archives/174663",
+        "source": "Siyatha News",
+        "published": 1795413049
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1167",
+          "at": 1795453303.1341069,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127471159318605",
+          "at": 1795453303.1341069,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
+    },
+    "a5a8e4e562cb3b1acabe16a1": {
+      "article": {
+        "id": "a5a8e4e562cb3b1acabe16a1",
+        "title_si": "චීනය සහ සිංගප්පූරුව අතර සංවර්ධන සහයෝගීතාව තවදුරටත් ශක්තිමත් කිරීමට පියවර",
+        "summary_si": "චීනය සහ සිංගප්පූරුව අතර ද්විපාර්ශ්වික සහයෝගීතා යාන්ත්‍රණය උපරිමයෙන් ප්‍රයෝජනයට ගනිමින් කෘත්‍රිම බුද්ධිය සහ පරිසර හිතකාමී සංවර්ධනය ඇතුළු ක්ෂේත්‍ර රැසක අන්‍යෝන්‍ය ප්‍රතිලාභ සහිත සහයෝගීතාව තවදුරටත් පුළුල් කිරීමට චීනය සූදානම් බව, චීන උප අග්‍රාමාත්‍ය Ding Xuexiang පවසයි. ඔහු මේ බව ප්‍රකාශ කළේ ඊයේ (22) සිංගප්පූරුවේදී එරට අග්‍රාමාත්‍ය Lawrence Wong හමු වූ අවස්ථාවේදීය.",
+        "link": "https://siyathanews.lk/archives/174651",
+        "source": "Siyatha News",
+        "published": 1795410119
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1168",
+          "at": 1795453303.1341069,
+          "format": "headline_only_no_event_photo"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127471231318605",
+          "at": 1795453303.1341069,
+          "format": "headline_only_no_event_photo"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -7556,7 +7625,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795452710.6896195,
+  "last_scan_at": 1795453303.1341069,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -7773,6 +7842,19 @@
         },
         "facebook": {
           "id": "1020689164470492_122127469533318605",
+          "format": "official_video_link"
+        }
+      }
+    },
+    "560c9ea9f1b2317db10f595f": {
+      "url": "https://www.youtube.com/watch?v=p6-6LJzICZc",
+      "destinations": {
+        "telegram": {
+          "id": "1169",
+          "format": "official_video_link"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127471285318605",
           "format": "official_video_link"
         }
       }
@@ -8512,7 +8594,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "54441b93c16034ba122c49cb": {
@@ -8527,7 +8609,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "d0cc364521433f15b52c0a06": {
@@ -8560,7 +8642,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "19a748cdb194c976a8b624fa": {
@@ -8575,7 +8657,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "833a74cd509ade476bb5608b": {
@@ -8662,7 +8744,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "f2b19d84ae8e19cb652040d6": {
@@ -8713,7 +8795,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "fde8d925f6c7883dc064c1b5": {
@@ -8728,7 +8810,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "34db6ba8e9c49161db6c623d": {
@@ -8743,7 +8825,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "91e0bb08720d099e32bf24c4": {
@@ -8758,7 +8840,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "6e37376fc512bf393b62ee45": {
@@ -8809,7 +8891,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "605aed87c68ff37981073fb2": {
@@ -8860,7 +8942,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "f55ef5dbf9d1bbc87acab0e9": {
@@ -8911,7 +8993,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "c0e095b7fdf5b038c1d42e85": {
@@ -8962,7 +9044,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "bdb36f570fcdc1cd61811c7f": {
@@ -9013,7 +9095,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "5ecd13b6dbb588878f1ce6d3": {
@@ -9028,7 +9110,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     },
     "52e72e725aab32aa2763b868": {
@@ -9043,7 +9125,52 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795452710.6896195,
+      "last_attempt_at": 1795453303.1341069,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "cf88ddb77089c2daa22a13e0": {
+      "at": 1795453303.1341069,
+      "article": {
+        "id": "cf88ddb77089c2daa22a13e0",
+        "title_si": "ඉඟුරුකඩේ අන්තර් හුවමාරුවේ පිවිසුම් හා පිටවීම් මාර්ග මාර්ග තාවකාලිකව වසා දැමේ",
+        "summary_si": "නව කැලණි පාලම සහ වරාය පිවිසුම් ගුවන් අධිවේගී මාර්ගය අතර සම්බන්ධක කොටසේ ඉදිකිරීම් කටයුතු හේතුවෙන් ඉඟුරුකඩේ අන්තර් හුවමාරුවේ පිවිසුම් හා පිටවීම් මාර්ග තාවකාලිකව වසා දැමීම පිළිබඳව මාර්ග සංවර්ධන අධිකාරිය නිවේදනයක් නිකුත් කර තිබේ.",
+        "link": "https://siyathanews.lk/archives/174666",
+        "source": "Siyatha News",
+        "published": 1795413254
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795453303.1341069,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "febd76b4267437c6eef2c907": {
+      "at": 1795453303.1341069,
+      "article": {
+        "id": "febd76b4267437c6eef2c907",
+        "title_si": "එළවළු මිල ඉහළ යාමෙන් වෙළඳුන්ටත් පාරිභෝගිකයන්ටත් දැඩි බලපෑම්",
+        "summary_si": "උඩරට සහ පහතරට එළවළුවල මිල විශාල ලෙස ඉහළ යෑම හේතුවෙන් එළවළු වෙළඳුන් මෙන්ම පාරිභෝගිකයන්ද දැඩි අසීරුතාවකට පත්ව තිබේ. ඒ අනුව, මාළු මිරිස් කිලෝවක් රු. 950ත් 1,000ත් අතර මිලකටත්, වම්බටු රු. 500කටත්, අමු මිරිස් රු. 800කටත්, බෝංචි රු. 450කටත්, කැරට් රු. 600ත් 700ත් අතර මිලකටත් අලෙවි වේ. එමෙන්ම, වට්ටක්කා රු. 400ක්, අළු කෙසෙල් රු.",
+        "link": "https://siyathanews.lk/archives/174663",
+        "source": "Siyatha News",
+        "published": 1795413049
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795453303.1341069,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "a5a8e4e562cb3b1acabe16a1": {
+      "at": 1795453303.1341069,
+      "article": {
+        "id": "a5a8e4e562cb3b1acabe16a1",
+        "title_si": "චීනය සහ සිංගප්පූරුව අතර සංවර්ධන සහයෝගීතාව තවදුරටත් ශක්තිමත් කිරීමට පියවර",
+        "summary_si": "චීනය සහ සිංගප්පූරුව අතර ද්විපාර්ශ්වික සහයෝගීතා යාන්ත්‍රණය උපරිමයෙන් ප්‍රයෝජනයට ගනිමින් කෘත්‍රිම බුද්ධිය සහ පරිසර හිතකාමී සංවර්ධනය ඇතුළු ක්ෂේත්‍ර රැසක අන්‍යෝන්‍ය ප්‍රතිලාභ සහිත සහයෝගීතාව තවදුරටත් පුළුල් කිරීමට චීනය සූදානම් බව, චීන උප අග්‍රාමාත්‍ය Ding Xuexiang පවසයි. ඔහු මේ බව ප්‍රකාශ කළේ ඊයේ (22) සිංගප්පූරුවේදී එරට අග්‍රාමාත්‍ය Lawrence Wong හමු වූ අවස්ථාවේදීය.",
+        "link": "https://siyathanews.lk/archives/174651",
+        "source": "Siyatha News",
+        "published": 1795410119
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795453303.1341069,
       "media_status": "awaiting_verified_event_media"
     }
   },
