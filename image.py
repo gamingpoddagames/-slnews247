@@ -343,7 +343,7 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
     # Inner panel has a thick rounded white frame and dark lower portion.
     draw = ImageDraw.Draw(canvas)
     draw.rounded_rectangle((32, 56, 1048, 1295), radius=88, fill='white')
-    draw.rounded_rectangle((44, 68, 1036, 1283), radius=76, fill='#202124')
+    draw.rounded_rectangle((44, 68, 1036, 1283), radius=76, fill='#101e38')
     photo_rect = (46, 70, 1034, 822)
     if image_path:
         with Image.open(image_path) as src:
@@ -381,29 +381,20 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
                    fill='#ffffff', bold=True)
 
     # Fade/cover lower photo margin with a charcoal headline field.
-    draw.rectangle((46, 793, 1034, 1282), fill='#202124')
-    words = title.split()
-    if not words:
-        raise ValueError('Title missing')
-    split = max(1, (len(words) + 1)//2)
-    yellow = ' '.join(words[:split])
-    white = ' '.join(words[split:])
-
-    # Keep full source headline, split purely for layout. Avoid word clipping.
-    upper = _fitted_lines(draw, yellow, 886, 170, range(58, 23, -2))
-    lower = _fitted_lines(draw, white, 886, 238, range(68, 23, -2)) if white else None
-    def center_lines(group, first_baseline, color):
-        if group is None:
-            return
-        size, lines, step = group
-        for line in lines:
-            x = 540 - mixed_width(draw, line, size, bold=True)/2
-            draw_mixed(draw, (x, first_baseline), line, size, fill=color, bold=True)
-            first_baseline += step
-    center_lines(upper, 880, '#ffdd32')
-    if lower:
-        center_lines(lower, 1068, 'white')
-    # Keep lower portion clean: no extra footer text or decorative captions.
+    draw.rectangle((46, 793, 1034, 1282), fill='#101e38')
+    # Fit the complete headline as one block; never split a phrase arbitrarily.
+    group = _fitted_lines(draw, title, 886, 370, range(68, 23, -2))
+    size, lines, step = group
+    baseline = 842 + size + max(0, (370 - len(lines) * step) // 2)
+    for index, line in enumerate(lines):
+        x = 540 - mixed_width(draw, line, size, bold=True) / 2
+        draw_mixed(draw, (x, baseline), line, size,
+                   fill='#ffdd32' if index == 0 else 'white', bold=True)
+        baseline += step
+    draw.rectangle((46, 1246, 1034, 1282), fill='#b50924')
+    tagline = 'පැය විසිහතර පුරාම'
+    x = 540 - mixed_width(draw, tagline, 22, bold=True) / 2
+    draw_mixed(draw, (x, 1273), tagline, 22, fill='white', bold=True)
 
     Path('output').mkdir(exist_ok=True)
     safe_id = re.sub('[^a-zA-Z0-9_-]', '', str(article.get('id', 'news'))) or 'news'
