@@ -1,11 +1,13 @@
 {
-  "checked_at": 1795528163.4081957,
+  "checked_at": 1795535350.3063042,
   "configured_feeds": 25,
   "sources": [
     {
       "source": "Ada Derana Sinhala",
-      "error": "HTTPError",
-      "http": 403
+      "http": 200,
+      "entries": 25,
+      "fresh_sinhala": 15,
+      "feed_url": "https://sinhala.adaderana.lk/rss.php"
     },
     {
       "source": "Dinamina",
@@ -28,14 +30,14 @@
       "source": "Lankadeepa Business",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 12,
+      "fresh_sinhala": 0,
       "feed_url": "https://www.lankadeepa.lk/rss/business/9"
     },
     {
       "source": "Siyatha News",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 16,
+      "fresh_sinhala": 9,
       "feed_url": "https://siyathanews.lk/feed/"
     },
     {
@@ -71,7 +73,7 @@
       "source": "Lankadeepa Video News",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 6,
+      "fresh_sinhala": 5,
       "feed_url": "https://www.lankadeepa.lk/rss/videos/12"
     },
     {
@@ -111,14 +113,14 @@
       "source": "Neth International",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 3,
+      "fresh_sinhala": 6,
       "feed_url": "https://www.nethnews.lk/international-news/feed/"
     },
     {
       "source": "Neth Politics",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 6,
+      "fresh_sinhala": 4,
       "feed_url": "https://www.nethnews.lk/politics/feed/"
     },
     {
@@ -139,7 +141,7 @@
       "source": "Siyatha World",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 5,
+      "fresh_sinhala": 4,
       "feed_url": "https://siyathanews.lk/archives/category/world-news/feed"
     },
     {
