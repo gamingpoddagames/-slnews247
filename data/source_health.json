@@ -1,12 +1,12 @@
 {
-  "checked_at": 1795506559.0231552,
+  "checked_at": 1795513757.7016468,
   "configured_feeds": 25,
   "sources": [
     {
       "source": "Ada Derana Sinhala",
       "http": 200,
       "entries": 25,
-      "fresh_sinhala": 16,
+      "fresh_sinhala": 15,
       "feed_url": "https://sinhala.adaderana.lk/rss.php"
     },
     {
@@ -66,7 +66,7 @@
       "source": "Lankadeepa World",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 6,
+      "fresh_sinhala": 4,
       "feed_url": "https://www.lankadeepa.lk/rss/world_news/14"
     },
     {
@@ -92,7 +92,7 @@
       "source": "Lanka Truth Sinhala",
       "http": 200,
       "entries": 24,
-      "fresh_sinhala": 5,
+      "fresh_sinhala": 0,
       "feed_url": "https://lankatruth.com/si/?feed=rss2"
     },
     {
@@ -106,7 +106,7 @@
       "source": "Neth Sports",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 4,
+      "fresh_sinhala": 3,
       "feed_url": "https://www.nethnews.lk/sports/feed/"
     },
     {
