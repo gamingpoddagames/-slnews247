@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-11-24T13:48:57Z",
+  "timestamp": "2026-11-24T15:48:41Z",
   "reason": "stale_production_run",
-  "last_success_run_id": 45387612689,
-  "note": "Last production success 2026-11-24T11:48:51Z; last_scan_at stale and no queued or in-progress workflow at recheck."
+  "last_success_run_id": 45407344978,
+  "note": "Last Auto News Bot success 2026-11-24T13:49:00Z; production last_scan_at stale and no queued or in-progress workflow at recheck."
 }
