@@ -10,13 +10,11 @@ the production variable font selects Weight and Width by their named axes.
 Optional image/video descriptions and labels are absent from public artwork and
 captions. Internal media provenance and required licence attribution are retained.
 
-Native news posts now require a verified reusable photo, an approved named
-subject/institution photo, or a frame decoded from an already approved exact-event
-clip. Missing media is held for review; neither a headline-only graphic nor a
-publisher-link preview is sent, even if older workflow fallback flags are true.
-Required licence credits remain. A public publisher thumbnail alone is not reuse
-permission. Reels also hold when approved event media is absent. Existing receipts
-are preserved and previously published posts are not re-sent for a design change.
+Native news posts prefer verified reusable photos or frames from approved
+event footage. When media is unavailable, eligible stories use an original
+topic graphic with the same SL NEWS 24/7 frame, headline panel and typography.
+Required licence credits remain on posts that use licensed media. Reels still
+require approved event media. Existing delivery receipts prevent resends.
 Feed eligibility is limited to the most recent 12 hours.
 
 Facebook news posts, editorial updates and video descriptions include a Sinhala

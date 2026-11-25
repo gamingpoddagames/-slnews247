@@ -367,11 +367,11 @@ def crimson_panel(size):
     return panel
 
 
-def news_card(article, image_path=None, illustrative=False, photo_label=None):
+def news_card(article, image_path=None, illustrative=False, photo_label=None, *, graphic_fallback=False):
     """Photo-first crimson poster with bold yellow/white Sinhala headlines.
 
     Callers verify the asset's story match and reuse rights before rendering.
-    A missing photograph is a hold, never an empty card or generated incident.
+    Explicit graphic fallback uses an original topic illustration.
     Media descriptions stay in internal records, not over the photograph.
     """
     from pathlib import Path
@@ -380,7 +380,7 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
     from PIL import ImageOps
     import re
 
-    if not image_path:
+    if not image_path and not graphic_fallback:
         raise ValueError('A verified real photo or event-video frame is required')
     title = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '', article['title_si'], flags=re.I)
     title = title.removeprefix('විස්තරාත්මක පුවත | ').strip()
@@ -388,10 +388,14 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
     canvas = broadcast_background((width, height), (32, 56, 1048, 1295), 88)
     # Build the centre separately, then clip photo and headline to one rounded mask.
     panel = crimson_panel((988, 1212))
-    with Image.open(image_path) as src:
-        photo = ImageOps.fit(ImageOps.exif_transpose(src).convert('RGB'), (988, 752),
-                             method=Image.Resampling.LANCZOS)
-    panel.paste(photo, (0, 0))
+    if image_path:
+        with Image.open(image_path) as src:
+            photo = ImageOps.fit(ImageOps.exif_transpose(src).convert('RGB'), (988, 752),
+                                 method=Image.Resampling.LANCZOS)
+        panel.paste(photo, (0, 0))
+    else:
+        from story_visual import draw_story_hero
+        draw_story_hero(panel, article, (0, 0, 987, 751))
     panel.paste(crimson_panel((988, 460)), (0, 752))
     mask = Image.new('L', panel.size)
     ImageDraw.Draw(mask).rounded_rectangle((0, 0, 987, 1211), radius=76, fill=255)

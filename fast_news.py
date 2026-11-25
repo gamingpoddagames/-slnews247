@@ -247,26 +247,29 @@ def send_text(platform, article):
     from pathlib import Path
     if article.get('sample'):
         return {'error': 'sample_posts_disabled'}
+    from image import news_card
     try:
         from real_photo import select_real_photo
         photo_path, image_kind, credit = select_real_photo(article)
-        from image import news_card
+    except Exception as exc:
+        print('Photo lookup unavailable:', type(exc).__name__)
+        photo_path, image_kind, credit = None, None, None
+    try:
         if photo_path and image_kind in ('verified_event_photo', 'licensed_subject_photo',
                                          'verified_event_video_frame'):
             image_path = news_card(article, image_path=photo_path, illustrative=False)
-        elif (photo_path and credit and image_kind in (
-                'verified_institution_photo', 'verified_education_context_photo')):
+        elif photo_path and credit and image_kind in (
+                'verified_institution_photo', 'verified_education_context_photo'):
             image_path = news_card(article, image_path=photo_path, illustrative=False,
                                    photo_label=credit['label_si'])
         else:
-            # Owner requires a real image/video on every native news post.
-            # Legacy workflow flags must never restore empty cards or link posts.
-            return {'error': 'exact_event_photo_required'}
+            image_kind, credit = 'branded_news_graphic', None
+            image_path = news_card(article, graphic_fallback=True)
         if not image_path or not Path(image_path).is_file() or Path(image_path).stat().st_size < 1000:
             return {'error': 'news_card_failed'}
-    except Exception as exc:
-        print('Real photo processing blocked:', type(exc).__name__, str(exc)[:160])
-        return {'error': 'real_photo_processing_failed'}
+    except (OSError, ValueError) as exc:
+        print('News card unavailable:', type(exc).__name__)
+        return {'error': 'news_card_failed'}
     message = caption(article)
     required_credit = ''
     if image_kind == 'verified_event_video_frame':

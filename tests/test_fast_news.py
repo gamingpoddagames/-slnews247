@@ -130,7 +130,7 @@ class PresentationTests(unittest.TestCase):
                       sender.call_args.kwargs['data']['caption'])
         self.assertTrue(sender.call_args.args[0].endswith('/sendPhoto'))
 
-    def test_legacy_fallback_flags_cannot_publish_empty_cards_or_links(self):
+    def test_missing_media_publishes_branded_graphic(self):
         from unittest.mock import MagicMock
         article = {'id': 'headline', 'title_si': 'මාතර සිද්ධිය',
                    'summary_si': 'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
@@ -147,9 +147,9 @@ class PresentationTests(unittest.TestCase):
                  patch('image.news_card', return_value=str(image)) as render, \
                  patch('requests.post', return_value=reply) as sender:
                 result = pipeline.send_text('telegram', article)
-        self.assertEqual(result['error'], 'exact_event_photo_required')
-        render.assert_not_called()
-        sender.assert_not_called()
+        self.assertEqual(result['format'], 'branded_news_graphic')
+        render.assert_called_once_with(article, graphic_fallback=True)
+        self.assertTrue(sender.call_args.args[0].endswith('/sendPhoto'))
 
     def test_unrelated_contextual_photo_is_never_published(self):
         article = {'id': 'two', 'title_si': 'මාතර සිද්ධිය',
@@ -157,20 +157,24 @@ class PresentationTests(unittest.TestCase):
                    'published': time.time()}
         with patch('real_photo.select_real_photo',
                    return_value=('other-event.jpg', 'licensed_context_photo', {})), \
+             patch('image.news_card', return_value=None) as render, \
              patch('requests.post') as request:
             result = pipeline.send_text('telegram', article)
-        self.assertEqual(result['error'], 'exact_event_photo_required')
+        self.assertEqual(result['error'], 'news_card_failed')
+        render.assert_called_once_with(article, graphic_fallback=True)
         request.assert_not_called()
 
 class ExactEventMediaTests(unittest.TestCase):
-    def test_missing_real_photo_never_publishes(self):
+    def test_missing_fallback_card_never_publishes(self):
         article = {'id':'new', 'title_si':'මාතර සිද්ධිය',
                    'summary_si':'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
                    'published':time.time(), 'link':'https://example.com/a'}
         with patch('real_photo.select_real_photo', return_value=(None, None, None)), \
+             patch('image.news_card', return_value=None) as render, \
              patch('requests.post') as sender:
             result = pipeline.send_text('telegram', article)
-        self.assertEqual(result['error'], 'exact_event_photo_required')
+        self.assertEqual(result['error'], 'news_card_failed')
+        render.assert_called_once_with(article, graphic_fallback=True)
         sender.assert_not_called()
 
     def test_exact_story_and_nonreuse_guards(self):
@@ -787,9 +791,11 @@ class MediaFailureRecoveryTests(unittest.TestCase):
                    'published':time.time(),'link':'https://example.com/newstory',
                    'summary_si':'මාතර ප්‍රදේශයේ වැදගත් පුවතක් පිළිබඳ නිල වාර්තාවක් නිකුත් කර තිබේ.'}
         with patch('real_photo.select_real_photo', side_effect=ConnectionError('media unavailable')), \
+             patch('image.news_card', return_value=None) as render, \
              patch('requests.post') as sender:
             result = pipeline.send_text('telegram', article)
-        self.assertEqual(result['error'], 'real_photo_processing_failed')
+        self.assertEqual(result['error'], 'news_card_failed')
+        render.assert_called_once_with(article, graphic_fallback=True)
         sender.assert_not_called()
 
 
