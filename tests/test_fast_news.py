@@ -436,7 +436,7 @@ class NewsCardTextBoundsTests(unittest.TestCase):
                 path = news_card(story)
                 with Image.open(path) as img:
                     # This used to be a bright yellow "details below" banner.
-                    self.assertEqual(img.getpixel((540, 1250)), (32, 33, 36))
+                    self.assertEqual(img.getpixel((540, 1250)), (24, 48, 76))
             finally:
                 os.chdir(previous)
 
@@ -511,7 +511,7 @@ class PhotoFirstPosterTests(unittest.TestCase):
                         for y in range(255, 735, 40):
                             colors.add(img.getpixel((x,y)))
                     self.assertGreater(len(colors), 12)
-                    self.assertGreater(img.getpixel((12,155))[0],img.getpixel((12,155))[2])
+                    self.assertGreater(img.getpixel((12,155))[2],img.getpixel((12,155))[0])
                     self.assertGreater(img.getpixel((12,1190))[2],img.getpixel((12,1190))[0])
             finally:
                 os.chdir(previous)
@@ -528,7 +528,7 @@ class PhotoFirstPosterTests(unittest.TestCase):
                     top=img.getpixel((10,150))
                     bottom=img.getpixel((10,1200))
                     blue=img.getpixel((500,170))
-                    self.assertGreater(top[0], top[2])  # orange-red border
+                    self.assertGreater(top[2], top[0])  # midnight blue glass border
                     self.assertGreater(bottom[2], bottom[0])  # blue border
                     self.assertGreater(blue[2], blue[0])  # blue photo fallback
                     self.assertEqual(img.size,(1080,1350))
@@ -564,7 +564,7 @@ class PhotoFirstPosterTests(unittest.TestCase):
                 with Image.open(path) as img:
                     self.assertEqual(img.size,(1080,1350))
                     self.assertTrue(all(abs(a-b) <= 3 for a,b in zip(img.getpixel((500,400)), (12,210,32))))
-                    self.assertEqual(img.getpixel((500,1250)),(32,33,36))
+                    self.assertEqual(img.getpixel((500,1250)),(24,48,76))
             finally:
                 os.chdir(previous)
 
