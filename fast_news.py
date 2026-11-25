@@ -228,9 +228,10 @@ def send_article_preview(platform, article):
         page, token = os.getenv('FB_PAGE_ID'), os.getenv('FB_PAGE_TOKEN')
         if not page or not token:
             return {'error': 'missing_credentials'}
+        from facebook import with_follow_links
         response = requests.post(
             f'https://graph.facebook.com/v22.0/{page}/feed',
-            data={'access_token': token, 'message': message, 'link': link},
+            data={'access_token': token, 'message': with_follow_links(message), 'link': link},
             timeout=(5, 60))
         data = response.json()
         if response.ok and data.get('id'):
@@ -314,9 +315,10 @@ def send_text(platform, article):
         page, token = os.getenv('FB_PAGE_ID'), os.getenv('FB_PAGE_TOKEN')
         if not page or not token:
             return {'error': 'missing_credentials'}
+        from facebook import with_follow_links
         with open(image_path, 'rb') as photo:
             response = requests.post(f'https://graph.facebook.com/v22.0/{page}/photos',
-                                     data={'access_token': token, 'caption': message},
+                                     data={'access_token': token, 'caption': with_follow_links(message)},
                                      files={'source': photo}, timeout=(5, 60))
         data = response.json()
         if response.ok and data.get('id'):
@@ -588,9 +590,10 @@ def send_official_video_link(platform, article, url):
         page, token = os.getenv('FB_PAGE_ID'), os.getenv('FB_PAGE_TOKEN')
         if not page or not token:
             return {'error': 'missing_credentials'}
+        from facebook import with_follow_links
         response = requests.post(
             f'https://graph.facebook.com/v22.0/{page}/feed',
-            data={'access_token': token, 'message': message, 'link': verified_url},
+            data={'access_token': token, 'message': with_follow_links(message), 'link': verified_url},
             timeout=(5, 45))
         data = response.json()
         if response.ok and data.get('id'):

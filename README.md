@@ -19,6 +19,13 @@ permission. Reels also hold when approved event media is absent. Existing receip
 are preserved and previously published posts are not re-sent for a design change.
 Feed eligibility is limited to the most recent 12 hours.
 
+Facebook news posts, editorial updates and video descriptions include a Sinhala
+Follow invitation linking to `https://www.facebook.com/1020689164470492`, plus
+the owner-confirmed news channel `https://t.me/slnews247` for more news.
+The footer is added once at the Facebook publishing boundary. Telegram captions
+keep their existing format and limits. These are caption links; no custom native
+Facebook button is created. Existing published posts are not re-sent.
+
 ## TikTok automation — existing SL NEWS 24/7 project (22 Nov 2026)
 
 This update extends the **same** five-minute `Auto News Bot` and the already

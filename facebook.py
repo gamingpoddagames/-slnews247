@@ -7,6 +7,20 @@ GRAPH_VERSION = "v22.0"
 PAGE_ID = os.getenv("FB_PAGE_ID")
 PAGE_TOKEN = os.getenv("FB_PAGE_TOKEN")
 
+PAGE_URL = "https://www.facebook.com/1020689164470492"
+TELEGRAM_URL = "https://t.me/slnews247"
+
+
+def with_follow_links(text):
+    """Owner-approved channel links for Facebook posts and video descriptions."""
+    text = str(text or '').rstrip()
+    additions = []
+    if PAGE_URL not in text:
+        additions.append('අලුත් පුවත් සඳහා SL NEWS 24/7 Follow කරන්න.\n' + PAGE_URL)
+    if TELEGRAM_URL not in text:
+        additions.append('තවත් පුවත් සඳහා අපේ Telegram channel එකට එක්වන්න.\n' + TELEGRAM_URL)
+    return '\n\n'.join([text] + additions)
+
 
 # ==========================================
 # Create Caption
@@ -14,7 +28,7 @@ PAGE_TOKEN = os.getenv("FB_PAGE_TOKEN")
 
 def make_caption(news):
     from fast_news import caption
-    return caption(news)
+    return with_follow_links(caption(news))
 
 
 # ==========================================
@@ -48,7 +62,7 @@ def upload_video(video_path, caption):
 
             data = {
 
-                "description": caption,
+                "description": with_follow_links(caption),
 
                 "access_token": PAGE_TOKEN
 
@@ -131,4 +145,5 @@ if __name__ == "__main__":
         )
 
     )
+
 
