@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-11-24T23:48:49Z",
+  "timestamp": "2026-11-25T01:48:45Z",
   "reason": "stale_production_run",
-  "last_success_run_id": 45494811351,
-  "note": "Last success 2026-11-24T21:49:17Z; stale last_scan_at 1795556938.3621044; no active workflow at recheck."
+  "last_success_run_id": 45513082999,
+  "note": "Last success 2026-11-24T23:49:41Z; stale last_scan_at 1795564162.026475; no active workflow at recheck."
 }
