@@ -1,5 +1,21 @@
 # SL News 247 — Sri Lankan Sinhala news automation
 
+## Photo-first light design — 25 November 2026
+
+The current poster keeps the rounded white frame with the warm upper and blue
+lower border. A large real photograph sits above a cream headline panel with
+readable navy/red Sinhala type. Headlines are fitted using the actual bold
+font measurements. Video scene text uses the same light palette.
+
+Native news posts now require a verified reusable photo, an approved named
+subject/institution photo, or a frame decoded from an already approved exact-event
+clip. Missing media is held for review; neither a headline-only graphic nor a
+publisher-link preview is sent, even if older workflow fallback flags are true.
+Required licence credits remain. A public publisher thumbnail alone is not reuse
+permission. Reels also hold when approved event media is absent. Existing receipts
+are preserved and previously published posts are not re-sent for a design change.
+Feed eligibility is limited to the most recent 12 hours.
+
 ## TikTok automation — existing SL NEWS 24/7 project (22 Nov 2026)
 
 This update extends the **same** five-minute `Auto News Bot` and the already
@@ -213,3 +229,4 @@ change the existing news bot, Facebook, Telegram, or TikTok publishing routines.
 Because a YouTube upload has not yet been verified, do not mark YouTube
 delivery as operational. Setup instructions are in
 [the bridge README](https://github.com/gamingpoddagames/telegram-to-social/blob/main/youtube_bridge/README.md).
+

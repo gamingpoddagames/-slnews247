@@ -272,7 +272,7 @@ def draw_mixed(draw, xy, text, size, fill='white', bold=False):
     return x
 
 
-def fit_headline(draw, title, width=950, max_height=550, start_size=72, min_size=20):
+def fit_headline(draw, title, width=950, max_height=550, start_size=72, min_size=20, bold=False):
     """Size Sinhala/English text using actual glyph measurements, never clipping."""
     if not title or not title.strip():
         raise ValueError('A news card requires a title')
@@ -280,21 +280,21 @@ def fit_headline(draw, title, width=950, max_height=550, start_size=72, min_size
         lines, current = [], ''
         for word in title.split():
             trial = (current + ' ' + word).strip()
-            if mixed_width(draw, trial, size) <= width:
+            if mixed_width(draw, trial, size, bold=bold) <= width:
                 current = trial
             else:
                 if current:
                     lines.append(current)
                 current = word
                 # Long unbreakable words must not escape the card boundary.
-                if mixed_width(draw, current, size) > width:
+                if mixed_width(draw, current, size, bold=bold) > width:
                     break
         else:
             if current:
                 lines.append(current)
             step = int(size * 1.48)
             if (lines and len(lines) * step <= max_height
-                    and all(mixed_width(draw, line, size) <= width for line in lines)):
+                    and all(mixed_width(draw, line, size, bold=bold) <= width for line in lines)):
                 return size, lines, step
     raise ValueError('Headline too long for readable card; keep full title in post caption')
 
@@ -302,7 +302,7 @@ def fit_headline(draw, title, width=950, max_height=550, start_size=72, min_size
 def _fitted_lines(draw, text, width, height, sizes):
     for size in sizes:
         try:
-            fs, lines, step = fit_headline(draw, text, width, height, size, size)
+            fs, lines, step = fit_headline(draw, text, width, height, size, size, bold=True)
             return fs, lines, step
         except ValueError:
             continue
@@ -310,49 +310,53 @@ def _fitted_lines(draw, text, width, height, sizes):
 
 
 def news_card(article, image_path=None, illustrative=False, photo_label=None):
-    """Original broadcast-style 1080x1350 news poster.
+    """Photo-first poster with the original warm/blue frame and a light centre.
 
-    The photo is allowed only after media.choose_photo has verified the
-    matching story and permission. No invented depiction or publisher logo.
+    Callers verify the asset's story match and reuse rights before rendering.
+    A missing photograph is a hold, never an empty card or generated incident.
     """
     from pathlib import Path
     from datetime import datetime
     from zoneinfo import ZoneInfo
+    from PIL import ImageOps
     import re
 
+    if not image_path:
+        raise ValueError('A verified real photo or event-video frame is required')
     title = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '', article['title_si'], flags=re.I)
     title = title.removeprefix('විස්තරාත්මක පුවත | ').strip()
     width, height = 1080, 1350
     canvas = Image.new('RGB', (width, height))
     gradient = ImageDraw.Draw(canvas)
-    # Glass broadcast frame: restrained cyan highlights over midnight blue.
+    # Retain the familiar rounded white frame, warm upper / blue lower border.
     for y in range(height):
-        t = y / height
-        gradient.line((0, y, width, y),
-                      fill=(int(7 + 7*t), int(18 + 13*t), int(43 + 24*t)))
+        if y < height // 2:
+            t = y / (height // 2)
+            color = (round(255 - 52*t), round(142 - 117*t), round(23 + 28*t))
+        else:
+            t = (y - height // 2) / (height - height // 2)
+            color = (round(17 - 7*t), round(101 - 60*t), round(184 - 79*t))
+        gradient.line((0, y, width, y), fill=color)
     glow = Image.new('RGBA', canvas.size)
     gd = ImageDraw.Draw(glow)
-    gd.ellipse((-260, -240, 720, 650), fill=(0, 173, 255, 100))
-    gd.ellipse((730, 800, 1400, 1510), fill=(110, 48, 255, 95))
+    gd.ellipse((30, -180, 830, 180), fill=(255, 240, 191, 90))
     canvas = Image.alpha_composite(canvas.convert('RGBA'),
-                                 glow.filter(ImageFilter.GaussianBlur(100))).convert('RGB')
+                                 glow.filter(ImageFilter.GaussianBlur(65))).convert('RGB')
     draw = ImageDraw.Draw(canvas)
-    draw.rounded_rectangle((30, 55, 1050, 1297), radius=42,
-                           fill='#101e36', outline='#63d9ff', width=2)
-    draw.rounded_rectangle((40, 65, 1040, 1287), radius=34,
-                           outline='#314e70', width=1)
-    photo_rect = (46, 70, 1034, 822)
-    if image_path:
-        with Image.open(image_path) as src:
-            photo = __import__('PIL.ImageOps', fromlist=['fit']).fit(
-                src.convert('RGB'), (photo_rect[2]-photo_rect[0], photo_rect[3]-photo_rect[1]),
-                method=Image.Resampling.LANCZOS)
-        canvas.paste(photo, (photo_rect[0], photo_rect[1]))
-    else:
-        # An original, incident-specific news infographic—not an empty gradient
-        # or an unrelated illustration—uses factual figures and topic artwork.
-        from story_visual import draw_story_hero
-        draw_story_hero(canvas, article, photo_rect)
+    draw.rounded_rectangle((32, 56, 1048, 1295), radius=88, fill='white')
+    # Build the centre separately, then clip photo and headline to one rounded mask.
+    panel = Image.new('RGB', (988, 1212), '#fff8ed')
+    with Image.open(image_path) as src:
+        photo = ImageOps.fit(ImageOps.exif_transpose(src).convert('RGB'), (988, 752),
+                             method=Image.Resampling.LANCZOS)
+    panel.paste(photo, (0, 0))
+    pd = ImageDraw.Draw(panel)
+    for y in range(752, 1212):
+        t = (y - 752) / 460
+        pd.line((0, y, 988, y), fill=(255, round(252 - 6*t), round(246 - 13*t)))
+    mask = Image.new('L', panel.size)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, 987, 1211), radius=76, fill=255)
+    canvas.paste(panel, (46, 70), mask)
 
     # Top date and original brand only (no third-party logo/watermarks).
     draw = ImageDraw.Draw(canvas)
@@ -360,11 +364,12 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
         article.get('published', __import__('time').time()), ZoneInfo('Asia/Colombo')
     ).strftime('%d.%m.%Y')
     latin = latin_font(35, bold=True)
-    draw.rounded_rectangle((75, 89, 326, 147), radius=14, fill='#1a2031')
-    draw.text((95, 100), date, font=latin, fill='white')
-    draw.rounded_rectangle((722, 22, 1027, 132), radius=22, fill='#0b426e', outline='#83e5ff', width=2)
-    draw.text((750, 36), 'SL NEWS', font=latin_font(41, bold=True), fill='white')
-    draw.text((891, 80), '24/7', font=latin_font(27, bold=True), fill='#91edff')
+    draw.rounded_rectangle((75, 89, 326, 147), radius=14, fill='#fff8ed', outline='white', width=2)
+    draw.text((95, 100), date, font=latin, fill='#18324e')
+    draw.rounded_rectangle((722, 22, 1027, 132), radius=22, fill='#b92136', outline='white', width=3)
+    draw.rounded_rectangle((730, 30, 1019, 64), radius=15, fill='#d84c45')
+    draw.text((748, 35), 'SL NEWS', font=latin_font(41, bold=True), fill='white')
+    draw.text((884, 82), '24/7', font=latin_font(28, bold=True), fill='#ffe094')
 
     if image_path and photo_label:
         # Identify archival institution photography without implying that
@@ -377,21 +382,20 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
         draw_mixed(draw, (132, 758), 'සංකේතාත්මක රූපයක්', 33,
                    fill='#ffffff', bold=True)
 
-    # Fade/cover lower photo margin with a charcoal headline field.
-    draw.rectangle((46, 793, 1034, 1282), fill='#101e36')
-    draw.line((76, 811, 1004, 811), fill='#67ddff', width=3)
-    draw.line((76, 816, 1004, 816), fill='#244f72', width=1)
-    draw.rounded_rectangle((76, 1230, 1004, 1268), radius=12, fill='#18304c')
-    draw.text((94, 1237), 'SL NEWS 24/7', font=latin_font(20, bold=True), fill='#9cecff')
-    draw_mixed(draw, (710, 1256), 'පැය විසිහතර පුරාම', 20, fill='#d5e9f8')
+    # Bright cream headline panel: high contrast navy/red type, generous spacing.
+    draw.rectangle((77, 839, 173, 845), fill='#c92938')
+    draw.line((188, 842, 1003, 842), fill='#e6d6c3', width=2)
+    draw.line((88, 1222, 992, 1222), fill='#e6d6c3', width=1)
+    draw.text((88, 1240), 'SL NEWS 24/7', font=latin_font(20, bold=True), fill='#18324e')
+    draw_mixed(draw, (727, 1260), 'පැය විසිහතර පුරාම', 20, fill='#735949')
     # Fit the complete headline as one block; never split a phrase arbitrarily.
-    group = _fitted_lines(draw, title, 886, 370, range(68, 23, -2))
+    group = _fitted_lines(draw, title, 888, 310, range(72, 31, -2))
     size, lines, step = group
-    baseline = 842 + size + max(0, (370 - len(lines) * step) // 2)
+    baseline = 872 + size + max(0, (310 - len(lines) * step) // 2)
     for index, line in enumerate(lines):
         x = 540 - mixed_width(draw, line, size, bold=True) / 2
         draw_mixed(draw, (x, baseline), line, size,
-                   fill='#8beaff' if index == 0 else '#ffffff', bold=True)
+                   fill='#b92136' if index == 0 else '#18324e', bold=True)
         baseline += step
     # Preserve the clean lower margin required by the production layout.
 
@@ -400,3 +404,4 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
     path = 'output/card_' + safe_id + '.png'
     canvas.save(path, optimize=True)
     return path
+

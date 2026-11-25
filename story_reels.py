@@ -56,6 +56,7 @@ def render_story_reel(article, path):
     """
     from animated_bulletin import render_bulletin, narration_for
     from media import choose_video
+    article = dict(article, require_event_media=True)
     try:
         footage = choose_video(article)
     except Exception as exc:
@@ -74,12 +75,16 @@ def render_story_reel(article, path):
         except Exception as exc:
             print('Licensed event footage edit unavailable; using branded reel:',
                   type(exc).__name__)
-    return render_bulletin(article, path), 'original_graphic_or_verified_photo'
+    from media import choose_photo
+    if not choose_photo(article):
+        raise ValueError('Verified event media required; no graphic-only reel')
+    return render_bulletin(article, path), 'verified_event_photo_reel'
 
 
 def _render_reel(article, video_path):
     """Use authorised same-event footage if available, otherwise our own reel."""
     from animated_bulletin import render_bulletin, render_graphic_reel, narration_for
+    article = dict(article, require_event_media=True)
     try:
         from media import choose_video
         clip = choose_video(article)
@@ -96,13 +101,11 @@ def _render_reel(article, video_path):
         print('Approved reel clip unavailable; using branded graphics:',
               type(exc).__name__)
     # A verified event photograph is a photo reel, never labelled as live footage.
-    if os.getenv('REELS_REQUIRE_EVENT_MEDIA', 'false').lower() == 'true':
-        from media import choose_photo
-        if not choose_photo(article):
-            raise ValueError('No verified event photo available for photo reel')
-        return render_bulletin(article, video_path), 'verified_event_photo_reel'
+    from media import choose_photo
+    if not choose_photo(article):
+        raise ValueError('No verified event photo available for photo reel')
     try:
-        return render_bulletin(article, video_path), 'branded_sinhala_voice_reel'
+        return render_bulletin(article, video_path), 'verified_event_photo_reel'
     except Exception as exc:
         print('Voice reel unavailable; using original motion graphic:',
               type(exc).__name__)
@@ -180,17 +183,16 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
         if status['rendered'] >= max_per_run:
             break
         article = entry['article']
-        if os.getenv('REELS_REQUIRE_EVENT_MEDIA', 'false').lower() == 'true':
-            from media import choose_photo, choose_video
-            try:
-                has_media = bool(choose_video(article) or choose_photo(article))
-            except Exception:
-                has_media = False
-            if not has_media:
-                entry['last_attempt_at'] = now
-                entry['media_status'] = 'awaiting_verified_event_media'
-                save(state)
-                continue
+        from media import choose_photo, choose_video
+        try:
+            has_media = bool(choose_video(article) or choose_photo(article))
+        except Exception:
+            has_media = False
+        if not has_media:
+            entry['last_attempt_at'] = now
+            entry['media_status'] = 'awaiting_verified_event_media'
+            save(state)
+            continue
         status['stories'].append(story_id)
         video_path = str(Path('output') / 'reels' / (story_id + '.mp4'))
         Path(video_path).parent.mkdir(parents=True, exist_ok=True)
@@ -246,3 +248,4 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
     status['pending'] = sum(
         r.get('status') in ('queued', 'render_failed') for r in journal.values())
     return status
+

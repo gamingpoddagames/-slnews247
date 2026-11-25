@@ -178,6 +178,26 @@ def select_subject_photo(article):
     return None
 
 
+def select_event_video_frame(article):
+    """Use a still only from the exact-event clip already approved by media.py."""
+    import subprocess
+    from media import choose_video
+    clip = choose_video(article)
+    if not clip:
+        return None
+    output = Path('output') / ('event_frame_' + hashlib.sha256(
+        str(article['id']).encode()).hexdigest()[:24] + '.jpg')
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.unlink(missing_ok=True)
+    subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', str(clip),
+                    '-t', '2', '-vf', 'thumbnail=30,scale=1280:-2',
+                    '-frames:v', '1', str(output)],
+                   check=True, timeout=35, capture_output=True)
+    with Image.open(output) as image:
+        image.verify()
+    return str(output)
+
+
 def select_real_photo(article):
     """Use real exact-event photography, then a verified *named institution*.
 
@@ -193,6 +213,14 @@ def select_real_photo(article):
         photo = None
     if photo:
         return photo, "verified_event_photo", None
+
+    try:
+        frame = select_event_video_frame(article)
+        if frame:
+            return frame, 'verified_event_video_frame', None
+    except Exception as exc:
+        # A failed clip decode never substitutes an unrelated image.
+        print('Approved event frame unavailable:', type(exc).__name__)
 
     try:
         subject = select_subject_photo(article)
@@ -219,3 +247,4 @@ def select_real_photo(article):
     except (requests.RequestException, OSError, ValueError) as exc:
         print("Vetted classroom archive photo unavailable:", type(exc).__name__)
     return None, None, None
+

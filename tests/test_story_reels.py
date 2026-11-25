@@ -8,6 +8,10 @@ from story_reels import publish_reels
 
 class PerStoryReelTests(unittest.TestCase):
     def setUp(self):
+        # Existing delivery tests represent stories with approved real photos.
+        photo = patch('media.choose_photo', return_value='approved-event.jpg')
+        photo.start()
+        self.addCleanup(photo.stop)
         self.article = {
             'id': 'event-one',
             'title_si': 'මාතර ප්‍රදේශයේ නිවේදනයක්',
@@ -96,7 +100,25 @@ class PerStoryReelTests(unittest.TestCase):
              patch('animated_bulletin.render_bulletin', return_value='graphic.mp4'):
             path, mode = render_story_reel(self.article, 'graphic.mp4')
         self.assertEqual((path, mode),
-                         ('graphic.mp4', 'original_graphic_or_verified_photo'))
+                         ('graphic.mp4', 'verified_event_photo_reel'))
+
+    def test_missing_media_holds_reel_even_when_legacy_flag_disabled(self):
+        import os
+        with patch('fast_news.publishable', return_value=True), \
+             patch('media.choose_photo', return_value=None), \
+             patch('media.choose_video', return_value=None), \
+             patch.dict(os.environ, {'REELS_REQUIRE_EVENT_MEDIA': 'false'}), \
+             patch('fast_news.save'), \
+             patch('story_reels._render_reel') as render, \
+             patch('telegram.upload_video') as telegram, \
+             patch('facebook.upload_video') as facebook:
+            result = publish_reels(self.state, [self.article], 1795350300)
+        self.assertEqual(result['rendered'], 0)
+        self.assertEqual(self.state['reels'][self.article['id']]['media_status'],
+                         'awaiting_verified_event_media')
+        render.assert_not_called()
+        telegram.assert_not_called()
+        facebook.assert_not_called()
 
     def test_queued_story_still_gets_reel_after_it_disappears_from_rss(self):
         second = dict(self.article, id='event-two',
@@ -170,3 +192,4 @@ class PerStoryReelTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+

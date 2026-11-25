@@ -129,7 +129,7 @@ class PresentationTests(unittest.TestCase):
                       sender.call_args.kwargs['data']['caption'])
         self.assertTrue(sender.call_args.args[0].endswith('/sendPhoto'))
 
-    def test_missing_event_photo_can_publish_honest_headline_card_when_enabled(self):
+    def test_legacy_fallback_flags_cannot_publish_empty_cards_or_links(self):
         from unittest.mock import MagicMock
         article = {'id': 'headline', 'title_si': 'මාතර සිද්ධිය',
                    'summary_si': 'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
@@ -140,15 +140,15 @@ class PresentationTests(unittest.TestCase):
             image = Path(directory, 'headline.png')
             image.write_bytes(b'news-card' * 200)
             with patch.dict(os.environ, {'ALLOW_HEADLINE_CARD_FALLBACK': 'true',
+                                         'ARTICLE_PREVIEW_FALLBACK': 'true',
                                          'TG_TOKEN': 'test', 'TG_CHAT_ID': 'test'}), \
                  patch('real_photo.select_real_photo', return_value=(None, None, None)), \
                  patch('image.news_card', return_value=str(image)) as render, \
                  patch('requests.post', return_value=reply) as sender:
                 result = pipeline.send_text('telegram', article)
-        self.assertEqual(result['format'], 'headline_only_no_event_photo')
-        render.assert_called_once_with(article, image_path=None, illustrative=False)
-        self.assertTrue(sender.call_args.args[0].endswith('/sendPhoto'))
-        self.assertNotIn('සිද්ධියේ සැබෑ ඡායාරූපයක්', sender.call_args.kwargs['data']['caption'])
+        self.assertEqual(result['error'], 'exact_event_photo_required')
+        render.assert_not_called()
+        sender.assert_not_called()
 
     def test_unrelated_contextual_photo_is_never_published(self):
         article = {'id': 'two', 'title_si': 'මාතර සිද්ධිය',
@@ -433,10 +433,11 @@ class NewsCardTextBoundsTests(unittest.TestCase):
             previous = os.getcwd()
             try:
                 os.chdir(root)
-                path = news_card(story)
+                Image.new('RGB', (1000, 800), (40, 120, 160)).save('event.png')
+                path = news_card(story, image_path='event.png')
                 with Image.open(path) as img:
                     # This used to be a bright yellow "details below" banner.
-                    self.assertEqual(img.getpixel((540, 1250)), (24, 48, 76))
+                    self.assertGreater(min(img.getpixel((540, 1250))), 225)
             finally:
                 os.chdir(previous)
 
@@ -448,7 +449,8 @@ class NewsCardTextBoundsTests(unittest.TestCase):
             previous = os.getcwd()
             try:
                 os.chdir(root)
-                path = news_card(story)
+                Image.new('RGB', (1000, 800), (40, 120, 160)).save('event.png')
+                path = news_card(story, image_path='event.png')
                 with Image.open(path) as rendered:
                     self.assertEqual(rendered.size, (1080, 1350))
             finally:
@@ -487,36 +489,19 @@ class SinhalaGlyphRegressionTests(unittest.TestCase):
 
 class PhotoFirstPosterTests(unittest.TestCase):
 
-    def test_no_photo_displays_news_specific_infographic_and_retains_brand(self):
-        from PIL import Image
+    def test_no_photo_rejected_before_infographic_or_file_creation(self):
         from image import news_card
-        from story_visual import story_theme, highlight
         story = {
             'id':'teachers-visual', 'title_si':'නොවැම්බර් 30 ගුරු විදුහල්පති වර්ජනයක් සැලසුම්',
             'summary_si': 'ගුරු හා විදුහල්පති සංගම් නොවැම්බර් 30 වැනිදා වැඩ වර්ජනයක් කිරීමට සැලසුම් කර තිබේ.',
             'published':1794921000
         }
-        with tempfile.TemporaryDirectory() as root:
-            previous=os.getcwd()
-            try:
-                os.chdir(root)
-                with Image.open(news_card(story)) as img:
-                    self.assertEqual(img.size, (1080,1350))
-                    self.assertEqual(story_theme(story)[0], 'education')
-                    self.assertEqual(highlight(story), ('30', 'නොවැම්බර්'))
-                    # The hero has a thematic subject graphic and actual
-                    # fact panel; it is no longer an empty shaded rectangle.
-                    colors = set()
-                    for x in range(120, 930, 45):
-                        for y in range(255, 735, 40):
-                            colors.add(img.getpixel((x,y)))
-                    self.assertGreater(len(colors), 12)
-                    self.assertGreater(img.getpixel((12,155))[2],img.getpixel((12,155))[0])
-                    self.assertGreater(img.getpixel((12,1190))[2],img.getpixel((12,1190))[0])
-            finally:
-                os.chdir(previous)
+        with patch('story_visual.draw_story_hero') as fallback:
+            with self.assertRaisesRegex(ValueError, 'real photo'):
+                news_card(story)
+        fallback.assert_not_called()
 
-    def test_no_photo_has_blue_area_and_split_color_frame(self):
+    def test_light_headline_panel_preserves_original_warm_blue_frame(self):
         from PIL import Image
         from image import news_card
         story={'id':'blue-fallback','title_si':'මාතර ප්‍රදේශයේ නව පුවතක්','published':1794921000}
@@ -524,13 +509,15 @@ class PhotoFirstPosterTests(unittest.TestCase):
             previous=os.getcwd()
             try:
                 os.chdir(root)
-                with Image.open(news_card(story)) as img:
+                Image.new('RGB', (1000, 800), (42, 91, 142)).save('photo.png')
+                with Image.open(news_card(story, image_path='photo.png')) as img:
                     top=img.getpixel((10,150))
                     bottom=img.getpixel((10,1200))
-                    blue=img.getpixel((500,170))
-                    self.assertGreater(top[2], top[0])  # midnight blue glass border
+                    centre=img.getpixel((500,870))
+                    self.assertGreater(top[0], top[2])  # warm original border
                     self.assertGreater(bottom[2], bottom[0])  # blue border
-                    self.assertGreater(blue[2], blue[0])  # blue photo fallback
+                    self.assertGreater(min(centre), 235)  # bright cream centre
+                    self.assertEqual(img.getpixel((500,350)), (42,91,142))
                     self.assertEqual(img.size,(1080,1350))
             finally:
                 os.chdir(previous)
@@ -564,7 +551,7 @@ class PhotoFirstPosterTests(unittest.TestCase):
                 with Image.open(path) as img:
                     self.assertEqual(img.size,(1080,1350))
                     self.assertTrue(all(abs(a-b) <= 3 for a,b in zip(img.getpixel((500,400)), (12,210,32))))
-                    self.assertEqual(img.getpixel((500,1250)),(24,48,76))
+                    self.assertGreater(min(img.getpixel((500,1250))),225)
             finally:
                 os.chdir(previous)
 
@@ -1004,3 +991,4 @@ class LicensedAttributionVideoTests(unittest.TestCase):
             caption=pipeline.caption(article)
         credits.assert_called_once_with(article)
         self.assertIn('CC BY: Example Creator',caption)
+

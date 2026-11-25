@@ -42,8 +42,8 @@ SOURCES = [
     ('Lanka Truth Sport', 'https://lankatruth.com/si/?feed=rss2&cat=6'),
 ]
 STATE_FILE = Path('data/sri_lanka_delivery.json')
-# A missed GitHub schedule should not permanently lose yesterday's news.
-MAX_AGE = 30 * 3600
+# Fresh news only; delayed schedules must not reintroduce yesterday's queue.
+MAX_AGE = 12 * 3600
 
 
 def clean(text):
@@ -250,21 +250,16 @@ def send_text(platform, article):
         from real_photo import select_real_photo
         photo_path, image_kind, credit = select_real_photo(article)
         from image import news_card
-        if photo_path and image_kind in ('verified_event_photo', 'licensed_subject_photo'):
+        if photo_path and image_kind in ('verified_event_photo', 'licensed_subject_photo',
+                                         'verified_event_video_frame'):
             image_path = news_card(article, image_path=photo_path, illustrative=False)
         elif (photo_path and credit and image_kind in (
                 'verified_institution_photo', 'verified_education_context_photo')):
             image_path = news_card(article, image_path=photo_path, illustrative=False,
                                    photo_label=credit['label_si'])
-        elif os.getenv('ARTICLE_PREVIEW_FALLBACK', 'false').lower() == 'true':
-            return send_article_preview(platform, article)
-        elif os.getenv('ALLOW_HEADLINE_CARD_FALLBACK', 'false').lower() == 'true':
-            # Never pass a different incident's photograph as this story.
-            # A graphic containing only the real news headline is honest,
-            # while the accompanying post contains the full checked facts.
-            image_kind = 'headline_only_no_event_photo'
-            image_path = news_card(article, image_path=None, illustrative=False)
         else:
+            # Owner requires a real image/video on every native news post.
+            # Legacy workflow flags must never restore empty cards or link posts.
             return {'error': 'exact_event_photo_required'}
         if not image_path or not Path(image_path).is_file() or Path(image_path).stat().st_size < 1000:
             return {'error': 'news_card_failed'}
@@ -273,6 +268,10 @@ def send_text(platform, article):
         return {'error': 'real_photo_processing_failed'}
     message = caption(article)
     required_credit = ''
+    if image_kind == 'verified_event_video_frame':
+        from media import video_credit
+        required_credit = video_credit(article)
+        message += required_credit
     if image_kind in ('verified_institution_photo', 'verified_education_context_photo') and credit:
         # Legally mandatory CC BY/CC BY-SA credit is part of the post, not
         # news-source boilerplate. Never hide required copyright terms.
@@ -797,3 +796,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
