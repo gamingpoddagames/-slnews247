@@ -325,25 +325,22 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
     width, height = 1080, 1350
     canvas = Image.new('RGB', (width, height))
     gradient = ImageDraw.Draw(canvas)
-    # Upper frame: existing warm news colors; lower frame: deep blue.
-    # Keep the transition at the poster's midpoint for a balanced two-tone border.
+    # Glass broadcast frame: restrained cyan highlights over midnight blue.
     for y in range(height):
-        if y < height // 2:
-            weight = y / (height // 2)
-            color = (round(255 - 52 * weight),
-                     round(142 - 117 * weight),
-                     round(23 + 28 * weight))
-        else:
-            weight = (y - height // 2) / (height - height // 2)
-            color = (round(17 - 7 * weight),
-                     round(101 - 60 * weight),
-                     round(184 - 79 * weight))
-        gradient.line((0, y, width, y), fill=color)
-
-    # Inner panel has a thick rounded white frame and dark lower portion.
+        t = y / height
+        gradient.line((0, y, width, y),
+                      fill=(int(7 + 7*t), int(18 + 13*t), int(43 + 24*t)))
+    glow = Image.new('RGBA', canvas.size)
+    gd = ImageDraw.Draw(glow)
+    gd.ellipse((-260, -240, 720, 650), fill=(0, 173, 255, 100))
+    gd.ellipse((730, 800, 1400, 1510), fill=(110, 48, 255, 95))
+    canvas = Image.alpha_composite(canvas.convert('RGBA'),
+                                 glow.filter(ImageFilter.GaussianBlur(100))).convert('RGB')
     draw = ImageDraw.Draw(canvas)
-    draw.rounded_rectangle((32, 56, 1048, 1295), radius=88, fill='white')
-    draw.rounded_rectangle((44, 68, 1036, 1283), radius=76, fill='#202124')
+    draw.rounded_rectangle((30, 55, 1050, 1297), radius=42,
+                           fill='#101e36', outline='#63d9ff', width=2)
+    draw.rounded_rectangle((40, 65, 1040, 1287), radius=34,
+                           outline='#314e70', width=1)
     photo_rect = (46, 70, 1034, 822)
     if image_path:
         with Image.open(image_path) as src:
@@ -365,9 +362,9 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
     latin = latin_font(35, bold=True)
     draw.rounded_rectangle((75, 89, 326, 147), radius=14, fill='#1a2031')
     draw.text((95, 100), date, font=latin, fill='white')
-    draw.rounded_rectangle((722, 22, 1027, 132), radius=22, fill='#a6081b', outline='white', width=5)
+    draw.rounded_rectangle((722, 22, 1027, 132), radius=22, fill='#0b426e', outline='#83e5ff', width=2)
     draw.text((750, 36), 'SL NEWS', font=latin_font(41, bold=True), fill='white')
-    draw.text((891, 80), '24/7', font=latin_font(27, bold=True), fill='#ffdc37')
+    draw.text((891, 80), '24/7', font=latin_font(27, bold=True), fill='#91edff')
 
     if image_path and photo_label:
         # Identify archival institution photography without implying that
@@ -381,7 +378,12 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
                    fill='#ffffff', bold=True)
 
     # Fade/cover lower photo margin with a charcoal headline field.
-    draw.rectangle((46, 793, 1034, 1282), fill='#202124')
+    draw.rectangle((46, 793, 1034, 1282), fill='#101e36')
+    draw.line((76, 811, 1004, 811), fill='#67ddff', width=3)
+    draw.line((76, 816, 1004, 816), fill='#244f72', width=1)
+    draw.rounded_rectangle((76, 1230, 1004, 1268), radius=12, fill='#18304c')
+    draw.text((94, 1237), 'SL NEWS 24/7', font=latin_font(20, bold=True), fill='#9cecff')
+    draw_mixed(draw, (710, 1256), 'පැය විසිහතර පුරාම', 20, fill='#d5e9f8')
     # Fit the complete headline as one block; never split a phrase arbitrarily.
     group = _fitted_lines(draw, title, 886, 370, range(68, 23, -2))
     size, lines, step = group
@@ -389,7 +391,7 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
     for index, line in enumerate(lines):
         x = 540 - mixed_width(draw, line, size, bold=True) / 2
         draw_mixed(draw, (x, baseline), line, size,
-                   fill='#ffdd32' if index == 0 else 'white', bold=True)
+                   fill='#8beaff' if index == 0 else '#ffffff', bold=True)
         baseline += step
     # Preserve the clean lower margin required by the production layout.
 
