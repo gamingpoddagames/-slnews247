@@ -1,6 +1,23 @@
 {
   "stories": [
     {
+      "id": "cbsl-otp-pin-safety-reminder-20261125",
+      "title_si": "මහ බැංකුවේ උපදෙස්: OTP සහ PIN අංක රහසිගතව තබාගන්න",
+      "summary_si": "බැංකු ගනුදෙනු කරන ඔබට ආරක්ෂක මතක් කිරීමක්. ගිණුමේ පරිශීලක නාමය, මුරපදය, PIN, OTP හෝ ගිණුම සත්‍යාපනයට අවශ්‍ය වෙනත් රහස් තොරතුරු කිසිවකු සමඟ හුවමාරු නොකරන ලෙස මහ බැංකුව උපදෙස් දී තිබේ. මෙවැනි තොරතුරු ලබාදීමෙන් ගිණුම් හිමියන්ගේ මුදල් දැඩි අවදානමකට ලක්විය හැකි බව එම උපදෙස්වල සඳහන් වේ.\n\nඅවහිර වූ විශාල මුදලක් නිදහස් කරගැනීමට උදව් කළහොත් ප්‍රතිලාභ දෙන බව කියමින් ව්‍යාජ ලේඛන පෙන්වා රහස් තොරතුරු ඉල්ලා සිටින වංචා ගැනද අවධානය යොමු කර ඇත. ගිණුමේ ගනුදෙනු වහා දැනගැනීමට බැංකුවෙන් SMS දැනුම්දීම් සේවාවක් ලබාගැනීමද නිර්දේශ කර තිබේ. මෙය 2021 ඔක්තෝබර් මාසයේ පළවූ උපදෙස් ඇසුරින් සකස් කළ මතක් කිරීමකි.",
+      "link": "https://www.newsfirst.lk/2021/10/28/beware-of-financial-scams-a-warning-from-the-central-bank",
+      "source": "SL NEWS 24/7 original public-safety reminder; 2021 CBSL guidance cross-checked in News 1st and Daily FT",
+      "published": 1795578216.013,
+      "content_type": "public_safety_reminder",
+      "facts_reviewed": true,
+      "source_refs": [
+        "https://www.newsfirst.lk/2021/10/28/beware-of-financial-scams-a-warning-from-the-central-bank",
+        "https://www.ft.lk/front-page/CBSL-warns-public-to-beware-of-financial-scams/44-725167"
+      ],
+      "timestamp_basis": "Original public-safety reminder prepared now, explicitly based on October 2021 guidance; not a new CBSL announcement",
+      "checked_at": "2026-11-25T03:43:36.013Z",
+      "primary_source_check": "CBSL original page and PDF returned 403 or timed out; facts cross-checked by opening two complete contemporary reports."
+    },
+    {
       "id": "cbsl-december-bank-holiday-reminder-20261125",
       "title_si": "මහ බැංකුවේ දින දර්ශනය: දෙසැම්බර් 23 සහ 25 බැංකු නිවාඩු",
       "summary_si": "දෙසැම්බර් මාසයේ බැංකු කටයුතු සැලසුම් කරන ඔබට මතක් කිරීමක්. 2026 නිල බැංකු නිවාඩු දින දර්ශනය අනුව දෙසැම්බර් 23 බදාදා උඳුවප් පුර පසළොස්වක පොහොය දිනයත්, දෙසැම්බර් 25 සිකුරාදා නත්තල් දිනයත් බැංකු නිවාඩු ලෙස සඳහන් වේ. එම දින දෙකම රජයේ නිවාඩු වන අතර නත්තල් දිනය වෙළෙඳ නිවාඩුවක් ලෙසද දක්වා ඇත.\n\nමීට අමතරව සියලු සෙනසුරාදා සහ ඉරිදා දින බැංකු නිවාඩු බව නිල දින දර්ශනය සඳහන් කරයි. දින දර්ශනයේ B යන්නෙන් බැංකු නිවාඩුද, P යන්නෙන් රජයේ නිවාඩුද, M යන්නෙන් වෙළෙඳ නිවාඩුද හඳුන්වා දී තිබේ. මෙය දැනට පළ කර ඇති නිල දින දර්ශනය ඇසුරින් කරන සේවා මතක් කිරීමකි.",
