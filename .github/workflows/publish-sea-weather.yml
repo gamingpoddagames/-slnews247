@@ -1,0 +1,37 @@
+name: Publish approved sea weather video
+on:
+  push:
+    branches: ['publish/sea-weather-20261125']
+    paths: ['.github/workflows/publish-sea-weather.yml']
+permissions:
+  contents: read
+jobs:
+  publish:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m pip install requests==2.32.4
+      - name: Verify and publish the approved video
+        env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        run: |
+          for part in data/sea-weather-video/*.b64; do base64 -d "$part"; done > sea-weather.mp4
+          echo '2bbc60f782fea9e74cdb871f8022966fad2daad3ba473ddc38e5eb2b520b3398  sea-weather.mp4' | sha256sum -c -
+          python - <<'PY'
+          from facebook import upload_video as facebook
+          from telegram import upload_video as telegram
+          caption = """2026 නොවැම්බර් 25 මුහුදු කාලගුණ අනාවැකිය | SL NEWS 24/7
+          මුහුදු ප්‍රදේශ කිහිපයක සුළඟ විටින් විට පැයට කිලෝමීටර් 40–45 දක්වා ඉහළ යා හැකියි.
+          සංරක්ෂිත රළ ඡායාරූපය: AmeenulAslam / Wikimedia Commons (කපා සකස් කර ඇත).
+          https://commons.wikimedia.org/wiki/File:Sea_waves_in_srilanka_beach.jpg
+          වීඩියෝව සහ ඡායාරූප අනුවර්තනය: CC BY-SA 4.0
+          https://creativecommons.org/licenses/by-sa/4.0/"""
+          fb = facebook('sea-weather.mp4', caption)
+          tg = telegram('sea-weather.mp4', caption)
+          print(f'Facebook accepted: {fb}; Telegram accepted: {tg}')
+          raise SystemExit(0 if fb and tg else 1)
+          PY
