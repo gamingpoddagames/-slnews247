@@ -8444,6 +8444,54 @@
         }
       },
       "uncertain": {}
+    },
+    "fb0017a006d9cb895c5ea425": {
+      "article": {
+        "id": "fb0017a006d9cb895c5ea425",
+        "title_si": "ධීවර ක්ෂේත්‍රයට කුඩා යාත්‍රා මිලදී ගැනීමට ලබන ජනවාරියේ සිට රු. මිලියන 500 ක සහන ණය වැඩසටහනක්",
+        "summary_si": "දේශීය ධීවර කර්මාන්තය සඳහා කුඩා යාත්‍රා මිලදී ගැනීම වෙනුවෙන් රුපියල් මිලියන 500ක සහන ණය වැඩසටහනක් ලබන ජනවාරි මාසයේ සිට ක්‍රියාත්මක කරන බව ධීවර අමාත්‍යාංශය නිවේදනය කරයි.",
+        "link": "https://siyathanews.lk/archives/174753",
+        "source": "Siyatha News",
+        "published": 1795585606
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795585957.144974
+      }
+    },
+    "503d57d84a8a902d7599599b": {
+      "article": {
+        "id": "503d57d84a8a902d7599599b",
+        "title_si": "හික්කඩුව වෙරළ තීරයේ දිය නාමින් සිටියදී දියවැලකට හසුවුණු බෙලරුස් ජාතික කාන්තාවකගේ දිවි බේරා ගැනේ.",
+        "summary_si": "හික්කඩුව, නාරිගම – තිරානගම වෙරළ තීරයේ දිය නාමින් සිටියදී දියවැලකට හසුව ගසාගෙන යමින් සිටි විදේශීය සංචාරක කාන්තාවකගේ දිවි බේරා ගැනීමට ශ්‍රී ලංකා පොලිස් ජීවිතාරක්ෂක ඒකකයේ නිලධාරීන් ඊයේ (24) පෙරවරුවේ සමත්ව තිබේ. ඊයේ පෙරවරු 10.",
+        "link": "https://siyathanews.lk/archives/174748",
+        "source": "Siyatha News",
+        "published": 1795585006
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795585957.144974
+      }
+    },
+    "16be416b10f9b6fdc768dbfd": {
+      "article": {
+        "id": "16be416b10f9b6fdc768dbfd",
+        "title_si": "රටවල් හා වෙළෙඳ බල ප්‍රදේශ 16කට නව තීරුබදු පැනවීමට අමෙරිකාව සූදානම් වෙයි",
+        "summary_si": "රටවල් කිහිපයකින් අමෙරිකාවට ආනයනය කරන භාණ්ඩ සඳහා නව තීරුබදු පැනවීමට අමෙරිකානු රජය සූදානම් වන බව BBC වාර්තා කරයි. මෙම නව ආනයන බදු හේතුවෙන් අමෙරිකාවේ ප්‍රධාන වෙළෙඳ හවුල්කරුවන් රැසකට බලපෑම් එල්ල වනු ඇත. ඒ අතර චීනය, යුරෝපා සංගමය, මෙක්සිකෝව සහ ජපානය ඇතුළු රටවල් හා වෙළෙඳ බල ප්‍රදේශ 16ක් ද ඇතුළත් වේ.",
+        "link": "https://siyathanews.lk/archives/174742",
+        "source": "Siyatha News",
+        "published": 1795582752
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795585957.144974
+      }
     }
   },
   "videos": {
@@ -8465,7 +8513,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795578278.3079426,
+  "last_scan_at": 1795585957.144974,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -9470,7 +9518,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "54441b93c16034ba122c49cb": {
@@ -9485,7 +9533,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "d0cc364521433f15b52c0a06": {
@@ -9518,7 +9566,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "19a748cdb194c976a8b624fa": {
@@ -9533,7 +9581,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "833a74cd509ade476bb5608b": {
@@ -9620,7 +9668,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "f2b19d84ae8e19cb652040d6": {
@@ -9671,7 +9719,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "fde8d925f6c7883dc064c1b5": {
@@ -9686,7 +9734,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "34db6ba8e9c49161db6c623d": {
@@ -9701,7 +9749,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "91e0bb08720d099e32bf24c4": {
@@ -9716,7 +9764,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "6e37376fc512bf393b62ee45": {
@@ -9767,7 +9815,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "605aed87c68ff37981073fb2": {
@@ -9818,7 +9866,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "f55ef5dbf9d1bbc87acab0e9": {
@@ -9869,7 +9917,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "c0e095b7fdf5b038c1d42e85": {
@@ -9920,7 +9968,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "bdb36f570fcdc1cd61811c7f": {
@@ -9971,7 +10019,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "5ecd13b6dbb588878f1ce6d3": {
@@ -9986,7 +10034,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "52e72e725aab32aa2763b868": {
@@ -10001,7 +10049,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "cf88ddb77089c2daa22a13e0": {
@@ -10016,7 +10064,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "febd76b4267437c6eef2c907": {
@@ -10031,7 +10079,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "a5a8e4e562cb3b1acabe16a1": {
@@ -10046,7 +10094,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "906db4934fbc950f18f1074f": {
@@ -10061,7 +10109,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "b583cef034301b2acf8d6731": {
@@ -10076,7 +10124,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "f7884447b7155c3a5c6aa9d8": {
@@ -10091,7 +10139,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "2c929a905d8f884e35355364": {
@@ -10106,7 +10154,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "d3aeb36cfa0585870a5f1805": {
@@ -10121,7 +10169,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "264ce056a213cc66e68b093a": {
@@ -10136,7 +10184,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "601b8ff6da84d7765cc003db": {
@@ -10151,7 +10199,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "ward-place-fire-hiru-502577-sl247": {
@@ -10168,7 +10216,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "kalmunai-saindamarudu-term-502574-sl247": {
@@ -10185,7 +10233,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "7c31499c45b73e28c4b4b134": {
@@ -10200,7 +10248,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "5d28ae69cbce4be2190e1ad2": {
@@ -10215,7 +10263,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "b3f01a9d152c40ece11cf243": {
@@ -10230,7 +10278,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "60884d21b625f0cc4980f83f": {
@@ -10245,7 +10293,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "3760b06c1147e5a3d4e5f369": {
@@ -10260,7 +10308,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "7bcb97bf6d736ea7a540f332": {
@@ -10275,7 +10323,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "9909b801e610b8c4279ab507": {
@@ -10290,7 +10338,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "56bc74ed26b9b04f69996b37": {
@@ -10305,7 +10353,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "578f8fa94e7ecb651484b842": {
@@ -10320,7 +10368,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "597aa4d9e4352dd26e550218": {
@@ -10335,7 +10383,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "1d9460f7bf9a66ae4a992037": {
@@ -10350,7 +10398,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "ce36331ffb294ad6c03613f3": {
@@ -10365,7 +10413,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "d5b4e945ca8c02dc5fd0ba20": {
@@ -10380,7 +10428,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "399e2c900129600bdbc2b067": {
@@ -10395,7 +10443,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "bc906233dcfd3714aa9bcfbc": {
@@ -10410,7 +10458,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "efca2dc417d5795831457ae0": {
@@ -10441,7 +10489,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "2af492afe39f22feed56d053": {
@@ -10456,7 +10504,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "b8fb010b0f6b519ce68099c8": {
@@ -10471,7 +10519,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "612152d8bf897e10bb3fbe45": {
@@ -10486,7 +10534,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "dec3d3c74de823728925ab6b": {
@@ -10501,7 +10549,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "a8b688b52ea99ad1a874cc78": {
@@ -10516,7 +10564,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "026d7bd65d89ff3ab9b9e4ce": {
@@ -10531,7 +10579,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "5b8bc743820d4e3f9008d7fc": {
@@ -10546,7 +10594,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "96447325fc3bc6e3ebeaf10e": {
@@ -10561,7 +10609,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "cbsl-december-bank-holiday-reminder-20261125": {
@@ -10582,7 +10630,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     },
     "cbsl-otp-pin-safety-reminder-20261125": {
@@ -10606,7 +10654,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795578278.3079426,
+      "last_attempt_at": 1795585957.144974,
       "media_status": "awaiting_verified_event_media"
     }
   },
