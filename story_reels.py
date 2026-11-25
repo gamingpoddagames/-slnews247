@@ -41,8 +41,7 @@ def _media_attribution(article):
         print('Reel media lookup:', type(exc).__name__)
         return ''
     if kind in ('verified_institution_photo', 'verified_education_context_photo') and credit:
-        return ('\n\n📷 ' + credit['label_si'] + ' — '
-                + credit['creator'] + ', ' + credit['license']
+        return ('\n\n📷 ' + credit['creator'] + ', ' + credit['license']
                 + ' (cropped/resized). ' + credit['source']
                 + ' ' + credit['license_url'])
     if kind == 'verified_event_photo':

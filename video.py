@@ -2,14 +2,15 @@
 import subprocess
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps
-from image import get_font, mixed_width, draw_mixed
+from image import (get_font, mixed_width, draw_mixed, latin_font,
+                   broadcast_background, crimson_panel, YELLOW)
 
 
 def wrap(draw, text, font, width):
     lines, current = [], ''
     for word in text.split():
         trial = (current + ' ' + word).strip()
-        if current and mixed_width(draw, trial, font.size) > width:
+        if current and mixed_width(draw, trial, font.size, bold=True) > width:
             lines.append(current)
             current = word
         else:
@@ -19,28 +20,33 @@ def wrap(draw, text, font, width):
     return lines
 
 
-def fit(draw, text, box, start, minimum=20):
+def fit(draw, text, box, start, minimum=20, fill='white', secondary_fill=None):
     x, y, width, height = box
     for size in range(start, minimum - 1, -2):
-        font = get_font(size)
+        font = get_font(size, bold=True)
         lines = wrap(draw, text, font, width)
         step = int(size * 1.65)
-        if lines and len(lines) * step <= height and all(mixed_width(draw, line, size) <= width for line in lines):
-            for line in lines:
-                draw_mixed(draw, (x, y + size), line, size, fill='white')
+        if lines and len(lines) * step <= height and all(mixed_width(draw, line, size, bold=True) <= width for line in lines):
+            for index, line in enumerate(lines):
+                draw_mixed(draw, (x, y + size), line, size,
+                           fill=(secondary_fill or fill) if index else fill,
+                           bold=True)
                 y += step
             return
     raise ValueError('News text does not fit card; refusing clipped output')
 
 
 def create_card(title, summary, path, image_path=None, height=1920, contextual=True):
-    card = Image.new('RGB', (1080, height), '#081225')
+    card = broadcast_background((1080, height), (32, 56, 1048, height-55), 88)
+    panel = crimson_panel((988, height-138))
+    mask = Image.new('L', panel.size)
+    ImageDraw.Draw(mask).rounded_rectangle(
+        (0, 0, panel.width-1, panel.height-1), radius=76, fill=255)
+    card.paste(panel, (46, 70), mask)
     draw = ImageDraw.Draw(card)
-    draw.rectangle((0, 0, 1080, 16), fill='#ef4056')
-    english = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
-    draw.text((65, 65), 'SL NEWS 24/7', font=ImageFont.truetype(english, 52), fill='white')
+    draw.text((65, 90), 'SL NEWS 24/7', font=latin_font(52, bold=True), fill='white')
     if height == 1920:
-        draw_mixed(draw, (65, 196), 'සිංහල පුවත්', 38, fill='#52dbc3')
+        draw_mixed(draw, (65, 217), 'පැය විසිහතර පුරාම', 32, fill=YELLOW, bold=True)
         photo_box = (45, 270, 1035, 1030)
         title_box, summary_box = (65, 1110, 950, 350), (65, 1500, 950, 210)
         footer_y = 1780
@@ -54,14 +60,11 @@ def create_card(title, summary, path, image_path=None, height=1920, contextual=T
             photo = ImageOps.fit(image.convert('RGB'), (x1-x0, y1-y0), method=Image.Resampling.LANCZOS)
         card.paste(photo, (x0, y0))
         draw = ImageDraw.Draw(card)
-        if contextual:
-            draw.rectangle((x0, y1-64, x1, y1), fill='#142642')
-            draw_mixed(draw, (x0+20, y1-24), 'පසුබිම් ඡායාරූපයකි', 27, fill='#d8e4ed')
-    fit(draw, title, title_box, 54, 24)
+    fit(draw, title, title_box, 54, 24, fill=YELLOW, secondary_fill='white')
     if summary_box[3] and summary:
         fit(draw, summary, summary_box, 30, 22)
-    draw.line((65, footer_y-15, 1015, footer_y-15), fill='#52dbc3', width=3)
-    draw.text((65, footer_y+12), 'Follow for Sri Lanka news', font=ImageFont.truetype(english, 29), fill='#a9bacf')
+    draw.line((65, footer_y-15, 1015, footer_y-15), fill='#d88b54', width=3)
+    draw.text((65, footer_y+12), 'SL NEWS 24/7', font=latin_font(29, bold=True), fill='white')
     card.save(path)
 
 
@@ -186,3 +189,4 @@ def create_footage_video(clip_path, title, summary, output_path, audio_path=None
             '-movflags', '+faststart', '-shortest', output_path]
     subprocess.run(args, check=True, timeout=240, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return True
+

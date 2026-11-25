@@ -188,6 +188,7 @@ class PerStoryReelTests(unittest.TestCase):
             public = _media_attribution({'title_si': 'මහ බැංකුව පොලී තීරණය'})
         self.assertIn('Zsastaba', public)
         self.assertIn('CC BY 4.0', public)
+        self.assertNotIn(credit['label_si'], public)
 
 
 if __name__ == '__main__':

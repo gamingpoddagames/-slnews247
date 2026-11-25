@@ -1,11 +1,14 @@
 # SL News 247 — Sri Lankan Sinhala news automation
 
-## Photo-first light design — 25 November 2026
+## Approved crimson design — 25 November 2026
 
 The current poster keeps the rounded white frame with the warm upper and blue
-lower border. A large real photograph sits above a cream headline panel with
-readable navy/red Sinhala type. Headlines are fitted using the actual bold
-font measurements. Video scene text uses the same light palette.
+lower border. A large real photograph sits above a logo-matched crimson panel
+with bold yellow and white Sinhala text. Posts, photo reels and approved footage
+layouts share this palette. Headlines are fitted using actual bold font metrics;
+the production variable font selects Weight and Width by their named axes.
+Optional image/video descriptions and labels are absent from public artwork and
+captions. Internal media provenance and required licence attribution are retained.
 
 Native news posts now require a verified reusable photo, an approved named
 subject/institution photo, or a frame decoded from an already approved exact-event

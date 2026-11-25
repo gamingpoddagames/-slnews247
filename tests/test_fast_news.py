@@ -125,6 +125,7 @@ class PresentationTests(unittest.TestCase):
             article, image_path=str(photo), illustrative=False,
             photo_label='ශ්‍රී ලංකා මහ බැංකුවේ ගොඩනැගිල්ල')
         self.assertIn('Zsastaba', sender.call_args.kwargs['data']['caption'])
+        self.assertNotIn(credit['label_si'], sender.call_args.kwargs['data']['caption'])
         self.assertIn('creativecommons.org/licenses/by/4.0/',
                       sender.call_args.kwargs['data']['caption'])
         self.assertTrue(sender.call_args.args[0].endswith('/sendPhoto'))
@@ -436,8 +437,10 @@ class NewsCardTextBoundsTests(unittest.TestCase):
                 Image.new('RGB', (1000, 800), (40, 120, 160)).save('event.png')
                 path = news_card(story, image_path='event.png')
                 with Image.open(path) as img:
-                    # This used to be a bright yellow "details below" banner.
-                    self.assertGreater(min(img.getpixel((540, 1250))), 225)
+                    # Footer stays crimson, without a yellow CTA banner.
+                    footer = img.getpixel((540, 1250))
+                    self.assertGreater(footer[0], 150)
+                    self.assertLess(footer[1], 50)
             finally:
                 os.chdir(previous)
 
@@ -501,7 +504,7 @@ class PhotoFirstPosterTests(unittest.TestCase):
                 news_card(story)
         fallback.assert_not_called()
 
-    def test_light_headline_panel_preserves_original_warm_blue_frame(self):
+    def test_crimson_headline_panel_preserves_original_warm_blue_frame(self):
         from PIL import Image
         from image import news_card
         story={'id':'blue-fallback','title_si':'මාතර ප්‍රදේශයේ නව පුවතක්','published':1794921000}
@@ -516,7 +519,8 @@ class PhotoFirstPosterTests(unittest.TestCase):
                     centre=img.getpixel((500,870))
                     self.assertGreater(top[0], top[2])  # warm original border
                     self.assertGreater(bottom[2], bottom[0])  # blue border
-                    self.assertGreater(min(centre), 235)  # bright cream centre
+                    self.assertGreater(centre[0], 150)  # logo-matched crimson
+                    self.assertLess(centre[1], 50)
                     self.assertEqual(img.getpixel((500,350)), (42,91,142))
                     self.assertEqual(img.size,(1080,1350))
             finally:
@@ -551,7 +555,9 @@ class PhotoFirstPosterTests(unittest.TestCase):
                 with Image.open(path) as img:
                     self.assertEqual(img.size,(1080,1350))
                     self.assertTrue(all(abs(a-b) <= 3 for a,b in zip(img.getpixel((500,400)), (12,210,32))))
-                    self.assertGreater(min(img.getpixel((500,1250))),225)
+                    footer = img.getpixel((500,1250))
+                    self.assertGreater(footer[0], 150)
+                    self.assertLess(footer[1], 50)
             finally:
                 os.chdir(previous)
 

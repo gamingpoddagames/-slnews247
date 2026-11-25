@@ -275,8 +275,7 @@ def send_text(platform, article):
     if image_kind in ('verified_institution_photo', 'verified_education_context_photo') and credit:
         # Legally mandatory CC BY/CC BY-SA credit is part of the post, not
         # news-source boilerplate. Never hide required copyright terms.
-        required_credit = ('\n\n📷 ' + credit['label_si'] + ' — '
-                           + credit['creator'] + ' / ' + credit['license']
+        required_credit = ('\n\n📷 ' + credit['creator'] + ' / ' + credit['license']
                            + ' (crop/resize)\n' + credit['source']
                            + '\n' + credit['license_url'])
         message += required_credit

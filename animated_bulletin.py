@@ -40,23 +40,22 @@ def _story_facts(article, narration):
 
 def _slide(article, text, index, image_path, destination, photo_label=None):
     """Three intentionally different broadcast scenes; no fabricated event shots."""
-    from image import draw_mixed, fit_headline, cover_resize, latin_font
+    from image import (draw_mixed, fit_headline, latin_font,
+                       broadcast_background, crimson_panel, YELLOW)
     from PIL import ImageOps
     import re
     from datetime import datetime
     from zoneinfo import ZoneInfo
 
     W, H = 720, 1280
-    palette = [('#fff8ed', '#b92136', '#ffb857')] * 3
-    bg, accent, highlight = palette[index]
-    canvas = Image.new('RGB', (W, H), bg)
+    canvas = broadcast_background((W, H), (21, 37, 699, 1251), 58)
+    panel = crimson_panel((664, 1190))
+    mask = Image.new('L', panel.size)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, 663, 1189), radius=48, fill=255)
+    canvas.paste(panel, (28, 51), mask)
     draw = ImageDraw.Draw(canvas)
-    draw.rectangle((0, 0, W, 19), fill=highlight)
-    draw.rounded_rectangle((35, 44, 685, 117), radius=22, fill=accent)
     draw.text((58, 65), 'SL NEWS 24/7', font=latin_font(34, bold=True), fill='white')
-    draw.rounded_rectangle((35, 144, 205, 191), radius=12, fill='#a9223c')
-    draw.text((53, 151), 'NEWS  /  0' + str(index+1),
-              font=latin_font(21, bold=True), fill='white')
+    draw_mixed(draw, (58, 164), 'පැය විසිහතර පුරාම', 23, fill=YELLOW, bold=True)
 
     # Only verified licensed exact-event media may fill the video window.
     # Without one, animate original editorial facts, never unrelated stock.
@@ -76,32 +75,34 @@ def _slide(article, text, index, image_path, destination, photo_label=None):
 
     headline = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '',
                       article.get('title_si', ''), flags=re.I)
-    draw.rounded_rectangle((35, 758, 685, 1029), radius=25, fill='#fffdf8',
-                           outline='#e6d6c3', width=2)
+    draw.line((48, 756, 672, 756), fill='#d88b54', width=2)
     size, lines, step = fit_headline(draw, headline, width=570,
-                                      max_height=227, start_size=40, min_size=20)
+                                      max_height=227, start_size=40, min_size=20,
+                                      bold=True)
     baseline = 820
-    for line in lines:
-        draw_mixed(draw, (68, baseline), line, size, bold=True, fill='#18324e')
+    for line_index, line in enumerate(lines):
+        draw_mixed(draw, (68, baseline), line, size, bold=True,
+                   fill=YELLOW if line_index == 0 else 'white')
         baseline += step
 
     # Fact line as a lower-third; fit or omit, never cut off characters.
-    draw.rectangle((0, 1055, W, H), fill='#fff8ed')
-    draw.line((37, 1058, 683, 1058), fill=highlight, width=5)
+    draw.line((48, 1058, 672, 1058), fill='#d88b54', width=3)
+    # A small text-free progress accent distinguishes the three scenes.
+    segment = 200
+    left = 48 + index * 212
+    draw.line((left, 1058, left + segment, 1058), fill=YELLOW, width=5)
     try:
         size, lines, step = fit_headline(draw, text, width=622,
-                                         max_height=137, start_size=26, min_size=18)
+                                         max_height=137, start_size=26, min_size=18,
+                                         bold=True)
         baseline = 1118
         for line in lines:
-            draw_mixed(draw, (48, baseline), line, size, fill='#18324e')
+            draw_mixed(draw, (48, baseline), line, size, fill='white', bold=True)
             baseline += step
     except ValueError:
         # The full fact is still narrated and in the post text.
         pass
-    # Brand and factual news only; archive institution imagery is identified
-    # by its subject in the picture, not misrepresented as event footage.
-    if image_path and photo_label:
-        draw_mixed(draw, (44, 1241), photo_label, 18, fill='#735949')
+    # Public scenes show the news and our brand; media metadata stays internal.
     canvas.save(destination)
     return str(destination)
 

@@ -57,7 +57,7 @@ class MediaFirstDesignTests(unittest.TestCase):
                 build_scene_images({'require_event_media': True}, 'script', folder)
         render.assert_not_called()
 
-    def test_complete_bold_headlines_fit_readable_light_panel(self):
+    def test_complete_bold_headlines_fit_readable_panel(self):
         from PIL import Image, ImageDraw
         from image import _fitted_lines, mixed_width
         draw = ImageDraw.Draw(Image.new('RGB', (1080, 1350)))
@@ -73,3 +73,18 @@ class MediaFirstDesignTests(unittest.TestCase):
             self.assertLessEqual(step * len(lines), 310)
             self.assertTrue(all(mixed_width(draw, line, size, bold=True) <= 888
                                 for line in lines))
+
+    def test_production_variable_font_bold_is_heavier_than_regular(self):
+        import image
+        variable = (Path(image.__file__).resolve().parent
+                    / 'assets/sinhala_fonts/NotoSansSinhala-Variable.ttf')
+        if not variable.is_file():
+            self.skipTest('Production font is downloaded by the workflow')
+        # Exercise the same variable font used by GitHub, even on machines
+        # that also have static Noto fonts installed.
+        with patch('pathlib.Path.exists', lambda path: path == variable):
+            regular = image.get_font(64)
+            bold = image.get_font(64, bold=True)
+        phrase = 'ශ්‍රී ලංකා මහ බැංකුව'
+        self.assertGreater(sum(bold.getmask(phrase)),
+                           sum(regular.getmask(phrase)) * 1.25)

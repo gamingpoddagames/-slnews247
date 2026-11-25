@@ -11,6 +11,9 @@ from PIL import (
 
 from config import VIDEO_WIDTH, VIDEO_HEIGHT
 
+CRIMSON = '#b92136'
+YELLOW = '#ffe24a'
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0"
 }
@@ -210,11 +213,17 @@ def get_font(size, bold=False):
             if not ImageFont.core.HAVE_RAQM:
                 raise RuntimeError('Pillow requires libraqm for correct Sinhala shaping')
             font = ImageFont.truetype(candidate, size, layout_engine=ImageFont.Layout.RAQM)
-            if bold and candidate.endswith('-Variable.ttf'):
-                try:
-                    font.set_variation_by_axes([100, 700])  # width=100, weight=700
-                except (OSError, ValueError):
-                    pass
+            if candidate.endswith('-Variable.ttf'):
+                # Google Fonts stores Weight before Width; never assume the
+                # filename's [wdth,wght] order is the actual axis order.
+                axes = font.get_variation_axes()
+                values = [
+                    max(axis['minimum'], min(axis['maximum'], 700 if bold else 400))
+                    if axis['name'].decode('utf-8').lower() == 'weight'
+                    else axis['default']
+                    for axis in axes
+                ]
+                font.set_variation_by_axes(values)
             return font
     raise RuntimeError('Sinhala font unavailable: install fonts-noto-core')
 
@@ -300,6 +309,21 @@ def fit_headline(draw, title, width=950, max_height=550, start_size=72, min_size
 
 
 def _fitted_lines(draw, text, width, height, sizes):
+    # Keep a short introductory clause together rather than letting its last
+    # word spill into the main fact (for example, a calendar heading).
+    prefix, colon, remainder = text.partition(':')
+    if colon and remainder.strip() and len(prefix) <= 60:
+        prefix += ':'
+        for size in sizes:
+            step = int(size * 1.48)
+            if mixed_width(draw, prefix, size, bold=True) > width:
+                continue
+            try:
+                _, tail, _ = fit_headline(draw, remainder.strip(), width,
+                                          height-step, size, size, bold=True)
+                return size, [prefix] + tail, step
+            except ValueError:
+                continue
     for size in sizes:
         try:
             fs, lines, step = fit_headline(draw, text, width, height, size, size, bold=True)
@@ -309,11 +333,46 @@ def _fitted_lines(draw, text, width, height, sizes):
     raise ValueError('Headline cannot fit the poster safely')
 
 
+def broadcast_background(size, frame_box, radius):
+    """Shared warm/blue surround and white rounded frame for posts and reels."""
+    width, height = size
+    canvas = Image.new('RGB', size)
+    gradient = ImageDraw.Draw(canvas)
+    for y in range(height):
+        if y < height // 2:
+            t = y / (height // 2)
+            color = (round(255 - 52*t), round(142 - 117*t), round(23 + 28*t))
+        else:
+            t = (y - height // 2) / (height - height // 2)
+            color = (round(17 - 7*t), round(101 - 60*t), round(184 - 79*t))
+        gradient.line((0, y, width, y), fill=color)
+    glow = Image.new('RGBA', size)
+    ImageDraw.Draw(glow).ellipse(
+        (width*.03, -height*.13, width*.77, height*.13), fill=(255, 240, 191, 90))
+    canvas = Image.alpha_composite(
+        canvas.convert('RGBA'), glow.filter(ImageFilter.GaussianBlur(65))).convert('RGB')
+    ImageDraw.Draw(canvas).rounded_rectangle(frame_box, radius=radius, fill='white')
+    return canvas
+
+
+def crimson_panel(size):
+    """Logo-matched crimson with a restrained darker red lower edge."""
+    width, height = size
+    panel = Image.new('RGB', size, CRIMSON)
+    draw = ImageDraw.Draw(panel)
+    for y in range(height):
+        t = y / max(1, height - 1)
+        draw.line((0, y, width, y), fill=(round(185 - 28*t),
+                                       round(33 - 10*t), round(54 - 8*t)))
+    return panel
+
+
 def news_card(article, image_path=None, illustrative=False, photo_label=None):
-    """Photo-first poster with the original warm/blue frame and a light centre.
+    """Photo-first crimson poster with bold yellow/white Sinhala headlines.
 
     Callers verify the asset's story match and reuse rights before rendering.
     A missing photograph is a hold, never an empty card or generated incident.
+    Media descriptions stay in internal records, not over the photograph.
     """
     from pathlib import Path
     from datetime import datetime
@@ -326,34 +385,14 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
     title = re.sub(r'\s*\((?:VIDEO|වීඩියෝ)\)', '', article['title_si'], flags=re.I)
     title = title.removeprefix('විස්තරාත්මක පුවත | ').strip()
     width, height = 1080, 1350
-    canvas = Image.new('RGB', (width, height))
-    gradient = ImageDraw.Draw(canvas)
-    # Retain the familiar rounded white frame, warm upper / blue lower border.
-    for y in range(height):
-        if y < height // 2:
-            t = y / (height // 2)
-            color = (round(255 - 52*t), round(142 - 117*t), round(23 + 28*t))
-        else:
-            t = (y - height // 2) / (height - height // 2)
-            color = (round(17 - 7*t), round(101 - 60*t), round(184 - 79*t))
-        gradient.line((0, y, width, y), fill=color)
-    glow = Image.new('RGBA', canvas.size)
-    gd = ImageDraw.Draw(glow)
-    gd.ellipse((30, -180, 830, 180), fill=(255, 240, 191, 90))
-    canvas = Image.alpha_composite(canvas.convert('RGBA'),
-                                 glow.filter(ImageFilter.GaussianBlur(65))).convert('RGB')
-    draw = ImageDraw.Draw(canvas)
-    draw.rounded_rectangle((32, 56, 1048, 1295), radius=88, fill='white')
+    canvas = broadcast_background((width, height), (32, 56, 1048, 1295), 88)
     # Build the centre separately, then clip photo and headline to one rounded mask.
-    panel = Image.new('RGB', (988, 1212), '#fff8ed')
+    panel = crimson_panel((988, 1212))
     with Image.open(image_path) as src:
         photo = ImageOps.fit(ImageOps.exif_transpose(src).convert('RGB'), (988, 752),
                              method=Image.Resampling.LANCZOS)
     panel.paste(photo, (0, 0))
-    pd = ImageDraw.Draw(panel)
-    for y in range(752, 1212):
-        t = (y - 752) / 460
-        pd.line((0, y, 988, y), fill=(255, round(252 - 6*t), round(246 - 13*t)))
+    panel.paste(crimson_panel((988, 460)), (0, 752))
     mask = Image.new('L', panel.size)
     ImageDraw.Draw(mask).rounded_rectangle((0, 0, 987, 1211), radius=76, fill=255)
     canvas.paste(panel, (46, 70), mask)
@@ -371,23 +410,11 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
     draw.text((748, 35), 'SL NEWS', font=latin_font(41, bold=True), fill='white')
     draw.text((884, 82), '24/7', font=latin_font(28, bold=True), fill='#ffe094')
 
-    if image_path and photo_label:
-        # Identify archival institution photography without implying that
-        # the picture captures the specific announcement or meeting.
-        draw.rounded_rectangle((100, 704, 950, 777), radius=16, fill='#15243f')
-        draw_mixed(draw, (120, 754), str(photo_label)[:46], 27,
-                   fill='#ffffff', bold=True)
-    elif image_path and illustrative:
-        draw.rounded_rectangle((110, 708, 720, 777), radius=16, fill='#15243f')
-        draw_mixed(draw, (132, 758), 'සංකේතාත්මක රූපයක්', 33,
-                   fill='#ffffff', bold=True)
-
-    # Bright cream headline panel: high contrast navy/red type, generous spacing.
-    draw.rectangle((77, 839, 173, 845), fill='#c92938')
-    draw.line((188, 842, 1003, 842), fill='#e6d6c3', width=2)
-    draw.line((88, 1222, 992, 1222), fill='#e6d6c3', width=1)
-    draw.text((88, 1240), 'SL NEWS 24/7', font=latin_font(20, bold=True), fill='#18324e')
-    draw_mixed(draw, (727, 1260), 'පැය විසිහතර පුරාම', 20, fill='#735949')
+    draw.rectangle((77, 839, 173, 845), fill=YELLOW)
+    draw.line((188, 842, 1003, 842), fill='#d88b54', width=2)
+    draw.line((88, 1222, 992, 1222), fill='#d88b54', width=1)
+    draw.text((88, 1240), 'SL NEWS 24/7', font=latin_font(20, bold=True), fill='white')
+    draw_mixed(draw, (727, 1260), 'පැය විසිහතර පුරාම', 20, fill=YELLOW, bold=True)
     # Fit the complete headline as one block; never split a phrase arbitrarily.
     group = _fitted_lines(draw, title, 888, 310, range(72, 31, -2))
     size, lines, step = group
@@ -395,7 +422,7 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None):
     for index, line in enumerate(lines):
         x = 540 - mixed_width(draw, line, size, bold=True) / 2
         draw_mixed(draw, (x, baseline), line, size,
-                   fill='#b92136' if index == 0 else '#18324e', bold=True)
+                   fill=YELLOW if index == 0 else 'white', bold=True)
         baseline += step
     # Preserve the clean lower margin required by the production layout.
 
