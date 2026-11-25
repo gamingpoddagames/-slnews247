@@ -1,4 +1,4 @@
-name: Publish approved sea weather video
+name: Publish sea weather with Sinhala narration
 on:
   push:
     branches: ['publish/sea-weather-20261125']
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python -m pip install requests==2.32.4
+      - run: python -m pip install requests==2.32.4 beautifulsoup4==4.13.4 gTTS==2.5.4
       - name: Verify and publish the approved video
         env:
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
@@ -22,16 +22,45 @@ jobs:
           for part in data/sea-weather-video/*.b64; do base64 -d "$part"; done > sea-weather.mp4
           echo '2bbc60f782fea9e74cdb871f8022966fad2daad3ba473ddc38e5eb2b520b3398  sea-weather.mp4' | sha256sum -c -
           python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          from voice import create_voice
+          scripts = [
+              'නොවැම්බර් විසි පහ වැනිදා මුහුදු කාලගුණ අනාවැකිය. ඇතැම් මුහුදු ප්‍රදේශවල සුළඟ පැයට කිලෝමීටර් හතළිහත් හතළිස් පහත් අතර දක්වා ඉහළ යා හැකියි.',
+              'කන්කසන්තුරය සිට මන්නාරම හරහා පුත්තලම දක්වා වෙරළට ඔබ්බෙන් මේ තත්ත්වය අපේක්ෂා කරනවා.',
+              'ත්‍රිකුණාමලය සිට මඩකලපුව සහ හම්බන්තොට හරහා මාතර දක්වා මුහුදු ප්‍රදේශවලටත් මෙම අනාවැකිය අදාළයි.',
+          ]
+          def run(*args):
+              subprocess.run(args, check=True)
+          Path('voice-output').mkdir(exist_ok=True)
+          for index, script in enumerate(scripts):
+              audio = f'voice-output/voice-{index}.mp3'
+              if not create_voice(script, audio) or Path(audio).stat().st_size < 1000:
+                  raise RuntimeError('Sinhala narration unavailable')
+              run('ffmpeg', '-y', '-loglevel', 'error', '-ss', str(index * 5),
+                  '-i', 'sea-weather.mp4', '-i', audio, '-vf',
+                  'trim=duration=5,tpad=stop_mode=clone:stop_duration=60', '-shortest',
+                  '-map', '0:v:0', '-map', '1:a:0', '-c:v', 'libx264', '-preset', 'veryfast',
+                  '-c:a', 'aac', '-ar', '44100', f'voice-output/part-{index}.mp4')
+          Path('voice-output/concat.txt').write_text(''.join(f"file part-{i}.mp4\n" for i in range(3)))
+          result = 'voice-output/sea-weather-sinhala.mp4'
+          run('ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0',
+              '-i', 'voice-output/concat.txt', '-c', 'copy', '-movflags', '+faststart', result)
+          audio_codec = subprocess.check_output(['ffprobe', '-v', 'error', '-select_streams',
+              'a:0', '-show_entries', 'stream=codec_name', '-of', 'csv=p=0', result], text=True).strip()
+          if audio_codec != 'aac':
+              raise RuntimeError('Final video has no narration stream')
+          print('Verified Sinhala narration track: AAC', flush=True)
           from facebook import upload_video as facebook
           from telegram import upload_video as telegram
-          caption = """2026 නොවැම්බර් 25 මුහුදු කාලගුණ අනාවැකිය | SL NEWS 24/7
+          caption = """2026 නොවැම්බර් 25 මුහුදු කාලගුණ අනාවැකිය | සිංහල හඬ සහිත සංස්කරණය | SL NEWS 24/7
           මුහුදු ප්‍රදේශ කිහිපයක සුළඟ විටින් විට පැයට කිලෝමීටර් 40–45 දක්වා ඉහළ යා හැකියි.
           සංරක්ෂිත රළ ඡායාරූපය: AmeenulAslam / Wikimedia Commons (කපා සකස් කර ඇත).
           https://commons.wikimedia.org/wiki/File:Sea_waves_in_srilanka_beach.jpg
           වීඩියෝව සහ ඡායාරූප අනුවර්තනය: CC BY-SA 4.0
           https://creativecommons.org/licenses/by-sa/4.0/"""
-          fb = facebook('sea-weather.mp4', caption)
-          tg = telegram('sea-weather.mp4', caption)
+          fb = facebook(result, caption)
+          tg = telegram(result, caption)
           print(f'Facebook accepted: {fb}; Telegram accepted: {tg}')
           raise SystemExit(0 if fb and tg else 1)
           PY
