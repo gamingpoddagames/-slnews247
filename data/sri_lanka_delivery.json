@@ -9366,6 +9366,75 @@
         }
       },
       "uncertain": {}
+    },
+    "0ac66b022891fe8dbf09819f": {
+      "article": {
+        "id": "0ac66b022891fe8dbf09819f",
+        "title_si": "අනියම් බිරියට දාව උපන් බිළිඳා වළ දැම්මැයි දෙදරු පියා අත්අඩංගුවට",
+        "summary_si": "තම අනියම් බිරිඳ ප්‍රසූත කළ බිළිඳකු රහසිගතව වළ දැම්මැයි කියන 30 හැවිරිදි දෙදරු පියකු සැකපිට අත් අඩංගුවට ගත් බව අලවතුගොඩ පොලීසිය පවසයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/අනියම්-බිරියට-දාව-උපන්-බිළිඳා-වළ-දැම්මැයි-දෙදරු-පියා-අත්අඩංගුවට/1-701166",
+        "source": "Lankadeepa Latest",
+        "published": 1795696380
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1258",
+          "at": 1795697291.2504177,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127974361318605",
+          "at": 1795697291.2504177,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "998b354a3a7780cc1c0f6718": {
+      "article": {
+        "id": "998b354a3a7780cc1c0f6718",
+        "title_si": "දිට්වා ආපදා වූවන්ට පින්පතා සර්ව ආගමික වතාවත් බදුල්ලේදී",
+        "summary_si": "දිට්වා ආපදාව සිදුවි වසරක් පිරිම නිමිත්තෙන් ආපදාවෙන් මියගිය සහ අතුරුදන්වී සිටින පිරිස සිහිපත් කරම්න් ජාතික සර්ව ආගමික වතාවත් අද පස්වරුවේ බදුල්ලේදී පැවත්විණි .",
+        "link": "https://www.lankadeepa.lk/latest_news/දිට්වා-ආපදා-වූවන්ට-පින්පතා-සර්ව-ආගමික-වතාවත්-බදුල්ලේදී/1-701164",
+        "source": "Lankadeepa Latest",
+        "published": 1795695240
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1259",
+          "at": 1795697291.2504177,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127974439318605",
+          "at": 1795697291.2504177,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "185d26ce21a23516677bb482": {
+      "article": {
+        "id": "185d26ce21a23516677bb482",
+        "title_si": "ගම්පහ මහේස්ත්‍රාත්තුමාගේ මාරුව අපේ පිට දාන්න එපා",
+        "summary_si": "ගම්පහ මහේස්ත්‍රාත්වරයා මාරු කිරීමේ වගකීම අධිකරණ අමාත්‍යාංශයට පටවන්න එපා යැයි අධිකරණ සහ ජාතික ඒකාබද්ධතා අමාත්‍ය නීතිඥ හර්ෂණ නානායක්කාර මහතා පාර්ලිමේන්තුවේදී අද (26) පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ගම්පහ-මහේස්ත්‍රාත්තුමාගේ-මාරුව-අපේ-පිට-දාන්න-එපා/1-701156",
+        "source": "Lankadeepa Latest",
+        "published": 1795689360
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1260",
+          "at": 1795697291.2504177,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127974559318605",
+          "at": 1795697291.2504177,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -9387,7 +9456,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795692883.5780122,
+  "last_scan_at": 1795697291.2504177,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -12073,7 +12142,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795692883.5780122,
+      "last_attempt_at": 1795697291.2504177,
       "media_status": "awaiting_verified_event_media"
     },
     "d4a89aba455231f1bedcaa4a": {
@@ -12088,7 +12157,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795692883.5780122,
+      "last_attempt_at": 1795697291.2504177,
       "media_status": "awaiting_verified_event_media"
     },
     "ca93df333e52eb9892466e07": {
@@ -12103,7 +12172,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795692883.5780122,
+      "last_attempt_at": 1795697291.2504177,
       "media_status": "awaiting_verified_event_media"
     },
     "d3d7000e31e05524689cc832": {
@@ -12118,7 +12187,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795692883.5780122,
+      "last_attempt_at": 1795697291.2504177,
       "media_status": "awaiting_verified_event_media"
     },
     "d1b9c5130d3abd3be3931504": {
@@ -12133,7 +12202,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795692883.5780122,
+      "last_attempt_at": 1795697291.2504177,
       "media_status": "awaiting_verified_event_media"
     },
     "39a0bf71b5e5c23ac8506bf1": {
@@ -12148,7 +12217,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795692883.5780122,
+      "last_attempt_at": 1795697291.2504177,
       "media_status": "awaiting_verified_event_media"
     },
     "169de22f69250cec60b5e8d9": {
@@ -12163,7 +12232,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795692883.5780122,
+      "last_attempt_at": 1795697291.2504177,
       "media_status": "awaiting_verified_event_media"
     },
     "8b3204c7c138425a6310310f": {
@@ -12178,7 +12247,52 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795692883.5780122,
+      "last_attempt_at": 1795697291.2504177,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "0ac66b022891fe8dbf09819f": {
+      "at": 1795697291.2504177,
+      "article": {
+        "id": "0ac66b022891fe8dbf09819f",
+        "title_si": "අනියම් බිරියට දාව උපන් බිළිඳා වළ දැම්මැයි දෙදරු පියා අත්අඩංගුවට",
+        "summary_si": "තම අනියම් බිරිඳ ප්‍රසූත කළ බිළිඳකු රහසිගතව වළ දැම්මැයි කියන 30 හැවිරිදි දෙදරු පියකු සැකපිට අත් අඩංගුවට ගත් බව අලවතුගොඩ පොලීසිය පවසයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/අනියම්-බිරියට-දාව-උපන්-බිළිඳා-වළ-දැම්මැයි-දෙදරු-පියා-අත්අඩංගුවට/1-701166",
+        "source": "Lankadeepa Latest",
+        "published": 1795696380
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795697291.2504177,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "998b354a3a7780cc1c0f6718": {
+      "at": 1795697291.2504177,
+      "article": {
+        "id": "998b354a3a7780cc1c0f6718",
+        "title_si": "දිට්වා ආපදා වූවන්ට පින්පතා සර්ව ආගමික වතාවත් බදුල්ලේදී",
+        "summary_si": "දිට්වා ආපදාව සිදුවි වසරක් පිරිම නිමිත්තෙන් ආපදාවෙන් මියගිය සහ අතුරුදන්වී සිටින පිරිස සිහිපත් කරම්න් ජාතික සර්ව ආගමික වතාවත් අද පස්වරුවේ බදුල්ලේදී පැවත්විණි .",
+        "link": "https://www.lankadeepa.lk/latest_news/දිට්වා-ආපදා-වූවන්ට-පින්පතා-සර්ව-ආගමික-වතාවත්-බදුල්ලේදී/1-701164",
+        "source": "Lankadeepa Latest",
+        "published": 1795695240
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795697291.2504177,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "185d26ce21a23516677bb482": {
+      "at": 1795697291.2504177,
+      "article": {
+        "id": "185d26ce21a23516677bb482",
+        "title_si": "ගම්පහ මහේස්ත්‍රාත්තුමාගේ මාරුව අපේ පිට දාන්න එපා",
+        "summary_si": "ගම්පහ මහේස්ත්‍රාත්වරයා මාරු කිරීමේ වගකීම අධිකරණ අමාත්‍යාංශයට පටවන්න එපා යැයි අධිකරණ සහ ජාතික ඒකාබද්ධතා අමාත්‍ය නීතිඥ හර්ෂණ නානායක්කාර මහතා පාර්ලිමේන්තුවේදී අද (26) පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ගම්පහ-මහේස්ත්‍රාත්තුමාගේ-මාරුව-අපේ-පිට-දාන්න-එපා/1-701156",
+        "source": "Lankadeepa Latest",
+        "published": 1795689360
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795697291.2504177,
       "media_status": "awaiting_verified_event_media"
     }
   },
