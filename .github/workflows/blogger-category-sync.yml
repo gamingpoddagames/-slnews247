@@ -34,6 +34,7 @@ jobs:
                   raise ValueError('Use the exact HTTPS Blogger homepage.')
               return u.hostname.lower()
           expected=host(cfg['BLOG_URL'])
+          if expected!='slnews247live.blogspot.com':raise SystemExit('Unexpected SL News blog hostname.')
           data=urllib.parse.urlencode({'client_id':cfg['CLIENT_ID'],'client_secret':cfg['CLIENT_SECRET'],'refresh_token':cfg['REFRESH_TOKEN'],'grant_type':'refresh_token'}).encode()
           try:
               with urllib.request.urlopen(urllib.request.Request('https://oauth2.googleapis.com/token',data=data),timeout=30) as r:
@@ -59,35 +60,39 @@ jobs:
             'World':('විදේශීය','ජාත්‍යන්තර','ඇමරිකා','ඉන්දියා','චීන','රුසියා','යුක්‍රේන','ඊශ්‍රායල','ගාසා','world news','international'),
             'Local':('දේශීය','ශ්‍රී ලංකා','ලංකාවේ','කොළඹ','මහනුවර','දඹුල්ල','ගාල්ල','පොලිසිය','sri lanka','colombo','local news')}
           aliases={'දේශීය':'Local','විදේශීය':'World','දේශපාලන':'Politics','ව්‍යාපාරික':'Business','ක්‍රීඩා':'Sports','කාලගුණය':'Weather','වෙනත්':'Other'}
-          categories=set(rules)|{'Other'}
+          categories=(set(rules)-{'Local'})|{'Other'}
           lookup={norm(c):c for c in categories}
-          lookup.update({norm(k):v for k,v in aliases.items()})
-          def category(post):
+          lookup.update({norm(k):v for k,v in aliases.items() if v in categories})
+          def desired(post):
               labels=post.get('labels',[])
-              for label in labels:
-                  if norm(label) in lookup:return lookup[norm(label)]
+              existing=[lookup[norm(l)] for l in labels if norm(l) in lookup and lookup[norm(l)]!='Other']
               title=norm(post.get('title','')+' '+' '.join(labels))
-              for c,keys in rules.items():
-                  if any(norm(k) in title for k in keys):return c
-              return 'Other'
+              inferred=next((c for c,keys in rules.items() if c!='Local' and any(norm(k) in title for k in keys)),None)
+              topics=existing or [inferred or 'Other']
+              body=post.get('content','')
+              # Only actual video markup or known video embed/watch URLs count.
+              video=bool(re.search(r'<(?:video|iframe|a)\b[^>]*(?:youtube(?:-nocookie)?\.com/(?:embed/|watch\?|shorts/)|youtu\.be/|facebook\.com/(?:plugins/video\.php|[^"\s]+/videos/|reel/)|fb\.watch/|player\.vimeo\.com/video/|tiktok\.com/(?:embed/|@[^/]+/video/)|\.mp4(?:[?"\s]|$))',body,re.I) or re.search(r'<video\b|<iframe\b[^>]*blogger\.com/video\.g',body,re.I))
+              if video or any(norm(l) in ('videos','video',norm('වීඩියෝ')) for l in labels):topics.append('Videos')
+              return list(dict.fromkeys(labels+topics))
           path='/blogs/'+blog['id']+'/posts'
           page=None; seen=0; proposed=0; changed=0
           apply=cfg['APPLY'].lower()=='true'
           while True:
-              params={'maxResults':100,'fetchBodies':'false','status':'live','view':'ADMIN'}
+              params={'maxResults':100,'fetchBodies':'true','status':'live','view':'ADMIN'}
               if page:params['pageToken']=page
               result=call('GET',path,params)
               for post in result.get('items',[]):
                   seen+=1
                   old=post.get('labels',[])
-                  if categories.intersection(old):continue
+                  if desired(post)==old:continue
                   proposed+=1
                   if not apply:continue
                   item=path+'/'+post['id']
-                  current=call('GET',item,{'view':'ADMIN','fetchBody':'false'})
+                  current=call('GET',item,{'view':'ADMIN','fetchBody':'true'})
                   labels=current.get('labels',[])
-                  if categories.intersection(labels):continue
-                  call('PATCH',item,body={'labels':list(dict.fromkeys(labels+[category(current)]))})
+                  new=desired(current)
+                  if new==labels:continue
+                  call('PATCH',item,body={'labels':new})
                   changed+=1
               page=result.get('nextPageToken')
               if not page:break
