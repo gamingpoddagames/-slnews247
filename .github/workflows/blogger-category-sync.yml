@@ -1,0 +1,95 @@
+name: SL News Blogger category sync
+on:
+  schedule:
+    - cron: '19,49 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: slnews-blogger-categories
+  cancel-in-progress: false
+jobs:
+  categorize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BLOG_URL: ${{ vars.SLNEWS_BLOGGER_URL }}
+      CLIENT_ID: ${{ secrets.BLOGGER_CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.BLOGGER_CLIENT_SECRET }}
+      REFRESH_TOKEN: ${{ secrets.BLOGGER_REFRESH_TOKEN }}
+      APPLY: ${{ vars.SLNEWS_BLOGGER_CATEGORY_ENABLED }}
+    steps:
+      - name: Categorize published posts without modifying content
+        run: |
+          python - <<'PY'
+          import os, json, urllib.request, urllib.parse, unicodedata, re
+          from urllib.error import HTTPError
+          cfg = {k: os.environ.get(k, '').strip() for k in ('BLOG_URL','CLIENT_ID','CLIENT_SECRET','REFRESH_TOKEN','APPLY')}
+          if not all(cfg[k] for k in ('BLOG_URL','CLIENT_ID','CLIENT_SECRET','REFRESH_TOKEN')):
+              print('Blogger connection missing; no changes made.')
+              raise SystemExit(0)
+          def host(url):
+              u=urllib.parse.urlsplit(url)
+              if u.scheme!='https' or not u.hostname or u.path not in ('','/') or u.query or u.fragment or u.username or u.password:
+                  raise ValueError('Use the exact HTTPS Blogger homepage.')
+              return u.hostname.lower()
+          expected=host(cfg['BLOG_URL'])
+          data=urllib.parse.urlencode({'client_id':cfg['CLIENT_ID'],'client_secret':cfg['CLIENT_SECRET'],'refresh_token':cfg['REFRESH_TOKEN'],'grant_type':'refresh_token'}).encode()
+          try:
+              with urllib.request.urlopen(urllib.request.Request('https://oauth2.googleapis.com/token',data=data),timeout=30) as r:
+                  token=json.load(r)['access_token']
+          except HTTPError as e:
+              raise SystemExit('OAuth refresh failed: HTTP '+str(e.code))
+          def call(method,path,params=None,body=None):
+              url='https://www.googleapis.com/blogger/v3'+path
+              if params: url+='?'+urllib.parse.urlencode(params)
+              req=urllib.request.Request(url, data=json.dumps(body).encode() if body is not None else None,method=method,headers={'Authorization':'Bearer '+token,'Content-Type':'application/json'})
+              try:
+                  with urllib.request.urlopen(req,timeout=30) as r:return json.load(r)
+              except HTTPError as e: raise RuntimeError('Blogger API HTTP '+str(e.code)) from None
+          def norm(s):return unicodedata.normalize('NFC',str(s)).casefold().replace(chr(0x200d),'').replace(chr(0x200c),'')
+          blog=call('GET','/blogs/byurl',{'url':'https://'+expected+'/'})
+          name=norm(blog.get('name',''))
+          if host(blog['url'])!=expected or 'sl' not in name or 'news' not in name:raise SystemExit('Wrong blog; no changes made.')
+          rules={
+            'Weather':('කාලගුණ','වැසි','වර්ෂා','සුළං','කුණාටු','ගංවතුර','නායයෑ','weather','cyclone','rainfall'),
+            'Sports':('ක්‍රීඩා','ක්රීඩා','ක්‍රිකට්','පාපන්දු','ඔලිම්පික්','cricket','football','sports','olympic'),
+            'Business':('ව්‍යාපාර','ආර්ථික','මහ බැංකු','කොටස් වෙළඳ','විනිමය','උද්ධමන','business','economy','inflation','central bank'),
+            'Politics':('දේශපාලන','පාර්ලිමේන්තු','මැතිවරණ','ජනාධිපති','අගමැති','කැබිනට්','politics','parliament','election','president'),
+            'World':('විදේශීය','ජාත්‍යන්තර','ඇමරිකා','ඉන්දියා','චීන','රුසියා','යුක්‍රේන','ඊශ්‍රායල','ගාසා','world news','international'),
+            'Local':('දේශීය','ශ්‍රී ලංකා','ලංකාවේ','කොළඹ','මහනුවර','දඹුල්ල','ගාල්ල','පොලිසිය','sri lanka','colombo','local news')}
+          aliases={'දේශීය':'Local','විදේශීය':'World','දේශපාලන':'Politics','ව්‍යාපාරික':'Business','ක්‍රීඩා':'Sports','කාලගුණය':'Weather','වෙනත්':'Other'}
+          categories=set(rules)|{'Other'}
+          lookup={norm(c):c for c in categories}
+          lookup.update({norm(k):v for k,v in aliases.items()})
+          def category(post):
+              labels=post.get('labels',[])
+              for label in labels:
+                  if norm(label) in lookup:return lookup[norm(label)]
+              title=norm(post.get('title','')+' '+' '.join(labels))
+              for c,keys in rules.items():
+                  if any(norm(k) in title for k in keys):return c
+              return 'Other'
+          path='/blogs/'+blog['id']+'/posts'
+          page=None; seen=0; proposed=0; changed=0
+          apply=cfg['APPLY'].lower()=='true'
+          while True:
+              params={'maxResults':100,'fetchBodies':'false','status':'live','view':'ADMIN'}
+              if page:params['pageToken']=page
+              result=call('GET',path,params)
+              for post in result.get('items',[]):
+                  seen+=1
+                  old=post.get('labels',[])
+                  if categories.intersection(old):continue
+                  proposed+=1
+                  if not apply:continue
+                  item=path+'/'+post['id']
+                  current=call('GET',item,{'view':'ADMIN','fetchBody':'false'})
+                  labels=current.get('labels',[])
+                  if categories.intersection(labels):continue
+                  call('PATCH',item,body={'labels':list(dict.fromkeys(labels+[category(current)]))})
+                  changed+=1
+              page=result.get('nextPageToken')
+              if not page:break
+          print('Posts scanned:',seen,'proposed:',proposed,'updated:',changed,'mode:', 'apply' if apply else 'preview')
+          PY
