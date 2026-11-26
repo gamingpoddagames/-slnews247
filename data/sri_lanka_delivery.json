@@ -9228,6 +9228,75 @@
         }
       },
       "uncertain": {}
+    },
+    "ca93df333e52eb9892466e07": {
+      "article": {
+        "id": "ca93df333e52eb9892466e07",
+        "title_si": "මහජන බැංකුව - අධිකරණ අමාත්‍යාංශය එක්ව අධිකරණ ගෙවීම් සඳහා ඩිජිටල් ගෙවීම් යාන්ත්‍රණයක් හඳුන්වා දෙයි",
+        "summary_si": "ශ්‍රී ලංකාවේ අධිකරණ ක්ෂේත්‍රයේ ඩිජිටල් පරිවර්තන ක්‍රියාවලියේ සුවිශේෂ සන්ධිස්ථානයක් සනිටුහන් කරමින්, අධිකරණයට අදාළ ගෙවීම් විද්‍යුත් ක්‍රමයට සිදුකිරීම සඳහා අන්තර්ජාල ගෙවීම් යාන්ත්‍රණයක් (Internet Payment Gateway - PG) ස්ථාපනය කිරීම වෙනුවෙන් මහජන බැංකුව සහ අධිකරණ හා ජාතික ඒකාබද්ධතා අමාත්‍යාංශය අත්වැල් බැඳගනි.",
+        "link": "https://www.lankadeepa.lk/business/මහජන-බැංකුව---අධිකරණ-අමාත්‍යාංශය-එක්ව-අධිකරණ-ගෙවීම්-සඳහා-ඩිජිටල්-ගෙවීම්-යාන්ත්‍රණයක්-හඳුන්වා-දෙයි/9-701131",
+        "source": "Lankadeepa Business",
+        "published": 1795680120
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1252",
+          "at": 1795681134.0823328,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127926979318605",
+          "at": 1795681134.0823328,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "d3d7000e31e05524689cc832": {
+      "article": {
+        "id": "d3d7000e31e05524689cc832",
+        "title_si": "ශ්‍රී ලංකාවේ මුද්‍රණ තාක්ෂණයට නව අත්දැකීමක් එක් කරමින් Deli හා Assidua Technologies නව මාවතකට එළැඹෙයි",
+        "summary_si": "චීනයේ ප්‍රමුඛ පෙළේ මුද්‍රණ යන්ත්‍ර සන්නාමයක් වනDeli ශ්‍රී ලංකාවේ කාර්යාල ස්වයංක්‍රීයකරණ සහ තොරතුරු තාක්ෂණ වෙළෙඳපොළේ සිය ව්‍යාපාර තව දුරටත් පුළුල් කිරීමේ අරමුණෙන් වසර 15ක වෙළෙඳපොළ හා තාක්ෂණ ක්ෂේත්‍රයේ පළපුරුද්දක් සහිත Assidua Technologies සමාගම සමඟ උපායමාර්ගික හවුල්කාරිත්වයකට එළැඹ තිබේ.",
+        "link": "https://www.lankadeepa.lk/business/ශ්‍රී-ලංකාවේ-මුද්‍රණ-තාක්ෂණයට-නව-අත්දැකීමක්-එක්-කරමින්--Deli--හා-Assidua-Technologies--නව-මාවතකට-එළැඹෙයි/9-701130",
+        "source": "Lankadeepa Business",
+        "published": 1795679940
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1253",
+          "at": 1795681134.0823328,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127927039318605",
+          "at": 1795681134.0823328,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "d1b9c5130d3abd3be3931504": {
+      "article": {
+        "id": "d1b9c5130d3abd3be3931504",
+        "title_si": "ලොව පුරා රස කෑම මේසයට ගෙන එන Keells",
+        "summary_si": "ශ්‍රී ලාංකීය පාරිභෝගිකයන්ගේ විවිධ ආහාර රුචිකත්වයට සහ අවශ්‍යතාවලට ප්‍රතිචාර දක්වමින්, Keells සිය ජාත්‍යන්තර ආහාරපාන නිෂ්පාදන පෙළ තවදුරටත් පුළුල් කර ඇත.",
+        "link": "https://www.lankadeepa.lk/business/ලොව-පුරා-රස-කෑම-මේසයට-ගෙන-එන-Keells/9-701129",
+        "source": "Lankadeepa Business",
+        "published": 1795679760
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1254",
+          "at": 1795681134.0823328,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127927129318605",
+          "at": 1795681134.0823328,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -9249,7 +9318,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795661601.334656,
+  "last_scan_at": 1795681134.0823328,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -11935,7 +12004,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795661601.334656,
+      "last_attempt_at": 1795681134.0823328,
       "media_status": "awaiting_verified_event_media"
     },
     "d4a89aba455231f1bedcaa4a": {
@@ -11950,7 +12019,52 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795661601.334656,
+      "last_attempt_at": 1795681134.0823328,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "ca93df333e52eb9892466e07": {
+      "at": 1795681134.0823328,
+      "article": {
+        "id": "ca93df333e52eb9892466e07",
+        "title_si": "මහජන බැංකුව - අධිකරණ අමාත්‍යාංශය එක්ව අධිකරණ ගෙවීම් සඳහා ඩිජිටල් ගෙවීම් යාන්ත්‍රණයක් හඳුන්වා දෙයි",
+        "summary_si": "ශ්‍රී ලංකාවේ අධිකරණ ක්ෂේත්‍රයේ ඩිජිටල් පරිවර්තන ක්‍රියාවලියේ සුවිශේෂ සන්ධිස්ථානයක් සනිටුහන් කරමින්, අධිකරණයට අදාළ ගෙවීම් විද්‍යුත් ක්‍රමයට සිදුකිරීම සඳහා අන්තර්ජාල ගෙවීම් යාන්ත්‍රණයක් (Internet Payment Gateway - PG) ස්ථාපනය කිරීම වෙනුවෙන් මහජන බැංකුව සහ අධිකරණ හා ජාතික ඒකාබද්ධතා අමාත්‍යාංශය අත්වැල් බැඳගනි.",
+        "link": "https://www.lankadeepa.lk/business/මහජන-බැංකුව---අධිකරණ-අමාත්‍යාංශය-එක්ව-අධිකරණ-ගෙවීම්-සඳහා-ඩිජිටල්-ගෙවීම්-යාන්ත්‍රණයක්-හඳුන්වා-දෙයි/9-701131",
+        "source": "Lankadeepa Business",
+        "published": 1795680120
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795681134.0823328,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "d3d7000e31e05524689cc832": {
+      "at": 1795681134.0823328,
+      "article": {
+        "id": "d3d7000e31e05524689cc832",
+        "title_si": "ශ්‍රී ලංකාවේ මුද්‍රණ තාක්ෂණයට නව අත්දැකීමක් එක් කරමින් Deli හා Assidua Technologies නව මාවතකට එළැඹෙයි",
+        "summary_si": "චීනයේ ප්‍රමුඛ පෙළේ මුද්‍රණ යන්ත්‍ර සන්නාමයක් වනDeli ශ්‍රී ලංකාවේ කාර්යාල ස්වයංක්‍රීයකරණ සහ තොරතුරු තාක්ෂණ වෙළෙඳපොළේ සිය ව්‍යාපාර තව දුරටත් පුළුල් කිරීමේ අරමුණෙන් වසර 15ක වෙළෙඳපොළ හා තාක්ෂණ ක්ෂේත්‍රයේ පළපුරුද්දක් සහිත Assidua Technologies සමාගම සමඟ උපායමාර්ගික හවුල්කාරිත්වයකට එළැඹ තිබේ.",
+        "link": "https://www.lankadeepa.lk/business/ශ්‍රී-ලංකාවේ-මුද්‍රණ-තාක්ෂණයට-නව-අත්දැකීමක්-එක්-කරමින්--Deli--හා-Assidua-Technologies--නව-මාවතකට-එළැඹෙයි/9-701130",
+        "source": "Lankadeepa Business",
+        "published": 1795679940
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795681134.0823328,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "d1b9c5130d3abd3be3931504": {
+      "at": 1795681134.0823328,
+      "article": {
+        "id": "d1b9c5130d3abd3be3931504",
+        "title_si": "ලොව පුරා රස කෑම මේසයට ගෙන එන Keells",
+        "summary_si": "ශ්‍රී ලාංකීය පාරිභෝගිකයන්ගේ විවිධ ආහාර රුචිකත්වයට සහ අවශ්‍යතාවලට ප්‍රතිචාර දක්වමින්, Keells සිය ජාත්‍යන්තර ආහාරපාන නිෂ්පාදන පෙළ තවදුරටත් පුළුල් කර ඇත.",
+        "link": "https://www.lankadeepa.lk/business/ලොව-පුරා-රස-කෑම-මේසයට-ගෙන-එන-Keells/9-701129",
+        "source": "Lankadeepa Business",
+        "published": 1795679760
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795681134.0823328,
       "media_status": "awaiting_verified_event_media"
     }
   },
