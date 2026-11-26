@@ -1,0 +1,31 @@
+name: SL News Blogger mirror
+on:
+  schedule:
+    - cron: '11,41 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: slnews-blogger-categories
+  cancel-in-progress: false
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify Python syntax
+        run: python -m py_compile blogger/mirror.py
+      - name: Mirror approved news posts
+        env:
+          PYTHONPATH: .
+          SLNEWS_BLOGGER_URL: ${{ vars.SLNEWS_BLOGGER_URL }}
+          SLNEWS_BLOGGER_PUBLISH_ENABLED: ${{ vars.SLNEWS_BLOGGER_PUBLISH_ENABLED }}
+          BLOGGER_CLIENT_ID: ${{ secrets.BLOGGER_CLIENT_ID }}
+          BLOGGER_CLIENT_SECRET: ${{ secrets.BLOGGER_CLIENT_SECRET }}
+          BLOGGER_REFRESH_TOKEN: ${{ secrets.BLOGGER_REFRESH_TOKEN }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+        run: python blogger/mirror.py
