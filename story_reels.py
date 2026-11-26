@@ -173,7 +173,15 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
                 and (v.get('status') != 'render_failed'
                      or now - v.get('last_attempt_at', 0) >= 900)]
                if not preview else queued)
-    pending.sort(key=lambda item: (item[1]['article'].get('published', 0), item[0]))
+    # Prioritize current news and avoid rechecking unavailable media every scan.
+    # Keep older records for audit; never replay stale stories automatically.
+    from fast_news import MAX_AGE
+    pending = [(k, v) for k, v in pending
+               if 0 <= now - v['article'].get('published', 0) <= MAX_AGE
+               and (v.get('media_status') != 'awaiting_verified_event_media'
+                    or now - v.get('last_attempt_at', 0) >= 900)]
+    pending.sort(key=lambda item: (item[1]['article'].get('published', 0), item[0]),
+                 reverse=True)
     status['pending'] = len(pending)
     if preview:
         return status
@@ -245,6 +253,8 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
         save(state)
 
     status['pending'] = sum(
-        r.get('status') in ('queued', 'render_failed') for r in journal.values())
+        r.get('status') in ('queued', 'render_failed')
+        and 0 <= now - r.get('article', {}).get('published', 0) <= MAX_AGE
+        for r in journal.values())
     return status
 
