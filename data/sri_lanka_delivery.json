@@ -9504,6 +9504,75 @@
         }
       },
       "uncertain": {}
+    },
+    "127eb396f953d2b5fe5625ad": {
+      "article": {
+        "id": "127eb396f953d2b5fe5625ad",
+        "title_si": "ආණ්ඩුව 22 ගෙනාවේ අධිවේගී පාරෙන්",
+        "summary_si": "ආණ්ඩුව රටේ ප්‍රජාතන්ත්‍රවාදයට මරු පහරක් එල්ල කරපු 22 වැනි ව්‍යවස්ථා සංශෝධනය අධිවේගී මාර්ගයෙන් ගෙනා බව විපක්ෂ නායක සජිත් ප්‍රේමදාස මහතා පාර්ලිමේන්තුවේදී පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ආණ්ඩුව-22-ගෙනාවේ-අධිවේගී-පාරෙන්/1-701155",
+        "source": "Lankadeepa Latest",
+        "published": 1795700520
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1265",
+          "at": 1795730300.5795078,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128014801318605",
+          "at": 1795730300.5795078,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "4aa71130c0436464c7eacba1": {
+      "article": {
+        "id": "4aa71130c0436464c7eacba1",
+        "title_si": "පිට රටදී කැත වැඩ කර එන අයට ලංකාවේදීත් නීතිය",
+        "summary_si": "ලිංගික අපයෝජන සම්බන්ධයෙන් විදේශ රට වලදී වරදකරුවන් වී මෙරටට පිටුවහල් කරන පුද්ගලයන් සම්බන්ධයෙන් ශ්‍රී ලංකාවේදී නීතිය ක්‍රියාත්මක කිරීමේ අවශ්‍යතාව පිළිබඳව පාර්ලිමේන්තු මන්ත්‍රීවරියන්ගේ සංසදයේ සහ සංසදය විසින් පත් කරන ලද අනු කමිටුවේ අවධානය යොමු වී තිබේ.",
+        "link": "https://www.lankadeepa.lk/latest_news/පිට-රටදී-කැත-වැඩ-කර-එන-අයට-ලංකාවේදීත්-නීතිය/1-701171",
+        "source": "Lankadeepa Latest",
+        "published": 1795699260
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1266",
+          "at": 1795730300.5795078,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128014879318605",
+          "at": 1795730300.5795078,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "47400b7c79ec09cc909081bf": {
+      "article": {
+        "id": "47400b7c79ec09cc909081bf",
+        "title_si": "නැගී එන ජාතීන්ගේ කාන්තා ක්‍රිකට් ශූරතාව දිනූ ලංකා කණ්ඩාය දිවයිනට",
+        "summary_si": "එක්සත් අරාබි එමීර් රාජ්‍යයේ පැවති 02 වන නැගී එන ජාතීන්ගේ කාන්තා ක්‍රිකට් කණ්ඩායම් අතර පැවති තරගාවලියේ දී , එහි ශූරතාවය දිනා ගත් ශ්‍රී ලංකා ජාතික කාන්තා ක්‍රිකට් කණ්ඩායම අද සවස කටුනායක ගුවන් තොටුපොළ වෙත පැමිණියහ.",
+        "link": "https://www.lankadeepa.lk/latest_news/නැගී-එන-ජාතීන්ගේ-කාන්තා-ක්‍රිකට්-ශූරතාව-දිනූ-ලංකා-කණ්ඩාය-දිවයිනට/1-701167",
+        "source": "Lankadeepa Latest",
+        "published": 1795696980
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1267",
+          "at": 1795730300.5795078,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128014969318605",
+          "at": 1795730300.5795078,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -9525,7 +9594,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795725009.740904,
+  "last_scan_at": 1795730300.5795078,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -12286,7 +12355,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795725009.740904,
+      "last_attempt_at": 1795730300.5795078,
       "media_status": "awaiting_verified_event_media"
     },
     "169de22f69250cec60b5e8d9": {
@@ -12301,7 +12370,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795725009.740904,
+      "last_attempt_at": 1795730300.5795078,
       "media_status": "awaiting_verified_event_media"
     },
     "8b3204c7c138425a6310310f": {
@@ -12316,7 +12385,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795725009.740904,
+      "last_attempt_at": 1795730300.5795078,
       "media_status": "awaiting_verified_event_media"
     },
     "0ac66b022891fe8dbf09819f": {
@@ -12331,7 +12400,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795725009.740904,
+      "last_attempt_at": 1795730300.5795078,
       "media_status": "awaiting_verified_event_media"
     },
     "998b354a3a7780cc1c0f6718": {
@@ -12346,7 +12415,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795725009.740904,
+      "last_attempt_at": 1795730300.5795078,
       "media_status": "awaiting_verified_event_media"
     },
     "185d26ce21a23516677bb482": {
@@ -12361,7 +12430,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795725009.740904,
+      "last_attempt_at": 1795730300.5795078,
       "media_status": "awaiting_verified_event_media"
     },
     "89d4211c32f06b727e13f744": {
@@ -12376,7 +12445,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795725009.740904,
+      "last_attempt_at": 1795730300.5795078,
       "media_status": "awaiting_verified_event_media"
     },
     "1c4892a36d04edeb6445cd9b": {
@@ -12391,7 +12460,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795725009.740904,
+      "last_attempt_at": 1795730300.5795078,
       "media_status": "awaiting_verified_event_media"
     },
     "a8cc4ac452c302b4a8cc8341": {
@@ -12406,7 +12475,52 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795725009.740904,
+      "last_attempt_at": 1795730300.5795078,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "127eb396f953d2b5fe5625ad": {
+      "at": 1795730300.5795078,
+      "article": {
+        "id": "127eb396f953d2b5fe5625ad",
+        "title_si": "ආණ්ඩුව 22 ගෙනාවේ අධිවේගී පාරෙන්",
+        "summary_si": "ආණ්ඩුව රටේ ප්‍රජාතන්ත්‍රවාදයට මරු පහරක් එල්ල කරපු 22 වැනි ව්‍යවස්ථා සංශෝධනය අධිවේගී මාර්ගයෙන් ගෙනා බව විපක්ෂ නායක සජිත් ප්‍රේමදාස මහතා පාර්ලිමේන්තුවේදී පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ආණ්ඩුව-22-ගෙනාවේ-අධිවේගී-පාරෙන්/1-701155",
+        "source": "Lankadeepa Latest",
+        "published": 1795700520
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795730300.5795078,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "4aa71130c0436464c7eacba1": {
+      "at": 1795730300.5795078,
+      "article": {
+        "id": "4aa71130c0436464c7eacba1",
+        "title_si": "පිට රටදී කැත වැඩ කර එන අයට ලංකාවේදීත් නීතිය",
+        "summary_si": "ලිංගික අපයෝජන සම්බන්ධයෙන් විදේශ රට වලදී වරදකරුවන් වී මෙරටට පිටුවහල් කරන පුද්ගලයන් සම්බන්ධයෙන් ශ්‍රී ලංකාවේදී නීතිය ක්‍රියාත්මක කිරීමේ අවශ්‍යතාව පිළිබඳව පාර්ලිමේන්තු මන්ත්‍රීවරියන්ගේ සංසදයේ සහ සංසදය විසින් පත් කරන ලද අනු කමිටුවේ අවධානය යොමු වී තිබේ.",
+        "link": "https://www.lankadeepa.lk/latest_news/පිට-රටදී-කැත-වැඩ-කර-එන-අයට-ලංකාවේදීත්-නීතිය/1-701171",
+        "source": "Lankadeepa Latest",
+        "published": 1795699260
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795730300.5795078,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "47400b7c79ec09cc909081bf": {
+      "at": 1795730300.5795078,
+      "article": {
+        "id": "47400b7c79ec09cc909081bf",
+        "title_si": "නැගී එන ජාතීන්ගේ කාන්තා ක්‍රිකට් ශූරතාව දිනූ ලංකා කණ්ඩාය දිවයිනට",
+        "summary_si": "එක්සත් අරාබි එමීර් රාජ්‍යයේ පැවති 02 වන නැගී එන ජාතීන්ගේ කාන්තා ක්‍රිකට් කණ්ඩායම් අතර පැවති තරගාවලියේ දී , එහි ශූරතාවය දිනා ගත් ශ්‍රී ලංකා ජාතික කාන්තා ක්‍රිකට් කණ්ඩායම අද සවස කටුනායක ගුවන් තොටුපොළ වෙත පැමිණියහ.",
+        "link": "https://www.lankadeepa.lk/latest_news/නැගී-එන-ජාතීන්ගේ-කාන්තා-ක්‍රිකට්-ශූරතාව-දිනූ-ලංකා-කණ්ඩාය-දිවයිනට/1-701167",
+        "source": "Lankadeepa Latest",
+        "published": 1795696980
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795730300.5795078,
       "media_status": "awaiting_verified_event_media"
     }
   },
