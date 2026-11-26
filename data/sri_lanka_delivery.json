@@ -9297,6 +9297,75 @@
         }
       },
       "uncertain": {}
+    },
+    "39a0bf71b5e5c23ac8506bf1": {
+      "article": {
+        "id": "39a0bf71b5e5c23ac8506bf1",
+        "title_si": "මහින්ද - ඉන්දීය නි’ මහ කොමසාරිස් හමුවක්",
+        "summary_si": "ශ්‍රී ලංකාවේ ඉන්දීය නියෝජ්‍ය මහ කොමසාරිස් මෛත්‍රේය කුල්කර්ණි මහතා සහ හිටපු ජනාධිපති මහින්ද රාජපක්ෂ මහතා අතර සුහද හමුවක් කොළඹදී පැවැත්විණි.",
+        "link": "https://www.lankadeepa.lk/latest_news/මහින්ද---ඉන්දීය-නි’-මහ-කොමසාරිස්-හමුවක්/1-701162",
+        "source": "Lankadeepa Latest",
+        "published": 1795691640
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1255",
+          "at": 1795692883.5780122,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127968769318605",
+          "at": 1795692883.5780122,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "169de22f69250cec60b5e8d9": {
+      "article": {
+        "id": "169de22f69250cec60b5e8d9",
+        "title_si": "ඊශ්‍රායල විපක්ෂ නායකයා ගිවිසුමකට අත්සන් කරයි",
+        "summary_si": "නව සන්ධාන රජයක් පිහිටුවීමේ අරමුණින්, ඊශ්‍රායල ප්‍රධාන විපක්ෂ නායක ගාඩි අයිසන්කොට් ඊයේ (26) නව සන්ධාන රජයක් පිහිටුවීම සඳහා ‘ඊශ්‍රායල් අවර් හෝම්’ පක්ෂයේ නායක ඇවිග්ඩෝර් ලිබර්මන් සමග නව ගිවිසුමකට අත්සන් තැබීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ඊශ්‍රායල-විපක්ෂ-නායකයා-ගිවිසුමකට-අත්සන්-කරයි/1-701159",
+        "source": "Lankadeepa Latest",
+        "published": 1795690680
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1256",
+          "at": 1795692883.5780122,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127968871318605",
+          "at": 1795692883.5780122,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "8b3204c7c138425a6310310f": {
+      "article": {
+        "id": "8b3204c7c138425a6310310f",
+        "title_si": "අයෝරා සමුළුවට ඇමති විජිත ඉන්දියාවට",
+        "summary_si": "විදේශ කටයුතු, විදේශ රැකියා සහ සංචාරක අමාත්‍ය විජිත හේරත්, 2026 නොවැම්බර් 27 වැනි දින පැවැත්වීමට නියමිත ඉන්දියානු සාගරය ආශ්‍රිත රටවල සංගමයේ (අයෝරා) 25 වැනි අමාත්‍ය මණ්ඩල රැස්වීමට සහභාගී වීම සඳහා අද, 2026 නොවැම්බර් 26 වැනි දින ඉන්දියාවේ නවදිල්ලි නුවර බලා පිටත්ව යයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/අයෝරා-සමුළුවට-ඇමති-විජිත-ඉන්දියාවට/1-701158",
+        "source": "Lankadeepa Latest",
+        "published": 1795689780
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1257",
+          "at": 1795692883.5780122,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122127968943318605",
+          "at": 1795692883.5780122,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -9318,7 +9387,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795681134.0823328,
+  "last_scan_at": 1795692883.5780122,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -12004,7 +12073,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795681134.0823328,
+      "last_attempt_at": 1795692883.5780122,
       "media_status": "awaiting_verified_event_media"
     },
     "d4a89aba455231f1bedcaa4a": {
@@ -12019,7 +12088,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795681134.0823328,
+      "last_attempt_at": 1795692883.5780122,
       "media_status": "awaiting_verified_event_media"
     },
     "ca93df333e52eb9892466e07": {
@@ -12034,7 +12103,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795681134.0823328,
+      "last_attempt_at": 1795692883.5780122,
       "media_status": "awaiting_verified_event_media"
     },
     "d3d7000e31e05524689cc832": {
@@ -12049,7 +12118,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795681134.0823328,
+      "last_attempt_at": 1795692883.5780122,
       "media_status": "awaiting_verified_event_media"
     },
     "d1b9c5130d3abd3be3931504": {
@@ -12064,7 +12133,52 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795681134.0823328,
+      "last_attempt_at": 1795692883.5780122,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "39a0bf71b5e5c23ac8506bf1": {
+      "at": 1795692883.5780122,
+      "article": {
+        "id": "39a0bf71b5e5c23ac8506bf1",
+        "title_si": "මහින්ද - ඉන්දීය නි’ මහ කොමසාරිස් හමුවක්",
+        "summary_si": "ශ්‍රී ලංකාවේ ඉන්දීය නියෝජ්‍ය මහ කොමසාරිස් මෛත්‍රේය කුල්කර්ණි මහතා සහ හිටපු ජනාධිපති මහින්ද රාජපක්ෂ මහතා අතර සුහද හමුවක් කොළඹදී පැවැත්විණි.",
+        "link": "https://www.lankadeepa.lk/latest_news/මහින්ද---ඉන්දීය-නි’-මහ-කොමසාරිස්-හමුවක්/1-701162",
+        "source": "Lankadeepa Latest",
+        "published": 1795691640
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795692883.5780122,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "169de22f69250cec60b5e8d9": {
+      "at": 1795692883.5780122,
+      "article": {
+        "id": "169de22f69250cec60b5e8d9",
+        "title_si": "ඊශ්‍රායල විපක්ෂ නායකයා ගිවිසුමකට අත්සන් කරයි",
+        "summary_si": "නව සන්ධාන රජයක් පිහිටුවීමේ අරමුණින්, ඊශ්‍රායල ප්‍රධාන විපක්ෂ නායක ගාඩි අයිසන්කොට් ඊයේ (26) නව සන්ධාන රජයක් පිහිටුවීම සඳහා ‘ඊශ්‍රායල් අවර් හෝම්’ පක්ෂයේ නායක ඇවිග්ඩෝර් ලිබර්මන් සමග නව ගිවිසුමකට අත්සන් තැබීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ඊශ්‍රායල-විපක්ෂ-නායකයා-ගිවිසුමකට-අත්සන්-කරයි/1-701159",
+        "source": "Lankadeepa Latest",
+        "published": 1795690680
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795692883.5780122,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "8b3204c7c138425a6310310f": {
+      "at": 1795692883.5780122,
+      "article": {
+        "id": "8b3204c7c138425a6310310f",
+        "title_si": "අයෝරා සමුළුවට ඇමති විජිත ඉන්දියාවට",
+        "summary_si": "විදේශ කටයුතු, විදේශ රැකියා සහ සංචාරක අමාත්‍ය විජිත හේරත්, 2026 නොවැම්බර් 27 වැනි දින පැවැත්වීමට නියමිත ඉන්දියානු සාගරය ආශ්‍රිත රටවල සංගමයේ (අයෝරා) 25 වැනි අමාත්‍ය මණ්ඩල රැස්වීමට සහභාගී වීම සඳහා අද, 2026 නොවැම්බර් 26 වැනි දින ඉන්දියාවේ නවදිල්ලි නුවර බලා පිටත්ව යයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/අයෝරා-සමුළුවට-ඇමති-විජිත-ඉන්දියාවට/1-701158",
+        "source": "Lankadeepa Latest",
+        "published": 1795689780
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795692883.5780122,
       "media_status": "awaiting_verified_event_media"
     }
   },
