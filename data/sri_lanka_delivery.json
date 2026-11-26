@@ -9435,6 +9435,75 @@
         }
       },
       "uncertain": {}
+    },
+    "89d4211c32f06b727e13f744": {
+      "article": {
+        "id": "89d4211c32f06b727e13f744",
+        "title_si": "ඉන්දියාව පරදවමින් ලංකාව ආසියානු නැගි එන තරු එක්දින තරගාවලියේ අවසන් මහ තරගයට",
+        "summary_si": "ඉන්දීය නැගි එන කණ්ඩායම කඩුලු 8කින් පරාජය කළ ශ්‍රි ලංකා නැගි එන කණ්ඩායම ආසියානු කුසලාන නැගි එන කණ්ඩායම් ඒක්දින තරගාවලියේ අවසන් මහ තරගට සුදුසුකම් ලැබීය. තරගයේ මුලින්ම පන්දුවට පහරදුන් ඉන්දීය ඒ් කණ්ඩායම පන්දුවාර50දි කඩුලු 8ක් දැවි ලකුණු 317ක් රැස් කළේය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ඉන්දියාව-පරදවමින්-ලංකාව-ආසියානු-නැගි-එන-තරු-එක්දින-තරගාවලියේ-අවසන්-මහ-තරගයට/1-701178",
+        "source": "Lankadeepa Latest",
+        "published": 1795714500
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1262",
+          "at": 1795725009.740904,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128007457318605",
+          "at": 1795725009.740904,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "1c4892a36d04edeb6445cd9b": {
+      "article": {
+        "id": "1c4892a36d04edeb6445cd9b",
+        "title_si": "වැඩ වර්ජන කළාට අසාධාරණ ඉල්ලීම් ⁣දෙන්නෙ නෑ",
+        "summary_si": "කොතරම් වැඩ වර්ජන ඉල්ලීම් කළත් අසාධාරණ ඉල්ලීම් වලට මේ මොහොතේ විසඳීම් ලබා දිය නොහැකි බව ජනාධිපති අනුර කුමාර දිසානායක මහතා පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/වැඩ-වර්ජන-කළාට-අසාධාරණ-ඉල්ලීම්-⁣දෙන්නෙ-නෑ/1-701173",
+        "source": "Lankadeepa Latest",
+        "published": 1795710960
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1263",
+          "at": 1795725009.740904,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128007517318605",
+          "at": 1795725009.740904,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "a8cc4ac452c302b4a8cc8341": {
+      "article": {
+        "id": "a8cc4ac452c302b4a8cc8341",
+        "title_si": "මැතිසබේ විධායක ගෘහ පාලකගෙන් අල්ලස් කොමිසම පැයක් ප්‍රශ්න කරයි",
+        "summary_si": "කතානායක වෛද්‍ය ජගත් වික්‍රමරත්න මහතාට එරෙහිව දූෂණ විරෝධී පනත යටතේ කෙරෙන විමර්ශනයට අදාළව පාර්ලිමේන්තුවේ විධායක ගෘහ පාලක ඉන්දික තුෂාර මහතාගෙන් අල්ලස් හෝ දුෂණ චෝදනා විමර්ශන කොමිෂන් සභාව අද (26) පැයක පමණ කාලයක් ප්‍රශ්න කර ප්‍රකාශයක් සටහන් කර ගත්තේය.",
+        "link": "https://www.lankadeepa.lk/latest_news/මැතිසබේ--විධායක-ගෘහ-පාලකගෙන්-අල්ලස්-කොමිසම-පැයක්-ප්‍රශ්න-කරයි/1-701172",
+        "source": "Lankadeepa Latest",
+        "published": 1795710420
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1264",
+          "at": 1795725009.740904,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128007619318605",
+          "at": 1795725009.740904,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -9456,7 +9525,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795697291.2504177,
+  "last_scan_at": 1795725009.740904,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -12217,7 +12286,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795697291.2504177,
+      "last_attempt_at": 1795725009.740904,
       "media_status": "awaiting_verified_event_media"
     },
     "169de22f69250cec60b5e8d9": {
@@ -12232,7 +12301,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795697291.2504177,
+      "last_attempt_at": 1795725009.740904,
       "media_status": "awaiting_verified_event_media"
     },
     "8b3204c7c138425a6310310f": {
@@ -12247,7 +12316,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795697291.2504177,
+      "last_attempt_at": 1795725009.740904,
       "media_status": "awaiting_verified_event_media"
     },
     "0ac66b022891fe8dbf09819f": {
@@ -12262,7 +12331,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795697291.2504177,
+      "last_attempt_at": 1795725009.740904,
       "media_status": "awaiting_verified_event_media"
     },
     "998b354a3a7780cc1c0f6718": {
@@ -12277,7 +12346,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795697291.2504177,
+      "last_attempt_at": 1795725009.740904,
       "media_status": "awaiting_verified_event_media"
     },
     "185d26ce21a23516677bb482": {
@@ -12292,7 +12361,52 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795697291.2504177,
+      "last_attempt_at": 1795725009.740904,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "89d4211c32f06b727e13f744": {
+      "at": 1795725009.740904,
+      "article": {
+        "id": "89d4211c32f06b727e13f744",
+        "title_si": "ඉන්දියාව පරදවමින් ලංකාව ආසියානු නැගි එන තරු එක්දින තරගාවලියේ අවසන් මහ තරගයට",
+        "summary_si": "ඉන්දීය නැගි එන කණ්ඩායම කඩුලු 8කින් පරාජය කළ ශ්‍රි ලංකා නැගි එන කණ්ඩායම ආසියානු කුසලාන නැගි එන කණ්ඩායම් ඒක්දින තරගාවලියේ අවසන් මහ තරගට සුදුසුකම් ලැබීය. තරගයේ මුලින්ම පන්දුවට පහරදුන් ඉන්දීය ඒ් කණ්ඩායම පන්දුවාර50දි කඩුලු 8ක් දැවි ලකුණු 317ක් රැස් කළේය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ඉන්දියාව-පරදවමින්-ලංකාව-ආසියානු-නැගි-එන-තරු-එක්දින-තරගාවලියේ-අවසන්-මහ-තරගයට/1-701178",
+        "source": "Lankadeepa Latest",
+        "published": 1795714500
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795725009.740904,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "1c4892a36d04edeb6445cd9b": {
+      "at": 1795725009.740904,
+      "article": {
+        "id": "1c4892a36d04edeb6445cd9b",
+        "title_si": "වැඩ වර්ජන කළාට අසාධාරණ ඉල්ලීම් ⁣දෙන්නෙ නෑ",
+        "summary_si": "කොතරම් වැඩ වර්ජන ඉල්ලීම් කළත් අසාධාරණ ඉල්ලීම් වලට මේ මොහොතේ විසඳීම් ලබා දිය නොහැකි බව ජනාධිපති අනුර කුමාර දිසානායක මහතා පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/වැඩ-වර්ජන-කළාට-අසාධාරණ-ඉල්ලීම්-⁣දෙන්නෙ-නෑ/1-701173",
+        "source": "Lankadeepa Latest",
+        "published": 1795710960
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795725009.740904,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "a8cc4ac452c302b4a8cc8341": {
+      "at": 1795725009.740904,
+      "article": {
+        "id": "a8cc4ac452c302b4a8cc8341",
+        "title_si": "මැතිසබේ විධායක ගෘහ පාලකගෙන් අල්ලස් කොමිසම පැයක් ප්‍රශ්න කරයි",
+        "summary_si": "කතානායක වෛද්‍ය ජගත් වික්‍රමරත්න මහතාට එරෙහිව දූෂණ විරෝධී පනත යටතේ කෙරෙන විමර්ශනයට අදාළව පාර්ලිමේන්තුවේ විධායක ගෘහ පාලක ඉන්දික තුෂාර මහතාගෙන් අල්ලස් හෝ දුෂණ චෝදනා විමර්ශන කොමිෂන් සභාව අද (26) පැයක පමණ කාලයක් ප්‍රශ්න කර ප්‍රකාශයක් සටහන් කර ගත්තේය.",
+        "link": "https://www.lankadeepa.lk/latest_news/මැතිසබේ--විධායක-ගෘහ-පාලකගෙන්-අල්ලස්-කොමිසම-පැයක්-ප්‍රශ්න-කරයි/1-701172",
+        "source": "Lankadeepa Latest",
+        "published": 1795710420
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795725009.740904,
       "media_status": "awaiting_verified_event_media"
     }
   },
