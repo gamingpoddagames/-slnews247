@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-11-27T15:53:11.985Z",
+  "timestamp": "2026-11-27T17:59:03.577Z",
   "reason": "stale_production_run",
-  "last_success_run_id": 46009595331,
-  "note": "No successful production run within 75 minutes; latest delivery scan was 13:44 UTC."
+  "last_success_run_id": 46028932877,
+  "note": "No successful production run within 75 minutes; last delivery scan 2026-11-27T15:54:31Z. Resume the existing FB/Telegram pipeline."
 }
