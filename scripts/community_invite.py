@@ -11,6 +11,7 @@ from image import broadcast_background, crimson_panel, latin_font, draw_mixed, m
 
 STATE = Path('data/community_invite_delivery.json')
 PAGE = 'https://www.facebook.com/1020689164470492'
+GROUP = 'https://www.facebook.com/share/g/1Mfe9tJaMa/'
 MESSAGES = [
     'නවතම පුවත් මඟ නොහැර දැනගන්න SL NEWS 24/7 සමඟ එක්වන්න.',
     'ශ්‍රී ලංකාවේ සහ ලෝකයේ වැදගත් පුවත් එකම තැනකින්.',
@@ -82,7 +83,8 @@ def main():
                 post = record.get('facebook',{}).get('url') or PAGE
                 share = 'https://www.facebook.com/sharer/sharer.php?' + urlencode({'u':post})
                 buttons = {'inline_keyboard':[[{'text':'Follow SL NEWS 24/7','url':PAGE}],
-                                              [{'text':'Share on Facebook','url':share}]]}
+                                              [{'text':'Share to Facebook (choose group)','url':share}],
+                                              [{'text':'Open our Facebook group','url':GROUP}]]}
                 with path.open('rb') as photo:
                     response = requests.post('https://api.telegram.org/bot'+os.environ['TG_TOKEN']+'/sendPhoto',
                         data={'chat_id':os.environ['TG_CHAT_ID'],'caption':text,'reply_markup':json.dumps(buttons)},
