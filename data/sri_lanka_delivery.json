@@ -9961,7 +9961,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "6b4f3d62131b92ce4e974b77": {
@@ -9977,7 +9977,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "f783583fdbc72d9063a3300c": {
@@ -9993,7 +9993,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "46ca827eecb3842ff5d80d1c": {
@@ -10032,7 +10032,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "74094212cf09b3cee1e148cf": {
@@ -10048,7 +10048,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "c91554de83c373f52aeb832d": {
@@ -10064,7 +10064,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "1caf0e0e1efa643c13c57d2f": {
@@ -10160,7 +10160,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "fe601ef0725f62013354353b": {
@@ -10176,7 +10176,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "d5a66a9a8b1f07aed40765bc": {
@@ -10192,7 +10192,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "0ca0db9bc2fd975e98ef5bd4": {
@@ -10208,7 +10208,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "820a055e8007feba3666923c": {
@@ -10224,7 +10224,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     },
     "105a33d0e522a8404ad85cb9": {
@@ -10240,7 +10240,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795794823.0493836
+        "at": 1795794871.0344863
       }
     }
   },
@@ -10263,7 +10263,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795794823.0493836,
+  "last_scan_at": 1795794871.0344863,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -10414,6 +10414,14 @@
       "facebook": {
         "id": "1020689164470492_122127829773318605",
         "format": "branded_news_graphic"
+      }
+    },
+    "a6841de55cefabc62b679801": {
+      "telegram": {
+        "error": "exact_event_photo_required"
+      },
+      "facebook": {
+        "error": "exact_event_photo_required"
       }
     }
   },
