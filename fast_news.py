@@ -289,7 +289,7 @@ def send_text(platform, article):
                            + ' (crop/resize)\n' + credit['source']
                            + '\n' + credit['license_url'])
         if image_kind == 'licensed_subject_stock':
-            required_credit = '\n\nමෙය සිද්ධිය වූ අවස්ථාවේ ඡායාරූපයක් නොවේ.' + required_credit
+            required_credit = required_credit.replace('📷 ', '📷 Pexels stock: ', 1)
         message += required_credit
     if platform == 'telegram' and len(message) > 1024:
         # Telegram caps photo captions; keep the full license credit and a
