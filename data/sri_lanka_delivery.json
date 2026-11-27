@@ -9794,7 +9794,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795754231.5990372
+        "at": 1795754482.5583642
       }
     },
     "2f003ca74481a684d67d69b0": {
@@ -9810,7 +9810,23 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795754231.5990372
+        "at": 1795754482.5583642
+      }
+    },
+    "27ddfa643ce0a0d0b83ef226": {
+      "article": {
+        "id": "27ddfa643ce0a0d0b83ef226",
+        "title_si": "තරුණ තරුණියන්ට සුදුසු වෘත්තීය පුහුණුව ලබාදීමට දොරින් දොරට",
+        "summary_si": "වෘත්තීය පුහුණු අධිකාරිය මගින් ආරම්භ කර ඇති දොරින් දොරට (DOOR TO DOOR SKILL) ජාතික නිපුණතා සංවර්ධන වැඩසටහන, මහර ප්‍රාදේශීය ලේකම් කොට්ඨාසයේ ප්‍රදේශ කිහිපයකදී ඉකුත්දා ආරම්භ කෙරිණි.",
+        "link": "https://www.lankadeepa.lk/business/තරුණ-තරුණියන්ට-සුදුසු-වෘත්තීය-පුහුණුව-ලබාදීමට-දොරින්-දොරට/9-701189",
+        "source": "Lankadeepa Business",
+        "published": 1795753500
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795754482.5583642
       }
     }
   },
@@ -9833,7 +9849,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795754231.5990372,
+  "last_scan_at": 1795754482.5583642,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -12684,7 +12700,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754231.5990372,
+      "last_attempt_at": 1795754482.5583642,
       "media_status": "awaiting_verified_event_media"
     },
     "1c4892a36d04edeb6445cd9b": {
@@ -12774,7 +12790,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754231.5990372,
+      "last_attempt_at": 1795754482.5583642,
       "media_status": "awaiting_verified_event_media"
     },
     "7403272f4d35e8d53aaf0244": {
@@ -12789,7 +12805,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754231.5990372,
+      "last_attempt_at": 1795754482.5583642,
       "media_status": "awaiting_verified_event_media"
     },
     "5728473eccb545ff504b1378": {
@@ -12804,7 +12820,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754231.5990372,
+      "last_attempt_at": 1795754482.5583642,
       "media_status": "awaiting_verified_event_media"
     },
     "6c8058af8a2bb84bfe8fb77d": {
@@ -12857,7 +12873,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754231.5990372,
+      "last_attempt_at": 1795754482.5583642,
       "media_status": "awaiting_verified_event_media"
     },
     "cceb1a2f68415b6d0a7356e5": {
@@ -12872,7 +12888,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754231.5990372,
+      "last_attempt_at": 1795754482.5583642,
       "media_status": "awaiting_verified_event_media"
     },
     "9cde83331085231e21e29727": {
@@ -12887,7 +12903,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754231.5990372,
+      "last_attempt_at": 1795754482.5583642,
       "media_status": "awaiting_verified_event_media"
     },
     "5666619b78b6d0eee7bc2b28": {
@@ -12902,7 +12918,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754231.5990372,
+      "last_attempt_at": 1795754482.5583642,
       "media_status": "awaiting_verified_event_media"
     }
   },

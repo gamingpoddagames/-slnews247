@@ -1,13 +1,11 @@
 {
-  "checked_at": 1795754231.5990372,
+  "checked_at": 1795754482.5583642,
   "configured_feeds": 25,
   "sources": [
     {
       "source": "Ada Derana Sinhala",
-      "http": 200,
-      "entries": 25,
-      "fresh_sinhala": 9,
-      "feed_url": "https://sinhala.adaderana.lk/rss.php"
+      "error": "HTTPError",
+      "http": 403
     },
     {
       "source": "Dinamina",
@@ -30,7 +28,7 @@
       "source": "Lankadeepa Business",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 0,
+      "fresh_sinhala": 1,
       "feed_url": "https://www.lankadeepa.lk/rss/business/9"
     },
     {
@@ -73,7 +71,7 @@
       "source": "Lankadeepa Video News",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 0,
+      "fresh_sinhala": 1,
       "feed_url": "https://www.lankadeepa.lk/rss/videos/12"
     },
     {
