@@ -40,7 +40,7 @@ def _story_facts(article, narration):
 
 def _slide(article, text, index, image_path, destination, photo_label=None):
     """Three intentionally different broadcast scenes; no fabricated event shots."""
-    from image import (draw_mixed, fit_headline, latin_font,
+    from image import (draw_mixed, fit_headline, latin_font, mixed_width,
                        broadcast_background, crimson_panel, YELLOW)
     from PIL import ImageOps
     import re
@@ -104,8 +104,14 @@ def _slide(article, text, index, image_path, destination, photo_label=None):
         pass
     label = photo_label or ('පුවත් විස්තර සටහන' if not image_path else '')
     if label:
-        draw.rounded_rectangle((44, 688, 676, 734), radius=10, fill='#18324e')
-        draw_mixed(draw, (56, 720), label, 19, fill='white', bold=True)
+        label_size = 18
+        label_width = mixed_width(draw, label, label_size, bold=False)
+        if label_width > 585:
+            label = 'Photo: archive / reference'
+            label_width = mixed_width(draw, label, label_size, bold=False)
+        x = int(672 - label_width - 9)
+        draw.rounded_rectangle((x - 8, 701, 678, 732), radius=6, fill='#18324e')
+        draw_mixed(draw, (x, 724), label, label_size, fill='white', bold=False)
     canvas.save(destination)
     return str(destination)
 

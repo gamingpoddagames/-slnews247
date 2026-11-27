@@ -85,7 +85,7 @@ def subject_photo_set(title, article_id):
                     im.convert('RGB').save(path,quality=90)
             output.append((str(path),'licensed_subject_stock',{'creator':creator,'source':source,
                 'license':'Pexels License','license_url':'https://www.pexels.com/license/',
-                'label_si':''}))
+                'label_si':'Stock photo'}))
             if len(output)>=3:
                 break
         except (requests.RequestException,OSError,ValueError,TypeError):

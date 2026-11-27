@@ -416,8 +416,15 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None, *,
 
     if photo_label or illustrative:
         label = photo_label or 'අදාළ විෂයයේ ඡායාරූපයක්'
-        draw.rounded_rectangle((76, 755, 1004, 807), radius=12, fill='#18324e')
-        draw_mixed(draw, (91, 792), label, 24, fill='white', bold=True)
+        # Compact, readable photo context in the lower corner, not a banner.
+        label_size = 20
+        label_width = mixed_width(draw, label, label_size, bold=False)
+        if label_width > 880:
+            label = 'Photo: archive / reference'
+            label_width = mixed_width(draw, label, label_size, bold=False)
+        x = int(1000 - label_width - 12)
+        draw.rounded_rectangle((x - 10, 772, 1004, 807), radius=7, fill='#18324e')
+        draw_mixed(draw, (x, 798), label, label_size, fill='white', bold=False)
     draw.rectangle((77, 839, 173, 845), fill=YELLOW)
     draw.line((188, 842, 1003, 842), fill='#d88b54', width=2)
     draw.line((88, 1222, 992, 1222), fill='#d88b54', width=1)
