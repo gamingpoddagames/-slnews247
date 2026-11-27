@@ -9780,6 +9780,22 @@
         }
       },
       "uncertain": {}
+    },
+    "a6723b33c356490329d30bf5": {
+      "article": {
+        "id": "a6723b33c356490329d30bf5",
+        "title_si": "යුද සමයේ ප්‍රහාර ගැන ප්‍රසිද්ධියේ සමාව ගන්නැයි එක්සත් ජාතීන්ගෙන් ශ්‍රී ලංකාවට නිර්දේශයක්",
+        "summary_si": "යුද සමයේදී මානුෂීය ආධාර සේවාවන්ට එල්ල කෙරුණු ප්‍රහාර සම්බන්ධයෙන් ශ්‍රී ලංකා රජය ප්‍රසිද්ධියේ සමාව අයැද සිටිය යුතු බවට අයැදීමක් කරන ලෙස එක්සත් ජාතීන්ගේ මානව හිමිකම් කාර්යාලය නිර්දේශයක් කර තිබෙනවා. ශ්‍රී ලංකා රජය සහ එල්. ටී. ටී. ඊ ය අතර පැවති සන්නද්ධ ගැටුම් සමයේදී සහ ඉන් පසුවත්, මානුෂීය ආධාර සහ වෛද්‍ය සේවාවන්ට එල්ල වූ ප්‍රහාර පිළිබඳ විශේෂ වාර්තාවක් නිකුත් ...",
+        "link": "https://www.nethnews.lk/breaking-news/local-news/%e0%b6%ba%e0%b7%94%e0%b6%af-%e0%b7%83%e0%b6%b8%e0%b6%ba%e0%b7%9a-%e0%b6%b4%e0%b7%8a%e0%b6%bb%e0%b7%84%e0%b7%8f%e0%b6%bb-%e0%b6%9c%e0%b7%90%e0%b6%b1-%e0%b6%b4%e0%b7%8a%e0%b6%bb/",
+        "source": "Neth Politics",
+        "published": 1795742350
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795753888.8020475
+      }
     }
   },
   "videos": {
@@ -9801,7 +9817,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795752758.7486455,
+  "last_scan_at": 1795753888.8020475,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -12652,7 +12668,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795752349.4786432,
+      "last_attempt_at": 1795753888.8020475,
       "media_status": "awaiting_verified_event_media"
     },
     "1c4892a36d04edeb6445cd9b": {
@@ -12667,7 +12683,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795752349.4786432,
+      "last_attempt_at": 1795753888.8020475,
       "media_status": "awaiting_verified_event_media"
     },
     "a8cc4ac452c302b4a8cc8341": {
@@ -12742,7 +12758,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795752349.4786432,
+      "last_attempt_at": 1795753888.8020475,
       "media_status": "awaiting_verified_event_media"
     },
     "7403272f4d35e8d53aaf0244": {
@@ -12757,7 +12773,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795752349.4786432,
+      "last_attempt_at": 1795753888.8020475,
       "media_status": "awaiting_verified_event_media"
     },
     "5728473eccb545ff504b1378": {
@@ -12772,7 +12788,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795752349.4786432,
+      "last_attempt_at": 1795753888.8020475,
       "media_status": "awaiting_verified_event_media"
     },
     "6c8058af8a2bb84bfe8fb77d": {
@@ -12825,7 +12841,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795752349.4786432,
+      "last_attempt_at": 1795753888.8020475,
       "media_status": "awaiting_verified_event_media"
     },
     "cceb1a2f68415b6d0a7356e5": {
@@ -12839,7 +12855,9 @@
         "published": 1795746506
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795753888.8020475,
+      "media_status": "awaiting_verified_event_media"
     },
     "9cde83331085231e21e29727": {
       "at": 1795752758.7486455,
@@ -12852,7 +12870,9 @@
         "published": 1795744512
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795753888.8020475,
+      "media_status": "awaiting_verified_event_media"
     },
     "5666619b78b6d0eee7bc2b28": {
       "at": 1795752758.7486455,
@@ -12865,7 +12885,9 @@
         "published": 1795743280
       },
       "status": "queued",
-      "destinations": {}
+      "destinations": {},
+      "last_attempt_at": 1795753888.8020475,
+      "media_status": "awaiting_verified_event_media"
     }
   },
   "reels_started_at": 1795349700,
