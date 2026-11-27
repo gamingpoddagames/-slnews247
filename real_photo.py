@@ -198,6 +198,63 @@ def select_event_video_frame(article):
     return str(output)
 
 
+
+# Named landmarks in the headline only; never substitute incident photography.
+NAMED_SUBJECTS = (
+    (('කටුනායක ගුවන්තොටුපළ', 'කටුනායක ගුවන් තොටුපළ'), 'Bandaranaike International Airport', ('bandaranaike', 'airport'), 'කටුනායක ගුවන්තොටුපළ'),
+    (('කොළඹ වරාය',), 'Port of Colombo', ('colombo', 'port'), 'කොළඹ වරාය'),
+    (('දළදා මාලිගාව', 'දළදා මාළිගාව'), 'Temple of the Tooth Kandy', ('temple', 'tooth'), 'දළදා මාලිගාව'),
+    (('නෙළුම් කුලුන', 'නෙළුම් කුළුණ'), 'Colombo Lotus Tower', ('lotus', 'tower'), 'නෙළුම් කුලුන'),
+)
+
+def select_named_subject_photo(article, session=None):
+    title = article.get('title_si', '')
+    if any(word in title for word in ('මරණ', 'මරු', 'ඝාත', 'අනතුර', 'ප්‍රහාර', 'ගිනි', 'අත්අඩංගු', 'අල්ලයි', 'සැකකරු')):
+        return None, None
+    rule = next((r for r in NAMED_SUBJECTS if any(w in title for w in r[0])), None)
+    if not rule:
+        return None, None
+    _, term, tokens, label = rule
+    session = session or requests.Session()
+    for page in _metadata_search(term, session):
+        name = page.get('title', '').lower().replace('_', ' ')
+        info = (page.get('imageinfo') or [{}])[0]
+        if not all(t in name for t in tokens) or not name.endswith(('.jpg', '.jpeg', '.webp')):
+            continue
+        if not permitted(info) or int(info.get('width', 0)) < 750 or int(info.get('height', 0)) < 500:
+            continue
+        url = info.get('thumburl') or info.get('url', '')
+        source = info.get('descriptionurl', '')
+        if urlparse(url).scheme != 'https' or urlparse(url).hostname != 'upload.wikimedia.org' or not source.startswith('https://commons.wikimedia.org/wiki/'):
+            continue
+        meta = info.get('extmetadata', {})
+        creator = plain(meta.get('Artist', {}).get('value', ''))
+        license_text = plain(meta.get('LicenseShortName', {}).get('value', ''))
+        license_url = plain(meta.get('LicenseUrl', {}).get('value', ''))
+        if not creator or not license_url or plain(meta.get('Restrictions', {}).get('value', '')):
+            continue
+        credit = {'creator': creator, 'license': license_text, 'license_url': license_url,
+                  'source': source, 'label_si': label + ' - පැරණි ඡායාරූපයක්', 'kind': 'named_subject_not_event'}
+        path = Path('output') / ('named_' + hashlib.sha256(source.encode()).hexdigest()[:24] + '.jpg')
+        if not path.is_file():
+            response = session.get(url, headers={'User-Agent': USER_AGENT}, timeout=(5, 15), stream=True)
+            response.raise_for_status()
+            data = bytearray()
+            for chunk in response.iter_content(65536):
+                data.extend(chunk)
+                if len(data) > MAX_BYTES:
+                    raise ValueError('Named subject photo too large')
+            with Image.open(BytesIO(data)) as im:
+                im.verify()
+            with Image.open(BytesIO(data)) as im:
+                if im.width < 700 or im.height < 450:
+                    continue
+                path.parent.mkdir(parents=True, exist_ok=True)
+                im.convert('RGB').save(path, quality=90)
+        return str(path), credit
+    return None, None
+
+
 def select_real_photo(article):
     """Use real exact-event photography, then a verified *named institution*.
 
@@ -246,5 +303,11 @@ def select_real_photo(article):
             return classroom, "verified_education_context_photo", credit
     except (requests.RequestException, OSError, ValueError) as exc:
         print("Vetted classroom archive photo unavailable:", type(exc).__name__)
+    try:
+        named, credit = select_named_subject_photo(article)
+        if named:
+            return named, 'verified_named_subject_photo', credit
+    except (requests.RequestException, OSError, ValueError, KeyError):
+        pass
     return None, None, None
 

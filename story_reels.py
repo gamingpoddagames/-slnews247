@@ -40,12 +40,15 @@ def _media_attribution(article):
     except Exception as exc:
         print('Reel media lookup:', type(exc).__name__)
         return ''
-    if kind in ('verified_institution_photo', 'verified_education_context_photo') and credit:
+    if kind in ('verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo') and credit:
         return ('\n\n📷 ' + credit['creator'] + ', ' + credit['license']
                 + ' (cropped/resized). ' + credit['source']
                 + ' ' + credit['license_url'])
     if kind == 'verified_event_photo':
         return _approved_asset_attribution(article, 'photo')
+    if kind == 'verified_event_video_frame':
+        from media import video_credit
+        return video_credit(article)
     return ''
 
 
@@ -83,7 +86,8 @@ def render_story_reel(article, path):
 def _render_reel(article, video_path):
     """Use authorised same-event footage if available, otherwise our own reel."""
     from animated_bulletin import render_bulletin, render_graphic_reel, narration_for
-    article = dict(article, require_event_media=True)
+    strict = os.getenv('REELS_REQUIRE_EVENT_MEDIA', 'false').lower() == 'true'
+    article = dict(article, require_event_media=strict)
     try:
         from media import choose_video
         clip = choose_video(article)
@@ -101,10 +105,11 @@ def _render_reel(article, video_path):
               type(exc).__name__)
     # A verified event photograph is a photo reel, never labelled as live footage.
     from media import choose_photo
-    if not choose_photo(article):
+    exact = choose_photo(article)
+    if not exact and strict:
         raise ValueError('No verified event photo available for photo reel')
     try:
-        return render_bulletin(article, video_path), 'verified_event_photo_reel'
+        return render_bulletin(article, video_path), ('verified_event_photo_reel' if exact else 'original_news_reel')
     except Exception as exc:
         print('Voice reel unavailable; using original motion graphic:',
               type(exc).__name__)
@@ -178,7 +183,8 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
     from fast_news import MAX_AGE
     pending = [(k, v) for k, v in pending
                if 0 <= now - v['article'].get('published', 0) <= MAX_AGE
-               and (v.get('media_status') != 'awaiting_verified_event_media'
+               and (os.getenv('REELS_REQUIRE_EVENT_MEDIA', 'false').lower() != 'true'
+                    or v.get('media_status') != 'awaiting_verified_event_media'
                     or now - v.get('last_attempt_at', 0) >= 900)]
     pending.sort(key=lambda item: (item[1]['article'].get('published', 0), item[0]),
                  reverse=True)
@@ -186,6 +192,7 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
     if preview:
         return status
 
+    strict = os.getenv('REELS_REQUIRE_EVENT_MEDIA', 'false').lower() == 'true'
     for story_id, entry in pending:
         if status['rendered'] >= max_per_run:
             break
@@ -195,11 +202,12 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
             has_media = bool(choose_video(article) or choose_photo(article))
         except Exception:
             has_media = False
-        if not has_media:
+        if not has_media and strict:
             entry['last_attempt_at'] = now
             entry['media_status'] = 'awaiting_verified_event_media'
             save(state)
             continue
+        entry.pop('media_status', None)
         status['stories'].append(story_id)
         video_path = str(Path('output') / 'reels' / (story_id + '.mp4'))
         Path(video_path).parent.mkdir(parents=True, exist_ok=True)

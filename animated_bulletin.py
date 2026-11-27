@@ -102,7 +102,10 @@ def _slide(article, text, index, image_path, destination, photo_label=None):
     except ValueError:
         # The full fact is still narrated and in the post text.
         pass
-    # Public scenes show the news and our brand; media metadata stays internal.
+    label = photo_label or ('පුවත් විස්තර සටහන' if not image_path else '')
+    if label:
+        draw.rounded_rectangle((44, 688, 676, 734), radius=10, fill='#18324e')
+        draw_mixed(draw, (56, 720), label, 19, fill='white', bold=True)
     canvas.save(destination)
     return str(destination)
 
@@ -123,8 +126,10 @@ def build_scene_images(article, script, directory):
         if not image_path or image_kind != 'verified_event_photo':
             raise ValueError('Verified exact-event photo required for reel scenes')
     label = (credit.get('label_si') if image_kind in (
-        'verified_institution_photo', 'verified_education_context_photo')
+        'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo')
         and credit else None)
+    if image_kind == 'licensed_subject_photo':
+        label = 'අදාළ විෂයයේ ඡායාරූපයක්'
     facts = _story_facts(article, script)
     return [_slide(article, facts[i], i, image_path,
                    folder / f'scene_{i+1}.png', photo_label=label) for i in range(3)]

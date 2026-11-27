@@ -257,9 +257,9 @@ def send_text(platform, article):
     try:
         if photo_path and image_kind in ('verified_event_photo', 'licensed_subject_photo',
                                          'verified_event_video_frame'):
-            image_path = news_card(article, image_path=photo_path, illustrative=False)
+            image_path = news_card(article, image_path=photo_path, illustrative=(image_kind == 'licensed_subject_photo'))
         elif photo_path and credit and image_kind in (
-                'verified_institution_photo', 'verified_education_context_photo'):
+                'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo'):
             image_path = news_card(article, image_path=photo_path, illustrative=False,
                                    photo_label=credit['label_si'])
         else:
@@ -276,7 +276,7 @@ def send_text(platform, article):
         from media import video_credit
         required_credit = video_credit(article)
         message += required_credit
-    if image_kind in ('verified_institution_photo', 'verified_education_context_photo') and credit:
+    if image_kind in ('verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo') and credit:
         # Legally mandatory CC BY/CC BY-SA credit is part of the post, not
         # news-source boilerplate. Never hide required copyright terms.
         required_credit = ('\n\n📷 ' + credit['creator'] + ' / ' + credit['license']
@@ -755,7 +755,14 @@ def main():
     # Explicit publishing diagnostics, so a green CI badge is not confused
     # with evidence that fresh posts or original video were actually sent.
     report['publishing_status'] = {
-        'new_photo_posts': {dest: delivery[dest]['sent'] for dest in ('telegram','facebook')},
+        'new_posts': {dest: delivery[dest]['sent'] for dest in ('telegram','facebook')},
+        'new_real_photo_posts': {dest: sum(1 for r in state['stories'].values()
+            if r.get('receipts', {}).get(dest, {}).get('at') == now
+            and r['receipts'][dest].get('format') in ('verified_event_photo', 'licensed_subject_photo', 'verified_event_video_frame', 'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo'))
+            for dest in ('telegram', 'facebook')},
+        'new_graphic_posts': {dest: sum(1 for r in state['stories'].values()
+            if r.get('receipts', {}).get(dest, {}).get('at') == now
+            and r['receipts'][dest].get('format') == 'branded_news_graphic') for dest in ('telegram', 'facebook')},
         'awaiting_exact_event_photo': {dest: delivery[dest]['awaiting_event_photo']
                                        for dest in ('telegram', 'facebook')},
         'fresh_publishable_found': report['publishable_articles'],

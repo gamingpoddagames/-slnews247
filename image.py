@@ -414,6 +414,10 @@ def news_card(article, image_path=None, illustrative=False, photo_label=None, *,
     draw.text((748, 35), 'SL NEWS', font=latin_font(41, bold=True), fill='white')
     draw.text((884, 82), '24/7', font=latin_font(28, bold=True), fill='#ffe094')
 
+    if photo_label or illustrative:
+        label = photo_label or 'අදාළ විෂයයේ ඡායාරූපයක්'
+        draw.rounded_rectangle((76, 755, 1004, 807), radius=12, fill='#18324e')
+        draw_mixed(draw, (91, 792), label, 24, fill='white', bold=True)
     draw.rectangle((77, 839, 173, 845), fill=YELLOW)
     draw.line((188, 842, 1003, 842), fill='#d88b54', width=2)
     draw.line((88, 1222, 992, 1222), fill='#d88b54', width=1)

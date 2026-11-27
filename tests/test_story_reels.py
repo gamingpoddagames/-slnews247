@@ -102,12 +102,12 @@ class PerStoryReelTests(unittest.TestCase):
         self.assertEqual((path, mode),
                          ('graphic.mp4', 'verified_event_photo_reel'))
 
-    def test_missing_media_holds_reel_even_when_legacy_flag_disabled(self):
+    def test_missing_media_holds_reel_when_strict_mode_enabled(self):
         import os
         with patch('fast_news.publishable', return_value=True), \
              patch('media.choose_photo', return_value=None), \
              patch('media.choose_video', return_value=None), \
-             patch.dict(os.environ, {'REELS_REQUIRE_EVENT_MEDIA': 'false'}), \
+             patch.dict(os.environ, {'REELS_REQUIRE_EVENT_MEDIA': 'true'}), \
              patch('fast_news.save'), \
              patch('story_reels._render_reel') as render, \
              patch('telegram.upload_video') as telegram, \
@@ -119,6 +119,21 @@ class PerStoryReelTests(unittest.TestCase):
         render.assert_not_called()
         telegram.assert_not_called()
         facebook.assert_not_called()
+
+    def test_missing_media_does_not_block_original_news_reel(self):
+        import os
+        with patch.dict(os.environ, {'REELS_REQUIRE_EVENT_MEDIA': 'false'}), \
+             patch('fast_news.publishable', return_value=True), \
+             patch('media.choose_photo', return_value=None), \
+             patch('media.choose_video', return_value=None), \
+             patch('fast_news.save'), \
+             patch('story_reels._media_attribution', return_value=''), \
+             patch('animated_bulletin.render_bulletin', return_value='news.mp4'), \
+             patch('telegram.upload_video', return_value=True), \
+             patch('facebook.upload_video', return_value=True):
+            result = publish_reels(self.state, [self.article], 1795350300)
+        self.assertEqual(result['sent'], {'telegram': 1, 'facebook': 1})
+        self.assertEqual(self.state['reels']['event-one']['format'], 'original_news_reel')
 
     def test_queued_story_still_gets_reel_after_it_disappears_from_rss(self):
         second = dict(self.article, id='event-two',
