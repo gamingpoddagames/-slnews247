@@ -9794,7 +9794,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795755739.2856915
+        "at": 1795756023.4634397
       }
     },
     "2f003ca74481a684d67d69b0": {
@@ -9810,7 +9810,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795755739.2856915
+        "at": 1795756023.4634397
       }
     },
     "27ddfa643ce0a0d0b83ef226": {
@@ -9849,7 +9849,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795755739.2856915
+        "at": 1795756023.4634397
       }
     },
     "043488024272080ebbdceb62": {
@@ -9865,7 +9865,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795755739.2856915
+        "at": 1795756023.4634397
       }
     },
     "86979eb80d35da862277e440": {
@@ -9881,7 +9881,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795755739.2856915
+        "at": 1795756023.4634397
       }
     },
     "a6e2fb73475163eb25963e38": {
@@ -9897,7 +9897,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795755739.2856915
+        "at": 1795756023.4634397
       }
     },
     "3337ce6165347897edd44018": {
@@ -9913,7 +9913,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795755739.2856915
+        "at": 1795756023.4634397
       }
     },
     "c3ce8bb181fde600548b9d50": {
@@ -9929,7 +9929,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795755739.2856915
+        "at": 1795756023.4634397
       }
     }
   },
@@ -9952,7 +9952,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795755739.2856915,
+  "last_scan_at": 1795756023.4634397,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -12803,7 +12803,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754482.5583642,
+      "last_attempt_at": 1795756023.4634397,
       "media_status": "awaiting_verified_event_media"
     },
     "1c4892a36d04edeb6445cd9b": {
@@ -12893,7 +12893,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795755739.2856915,
+      "last_attempt_at": 1795756023.4634397,
       "media_status": "awaiting_verified_event_media"
     },
     "7403272f4d35e8d53aaf0244": {
@@ -12908,7 +12908,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795755739.2856915,
+      "last_attempt_at": 1795756023.4634397,
       "media_status": "awaiting_verified_event_media"
     },
     "5728473eccb545ff504b1378": {
@@ -12923,7 +12923,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795755739.2856915,
+      "last_attempt_at": 1795756023.4634397,
       "media_status": "awaiting_verified_event_media"
     },
     "6c8058af8a2bb84bfe8fb77d": {
@@ -12995,7 +12995,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754482.5583642,
+      "last_attempt_at": 1795756023.4634397,
       "media_status": "awaiting_verified_event_media"
     },
     "9cde83331085231e21e29727": {
@@ -13010,7 +13010,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795754482.5583642,
+      "last_attempt_at": 1795756023.4634397,
       "media_status": "awaiting_verified_event_media"
     },
     "5666619b78b6d0eee7bc2b28": {
@@ -13023,10 +13023,14 @@
         "source": "Neth Sports",
         "published": 1795743280
       },
-      "status": "queued",
-      "destinations": {},
-      "last_attempt_at": 1795754482.5583642,
-      "media_status": "awaiting_verified_event_media"
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "last_attempt_at": 1795756023.4634397,
+      "media_status": "awaiting_verified_event_media",
+      "format": "original_news_reel"
     },
     "27ddfa643ce0a0d0b83ef226": {
       "at": 1795755739.2856915,
@@ -13432,6 +13436,18 @@
       },
       "status": "queued",
       "queued_at": 1795755739.2856915
+    },
+    "5666619b78b6d0eee7bc2b28": {
+      "article": {
+        "id": "5666619b78b6d0eee7bc2b28",
+        "title_si": "ඉන්දියාවට එරෙහි විශිෂ්ඨ ජයත් සමග ශ්‍රී ලංකාව ආසියානු රයිසින් ස්ටාර්ස් එක්දින ක්‍රිකට් තරගාවලියේ අවසන් මහා තරගයට",
+        "summary_si": "ඉන්දිය A කණ්ඩායමට එරෙහි විශිෂ්ට ජයග්‍රහණයක් සමග ආසියානු Rising Stars එක්දින ක්‍රිකට් තරගාවලියේ අවසන් මහා තරගයට සුදුසුකම් ලබා ගැනීමට ශ්‍රී ලංකා A කණ්ඩායම සමත් වුණා. පවන් රත්නායකගේ නායකත්වයෙන් යුත් ශ්‍රී ලංකා A කණ්ඩායම මෙහිදී ඉන්දිය A කණ්ඩායම පරාජය කළේ කඩුලු 8න්. ආසියානු Rising Stars එක්දින ක්‍රිකට් තරගාවලිය පැවැත්වෙන්නේ දෝහා හිදී. ශ්‍රී ලංකා සහ ඉන්දීය A ...",
+        "link": "https://www.nethnews.lk/breaking-news/local-news/%e0%b6%89%e0%b6%b1%e0%b7%8a%e0%b6%af%e0%b7%92%e0%b6%ba%e0%b7%8f%e0%b7%80%e0%b6%a7-%e0%b6%91%e0%b6%bb%e0%b7%99%e0%b7%84%e0%b7%92-%e0%b7%80%e0%b7%92%e0%b7%81%e0%b7%92%e0%b7%82%e0%b7%8a%e0%b6%a8/",
+        "source": "Neth Sports",
+        "published": 1795743280
+      },
+      "status": "queued",
+      "queued_at": 1795756023.4634397
     }
   },
   "tiktok_started_at": 1795370479.455068
