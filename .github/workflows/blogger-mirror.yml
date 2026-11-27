@@ -4,24 +4,35 @@ on:
     - cron: '11,41 * * * *'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+  actions: read
+  id-token: write
 concurrency:
-  group: slnews-blogger-categories
+  group: sinhala-news-production
   cancel-in-progress: false
 jobs:
   mirror:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install existing news dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Refresh production receipts
+        run: |
+          git fetch --quiet origin main
+          git show origin/main:data/sri_lanka_delivery.json > data/sri_lanka_delivery.json
       - name: Verify Python syntax
         run: python -m py_compile blogger/mirror.py
       - name: Mirror approved news posts
         env:
           PYTHONPATH: .
+          SLNEWS_VIDIQ_BRIDGE_URL: 'https://everydaykit.gamingpoddagames.workers.dev/slnews247/vidiq'
+          SLNEWS_VIDIQ_PUBLISH_ENABLED: 'false'
+          SLNEWS_ARTIFACT_READ_TOKEN: ${{ github.token }}
           SLNEWS_BLOGGER_URL: ${{ vars.SLNEWS_BLOGGER_URL }}
           SLNEWS_BLOGGER_PUBLISH_ENABLED: ${{ vars.SLNEWS_BLOGGER_PUBLISH_ENABLED }}
           BLOGGER_CLIENT_ID: ${{ secrets.BLOGGER_CLIENT_ID }}
@@ -29,3 +40,20 @@ jobs:
           BLOGGER_REFRESH_TOKEN: ${{ secrets.BLOGGER_REFRESH_TOKEN }}
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
         run: python blogger/mirror.py
+      - name: Preserve Blogger and TikTok delivery checkpoints
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          snapshot=$(mktemp -d)
+          cp data/sri_lanka_delivery.json "$snapshot/sri_lanka_delivery.json"
+          for attempt in 1 2 3; do
+            git fetch --quiet origin main
+            git reset --hard origin/main
+            python scripts/merge_news_checkpoint.py "$snapshot"
+            git add data/sri_lanka_delivery.json
+            if git diff --cached --quiet; then break; fi
+            git commit -m 'Record Blogger and TikTok delivery checkpoints'
+            if git push origin HEAD:main; then break; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+          done

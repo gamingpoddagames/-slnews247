@@ -251,6 +251,12 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
         attribution = (_approved_asset_attribution(article, 'video')
                        if format_name == 'approved_exact_event_clip'
                        else _media_attribution(article))
+        try:
+            import json
+            Path(str(path) + '.attribution.json').write_text(json.dumps({
+                'article_id': story_id, 'attribution': attribution}, ensure_ascii=False), encoding='utf-8')
+        except OSError:
+            pass
         normal = caption(article)
         # Telegram video captions have a 1024-character limit. Do not cut
         # off the mandatory licence details; shorten the news summary instead.

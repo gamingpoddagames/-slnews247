@@ -117,7 +117,17 @@ def main():
         result=api(path,{"isDraft":"false"},"POST",{"title":title,"content":"\n".join(parts),"labels":labels})
         if not result.get("id"):raise RuntimeError("Unconfirmed Blogger response; stop run")
         known.add(ident);titles.add(norm(title))
+        state.setdefault("blogger_posts", {})[ident] = {
+            "id": str(result["id"]), "url": result.get("url", ""), "at": time.time()}
+        from fast_news import save
+        save(state)
         print("Blogger accepted post",result["id"])
+        try:
+            from vidiq_tiktok_bridge import publish_tiktok
+            outcome = publish_tiktok(state, [a], time.time(), save=save, max_items=1)
+            print("TikTok same-run delivery:", json.dumps(outcome))
+        except Exception as exc:
+            print("TikTok same-run delivery needs review:", type(exc).__name__)
     print("Eligible new posts:",total,"mode:","publish" if apply else "preview")
 
 if __name__=="__main__":main()

@@ -292,6 +292,14 @@ def send_text(platform, article):
             provider = credit.get('provider', 'Pexels')
             required_credit = required_credit.replace('📷 ', '📷 ' + provider + ' context: ', 1)
         message += required_credit
+    # Retain the exact licence text with this original asset for cross-posting.
+    if Path(image_path).is_file():
+        try:
+            Path(str(image_path) + '.attribution.json').write_text(
+                json.dumps({'article_id': article['id'], 'attribution': required_credit},
+                           ensure_ascii=False), encoding='utf-8')
+        except OSError:
+            pass
     if platform == 'telegram' and len(message) > 1024:
         # Telegram caps photo captions; keep the full license credit and a
         # factual headline, shortening only ancillary story details.
@@ -757,6 +765,19 @@ def main():
         report['tiktok_delivery'] = {'status': 'integration_error',
                                      'error': type(exc).__name__}
         print('TikTok integration:', type(exc).__name__)
+    # The same production run sends the same original media to Public TikTok.
+    # This has no separate schedule and never delivers to the creator's inbox.
+    try:
+        from vidiq_tiktok_bridge import publish_tiktok
+        tiktok_articles = {a['id']: a for a in articles}
+        for item in state.get('reels', {}).values():
+            a = item.get('article', {})
+            if a.get('id'):
+                tiktok_articles.setdefault(a['id'], a)
+        report['tiktok_direct'] = publish_tiktok(
+            state, list(tiktok_articles.values()), now, preview=preview, save=save)
+    except Exception as exc:
+        report['tiktok_direct'] = {'status': 'integration_error', 'error': type(exc).__name__}
     report['unconfirmed_headline_requests'] = sum(len(r.get('uncertain', {})) for r in state.get('stories', {}).values())
     # Report independent video results, not just a green workflow status.
     video_result = report['video']
@@ -787,6 +808,7 @@ def main():
         'video_result': report['video'],
         'story_reels': report.get('reels'),
         'tiktok_news': report.get('tiktok_delivery'),
+        'tiktok_direct': report.get('tiktok_direct'),
         'next_video_minimum_interval_minutes': 15,
         'note': 'Scheduled GitHub Actions are best effort, not a 5-minute SLA.',
     }

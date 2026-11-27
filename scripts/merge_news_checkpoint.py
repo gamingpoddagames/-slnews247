@@ -51,7 +51,7 @@ def merge_state(remote, local):
     # Preserve all non-headline production journals as well. Formerly only
     # 'stories' survived this merge, silently dropping video cooldowns,
     # official-video-link receipts and editorial history every run.
-    for key in ('videos', 'bulletins', 'reels', 'official_video_links', 'editorial_updates'):
+    for key in ('videos', 'bulletins', 'reels', 'official_video_links', 'editorial_updates', 'blogger_posts'):
         merged = dict(remote.get(key) or {})
         for article_id, local_entry in (local.get(key) or {}).items():
             if article_id not in merged:
@@ -99,11 +99,27 @@ def merge_state(remote, local):
         else:
             external[article_id] = {**old, **incoming}
     result['tiktok_news'] = external
+    # Direct Public connector receipts have independent post/publication IDs.
+    # Confirmed delivery and unknown side effects must survive stale workers.
+    ranks_direct = {'media_failed': 0, 'importing': 1, 'creating': 2, 'draft': 3,
+                    'submitted': 4, 'inProgress': 5, 'failed': 6, 'uncertain': 7,
+                    'reconciliationRequired': 8, 'completed': 9}
+    direct = dict(remote.get('vidiq_tiktok') or {})
+    for article_id, incoming in (local.get('vidiq_tiktok') or {}).items():
+        old = direct.get(article_id, {})
+        if old.get('postId') and incoming.get('postId') and old['postId'] != incoming['postId']:
+            direct[article_id] = {**old, 'merge_conflict': True,
+                'status': 'completed' if old.get('status') == 'completed' else 'reconciliationRequired'}
+        elif ranks_direct.get(old.get('status'), -1) > ranks_direct.get(incoming.get('status'), -1):
+            direct[article_id] = {**incoming, **old}
+        else:
+            direct[article_id] = {**old, **incoming}
+    result['vidiq_tiktok'] = direct
     times = [v for v in (remote.get('tiktok_started_at'),
                          local.get('tiktok_started_at')) if v is not None]
     if times:
         result['tiktok_started_at'] = min(times)
-    for key in ('last_video_at', 'last_bulletin_at'):
+    for key in ('last_video_at', 'last_bulletin_at', 'vidiq_tiktok_limit_at'):
         result[key] = max(remote.get(key, 0), local.get(key, 0))
     # Preserve the rollout boundary: queued per-story reels must not be
     # silently lost when a delayed GitHub scan merges its checkpoint.
@@ -141,3 +157,4 @@ def main(snapshot_dir):
 
 if __name__ == '__main__':
     main(sys.argv[1])
+

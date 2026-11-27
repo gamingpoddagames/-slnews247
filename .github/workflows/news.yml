@@ -22,6 +22,8 @@ on:
         default: true
 permissions:
   contents: write
+  actions: read
+  id-token: write
 concurrency:
   group: sinhala-news-production
   cancel-in-progress: false
@@ -90,6 +92,9 @@ jobs:
       - name: Run news pipeline
         env:
           PREVIEW_ONLY: ${{ github.event_name == 'workflow_dispatch' && !inputs.publish }}
+          SLNEWS_VIDIQ_BRIDGE_URL: 'https://everydaykit.gamingpoddagames.workers.dev/slnews247/vidiq'
+          SLNEWS_VIDIQ_PUBLISH_ENABLED: 'false'
+          SLNEWS_ARTIFACT_READ_TOKEN: ${{ github.token }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
