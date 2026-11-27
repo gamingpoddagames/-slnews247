@@ -9984,7 +9984,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795813666.1198661
+        "at": 1795815994.5298684
       }
     },
     "f783583fdbc72d9063a3300c": {
@@ -10069,7 +10069,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795813666.1198661
+        "at": 1795815994.5298684
       }
     },
     "c91554de83c373f52aeb832d": {
@@ -10108,7 +10108,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795813666.1198661
+        "at": 1795815994.5298684
       }
     },
     "0c2b0e284bf050232f971587": {
@@ -10156,7 +10156,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795813666.1198661
+        "at": 1795815994.5298684
       }
     },
     "92d8868585705e01e748b36e": {
@@ -10172,7 +10172,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795813666.1198661
+        "at": 1795815994.5298684
       }
     },
     "a6841de55cefabc62b679801": {
@@ -10303,7 +10303,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795813666.1198661
+        "at": 1795815994.5298684
       }
     },
     "cbf98e8c42bbfc5701da1041": {
@@ -10342,7 +10342,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795813666.1198661
+        "at": 1795815994.5298684
       }
     },
     "a1283a15f8e5da89c49b3111": {
@@ -10404,7 +10404,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795813666.1198661,
+  "last_scan_at": 1795815994.5298684,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -10610,6 +10610,16 @@
       },
       "facebook": {
         "id": "1020689164470492_122128199397318605",
+        "format": "licensed_subject_stock"
+      }
+    },
+    "c260a513b7e5537fdbc7f034": {
+      "telegram": {
+        "id": "1313",
+        "format": "licensed_subject_stock"
+      },
+      "facebook": {
+        "id": "1020689164470492_122128201359318605",
         "format": "licensed_subject_stock"
       }
     }
