@@ -10156,12 +10156,19 @@
         "source": "Lankadeepa Latest",
         "published": 1795786200
       },
-      "receipts": {},
-      "uncertain": {},
-      "photo_review": {
-        "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
-      }
+      "receipts": {
+        "telegram": {
+          "id": "1289",
+          "at": 1795803325.7937307,
+          "format": "licensed_subject_stock"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128185405318605",
+          "at": 1795803325.7937307,
+          "format": "licensed_subject_stock"
+        }
+      },
+      "uncertain": {}
     },
     "fe601ef0725f62013354353b": {
       "article": {
@@ -10220,12 +10227,19 @@
         "source": "Lankadeepa Latest",
         "published": 1795791900
       },
-      "receipts": {},
-      "uncertain": {},
-      "photo_review": {
-        "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
-      }
+      "receipts": {
+        "telegram": {
+          "id": "1288",
+          "at": 1795803325.7937307,
+          "format": "licensed_subject_stock"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128185303318605",
+          "at": 1795803325.7937307,
+          "format": "licensed_subject_stock"
+        }
+      },
+      "uncertain": {}
     },
     "105a33d0e522a8404ad85cb9": {
       "article": {
@@ -10252,12 +10266,19 @@
         "source": "Lankadeepa Latest",
         "published": 1795794660
       },
-      "receipts": {},
-      "uncertain": {},
-      "photo_review": {
-        "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
-      }
+      "receipts": {
+        "telegram": {
+          "id": "1287",
+          "at": 1795803325.7937307,
+          "format": "licensed_subject_stock"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128185213318605",
+          "at": 1795803325.7937307,
+          "format": "licensed_subject_stock"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -10279,7 +10300,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795802364.736873,
+  "last_scan_at": 1795803325.7937307,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -10446,6 +10467,16 @@
       },
       "facebook": {
         "error": "exact_event_photo_required"
+      }
+    },
+    "d5a66a9a8b1f07aed40765bc": {
+      "telegram": {
+        "id": "1290",
+        "format": "licensed_subject_stock"
+      },
+      "facebook": {
+        "id": "1020689164470492_122128185513318605",
+        "format": "licensed_subject_stock"
       }
     }
   },
@@ -13410,6 +13441,55 @@
       },
       "format": "original_news_reel",
       "last_attempt_at": 1795781183.8819592
+    },
+    "cbf98e8c42bbfc5701da1041": {
+      "at": 1795803325.7937307,
+      "article": {
+        "id": "cbf98e8c42bbfc5701da1041",
+        "title_si": "‘මිත්‍ර ශක්ති යුද අභ්‍යාසය අවසන්",
+        "summary_si": "ශ්‍රී ලංකා යුද්ධ හමුදාව සහ ඉන්දීය යුද්ධ හමුදාව අතර වාර්ෂිකව පැවැත්වෙන ද්විපාර්ශ්වික ඒකාබද්ධ යුද අභ්‍යාස මාලාවේ 12 වන අදියර වන ‘මිත්‍ර ශක්ති – XII’ යුද අභ්‍යාසය 2026 නොවැම්බර් මස 13 සිට 26 දක්වා මාදුරුඔය යුද්ධ හමුදා පුහුණු පාසලේදී සාර්ථකව පැවැත්විණි.",
+        "link": "https://www.lankadeepa.lk/latest_news/‘මිත්‍ර-ශක්ති-යුද-අභ්‍යාසය-අවසන්/1-701244",
+        "source": "Lankadeepa Latest",
+        "published": 1795794660
+      },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "original_news_reel",
+      "last_attempt_at": 1795803325.7937307
+    },
+    "820a055e8007feba3666923c": {
+      "at": 1795803325.7937307,
+      "article": {
+        "id": "820a055e8007feba3666923c",
+        "title_si": "පෝසත්ම උදවියගේ ආදායම සියයට 6.8 කින් නැගලා",
+        "summary_si": "අංජුල මහික වීරරත්න සහ සුජිත් හේවාජුලිගේරටේ පොහොසත්ම සියයට විස්සක කාණ්ඩයේ ආදායම සියයට 6. 8 කින් වැඩි වී තිබෙන බව අනුරාධපුර දිස්ත්‍රික් මන්ත්‍රී සුරංග රත්නායක මහතා (ස. ජ. බ) පාර්ලිමේන්තුවේදී පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/පෝසත්ම-උදවියගේ-ආදායම-සියයට-6-8-කින්-නැගලා/1-701243",
+        "source": "Lankadeepa Latest",
+        "published": 1795791900
+      },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "original_news_reel",
+      "last_attempt_at": 1795803325.7937307
+    },
+    "a6841de55cefabc62b679801": {
+      "at": 1795803325.7937307,
+      "article": {
+        "id": "a6841de55cefabc62b679801",
+        "title_si": "ලංකාවේ ණය ශ්‍රේණිගත කිරීම් ඉහළට",
+        "summary_si": "ශ්‍රී ලංකාවේ දිගුකාලීන විදේශීය සහ දේශීය මුදල් ණය ශ්‍රේණිගත කිරීම් ’CCC+/C’ සිට ’B-/B’ දක්වා ඉහළ නැංවීමට ජාත්‍යන්තර ණය ශ්‍රේණිගත කිරීමේ ආයතනයක් වන S&P Global Ratings පියවර ගෙන තිබේ.",
+        "link": "https://www.lankadeepa.lk/latest_news/ලංකාවේ-ණය-ශ්‍රේණිගත-කිරීම්-ඉහළට/1-701242",
+        "source": "Lankadeepa Latest",
+        "published": 1795786200
+      },
+      "status": "queued",
+      "destinations": {}
     }
   },
   "reels_started_at": 1795349700,
@@ -13821,6 +13901,30 @@
       },
       "status": "queued",
       "queued_at": 1795781183.8819592
+    },
+    "cbf98e8c42bbfc5701da1041": {
+      "article": {
+        "id": "cbf98e8c42bbfc5701da1041",
+        "title_si": "‘මිත්‍ර ශක්ති යුද අභ්‍යාසය අවසන්",
+        "summary_si": "ශ්‍රී ලංකා යුද්ධ හමුදාව සහ ඉන්දීය යුද්ධ හමුදාව අතර වාර්ෂිකව පැවැත්වෙන ද්විපාර්ශ්වික ඒකාබද්ධ යුද අභ්‍යාස මාලාවේ 12 වන අදියර වන ‘මිත්‍ර ශක්ති – XII’ යුද අභ්‍යාසය 2026 නොවැම්බර් මස 13 සිට 26 දක්වා මාදුරුඔය යුද්ධ හමුදා පුහුණු පාසලේදී සාර්ථකව පැවැත්විණි.",
+        "link": "https://www.lankadeepa.lk/latest_news/‘මිත්‍ර-ශක්ති-යුද-අභ්‍යාසය-අවසන්/1-701244",
+        "source": "Lankadeepa Latest",
+        "published": 1795794660
+      },
+      "status": "queued",
+      "queued_at": 1795803325.7937307
+    },
+    "820a055e8007feba3666923c": {
+      "article": {
+        "id": "820a055e8007feba3666923c",
+        "title_si": "පෝසත්ම උදවියගේ ආදායම සියයට 6.8 කින් නැගලා",
+        "summary_si": "අංජුල මහික වීරරත්න සහ සුජිත් හේවාජුලිගේරටේ පොහොසත්ම සියයට විස්සක කාණ්ඩයේ ආදායම සියයට 6. 8 කින් වැඩි වී තිබෙන බව අනුරාධපුර දිස්ත්‍රික් මන්ත්‍රී සුරංග රත්නායක මහතා (ස. ජ. බ) පාර්ලිමේන්තුවේදී පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/පෝසත්ම-උදවියගේ-ආදායම-සියයට-6-8-කින්-නැගලා/1-701243",
+        "source": "Lankadeepa Latest",
+        "published": 1795791900
+      },
+      "status": "queued",
+      "queued_at": 1795803325.7937307
     }
   },
   "tiktok_started_at": 1795370479.455068
