@@ -205,6 +205,12 @@ NAMED_SUBJECTS = (
     (('කොළඹ වරාය',), 'Port of Colombo', ('colombo', 'port'), 'කොළඹ වරාය'),
     (('දළදා මාලිගාව', 'දළදා මාළිගාව'), 'Temple of the Tooth Kandy', ('temple', 'tooth'), 'දළදා මාලිගාව'),
     (('නෙළුම් කුලුන', 'නෙළුම් කුළුණ'), 'Colombo Lotus Tower', ('lotus', 'tower'), 'නෙළුම් කුලුන'),
+    (('පාර්ලිමේන්තුව', 'පාර්ලිමේන්තු'), 'Sri Lanka Parliament building', ('parliament', 'sri lanka'), 'ශ්‍රී ලංකා පාර්ලිමේන්තුව'),
+    (('කොළඹ කොටස් වෙළෙඳපොළ', 'කොළඹ කොටස් වෙළඳපොළ'), 'Colombo Stock Exchange', ('colombo', 'stock exchange'), 'කොළඹ කොටස් වෙළෙඳපොළ'),
+    (('ශ්‍රී ලංකා ක්‍රිකට් කණ්ඩායම', 'ශ්‍රී ලංකා ක්‍රිකට් කණ්ඩායමේ'), 'Sri Lanka national cricket team', ('sri lanka', 'cricket', 'team'), 'ශ්‍රී ලංකා ක්‍රිකට් කණ්ඩායම'),
+    (('කොළඹ ජාතික රෝහල',), 'National Hospital of Sri Lanka Colombo', ('national hospital', 'sri lanka'), 'කොළඹ ජාතික රෝහල'),
+    (('කැලණිය විශ්වවිද්‍යාලය', 'කැලණිය විශ්වවිද්‍යාලයේ'), 'University of Kelaniya', ('university', 'kelaniya'), 'කැලණිය විශ්වවිද්‍යාලය'),
+    (('පේරාදෙණිය විශ්වවිද්‍යාලය', 'පේරාදෙණිය විශ්වවිද්‍යාලයේ'), 'University of Peradeniya', ('university', 'peradeniya'), 'පේරාදෙණිය විශ්වවිද්‍යාලය'),
 )
 
 def select_named_subject_photo(article, session=None):
@@ -255,7 +261,7 @@ def select_named_subject_photo(article, session=None):
     return None, None
 
 
-def select_real_photo(article):
+def _select_real_photo(article):
     """Use real exact-event photography, then a verified *named institution*.
 
     A photograph of the actual Central Bank building can illustrate policy
@@ -278,6 +284,13 @@ def select_real_photo(article):
     except Exception as exc:
         # A failed clip decode never substitutes an unrelated image.
         print('Approved event frame unavailable:', type(exc).__name__)
+
+    import os
+    if os.getenv('NEWS_REQUIRE_REAL_MEDIA', 'false').lower() == 'true':
+        from source_photos import source_photo_set
+        photos = source_photo_set(article.get('link', ''), article.get('title_si', ''))
+        if photos:
+            return photos[0]
 
     try:
         subject = select_subject_photo(article)
@@ -311,3 +324,29 @@ def select_real_photo(article):
         pass
     return None, None, None
 
+
+
+# Cache one selection per exact article during each scan, so Facebook, Telegram,
+# reel scenes and licence credit refer to the same downloaded asset.
+_SCAN_PHOTOS = {}
+
+
+def select_real_photo(article):
+    import os
+    if os.getenv('NEWS_REQUIRE_REAL_MEDIA', 'false').lower() != 'true':
+        return _select_real_photo(article)
+    key = (article.get('id'), article.get('link'), article.get('title_si'))
+    if key not in _SCAN_PHOTOS:
+        _SCAN_PHOTOS[key] = _select_real_photo(article)
+    return _SCAN_PHOTOS[key]
+
+
+def reel_photo_set(article):
+    """Use multiple licensed images from the same exact article where available."""
+    first = select_real_photo(article)
+    if not first[0]:
+        return []
+    if first[1] == 'licensed_article_photo':
+        from source_photos import source_photo_set
+        return list(source_photo_set(article.get('link', ''), article.get('title_si', ''))) or [first]
+    return [first]

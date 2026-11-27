@@ -107,7 +107,8 @@ jobs:
           SLNEWS_TIKTOK_MAX_PER_DAY: '2'
           MYMEMORY_EMAIL: ${{ secrets.MYMEMORY_EMAIL }}
           MAX_NEWS_PER_RUN: '3'
-          ALLOW_HEADLINE_CARD_FALLBACK: 'true'
+          ALLOW_HEADLINE_CARD_FALLBACK: 'false'
+          NEWS_REQUIRE_REAL_MEDIA: 'true'
           ARTICLE_PREVIEW_FALLBACK: 'false'
           EXTERNAL_NEWS_LINK_POSTS: 'false'
           MAX_REELS_PER_RUN: '2'

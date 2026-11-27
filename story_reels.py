@@ -40,6 +40,14 @@ def _media_attribution(article):
     except Exception as exc:
         print('Reel media lookup:', type(exc).__name__)
         return ''
+    if kind == 'licensed_article_photo':
+        from real_photo import reel_photo_set
+        credits = []
+        for _, _, c in reel_photo_set(article):
+            line = '📷 ' + c['creator'] + ' · ' + c['license'] + ' (cropped/resized). ' + c['source'] + ' ' + c['license_url']
+            if line not in credits:
+                credits.append(line)
+        return '\n\n' + '\n'.join(credits)
     if kind in ('verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo') and credit:
         return ('\n\n📷 ' + credit['creator'] + ', ' + credit['license']
                 + ' (cropped/resized). ' + credit['source']
@@ -87,7 +95,8 @@ def _render_reel(article, video_path):
     """Use authorised same-event footage if available, otherwise our own reel."""
     from animated_bulletin import render_bulletin, render_graphic_reel, narration_for
     strict = os.getenv('REELS_REQUIRE_EVENT_MEDIA', 'false').lower() == 'true'
-    article = dict(article, require_event_media=strict)
+    real_required = os.getenv('NEWS_REQUIRE_REAL_MEDIA', 'false').lower() == 'true'
+    article = dict(article, require_event_media=strict, require_real_photo=real_required)
     try:
         from media import choose_video
         clip = choose_video(article)
@@ -106,11 +115,17 @@ def _render_reel(article, video_path):
     # A verified event photograph is a photo reel, never labelled as live footage.
     from media import choose_photo
     exact = choose_photo(article)
+    if real_required and not exact:
+        from real_photo import select_real_photo
+        if not select_real_photo(article)[0]:
+            raise ValueError('Relevant licensed photo required for reel')
     if not exact and strict:
         raise ValueError('No verified event photo available for photo reel')
     try:
         return render_bulletin(article, video_path), ('verified_event_photo_reel' if exact else 'original_news_reel')
     except Exception as exc:
+        if real_required:
+            raise  # Never publish a silent/graphic-only replacement in production.
         print('Voice reel unavailable; using original motion graphic:',
               type(exc).__name__)
     return render_graphic_reel(article, video_path), 'branded_graphic_reel'
@@ -193,6 +208,7 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
         return status
 
     strict = os.getenv('REELS_REQUIRE_EVENT_MEDIA', 'false').lower() == 'true'
+    real_required = os.getenv('NEWS_REQUIRE_REAL_MEDIA', 'false').lower() == 'true'
     for story_id, entry in pending:
         if status['rendered'] >= max_per_run:
             break
@@ -202,7 +218,13 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
             has_media = bool(choose_video(article) or choose_photo(article))
         except Exception:
             has_media = False
-        if not has_media and strict:
+        if not has_media and real_required and not strict:
+            from real_photo import select_real_photo
+            try:
+                has_media = bool(select_real_photo(article)[0])
+            except Exception:
+                has_media = False
+        if not has_media and (strict or real_required):
             entry['last_attempt_at'] = now
             entry['media_status'] = 'awaiting_verified_event_media'
             save(state)

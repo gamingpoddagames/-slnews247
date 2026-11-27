@@ -259,10 +259,12 @@ def send_text(platform, article):
                                          'verified_event_video_frame'):
             image_path = news_card(article, image_path=photo_path, illustrative=(image_kind == 'licensed_subject_photo'))
         elif photo_path and credit and image_kind in (
-                'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo'):
+                'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo', 'licensed_article_photo'):
             image_path = news_card(article, image_path=photo_path, illustrative=False,
                                    photo_label=credit['label_si'])
         else:
+            if os.getenv('NEWS_REQUIRE_REAL_MEDIA', 'false').lower() == 'true' or os.getenv('ALLOW_HEADLINE_CARD_FALLBACK', 'true').lower() != 'true':
+                return {'error': 'exact_event_photo_required'}
             image_kind, credit = 'branded_news_graphic', None
             image_path = news_card(article, graphic_fallback=True)
         if not image_path or not Path(image_path).is_file() or Path(image_path).stat().st_size < 1000:
@@ -272,11 +274,15 @@ def send_text(platform, article):
         return {'error': 'news_card_failed'}
     message = caption(article)
     required_credit = ''
+    if image_kind == 'verified_event_photo':
+        from story_reels import _approved_asset_attribution
+        required_credit = _approved_asset_attribution(article, 'photo')
+        message += required_credit
     if image_kind == 'verified_event_video_frame':
         from media import video_credit
         required_credit = video_credit(article)
         message += required_credit
-    if image_kind in ('verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo') and credit:
+    if image_kind in ('verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo', 'licensed_article_photo') and credit:
         # Legally mandatory CC BY/CC BY-SA credit is part of the post, not
         # news-source boilerplate. Never hide required copyright terms.
         required_credit = ('\n\n📷 ' + credit['creator'] + ' / ' + credit['license']
@@ -335,6 +341,8 @@ def deliver(state, articles, now, preview=False, sender=send_text):
     records = state.setdefault('stories', {})
     limit = max(1, min(60, int(os.getenv('MAX_NEWS_PER_RUN', '30'))))
     selected = []
+    strict_media = os.getenv('NEWS_REQUIRE_REAL_MEDIA', 'false').lower() == 'true'
+    scan_limit = max(limit, min(12, limit * 4)) if strict_media else limit
     for article in articles:
         if not publishable(article):
             continue
@@ -342,11 +350,17 @@ def deliver(state, articles, now, preview=False, sender=send_text):
         if all(name in record['receipts'] or record.get('uncertain', {}).get(name) for name in results):
             continue
         selected.append(article)
-        if len(selected) >= limit:
+        if len(selected) >= scan_limit:
             break
+    attempted = []
     for article in selected:
+        if strict_media and all(results[n]['sent'] >= limit for n in results):
+            break
+        attempted.append(article)
         record = records[article['id']]
         for name in results:
+            if strict_media and results[name]['sent'] >= limit:
+                continue
             if name in record['receipts']:
                 continue
             if preview:
@@ -379,7 +393,7 @@ def deliver(state, articles, now, preview=False, sender=send_text):
                 results[name]['failed'] += 1
                 record.setdefault('errors', {})[name] = result
             save(state)
-    return results, selected
+    return results, attempted
 
 
 def maybe_animated_bulletin(state, articles, now, preview):
@@ -758,7 +772,7 @@ def main():
         'new_posts': {dest: delivery[dest]['sent'] for dest in ('telegram','facebook')},
         'new_real_photo_posts': {dest: sum(1 for r in state['stories'].values()
             if r.get('receipts', {}).get(dest, {}).get('at') == now
-            and r['receipts'][dest].get('format') in ('verified_event_photo', 'licensed_subject_photo', 'verified_event_video_frame', 'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo'))
+            and r['receipts'][dest].get('format') in ('verified_event_photo', 'licensed_subject_photo', 'verified_event_video_frame', 'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo', 'licensed_article_photo'))
             for dest in ('telegram', 'facebook')},
         'new_graphic_posts': {dest: sum(1 for r in state['stories'].values()
             if r.get('receipts', {}).get(dest, {}).get('at') == now

@@ -130,6 +130,15 @@ def build_scene_images(article, script, directory):
         and credit else None)
     if image_kind == 'licensed_subject_photo':
         label = 'අදාළ විෂයයේ ඡායාරූපයක්'
+    if article.get('require_real_photo') and not image_path:
+        raise ValueError('Relevant real photo required for reel scenes')
+    if image_kind == 'licensed_article_photo':
+        from real_photo import reel_photo_set
+        photos = reel_photo_set(article)
+        if photos:
+            facts = _story_facts(article, script)
+            return [_slide(article, facts[i], i, photos[i % len(photos)][0],
+                       folder / f'scene_{i+1}.png', photo_label=photos[i % len(photos)][2]['label_si']) for i in range(3)]
     facts = _story_facts(article, script)
     return [_slide(article, facts[i], i, image_path,
                    folder / f'scene_{i+1}.png', photo_label=label) for i in range(3)]

@@ -151,6 +151,18 @@ class PresentationTests(unittest.TestCase):
         render.assert_called_once_with(article, graphic_fallback=True)
         self.assertTrue(sender.call_args.args[0].endswith('/sendPhoto'))
 
+    def test_production_requires_real_photo(self):
+        article = {'id': 'strict', 'title_si': 'මාතර සිද්ධිය',
+                   'summary_si': 'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
+                   'published': time.time()}
+        with patch.dict(os.environ, {'NEWS_REQUIRE_REAL_MEDIA': 'true'}), \
+             patch('real_photo.select_real_photo', return_value=(None, None, None)), \
+             patch('image.news_card') as render, \
+             patch('requests.post') as sender:
+            self.assertEqual(pipeline.send_text('facebook', article)['error'], 'exact_event_photo_required')
+        render.assert_not_called()
+        sender.assert_not_called()
+
     def test_unrelated_contextual_photo_is_never_published(self):
         article = {'id': 'two', 'title_si': 'මාතර සිද්ධිය',
                    'summary_si': 'මාතර සිද්ධිය සම්බන්ධයෙන් මේ වනවිට පොලිසිය විමර්ශන ආරම්භ කර තිබේ.',
