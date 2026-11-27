@@ -9794,7 +9794,23 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795753888.8020475
+        "at": 1795754231.5990372
+      }
+    },
+    "2f003ca74481a684d67d69b0": {
+      "article": {
+        "id": "2f003ca74481a684d67d69b0",
+        "title_si": "දිට්වා සුළි කුණාටුවේන ජීවිත අහිමි වූ පිරිස සිහි කරමින් මැතිසබයේ නිහඩතාවක්",
+        "summary_si": "දිට්වා සුළි කුණාටුව හේතුවෙන් ජීවිතක්ෂයට පත්වූ පුද්ගලයින් සිහිපත් කරමින් පාර්ලිමේන්තුවේදී විනාඩියක නිහඬතාවක් පැවැත්වුණා. ඒ, අද පෙරවරුවේ පාර්ලිමේන්තුව රැස්වූ අවස්ථාවේදීයි. පසුගිය වසරේ නොවැම්බර් 25 වනදා හටගත් දිට්වා සුළි කුණාටුවෙන් දිවයිනේ ප්‍රදේශ රැසකට බලපෑම් එල්ල වුණා. ඒ අනුව ඇති වූ තද වැසි, තද සුළං සහ නායයෑම් හේතුවෙන් මාර්ග පද්ධති, නිවාස සහ වගාබිම් රැසකට එල්ල වූයේ දැඩි විනාශයක්. ...",
+        "link": "https://www.nethnews.lk/breaking-news/local-news/%e0%b6%af%e0%b7%92%e0%b6%a7%e0%b7%8a%e0%b7%80%e0%b7%8f-%e0%b7%83%e0%b7%94%e0%b7%85%e0%b7%92-%e0%b6%9a%e0%b7%94%e0%b6%ab%e0%b7%8f%e0%b6%a7%e0%b7%94%e0%b7%80%e0%b7%9a%e0%b6%b1-%e0%b6%a2%e0%b7%93/",
+        "source": "Neth Politics",
+        "published": 1795754217
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795754231.5990372
       }
     }
   },
@@ -9817,7 +9833,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795753888.8020475,
+  "last_scan_at": 1795754231.5990372,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -12668,7 +12684,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795753888.8020475,
+      "last_attempt_at": 1795754231.5990372,
       "media_status": "awaiting_verified_event_media"
     },
     "1c4892a36d04edeb6445cd9b": {
@@ -12758,7 +12774,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795753888.8020475,
+      "last_attempt_at": 1795754231.5990372,
       "media_status": "awaiting_verified_event_media"
     },
     "7403272f4d35e8d53aaf0244": {
@@ -12773,7 +12789,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795753888.8020475,
+      "last_attempt_at": 1795754231.5990372,
       "media_status": "awaiting_verified_event_media"
     },
     "5728473eccb545ff504b1378": {
@@ -12788,7 +12804,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795753888.8020475,
+      "last_attempt_at": 1795754231.5990372,
       "media_status": "awaiting_verified_event_media"
     },
     "6c8058af8a2bb84bfe8fb77d": {
@@ -12841,7 +12857,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795753888.8020475,
+      "last_attempt_at": 1795754231.5990372,
       "media_status": "awaiting_verified_event_media"
     },
     "cceb1a2f68415b6d0a7356e5": {
@@ -12856,7 +12872,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795753888.8020475,
+      "last_attempt_at": 1795754231.5990372,
       "media_status": "awaiting_verified_event_media"
     },
     "9cde83331085231e21e29727": {
@@ -12871,7 +12887,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795753888.8020475,
+      "last_attempt_at": 1795754231.5990372,
       "media_status": "awaiting_verified_event_media"
     },
     "5666619b78b6d0eee7bc2b28": {
@@ -12886,7 +12902,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795753888.8020475,
+      "last_attempt_at": 1795754231.5990372,
       "media_status": "awaiting_verified_event_media"
     }
   },
