@@ -40,7 +40,7 @@ def _media_attribution(article):
     except Exception as exc:
         print('Reel media lookup:', type(exc).__name__)
         return ''
-    if kind == 'licensed_article_photo':
+    if kind in ('licensed_article_photo', 'licensed_subject_stock'):
         from real_photo import reel_photo_set
         credits = []
         for _, _, c in reel_photo_set(article):

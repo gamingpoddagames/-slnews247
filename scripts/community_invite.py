@@ -26,10 +26,16 @@ def render(day):
     canvas = broadcast_background((1080, 1350), (32, 56, 1048, 1295), 88)
     canvas.paste(crimson_panel((988, 1212)), (46, 70))
     logo = Path('assets/logo.png')
-    if logo.is_file():
+    try:
         with Image.open(logo) as im:
             im = ImageOps.contain(im.convert('RGBA'), (320, 320))
             canvas.paste(im, ((1080-im.width)//2, 120), im)
+    except (OSError, ValueError):
+        # Original brand mark, not a borrowed or invented third-party logo.
+        brand = ImageDraw.Draw(canvas)
+        brand.rounded_rectangle((375, 120, 705, 430), radius=55, fill='#18324e', outline='#ffe24a', width=5)
+        brand.text((540, 230), 'SL NEWS', font=latin_font(53, bold=True), fill='white', anchor='mm')
+        brand.text((540, 330), '24/7', font=latin_font(92, bold=True), fill='#ffe24a', anchor='mm')
     draw = ImageDraw.Draw(canvas)
     def center(line, baseline, size, color):
         x = (1080 - mixed_width(draw, line, size, bold=True)) / 2

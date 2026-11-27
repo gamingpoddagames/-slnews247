@@ -259,7 +259,7 @@ def send_text(platform, article):
                                          'verified_event_video_frame'):
             image_path = news_card(article, image_path=photo_path, illustrative=(image_kind == 'licensed_subject_photo'))
         elif photo_path and credit and image_kind in (
-                'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo', 'licensed_article_photo'):
+                'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo', 'licensed_article_photo', 'licensed_subject_stock'):
             image_path = news_card(article, image_path=photo_path, illustrative=False,
                                    photo_label=credit['label_si'])
         else:
@@ -282,7 +282,7 @@ def send_text(platform, article):
         from media import video_credit
         required_credit = video_credit(article)
         message += required_credit
-    if image_kind in ('verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo', 'licensed_article_photo') and credit:
+    if image_kind in ('verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo', 'licensed_article_photo', 'licensed_subject_stock') and credit:
         # Legally mandatory CC BY/CC BY-SA credit is part of the post, not
         # news-source boilerplate. Never hide required copyright terms.
         required_credit = ('\n\n📷 ' + credit['creator'] + ' / ' + credit['license']
@@ -772,7 +772,7 @@ def main():
         'new_posts': {dest: delivery[dest]['sent'] for dest in ('telegram','facebook')},
         'new_real_photo_posts': {dest: sum(1 for r in state['stories'].values()
             if r.get('receipts', {}).get(dest, {}).get('at') == now
-            and r['receipts'][dest].get('format') in ('verified_event_photo', 'licensed_subject_photo', 'verified_event_video_frame', 'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo', 'licensed_article_photo'))
+            and r['receipts'][dest].get('format') in ('verified_event_photo', 'licensed_subject_photo', 'verified_event_video_frame', 'verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo', 'licensed_article_photo', 'licensed_subject_stock'))
             for dest in ('telegram', 'facebook')},
         'new_graphic_posts': {dest: sum(1 for r in state['stories'].values()
             if r.get('receipts', {}).get(dest, {}).get('at') == now

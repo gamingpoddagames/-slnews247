@@ -132,7 +132,7 @@ def build_scene_images(article, script, directory):
         label = 'අදාළ විෂයයේ ඡායාරූපයක්'
     if article.get('require_real_photo') and not image_path:
         raise ValueError('Relevant real photo required for reel scenes')
-    if image_kind == 'licensed_article_photo':
+    if image_kind in ('licensed_article_photo', 'licensed_subject_stock'):
         from real_photo import reel_photo_set
         photos = reel_photo_set(article)
         if photos:

@@ -322,6 +322,11 @@ def _select_real_photo(article):
             return named, 'verified_named_subject_photo', credit
     except (requests.RequestException, OSError, ValueError, KeyError):
         pass
+    if os.getenv('NEWS_REQUIRE_REAL_MEDIA', 'false').lower() == 'true':
+        from subject_photos import subject_photo_set
+        photos = subject_photo_set(article.get('title_si',''), article.get('id',''))
+        if photos:
+            return photos[0]
     return None, None, None
 
 
@@ -346,6 +351,9 @@ def reel_photo_set(article):
     first = select_real_photo(article)
     if not first[0]:
         return []
+    if first[1] == 'licensed_subject_stock':
+        from subject_photos import subject_photo_set
+        return list(subject_photo_set(article.get('title_si',''), article.get('id',''))) or [first]
     if first[1] == 'licensed_article_photo':
         from source_photos import source_photo_set
         return list(source_photo_set(article.get('link', ''), article.get('title_si', ''))) or [first]
