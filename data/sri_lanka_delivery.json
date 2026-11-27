@@ -10179,12 +10179,19 @@
         "source": "Lankadeepa Latest",
         "published": 1795785780
       },
-      "receipts": {},
-      "uncertain": {},
-      "photo_review": {
-        "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
-      }
+      "receipts": {
+        "telegram": {
+          "id": "1293",
+          "at": 1795806371.1873353,
+          "format": "licensed_subject_stock"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128190169318605",
+          "at": 1795806371.1873353,
+          "format": "licensed_subject_stock"
+        }
+      },
+      "uncertain": {}
     },
     "d5a66a9a8b1f07aed40765bc": {
       "article": {
@@ -10195,12 +10202,19 @@
         "source": "Lankadeepa Latest",
         "published": 1795784880
       },
-      "receipts": {},
-      "uncertain": {},
-      "photo_review": {
-        "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
-      }
+      "receipts": {
+        "telegram": {
+          "id": "1294",
+          "at": 1795806371.1873353,
+          "format": "licensed_subject_stock"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128190277318605",
+          "at": 1795806371.1873353,
+          "format": "licensed_subject_stock"
+        }
+      },
+      "uncertain": {}
     },
     "0ca0db9bc2fd975e98ef5bd4": {
       "article": {
@@ -10211,12 +10225,19 @@
         "source": "Lankadeepa Latest",
         "published": 1795784160
       },
-      "receipts": {},
-      "uncertain": {},
-      "photo_review": {
-        "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
-      }
+      "receipts": {
+        "telegram": {
+          "id": "1295",
+          "at": 1795806371.1873353,
+          "format": "licensed_subject_stock"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128190379318605",
+          "at": 1795806371.1873353,
+          "format": "licensed_subject_stock"
+        }
+      },
+      "uncertain": {}
     },
     "820a055e8007feba3666923c": {
       "article": {
@@ -10254,7 +10275,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
+        "at": 1795806371.1873353
       }
     },
     "cbf98e8c42bbfc5701da1041": {
@@ -10300,7 +10321,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795803325.7937307,
+  "last_scan_at": 1795806371.1873353,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -13488,6 +13509,55 @@
         "source": "Lankadeepa Latest",
         "published": 1795786200
       },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "original_news_reel",
+      "last_attempt_at": 1795806371.1873353
+    },
+    "fe601ef0725f62013354353b": {
+      "at": 1795806371.1873353,
+      "article": {
+        "id": "fe601ef0725f62013354353b",
+        "title_si": "ග්‍රාමීය සංවර්ධන- ධීවර වැය ශීර්ෂ සම්මතයි",
+        "summary_si": "ග්‍රාමීය සංවර්ධන, සමාජ ආරක්ෂණ සහ ප්‍රජා සවිබල ගැන්වීම් අමාත්‍යාංශයේ සහ ධීවර, ජලජ හා සාගර සම්පත් අමාත්‍යාංශයේ වැය ශීර්ෂ පාර්ලිමේන්තුවේදී සම්මත විය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ග්‍රාමීය-සංවර්ධන--ධීවර-වැය-ශීර්ෂ-සම්මතයි/1-701241",
+        "source": "Lankadeepa Latest",
+        "published": 1795785780
+      },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "original_news_reel",
+      "last_attempt_at": 1795806371.1873353
+    },
+    "d5a66a9a8b1f07aed40765bc": {
+      "at": 1795806371.1873353,
+      "article": {
+        "id": "d5a66a9a8b1f07aed40765bc",
+        "title_si": "ලෝක බෞද්ධ සංඝ සම්මේලනය හෙට ඇරැඹෙයි",
+        "summary_si": "​“ලෝක බෞද්ධ සංඝ සම්මේලනය 60 වන සංවත්සරය උත්සවය ජනාධිපති අනුර කුමාර දිසානායක මහතාගේ සහභාගීත්වයෙන් කැලණිය නාගානන්ද අන්තර්ජාතික විශ්ව විද්‍යාලයීය ශ්‍රවණාගාරයේ දී හෙට (28) පෙරවරුවේ පැවැත්වෙි.",
+        "link": "https://www.lankadeepa.lk/latest_news/ලෝක-බෞද්ධ-සංඝ-සම්මේලනය-හෙට-ඇරැඹෙයි/1-701239",
+        "source": "Lankadeepa Latest",
+        "published": 1795784880
+      },
+      "status": "queued",
+      "destinations": {}
+    },
+    "0ca0db9bc2fd975e98ef5bd4": {
+      "at": 1795806371.1873353,
+      "article": {
+        "id": "0ca0db9bc2fd975e98ef5bd4",
+        "title_si": "නාය පෙරහුරුව අස්සේ ඇත්තටම නාය අවදානමක්:පවුල් 106ක් ඉවත් කරයි",
+        "summary_si": "හල්දුම්මුල්ල ප්‍රාදේශීය ලේකම් කොට්ඨාසයේ අද 27 දින පැවති ආපදා පෙරහුරු වැඩසටහනක් අතරතුර සැබවින්ම එක්වරම ඇද හැලුණු ධාරානිපාත වර්ෂාවක් සමග ඇති වූ නාය අවදානමක් හේතුවෙන් කොස්ලන්ද මාකල්දෙණිය ප්‍රදේශයේ පවුල් 106ක් ආරක්ෂිතව ඉත් කළ බව බදුල්ල ආපදා කළමනාකරණ මධ්‍යස්ථානයේ නියෝජ්‍ය අධ්‍යක්ෂ ඊ. එම් . එල්. උදය කුමාර මහතා පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/නාය-පෙරහුරුව-අස්සේ-ඇත්තටම-නාය-අවදානමක්:පවුල්-106ක්-ඉවත්-කරයි/1-701238",
+        "source": "Lankadeepa Latest",
+        "published": 1795784160
+      },
       "status": "queued",
       "destinations": {}
     }
@@ -13925,7 +13995,34 @@
       },
       "status": "queued",
       "queued_at": 1795803325.7937307
+    },
+    "a6841de55cefabc62b679801": {
+      "article": {
+        "id": "a6841de55cefabc62b679801",
+        "title_si": "ලංකාවේ ණය ශ්‍රේණිගත කිරීම් ඉහළට",
+        "summary_si": "ශ්‍රී ලංකාවේ දිගුකාලීන විදේශීය සහ දේශීය මුදල් ණය ශ්‍රේණිගත කිරීම් ’CCC+/C’ සිට ’B-/B’ දක්වා ඉහළ නැංවීමට ජාත්‍යන්තර ණය ශ්‍රේණිගත කිරීමේ ආයතනයක් වන S&P Global Ratings පියවර ගෙන තිබේ.",
+        "link": "https://www.lankadeepa.lk/latest_news/ලංකාවේ-ණය-ශ්‍රේණිගත-කිරීම්-ඉහළට/1-701242",
+        "source": "Lankadeepa Latest",
+        "published": 1795786200
+      },
+      "status": "queued",
+      "queued_at": 1795806371.1873353
+    },
+    "fe601ef0725f62013354353b": {
+      "article": {
+        "id": "fe601ef0725f62013354353b",
+        "title_si": "ග්‍රාමීය සංවර්ධන- ධීවර වැය ශීර්ෂ සම්මතයි",
+        "summary_si": "ග්‍රාමීය සංවර්ධන, සමාජ ආරක්ෂණ සහ ප්‍රජා සවිබල ගැන්වීම් අමාත්‍යාංශයේ සහ ධීවර, ජලජ හා සාගර සම්පත් අමාත්‍යාංශයේ වැය ශීර්ෂ පාර්ලිමේන්තුවේදී සම්මත විය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ග්‍රාමීය-සංවර්ධන--ධීවර-වැය-ශීර්ෂ-සම්මතයි/1-701241",
+        "source": "Lankadeepa Latest",
+        "published": 1795785780
+      },
+      "status": "queued",
+      "queued_at": 1795806371.1873353
     }
   },
-  "tiktok_started_at": 1795370479.455068
+  "tiktok_started_at": 1795370479.455068,
+  "blogger_posts": {},
+  "vidiq_tiktok": {},
+  "vidiq_tiktok_limit_at": 0
 }
