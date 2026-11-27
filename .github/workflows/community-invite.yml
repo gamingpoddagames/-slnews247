@@ -1,0 +1,64 @@
+name: SL News daily community invitation
+on:
+  schedule:
+    - cron: '0 13 * * *' # 18:30 Sri Lanka
+  push:
+    branches: [main]
+    paths: ['.github/workflows/community-invite.yml', 'scripts/community_invite.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: slnews-community-invite
+  cancel-in-progress: false
+jobs:
+  invite:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Sinhala renderer
+        run: |
+          python -m pip install requests Pillow
+          mkdir -p assets/sinhala_fonts
+          curl -fLsS --retry 3 --max-time 75 'https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssinhala/NotoSansSinhala%5Bwdth%2Cwght%5D.ttf' -o assets/sinhala_fonts/NotoSansSinhala-Variable.ttf
+          python -c "from image import get_font; get_font(32)"
+      - name: Refresh community invitation receipts
+        run: |
+          git fetch origin main
+          if git cat-file -e origin/main:data/community_invite_delivery.json 2>/dev/null; then
+            git show origin/main:data/community_invite_delivery.json > data/community_invite_delivery.json
+          fi
+      - name: Publish daily community invitation
+        env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        run: python -m scripts.community_invite
+      - name: Preserve community invitation receipts
+        if: always()
+        run: |
+          if [ ! -f data/community_invite_delivery.json ]; then exit 0; fi
+          cp data/community_invite_delivery.json /tmp/slnews-community-state.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp /tmp/slnews-community-state.json data/community_invite_delivery.json
+            git add data/community_invite_delivery.json
+            if git diff --cached --quiet; then break; fi
+            git commit -m 'Record daily community invitation delivery'
+            if git push origin HEAD:main; then break; fi
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daily-community-invite
+          path: output/community_invite.png
+          retention-days: 7
