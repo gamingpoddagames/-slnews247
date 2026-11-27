@@ -10303,7 +10303,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795818189.0148816
+        "at": 1795823521.414649
       }
     },
     "cbf98e8c42bbfc5701da1041": {
@@ -10383,6 +10383,22 @@
         "status": "awaiting_exact_event_photo",
         "at": 1795812579.5080793
       }
+    },
+    "26bcbf79f8b7f5b7ca53b086": {
+      "article": {
+        "id": "26bcbf79f8b7f5b7ca53b086",
+        "title_si": "හෝමුස් සමුද්‍ර සන්ධියේ පාලනය තමන් සතු බව ඉරානය කියයි – මුහුදු බෝම්බයක ගැටී තෙල් නෞකා දෙකක් ගිනිගනී",
+        "summary_si": "නැගෙනහිර හෝමුස් සමුද්‍ර සන්ධිය (Strait of Hormuz) සහ උතුරු ඉන්දියන් සාගරය අතර මුහුදු කලාපයේ පූර්ණ පාලනය ඉරාන නාවික හමුදාව සතු බව එරට හමුදා ප්‍රකාශක මොහොමඩ් අක්‍රමිනියා ප්‍රකාශ කර තිබෙනවා. ඊයේ දිනට යෙදී තිබු ඉරාන නාවික හමුදා දිනය නිමිත්තෙන් සමාජ මාධ්‍ය ඔස්සේ සටහනක් තබමින් ඔහු සඳහන් කර ඇත්තේ, නැගෙනහිර හෝමුස් සමුද්‍ර සන්ධියේ සිට උතුරු ඉන්දියන් ...",
+        "link": "https://www.nethnews.lk/breaking-news/foreign-news/%e0%b7%84%e0%b7%9d%e0%b6%b8%e0%b7%94%e0%b7%83%e0%b7%8a-%e0%b7%83%e0%b6%b8%e0%b7%94%e0%b6%af%e0%b7%8a%e0%b6%bb-%e0%b7%83%e0%b6%b1%e0%b7%8a%e0%b6%b0%e0%b7%92%e0%b6%ba%e0%b7%9a-%e0%b6%b4/",
+        "source": "Neth International",
+        "published": 1795822870
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795823521.414649
+      }
     }
   },
   "videos": {
@@ -10404,7 +10420,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795818189.0148816,
+  "last_scan_at": 1795823521.414649,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
