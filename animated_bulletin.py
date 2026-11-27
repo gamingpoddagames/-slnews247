@@ -167,7 +167,8 @@ def render_bulletin(article, output_path='output/animated_news_bulletin.mp4'):
 
     scene_files = build_scene_images(article, script,
                                      output.parent / (output.stem + '_scenes'))
-    frames = max(1, math.ceil(duration * 20))
+    fps = 30
+    frames = max(1, math.ceil(duration * fps))
     counts = [frames // 3] * 3
     for i in range(frames % 3):
         counts[i] += 1
@@ -176,18 +177,18 @@ def render_bulletin(article, output_path='output/animated_news_bulletin.mp4'):
     filters = []
     args = ['ffmpeg', '-y', '-loglevel', 'error']
     for path in scene_files:
-        args.extend(['-loop', '1', '-framerate', '20', '-i', str(path)])
+        args.extend(['-loop', '1', '-framerate', str(fps), '-i', str(path)])
     args.extend(['-i', str(voice_path)])
     for i, count in enumerate(counts):
         filters.append(
-            f'[{i}:v]zoompan=z=\'min(zoom+0.00055,1.07)\':'
+            f'[{i}:v]zoompan=z=\'min(zoom+0.00037,1.07)\':'
             f'x=\'iw/2-(iw/zoom/2)\':y=\'ih/2-(ih/zoom/2)\':'
-            f'd={count}:s=720x1280:fps=20,trim=duration={count/20:.3f},'
+            f'd={count}:s=720x1280:fps={fps},trim=duration={count/fps:.3f},'
             f'setpts=PTS-STARTPTS,format=yuv420p[v{i}]')
     filters.append(''.join(f'[v{i}]' for i in range(3)) +
                    'concat=n=3:v=1:a=0[v]')
     args.extend(['-filter_complex', ';'.join(filters), '-map', '[v]',
-                 '-map', '3:a:0', '-t', str(duration), '-r', '20',
+                 '-map', '3:a:0', '-t', str(duration), '-r', str(fps),
                  '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '26',
                  '-c:a', 'aac', '-b:a', '96k', '-pix_fmt', 'yuv420p',
                  '-movflags', '+faststart', '-shortest', str(output)])
@@ -231,4 +232,5 @@ def render_graphic_reel(article, output_path):
     if not output.is_file() or output.stat().st_size < 20000:
         raise RuntimeError('Original graphic reel not created')
     return str(output)
+
 

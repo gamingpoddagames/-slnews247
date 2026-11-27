@@ -45,10 +45,10 @@ def _media_attribution(article):
         credits = []
         for _, _, c in reel_photo_set(article):
             line = '📷 ' + c['creator'] + ' · ' + c['license'] + ' (cropped/resized). ' + c['source'] + ' ' + c['license_url']
+            if kind == 'licensed_subject_stock':
+                line = line.replace('📷 ', '📷 ' + c.get('provider', 'Pexels') + ' context: ', 1)
             if line not in credits:
                 credits.append(line)
-        if kind == 'licensed_subject_stock':
-            credits = [line.replace('📷 ', '📷 Pexels stock: ', 1) for line in credits]
         return '\n\n' + '\n'.join(credits)
     if kind in ('verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo') and credit:
         return ('\n\n📷 ' + credit['creator'] + ', ' + credit['license']
@@ -289,4 +289,5 @@ def publish_reels(state, articles, now, preview=False, max_per_run=None):
         and 0 <= now - r.get('article', {}).get('published', 0) <= MAX_AGE
         for r in journal.values())
     return status
+
 

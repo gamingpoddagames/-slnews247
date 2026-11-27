@@ -217,7 +217,8 @@ def select_named_subject_photo(article, session=None):
     title = article.get('title_si', '')
     if any(word in title for word in ('මරණ', 'මරු', 'ඝාත', 'අනතුර', 'ප්‍රහාර', 'ගිනි', 'අත්අඩංගු', 'අල්ලයි', 'සැකකරු')):
         return None, None
-    rule = next((r for r in NAMED_SUBJECTS if any(w in title for w in r[0])), None)
+    context = title + ' ' + article.get('summary_si', '')
+    rule = next((r for r in NAMED_SUBJECTS if any(w in context for w in r[0])), None)
     if not rule:
         return None, None
     _, term, tokens, label = rule
@@ -267,7 +268,7 @@ def _select_real_photo(article):
     A photograph of the actual Central Bank building can illustrate policy
     news ABOUT the Central Bank; it must be labelled as building/archive
     photography, never as a picture of the meeting or participants.
-    Arbitrary topic-based stock photos remain forbidden.
+    Related licensed subject photos are selected only by explicit story context.
     """
     try:
         photo = choose_photo(article)
@@ -324,7 +325,8 @@ def _select_real_photo(article):
         pass
     if os.getenv('NEWS_REQUIRE_REAL_MEDIA', 'false').lower() == 'true':
         from subject_photos import subject_photo_set
-        photos = subject_photo_set(article.get('title_si',''), article.get('id',''))
+        photos = subject_photo_set(article.get('title_si',''), article.get('id',''),
+                                   article.get('summary_si', ''))
         if photos:
             return photos[0]
     return None, None, None
@@ -340,7 +342,8 @@ def select_real_photo(article):
     import os
     if os.getenv('NEWS_REQUIRE_REAL_MEDIA', 'false').lower() != 'true':
         return _select_real_photo(article)
-    key = (article.get('id'), article.get('link'), article.get('title_si'))
+    key = (article.get('id'), article.get('link'), article.get('title_si'),
+           article.get('summary_si'))
     if key not in _SCAN_PHOTOS:
         _SCAN_PHOTOS[key] = _select_real_photo(article)
     return _SCAN_PHOTOS[key]
@@ -353,8 +356,10 @@ def reel_photo_set(article):
         return []
     if first[1] == 'licensed_subject_stock':
         from subject_photos import subject_photo_set
-        return list(subject_photo_set(article.get('title_si',''), article.get('id',''))) or [first]
+        return list(subject_photo_set(article.get('title_si',''), article.get('id',''),
+                                      article.get('summary_si', ''))) or [first]
     if first[1] == 'licensed_article_photo':
         from source_photos import source_photo_set
         return list(source_photo_set(article.get('link', ''), article.get('title_si', ''))) or [first]
     return [first]
+

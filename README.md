@@ -1,5 +1,26 @@
 # SL News 247 — Sri Lankan Sinhala news automation
 
+## Related photo recovery — 27 November 2026
+
+Production keeps real media required. Subject photo lookup now reads both the
+headline and the actual Sinhala summary, with concrete queries for income,
+credit ratings, budget debates, school calendars, Buddhist conferences,
+Sri Lankan military cooperation and sea weather. Exact-event assets retain
+priority. A foreign parliament or flag cannot substitute for the Sri Lankan
+subject. Harmful incident/portrait stock remains excluded.
+
+Pexels stock is tried first, with an independent, subject-matched Commons
+archive lookup if the key, request or matching result is unavailable. Each
+accepted asset records its source, creator, reuse licence, subject evidence and
+image hash alongside output files. Context photos keep the existing small
+Stock/Archive label and the correct provider's licence credit. No publisher
+thumbnail or video is approved merely because its page is public.
+
+Narrated photo reels use the same three-scene design and Sinhala voice at
+30fps, compatible with the connected TikTok publishing route. Approved reusable
+event clips still take priority; an image montage is not presented as actual
+event footage. Existing posting receipts and all template colours are retained.
+
 ## Approved crimson design — 25 November 2026
 
 The current poster keeps the rounded white frame with the warm upper and blue
@@ -237,4 +258,5 @@ change the existing news bot, Facebook, Telegram, or TikTok publishing routines.
 Because a YouTube upload has not yet been verified, do not mark YouTube
 delivery as operational. Setup instructions are in
 [the bridge README](https://github.com/gamingpoddagames/telegram-to-social/blob/main/youtube_bridge/README.md).
+
 
