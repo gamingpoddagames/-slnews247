@@ -1,5 +1,5 @@
 {
-  "checked_at": 1795808979.4293299,
+  "checked_at": 1795812579.5080793,
   "configured_feeds": 25,
   "sources": [
     {
@@ -30,7 +30,7 @@
       "source": "Lankadeepa Business",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 2,
+      "fresh_sinhala": 1,
       "feed_url": "https://www.lankadeepa.lk/rss/business/9"
     },
     {
@@ -120,7 +120,7 @@
       "source": "Neth Politics",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 2,
+      "fresh_sinhala": 1,
       "feed_url": "https://www.nethnews.lk/politics/feed/"
     },
     {
