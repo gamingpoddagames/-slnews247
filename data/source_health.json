@@ -1,5 +1,5 @@
 {
-  "checked_at": 1795794871.0344863,
+  "checked_at": 1795802364.736873,
   "configured_feeds": 25,
   "sources": [
     {
@@ -28,14 +28,14 @@
       "source": "Lankadeepa Business",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 12,
+      "fresh_sinhala": 11,
       "feed_url": "https://www.lankadeepa.lk/rss/business/9"
     },
     {
       "source": "Siyatha News",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 14,
+      "fresh_sinhala": 8,
       "feed_url": "https://siyathanews.lk/feed/"
     },
     {
@@ -71,7 +71,7 @@
       "source": "Lankadeepa Video News",
       "http": 200,
       "entries": 12,
-      "fresh_sinhala": 2,
+      "fresh_sinhala": 0,
       "feed_url": "https://www.lankadeepa.lk/rss/videos/12"
     },
     {
@@ -118,7 +118,7 @@
       "source": "Neth Politics",
       "http": 200,
       "entries": 9,
-      "fresh_sinhala": 4,
+      "fresh_sinhala": 3,
       "feed_url": "https://www.nethnews.lk/politics/feed/"
     },
     {
@@ -139,7 +139,7 @@
       "source": "Siyatha World",
       "http": 200,
       "entries": 50,
-      "fresh_sinhala": 5,
+      "fresh_sinhala": 0,
       "feed_url": "https://siyathanews.lk/archives/category/world-news/feed"
     },
     {
