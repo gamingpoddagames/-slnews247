@@ -9573,6 +9573,75 @@
         }
       },
       "uncertain": {}
+    },
+    "20d1285b946c7d45a59a8bf4": {
+      "article": {
+        "id": "20d1285b946c7d45a59a8bf4",
+        "title_si": "මත් බවට සැක යාත්‍රාවක් නාවික හමුදා බාරයට",
+        "summary_si": "දකුණු මුහුදු තීරයේ දෙවුන්දරට ​​දකුණු පසින් වූ ජාත්‍යන්තර මුහුදේ සිදු කළ විශේෂ මෙහෙයුමකදී මත් ද්‍රව්‍ය ප්‍රවාහනය කරන බව සැක පිර යාත්‍රාවක් සමග හත් දෙනකු අත්අඩංගුවට ගත් බව නාවික හමුදාව කියයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/මත්-බවට-සැක-යාත්‍රාවක්-නාවික-හමුදා-බාරයට/1-701187",
+        "source": "Lankadeepa Latest",
+        "published": 1795748400
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1268",
+          "at": 1795748907.2947645,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128060623318605",
+          "at": 1795748907.2947645,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "7403272f4d35e8d53aaf0244": {
+      "article": {
+        "id": "7403272f4d35e8d53aaf0244",
+        "title_si": "හෙරොයින් හා අයිස් බවට සැක යාත්‍රාවක් නාවක හමුදා භාරයට",
+        "summary_si": "හෙරොයින් සහ අයිස් බවට සැක කෙරෙන මත්ද්‍රව්‍ය තොගයක් ප්‍රවාහනය කරමින් තිබූ යාත්‍රාවක් සමග සැකකරුවන් 07දෙනෙකු නාවික හමුදා භාරයට ගෙන තිබේ. නාවික හමුදාව, දෙවුන්දරට ​​දකුණු දෙසින් වූ ජාත්‍යන්තර මුහුදේ සිදු කළ විශේෂ සෝදිසි මෙහෙයුමකදී මෙම අත්අඩංගුවට ගැනිම සිදුකර තිබේ.",
+        "link": "https://www.lankadeepa.lk/latest_news/හෙරොයින්-හා-අයිස්-බවට-සැක-යාත්‍රාවක්-නාවක-හමුදා-භාරයට/1-701184",
+        "source": "Lankadeepa Latest",
+        "published": 1795747620
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1269",
+          "at": 1795748907.2947645,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128060719318605",
+          "at": 1795748907.2947645,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
+    },
+    "5728473eccb545ff504b1378": {
+      "article": {
+        "id": "5728473eccb545ff504b1378",
+        "title_si": "මලිදූවේ දී ඝාතනය වී ඇත්තේ කමාන්ඩෝ හිටපු මේජර්වරයෙක්",
+        "summary_si": "බූස්ස මලිදූවේ චීන ක්‍රීඩාංගනයේදී හමුවූ මළ සිරුර යුද හමුදා කමාන්ඩෝ බළකායේ හිටපු මේජර්වරයකුගේ බව රත්ගම පොලිසිය කියයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/මලිදූවේ-දී-ඝාතනය-වී-ඇත්තේ-කමාන්ඩෝ-හිටපු--මේජර්වරයෙක්/1-701185",
+        "source": "Lankadeepa Latest",
+        "published": 1795747500
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1270",
+          "at": 1795748907.2947645,
+          "format": "branded_news_graphic"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128060821318605",
+          "at": 1795748907.2947645,
+          "format": "branded_news_graphic"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -9594,7 +9663,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795730300.5795078,
+  "last_scan_at": 1795748907.2947645,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -12445,7 +12514,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795730300.5795078,
+      "last_attempt_at": 1795748907.2947645,
       "media_status": "awaiting_verified_event_media"
     },
     "1c4892a36d04edeb6445cd9b": {
@@ -12460,7 +12529,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795730300.5795078,
+      "last_attempt_at": 1795748907.2947645,
       "media_status": "awaiting_verified_event_media"
     },
     "a8cc4ac452c302b4a8cc8341": {
@@ -12475,7 +12544,7 @@
       },
       "status": "queued",
       "destinations": {},
-      "last_attempt_at": 1795730300.5795078,
+      "last_attempt_at": 1795748907.2947645,
       "media_status": "awaiting_verified_event_media"
     },
     "127eb396f953d2b5fe5625ad": {
@@ -12521,6 +12590,51 @@
       "status": "queued",
       "destinations": {},
       "last_attempt_at": 1795730300.5795078,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "20d1285b946c7d45a59a8bf4": {
+      "at": 1795748907.2947645,
+      "article": {
+        "id": "20d1285b946c7d45a59a8bf4",
+        "title_si": "මත් බවට සැක යාත්‍රාවක් නාවික හමුදා බාරයට",
+        "summary_si": "දකුණු මුහුදු තීරයේ දෙවුන්දරට ​​දකුණු පසින් වූ ජාත්‍යන්තර මුහුදේ සිදු කළ විශේෂ මෙහෙයුමකදී මත් ද්‍රව්‍ය ප්‍රවාහනය කරන බව සැක පිර යාත්‍රාවක් සමග හත් දෙනකු අත්අඩංගුවට ගත් බව නාවික හමුදාව කියයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/මත්-බවට-සැක-යාත්‍රාවක්-නාවික-හමුදා-බාරයට/1-701187",
+        "source": "Lankadeepa Latest",
+        "published": 1795748400
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795748907.2947645,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "7403272f4d35e8d53aaf0244": {
+      "at": 1795748907.2947645,
+      "article": {
+        "id": "7403272f4d35e8d53aaf0244",
+        "title_si": "හෙරොයින් හා අයිස් බවට සැක යාත්‍රාවක් නාවක හමුදා භාරයට",
+        "summary_si": "හෙරොයින් සහ අයිස් බවට සැක කෙරෙන මත්ද්‍රව්‍ය තොගයක් ප්‍රවාහනය කරමින් තිබූ යාත්‍රාවක් සමග සැකකරුවන් 07දෙනෙකු නාවික හමුදා භාරයට ගෙන තිබේ. නාවික හමුදාව, දෙවුන්දරට ​​දකුණු දෙසින් වූ ජාත්‍යන්තර මුහුදේ සිදු කළ විශේෂ සෝදිසි මෙහෙයුමකදී මෙම අත්අඩංගුවට ගැනිම සිදුකර තිබේ.",
+        "link": "https://www.lankadeepa.lk/latest_news/හෙරොයින්-හා-අයිස්-බවට-සැක-යාත්‍රාවක්-නාවක-හමුදා-භාරයට/1-701184",
+        "source": "Lankadeepa Latest",
+        "published": 1795747620
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795748907.2947645,
+      "media_status": "awaiting_verified_event_media"
+    },
+    "5728473eccb545ff504b1378": {
+      "at": 1795748907.2947645,
+      "article": {
+        "id": "5728473eccb545ff504b1378",
+        "title_si": "මලිදූවේ දී ඝාතනය වී ඇත්තේ කමාන්ඩෝ හිටපු මේජර්වරයෙක්",
+        "summary_si": "බූස්ස මලිදූවේ චීන ක්‍රීඩාංගනයේදී හමුවූ මළ සිරුර යුද හමුදා කමාන්ඩෝ බළකායේ හිටපු මේජර්වරයකුගේ බව රත්ගම පොලිසිය කියයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/මලිදූවේ-දී-ඝාතනය-වී-ඇත්තේ-කමාන්ඩෝ-හිටපු--මේජර්වරයෙක්/1-701185",
+        "source": "Lankadeepa Latest",
+        "published": 1795747500
+      },
+      "status": "queued",
+      "destinations": {},
+      "last_attempt_at": 1795748907.2947645,
       "media_status": "awaiting_verified_event_media"
     }
   },
