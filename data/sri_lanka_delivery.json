@@ -9984,7 +9984,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795812579.5080793
+        "at": 1795813666.1198661
       }
     },
     "f783583fdbc72d9063a3300c": {
@@ -10069,7 +10069,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795812579.5080793
+        "at": 1795813666.1198661
       }
     },
     "c91554de83c373f52aeb832d": {
@@ -10108,7 +10108,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795812579.5080793
+        "at": 1795813666.1198661
       }
     },
     "0c2b0e284bf050232f971587": {
@@ -10156,7 +10156,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795812579.5080793
+        "at": 1795813666.1198661
       }
     },
     "92d8868585705e01e748b36e": {
@@ -10172,7 +10172,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795812579.5080793
+        "at": 1795813666.1198661
       }
     },
     "a6841de55cefabc62b679801": {
@@ -10303,7 +10303,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795812579.5080793
+        "at": 1795813666.1198661
       }
     },
     "cbf98e8c42bbfc5701da1041": {
@@ -10342,7 +10342,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795812579.5080793
+        "at": 1795813666.1198661
       }
     },
     "a1283a15f8e5da89c49b3111": {
@@ -10404,7 +10404,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795812579.5080793,
+  "last_scan_at": 1795813666.1198661,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -10600,6 +10600,16 @@
       },
       "facebook": {
         "id": "1020689164470492_122128198467318605",
+        "format": "licensed_subject_stock"
+      }
+    },
+    "0ca0db9bc2fd975e98ef5bd4": {
+      "telegram": {
+        "id": "1309",
+        "format": "licensed_subject_stock"
+      },
+      "facebook": {
+        "id": "1020689164470492_122128199397318605",
         "format": "licensed_subject_stock"
       }
     }
@@ -13720,8 +13730,13 @@
         "source": "Lankadeepa Latest",
         "published": 1795775580
       },
-      "status": "queued",
-      "destinations": {}
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "original_news_reel",
+      "last_attempt_at": 1795813666.1198661
     },
     "c91554de83c373f52aeb832d": {
       "at": 1795812579.5080793,
@@ -13733,8 +13748,13 @@
         "source": "Neth Politics",
         "published": 1795775220
       },
-      "status": "queued",
-      "destinations": {}
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "original_news_reel",
+      "last_attempt_at": 1795813666.1198661
     },
     "a1283a15f8e5da89c49b3111": {
       "at": 1795812579.5080793,
@@ -14255,6 +14275,30 @@
       },
       "status": "queued",
       "queued_at": 1795812579.5080793
+    },
+    "5250931ac1764e3da50b6973": {
+      "article": {
+        "id": "5250931ac1764e3da50b6973",
+        "title_si": "පඩි වැඩි වීම් ඉල්ලන්නේ ට්‍රිප් යන්න නෙමෙයි",
+        "summary_si": "රාජ්‍ය අංශයේ මෙන්ම පෞද්ගලික අංශ සේවකයන් පඩි වැඩිවීමක් ඉල්ලන්නේ ට්‍රිප් යන්න නොවේ යැයි පත් කළ මන්ත්‍රී නාමල් රාජපක්ෂ මහතා:-(පො. පෙ) පාර්ලිමේන්තුවේදී පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/පඩි-වැඩි-වීම්-ඉල්ලන්නේ-ට්‍රිප්--යන්න-නෙමෙයි/1-701230",
+        "source": "Lankadeepa Latest",
+        "published": 1795775580
+      },
+      "status": "queued",
+      "queued_at": 1795813666.1198661
+    },
+    "c91554de83c373f52aeb832d": {
+      "article": {
+        "id": "c91554de83c373f52aeb832d",
+        "title_si": "ග්‍රාමීය සංවර්ධනයට බිලියන 35ක් පහුගිය අවුරුද්දේ වෙන් කරලා. බිලියනයයි වියදම් කරලා තියෙන්නේ – නාමල් රාජපක්ෂ",
+        "summary_si": "ග්‍රාමීය සංවර්ධනයට බිලියන 35ක් පහුගිය අවුරුද්දේ වෙන් කරලා. බිලියනයයි වියදම් කරලා තියෙන්නේ. නාමල් රාජපක්ෂ ආණ්ඩුව ඉලක්කම් නම් කියනවා. හැබැයි ඉතින් ගරු සභාපතිතුමිය ප්‍රශ්නය ප්‍රායෝගිකව මේ කියන මුදල් බිම ආයෝජනය වෙනවද නැද්ද කියන ප්‍රශ්නය තමයි තියෙන්නේ. මොකද ඔබතුමාලා හැම අයවැයකදීම නොම්බර කියනවා. හැබැයි ඉතින් යථාර්ථය තමයි මේ මුදල් ගමේ ආයෝජනය වෙනවද? ග්‍රාමීය සංවර්ධනයට මේ මුදල් ටික ආයෝජනය ... ග්‍රාමීය සංවර්ධනයට බිලියන 35ක් පහුගිය අවුරුද්දේ වෙන් කරලා.",
+        "link": "https://www.nethnews.lk/breaking-news/local-news/%e0%b6%9c%e0%b7%8a%e0%b6%bb%e0%b7%8f%e0%b6%b8%e0%b7%93%e0%b6%ba-%e0%b7%83%e0%b6%82%e0%b7%80%e0%b6%bb%e0%b7%8a%e0%b6%b0%e0%b6%b1%e0%b6%ba%e0%b6%a7-%e0%b6%b6%e0%b7%92%e0%b6%bd%e0%b7%92%e0%b6%ba/",
+        "source": "Neth Politics",
+        "published": 1795775220
+      },
+      "status": "queued",
+      "queued_at": 1795813666.1198661
     }
   },
   "tiktok_started_at": 1795370479.455068,
