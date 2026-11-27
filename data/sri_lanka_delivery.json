@@ -9957,12 +9957,19 @@
         "source": "Lankadeepa Latest",
         "published": 1795778880
       },
-      "receipts": {},
-      "uncertain": {},
-      "photo_review": {
-        "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
-      }
+      "receipts": {
+        "telegram": {
+          "id": "1298",
+          "at": 1795808979.4293299,
+          "format": "licensed_subject_stock"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128194033318605",
+          "at": 1795808979.4293299,
+          "format": "licensed_subject_stock"
+        }
+      },
+      "uncertain": {}
     },
     "6b4f3d62131b92ce4e974b77": {
       "article": {
@@ -9977,7 +9984,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
+        "at": 1795808979.4293299
       }
     },
     "f783583fdbc72d9063a3300c": {
@@ -9989,12 +9996,19 @@
         "source": "Siyatha News",
         "published": 1795776546
       },
-      "receipts": {},
-      "uncertain": {},
-      "photo_review": {
-        "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
-      }
+      "receipts": {
+        "telegram": {
+          "id": "1299",
+          "at": 1795808979.4293299,
+          "format": "licensed_subject_stock"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128194093318605",
+          "at": 1795808979.4293299,
+          "format": "licensed_subject_stock"
+        }
+      },
+      "uncertain": {}
     },
     "46ca827eecb3842ff5d80d1c": {
       "article": {
@@ -10028,12 +10042,19 @@
         "source": "Lankadeepa Latest",
         "published": 1795775580
       },
-      "receipts": {},
-      "uncertain": {},
-      "photo_review": {
-        "status": "awaiting_exact_event_photo",
-        "at": 1795802364.736873
-      }
+      "receipts": {
+        "telegram": {
+          "id": "1300",
+          "at": 1795808979.4293299,
+          "format": "licensed_subject_stock"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128194189318605",
+          "at": 1795808979.4293299,
+          "format": "licensed_subject_stock"
+        }
+      },
+      "uncertain": {}
     },
     "74094212cf09b3cee1e148cf": {
       "article": {
@@ -10275,7 +10296,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795806371.1873353
+        "at": 1795808979.4293299
       }
     },
     "cbf98e8c42bbfc5701da1041": {
@@ -10300,6 +10321,28 @@
         }
       },
       "uncertain": {}
+    },
+    "df32ff68db2c35a80815771c": {
+      "article": {
+        "id": "df32ff68db2c35a80815771c",
+        "title_si": "ශ්‍රී ලංකා – බ්‍රසීල තාක්ෂණික ගිවිසුම (VIDEO)",
+        "summary_si": "දේශීය උක් කර්මාන්තය නගා සිටුවීමට ශ්‍රී ලංකාව සහ බ්‍රසීලය අතර තාක්ෂණික සහයෝගිතා ගිවිසුමකට අත්සන් තබා තිබෙනවා. ඒ අමාත්‍ය සුනිල් හඳුන්නෙත්තිගේ ප්‍රධානත්වයෙනුයි. ආනයනික සීනි මත යැපීම අවම කර ගැනීමේ අරමුණින් මෙම ව්‍යාපෘතිය ආරම්භ කර තිබෙනවා.",
+        "link": "https://siyathanews.lk/archives/174832",
+        "source": "Siyatha News",
+        "published": 1795773017
+      },
+      "receipts": {}
+    },
+    "a1283a15f8e5da89c49b3111": {
+      "article": {
+        "id": "a1283a15f8e5da89c49b3111",
+        "title_si": "සමස්ත ලංකා වෛද්‍ය රසායනාගාර සංගමයෙන් අයවැයට ප්‍රසාදය (VIDEO)",
+        "summary_si": "2027 අයවැයට සමස්ත ලංකා වෛද්‍ය රසායනාගාර සංගමය සිය ප්‍රසාදය පළ කර තිබෙනවා. ඉතිහාසයේ වැඩිම වැටුප් වැඩිකිරීම් වත්මන් ආණ්ඩුව සිදු කර ඇති බවයි ඔවුන් පවසන්නේ. මේ අතර අයවැයට විරෝධය පළ කරමින් විවිධ සංවිධාන ප්‍රදේශ කිහිපයක අදත් විරෝධතාවල නිරත වී තිබෙනවා.",
+        "link": "https://siyathanews.lk/archives/174829",
+        "source": "Siyatha News",
+        "published": 1795772019
+      },
+      "receipts": {}
     }
   },
   "videos": {
@@ -10321,7 +10364,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795806371.1873353,
+  "last_scan_at": 1795808979.4293299,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -10497,6 +10540,16 @@
       },
       "facebook": {
         "id": "1020689164470492_122128185513318605",
+        "format": "licensed_subject_stock"
+      }
+    },
+    "cbf98e8c42bbfc5701da1041": {
+      "telegram": {
+        "id": "1301",
+        "format": "licensed_subject_stock"
+      },
+      "facebook": {
+        "id": "1020689164470492_122128194267318605",
         "format": "licensed_subject_stock"
       }
     }
@@ -13545,8 +13598,13 @@
         "source": "Lankadeepa Latest",
         "published": 1795784880
       },
-      "status": "queued",
-      "destinations": {}
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "original_news_reel",
+      "last_attempt_at": 1795808979.4293299
     },
     "0ca0db9bc2fd975e98ef5bd4": {
       "at": 1795806371.1873353,
@@ -13557,6 +13615,50 @@
         "link": "https://www.lankadeepa.lk/latest_news/නාය-පෙරහුරුව-අස්සේ-ඇත්තටම-නාය-අවදානමක්:පවුල්-106ක්-ඉවත්-කරයි/1-701238",
         "source": "Lankadeepa Latest",
         "published": 1795784160
+      },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "original_news_reel",
+      "last_attempt_at": 1795808979.4293299
+    },
+    "c260a513b7e5537fdbc7f034": {
+      "at": 1795808979.4293299,
+      "article": {
+        "id": "c260a513b7e5537fdbc7f034",
+        "title_si": "පාසල් නිවාඩුව දෙසැම්බර් හතර",
+        "summary_si": "​2026 වර්ෂයේ සියලු ම රජයේ සහ රජයේ අනුමත පෞද්ගලික පාසල්වල තෙවන පාසල් වාරය දෙසැම්බර් මස 04 වන සිකුරාදා දිනෙන් අවසන් වන අතර 2027 වර්ෂයේ නව පාසල් වාරය 2027 ජනවාරි 04 වන සඳුදා දින ආරම්භ වන බව අධ්‍යාපන අමාත්‍යංශය නිවේදනය කරයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/පාසල්-නිවාඩුව-දෙසැම්බර්-හතර/1-701236",
+        "source": "Lankadeepa Latest",
+        "published": 1795778880
+      },
+      "status": "queued",
+      "destinations": {}
+    },
+    "f783583fdbc72d9063a3300c": {
+      "at": 1795808979.4293299,
+      "article": {
+        "id": "f783583fdbc72d9063a3300c",
+        "title_si": "ඉන්දියාව පරදා ශ්‍රී ලංකාව ආසියානු නැගී එන කණ්ඩායම් අවසන් සටනට",
+        "summary_si": "ආසියානු නැගී එන එක්දින ක්‍රිකට් තරඟාවලියේ අවසාන තරඟය සඳහා ශ්‍රී ලංකාව ඊයේ තේරී පත් වුණා. ඉන්දීය ඒ කණ්ඩායම පරාජයට පත් කරමිනුයි ශ්‍රී ලංකා කණ්ඩායම අවසන් මහා තරඟයට සුදුසුකම් ලබා ගත්තේ.",
+        "link": "https://siyathanews.lk/archives/174843",
+        "source": "Siyatha News",
+        "published": 1795776546
+      },
+      "status": "queued",
+      "destinations": {}
+    },
+    "5250931ac1764e3da50b6973": {
+      "at": 1795808979.4293299,
+      "article": {
+        "id": "5250931ac1764e3da50b6973",
+        "title_si": "පඩි වැඩි වීම් ඉල්ලන්නේ ට්‍රිප් යන්න නෙමෙයි",
+        "summary_si": "රාජ්‍ය අංශයේ මෙන්ම පෞද්ගලික අංශ සේවකයන් පඩි වැඩිවීමක් ඉල්ලන්නේ ට්‍රිප් යන්න නොවේ යැයි පත් කළ මන්ත්‍රී නාමල් රාජපක්ෂ මහතා:-(පො. පෙ) පාර්ලිමේන්තුවේදී පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/පඩි-වැඩි-වීම්-ඉල්ලන්නේ-ට්‍රිප්--යන්න-නෙමෙයි/1-701230",
+        "source": "Lankadeepa Latest",
+        "published": 1795775580
       },
       "status": "queued",
       "destinations": {}
@@ -14019,6 +14121,30 @@
       },
       "status": "queued",
       "queued_at": 1795806371.1873353
+    },
+    "d5a66a9a8b1f07aed40765bc": {
+      "article": {
+        "id": "d5a66a9a8b1f07aed40765bc",
+        "title_si": "ලෝක බෞද්ධ සංඝ සම්මේලනය හෙට ඇරැඹෙයි",
+        "summary_si": "​“ලෝක බෞද්ධ සංඝ සම්මේලනය 60 වන සංවත්සරය උත්සවය ජනාධිපති අනුර කුමාර දිසානායක මහතාගේ සහභාගීත්වයෙන් කැලණිය නාගානන්ද අන්තර්ජාතික විශ්ව විද්‍යාලයීය ශ්‍රවණාගාරයේ දී හෙට (28) පෙරවරුවේ පැවැත්වෙි.",
+        "link": "https://www.lankadeepa.lk/latest_news/ලෝක-බෞද්ධ-සංඝ-සම්මේලනය-හෙට-ඇරැඹෙයි/1-701239",
+        "source": "Lankadeepa Latest",
+        "published": 1795784880
+      },
+      "status": "queued",
+      "queued_at": 1795808979.4293299
+    },
+    "0ca0db9bc2fd975e98ef5bd4": {
+      "article": {
+        "id": "0ca0db9bc2fd975e98ef5bd4",
+        "title_si": "නාය පෙරහුරුව අස්සේ ඇත්තටම නාය අවදානමක්:පවුල් 106ක් ඉවත් කරයි",
+        "summary_si": "හල්දුම්මුල්ල ප්‍රාදේශීය ලේකම් කොට්ඨාසයේ අද 27 දින පැවති ආපදා පෙරහුරු වැඩසටහනක් අතරතුර සැබවින්ම එක්වරම ඇද හැලුණු ධාරානිපාත වර්ෂාවක් සමග ඇති වූ නාය අවදානමක් හේතුවෙන් කොස්ලන්ද මාකල්දෙණිය ප්‍රදේශයේ පවුල් 106ක් ආරක්ෂිතව ඉත් කළ බව බදුල්ල ආපදා කළමනාකරණ මධ්‍යස්ථානයේ නියෝජ්‍ය අධ්‍යක්ෂ ඊ. එම් . එල්. උදය කුමාර මහතා පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/නාය-පෙරහුරුව-අස්සේ-ඇත්තටම-නාය-අවදානමක්:පවුල්-106ක්-ඉවත්-කරයි/1-701238",
+        "source": "Lankadeepa Latest",
+        "published": 1795784160
+      },
+      "status": "queued",
+      "queued_at": 1795808979.4293299
     }
   },
   "tiktok_started_at": 1795370479.455068,
