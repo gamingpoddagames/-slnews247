@@ -47,7 +47,8 @@ def _media_attribution(article):
             line = '📷 ' + c['creator'] + ' · ' + c['license'] + ' (cropped/resized). ' + c['source'] + ' ' + c['license_url']
             if line not in credits:
                 credits.append(line)
-        return '\n\n' + '\n'.join(credits)
+        notice = ('මෙය සිද්ධිය වූ අවස්ථාවේ දර්ශන නොවේ.\n' if kind == 'licensed_subject_stock' else '')
+        return '\n\n' + notice + '\n'.join(credits)
     if kind in ('verified_institution_photo', 'verified_education_context_photo', 'verified_named_subject_photo') and credit:
         return ('\n\n📷 ' + credit['creator'] + ', ' + credit['license']
                 + ' (cropped/resized). ' + credit['source']
