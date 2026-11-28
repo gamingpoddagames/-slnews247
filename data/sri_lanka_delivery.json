@@ -10484,7 +10484,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795870339.7043366
+        "at": 1795877320.444575
       }
     },
     "a0c6dae4292683704229033d": {
@@ -10500,7 +10500,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795870339.7043366
+        "at": 1795877320.444575
       }
     },
     "d4741c45ebf5521d38383ae7": {
@@ -10516,7 +10516,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795870339.7043366
+        "at": 1795877320.444575
       }
     },
     "a288ec6289e55ccbec019ee8": {
@@ -10555,7 +10555,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795870339.7043366
+        "at": 1795877320.444575
       }
     },
     "ef0fedd4dddace9363ef90a5": {
@@ -10587,7 +10587,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795870339.7043366
+        "at": 1795877320.444575
       }
     },
     "ba2112d0db8802e48db3af67": {
@@ -10603,7 +10603,23 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795870339.7043366
+        "at": 1795877320.444575
+      }
+    },
+    "d213db0faeb82535df01a1af": {
+      "article": {
+        "id": "d213db0faeb82535df01a1af",
+        "title_si": "ලංගම බසයට ගලක් පෙරළේ:මගියෙක් මරුට, දෙකකට තුවාල",
+        "summary_si": "හැටන් සිට කොළඹ දක්වා ධාවනය වූ ලංගම බස් රථයක් මතට ගිනිගත්හේන කළුගල පොලිස් මුර පොළ ආසන්නයේදී ඉහළ කඳු මුදුනේ සිට පෙරලී ආ ගලක් වැදීමෙන් එක් මගියකු මියගොස් තවත් දෙදෙනකු තුවාල ලබා ඇතැයි පොලිසිය කියයි.",
+        "link": "https://www.lankadeepa.lk/latest_news/ලංගම-බසයට-ගලක්-පෙරළේ:මගියෙක්-මරුට--දෙකකට-තුවාල/1-701266",
+        "source": "Lankadeepa Latest",
+        "published": 1795869660
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795877320.444575
       }
     }
   },
@@ -10626,7 +10642,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795870339.7043366,
+  "last_scan_at": 1795877320.444575,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
