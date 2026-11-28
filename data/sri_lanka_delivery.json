@@ -10397,7 +10397,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795845194.797809
+        "at": 1795852385.635551
       }
     },
     "749163f55c31c224b5c2c007": {
@@ -10429,7 +10429,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795845194.797809
+        "at": 1795852385.635551
       }
     },
     "ce566c4d6ef2cba4c7f962ac": {
@@ -10445,7 +10445,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795845194.797809
+        "at": 1795852385.635551
       }
     },
     "376ed98ddbad4fef30f03c41": {
@@ -10484,7 +10484,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795845194.797809
+        "at": 1795852385.635551
       }
     },
     "a0c6dae4292683704229033d": {
@@ -10500,8 +10500,47 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795845194.797809
+        "at": 1795852385.635551
       }
+    },
+    "d4741c45ebf5521d38383ae7": {
+      "article": {
+        "id": "d4741c45ebf5521d38383ae7",
+        "title_si": "ඇමරිකානු ගුවන්තොටුපොළකදී ගුවන් යානා දෙකක පියාපත් එකිනෙක ගැටෙයි",
+        "summary_si": "ඇමරිකාවේ වොෂින්ටන්හි රොනල්ඩ් රේගන් වොෂින්ටන් ජාතික ගුවන්තොටුපොළේදී ඇමරිකන් එයාර්ලයින්ස් සමාගමට අයත් ගුවන් යානා දෙකක් එකිනෙක ගැටී තිබෙනවා. ගුවන් ගත කිරීම සඳහා ධාවන පථය ඔස්සේ ධාවනය වෙමින් තිබියදී මෙම ගැටීම සිදුව ඇති බවයි විදෙස් මාධ්‍ය වාර්තා කළේ. බෝයිං 737-800 වර්ගයේ ගුවන් යානා දෙකක පියාපත් කෙළවර මෙලෙස එකිනෙක ස්පර්ශ වී ඇති අතර, සිද්ධියෙන් කිසිවෙකුටත් තුවාල සිදුව නැහැ. ...",
+        "link": "https://www.nethnews.lk/breaking-news/foreign-news/%e0%b6%87%e0%b6%b8%e0%b6%bb%e0%b7%92%e0%b6%9a%e0%b7%8f%e0%b6%b1%e0%b7%94-%e0%b6%9c%e0%b7%94%e0%b7%80%e0%b6%b1%e0%b7%8a%e0%b6%ad%e0%b7%9c%e0%b6%a7%e0%b7%94%e0%b6%b4%e0%b7%9c%e0%b7%85%e0%b6%9a%e0%b6%af/",
+        "source": "Neth International",
+        "published": 1795851687
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795852385.635551
+      }
+    },
+    "a288ec6289e55ccbec019ee8": {
+      "article": {
+        "id": "a288ec6289e55ccbec019ee8",
+        "title_si": "මුළු ලොවම බුදු දහම නැවත මෙනෙහි කර ගත යුතුයි",
+        "summary_si": "ලෝක ගැටුම් ඇතිවන මේ මොහොතේ මුළු ලොවම බුදු දහමේ හරය නැවත මෙනෙහි කර ගැනීම වැදගත් බව ජනාධිපති අනුර කුමාර දිසානායක මහතා “ලෝක බෞද්ධ සංඝ සම්මේලනයේ 60 වන සංවත්සරය උත්සවය අමතමින් අද පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/මුළු-ලොවම-බුදු-දහම-නැවත-මෙනෙහි-කර-ගත-යුතුයි/1-701250",
+        "source": "Lankadeepa Latest",
+        "published": 1795851000
+      },
+      "receipts": {
+        "telegram": {
+          "id": "1316",
+          "at": 1795852385.635551,
+          "format": "licensed_subject_stock"
+        },
+        "facebook": {
+          "id": "1020689164470492_122128253823318605",
+          "at": 1795852385.635551,
+          "format": "licensed_subject_stock"
+        }
+      },
+      "uncertain": {}
     }
   },
   "videos": {
@@ -10523,7 +10562,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795845194.797809,
+  "last_scan_at": 1795852385.635551,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -13931,6 +13970,24 @@
       },
       "format": "original_news_reel",
       "last_attempt_at": 1795835763.8449945
+    },
+    "a288ec6289e55ccbec019ee8": {
+      "at": 1795852385.635551,
+      "article": {
+        "id": "a288ec6289e55ccbec019ee8",
+        "title_si": "මුළු ලොවම බුදු දහම නැවත මෙනෙහි කර ගත යුතුයි",
+        "summary_si": "ලෝක ගැටුම් ඇතිවන මේ මොහොතේ මුළු ලොවම බුදු දහමේ හරය නැවත මෙනෙහි කර ගැනීම වැදගත් බව ජනාධිපති අනුර කුමාර දිසානායක මහතා “ලෝක බෞද්ධ සංඝ සම්මේලනයේ 60 වන සංවත්සරය උත්සවය අමතමින් අද පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/මුළු-ලොවම-බුදු-දහම-නැවත-මෙනෙහි-කර-ගත-යුතුයි/1-701250",
+        "source": "Lankadeepa Latest",
+        "published": 1795851000
+      },
+      "status": "delivered",
+      "destinations": {
+        "telegram": "accepted",
+        "facebook": "accepted"
+      },
+      "format": "original_news_reel",
+      "last_attempt_at": 1795852385.635551
     }
   },
   "reels_started_at": 1795349700,
@@ -14474,6 +14531,18 @@
       },
       "status": "queued",
       "queued_at": 1795835763.8449945
+    },
+    "a288ec6289e55ccbec019ee8": {
+      "article": {
+        "id": "a288ec6289e55ccbec019ee8",
+        "title_si": "මුළු ලොවම බුදු දහම නැවත මෙනෙහි කර ගත යුතුයි",
+        "summary_si": "ලෝක ගැටුම් ඇතිවන මේ මොහොතේ මුළු ලොවම බුදු දහමේ හරය නැවත මෙනෙහි කර ගැනීම වැදගත් බව ජනාධිපති අනුර කුමාර දිසානායක මහතා “ලෝක බෞද්ධ සංඝ සම්මේලනයේ 60 වන සංවත්සරය උත්සවය අමතමින් අද පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/මුළු-ලොවම-බුදු-දහම-නැවත-මෙනෙහි-කර-ගත-යුතුයි/1-701250",
+        "source": "Lankadeepa Latest",
+        "published": 1795851000
+      },
+      "status": "queued",
+      "queued_at": 1795852385.635551
     }
   },
   "tiktok_started_at": 1795370479.455068,
