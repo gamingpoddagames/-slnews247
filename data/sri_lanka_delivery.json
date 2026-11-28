@@ -10397,7 +10397,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795852385.635551
+        "at": 1795855841.233859
       }
     },
     "749163f55c31c224b5c2c007": {
@@ -10429,7 +10429,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795852385.635551
+        "at": 1795855841.233859
       }
     },
     "ce566c4d6ef2cba4c7f962ac": {
@@ -10445,7 +10445,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795852385.635551
+        "at": 1795855841.233859
       }
     },
     "376ed98ddbad4fef30f03c41": {
@@ -10484,7 +10484,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795852385.635551
+        "at": 1795855841.233859
       }
     },
     "a0c6dae4292683704229033d": {
@@ -10500,7 +10500,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795852385.635551
+        "at": 1795855841.233859
       }
     },
     "d4741c45ebf5521d38383ae7": {
@@ -10516,7 +10516,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795852385.635551
+        "at": 1795855841.233859
       }
     },
     "a288ec6289e55ccbec019ee8": {
@@ -10541,6 +10541,38 @@
         }
       },
       "uncertain": {}
+    },
+    "5842b15b180617b14c02b4b3": {
+      "article": {
+        "id": "5842b15b180617b14c02b4b3",
+        "title_si": "යතුරු පැදියේ ගිය පොලිස් සැරයන් අනතුරකින් මරුට",
+        "summary_si": "කොළඹ මහනුවර ප්‍රධාන මාර්ගයේ මාවනැල්ල පහළ කඩුගන්නාවේ දී යතුරු පැදියක් මාර්ගයෙන් ඉවතට පැන සිදු වූ අනතුරකින් පොලිස් සැරයන්වරයෙකු අද 28 වැනිදා අලුයම මිය ගොස් ඇතැයි මාවනැල්ල පොලිසිය පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/යතුරු-පැදියේ-ගිය-පොලිස්-සැරයන්-අනතුරකින්-මරුට/1-701252",
+        "source": "Lankadeepa Latest",
+        "published": 1795852680
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795855841.233859
+      }
+    },
+    "ef0fedd4dddace9363ef90a5": {
+      "article": {
+        "id": "ef0fedd4dddace9363ef90a5",
+        "title_si": "\"පාලකයා ප්‍රතිපත්තිගරුක නම් රට සෞභාග්‍ය වෙනවා.. දූෂිත නම් රට අරාජික වෙනවා\" - ජනපති",
+        "summary_si": "\"පාලකයා ප්‍රතිපත්තිගරුක නම් රට සෞභාග්‍ය වෙනවා..",
+        "link": "https://sinhala.adaderana.lk/news/255330",
+        "source": "Ada Derana Sinhala",
+        "published": 1795849384
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795855841.233859
+      }
     }
   },
   "videos": {
@@ -10562,7 +10594,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795852385.635551,
+  "last_scan_at": 1795855841.233859,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -10795,6 +10827,16 @@
       },
       "facebook": {
         "error": "exact_event_photo_required"
+      }
+    },
+    "a288ec6289e55ccbec019ee8": {
+      "telegram": {
+        "id": "1318",
+        "format": "licensed_subject_stock"
+      },
+      "facebook": {
+        "id": "1020689164470492_122128261605318605",
+        "format": "licensed_subject_stock"
       }
     }
   },
