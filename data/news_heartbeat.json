@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-11-27T23:51:35.347Z",
+  "timestamp": "2026-11-28T01:48:09.549Z",
   "reason": "stale_production_run",
-  "last_success_run_id": 46076284033,
-  "note": "Last production scan 2026-11-27T22:23:09Z; resume existing news pipeline."
+  "last_success_run_id": 46084788882,
+  "note": "Last scan 2026-11-27T23:52:01Z; resume production news scan."
 }
