@@ -10397,7 +10397,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795835763.8449945
+        "at": 1795838000.063656
       }
     },
     "749163f55c31c224b5c2c007": {
@@ -10429,7 +10429,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795835763.8449945
+        "at": 1795838000.063656
       }
     },
     "ce566c4d6ef2cba4c7f962ac": {
@@ -10445,7 +10445,7 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795835763.8449945
+        "at": 1795838000.063656
       }
     },
     "376ed98ddbad4fef30f03c41": {
@@ -10470,6 +10470,38 @@
         }
       },
       "uncertain": {}
+    },
+    "88fb8bbb00e9f9ccc6220507": {
+      "article": {
+        "id": "88fb8bbb00e9f9ccc6220507",
+        "title_si": "නිදහස් පක්ෂයේ අනාගතය ගැන නෙත් නිවුස් රතු කට්ටේදී දුමින්ද දිසානායකගෙන් විශේෂ අනාවරණයක්",
+        "summary_si": "පක්ෂය හැරගිය බොහෝ පිරිසක් ළගදීම ශ්‍රී ලංකා නිදහස් පක්ෂය හා යළි එක්වීමට සූදානමින් පසුවන බව හිටපු අමාත්‍ය දුමින්ද දිසානායක මහතා පවසනවා. ඔහු මේ බව ප්‍රකාශ කළේ නෙත් නිවුස් යූ ටියුබ් නාලිකාව වෙනුවෙන් සචිනි සීලවර්ධන සමග රතු කට්ට දේශපාලන සංවාදයට සහභාගි වෙමින්.",
+        "link": "https://www.nethnews.lk/breaking-news/local-news/%e0%b6%b1%e0%b7%92%e0%b6%af%e0%b7%84%e0%b7%83%e0%b7%8a-%e0%b6%b4%e0%b6%9a%e0%b7%8a%e0%b7%82%e0%b6%ba%e0%b7%9a-%e0%b6%85%e0%b6%b1%e0%b7%8f%e0%b6%9c%e0%b6%ad%e0%b6%ba-%e0%b6%9c%e0%b7%90%e0%b6%b1/",
+        "source": "Neth Politics",
+        "published": 1795837896
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795838000.063656
+      }
+    },
+    "a0c6dae4292683704229033d": {
+      "article": {
+        "id": "a0c6dae4292683704229033d",
+        "title_si": "ජිනීවා නුවරින් ලංකාවට රතු එළියක්",
+        "summary_si": "යුද සමයේදී මානුෂීය සහ වෛද්‍ය සේවකයන්ගේ පහසුකම් සහ මෙහෙයුම් වෙත එල්ල වූ ප්‍රහාර පිළිගෙන ඒ සම්බන්ධයෙන් සමාව ගන්නා ලෙස ජිනීවා නුවර එක්සත් ජාතීන්ගේ මානව හිමිකම් කාර්යාලය වාර්තාවක් මගින් ශ්‍රී ලංකාවට නිර්දේශයක් කර ඇති බවත් මෙම නිර්දේශය ලබන පෙබරවාරි මාසයේදී පැවැත්වෙන 64 වැනි මානව හිමිකම් කවුන්සිල සැසියට ඉදිරිපත් විය හැකි හෙයින් ලංකාව ඊට උත්තර බැදීමට සූදානම් විය යුතු බවත් මහාචාර්ය නීතිඥ ප්‍රතිභා මහානාම හේවා මහතා පැවසීය.",
+        "link": "https://www.lankadeepa.lk/latest_news/ජිනීවා-නුවරින්-ලංකාවට-රතු-එළියක්/1-701246",
+        "source": "Lankadeepa Latest",
+        "published": 1795837140
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795838000.063656
+      }
     }
   },
   "videos": {
@@ -10491,7 +10523,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795835763.8449945,
+  "last_scan_at": 1795838000.063656,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
@@ -10711,6 +10743,14 @@
       }
     },
     "6b4f3d62131b92ce4e974b77": {
+      "telegram": {
+        "error": "exact_event_photo_required"
+      },
+      "facebook": {
+        "error": "exact_event_photo_required"
+      }
+    },
+    "ce566c4d6ef2cba4c7f962ac": {
       "telegram": {
         "error": "exact_event_photo_required"
       },
