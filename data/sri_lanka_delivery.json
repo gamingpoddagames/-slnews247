@@ -10397,7 +10397,23 @@
       "uncertain": {},
       "photo_review": {
         "status": "awaiting_exact_event_photo",
-        "at": 1795823521.414649
+        "at": 1795830519.800087
+      }
+    },
+    "749163f55c31c224b5c2c007": {
+      "article": {
+        "id": "749163f55c31c224b5c2c007",
+        "title_si": "නාවික හමුදා භාරයට ගත් යාත්‍රාවේ තිබී හෙරොයින් කිලෝග්‍රෑම් 3.6ක් සොයා ගැනේ",
+        "summary_si": "නාවික හමුදා භාරයට ගත් යාත්‍රාවේ තිබී හෙරොයින් කිලෝග්‍රෑම් 3.",
+        "link": "https://sinhala.adaderana.lk/news/255318",
+        "source": "Ada Derana Sinhala",
+        "published": 1795829018
+      },
+      "receipts": {},
+      "uncertain": {},
+      "photo_review": {
+        "status": "awaiting_exact_event_photo",
+        "at": 1795830519.800087
       }
     }
   },
@@ -10420,7 +10436,7 @@
     }
   },
   "last_video_at": 1794857263.9764938,
-  "last_scan_at": 1795823521.414649,
+  "last_scan_at": 1795830519.800087,
   "video_style": "photo-v1",
   "editorial_updates": {
     "981e87262c5a1a7e8bc1db61": {
